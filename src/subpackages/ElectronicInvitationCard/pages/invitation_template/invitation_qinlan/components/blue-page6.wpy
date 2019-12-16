@@ -1,0 +1,179 @@
+<style lang="less">
+page {
+  width: 100%;
+  height: 100%;
+}
+</style>
+<template>
+  <view class="page-blue">
+    <!-- page6 -->
+    <view class="frame">
+      <blue-layout flower="flower03">
+        <view
+          slot="panel"
+          class="panel6"
+        >
+          <view class="panel-top">
+            <view class="panel-top-left">
+              <image
+                class="panel-top-photo-left"
+                mode="aspectFill"
+                src="{{ p6.contentInfos[0].fieldContent }}"
+                @load="imageLoad"
+              />
+              <temp-image-uploader
+                :rate.sync="src8Rate"
+                :mySrc.sync="src8"
+                :myShown.sync="editMode"
+                @onImageUploaded.user="onImageUploaded"
+              />
+            </view>
+            <view class="panel-top-right">
+              <image
+                class="panel-top-photo-right"
+                mode="aspectFill"
+                src="{{ p6.contentInfos[1].fieldContent }}"
+                @load="imageLoad"
+              />
+              <temp-image-uploader2
+                :rate.sync="src9Rate"
+                :mySrc.sync="src9"
+                :myShown.sync="editMode"
+                @onImageUploaded.user="onImageUploaded"
+              />
+            </view>
+          </view>
+          <view class="panel-middle">
+            <view class="icon-my-sweetest-love"></view>
+          </view>
+          <view class="panel-bottom">
+            <image
+              class="panel-bottom-photo"
+              mode="aspectFill"
+              src="{{ p6.contentInfos[2].fieldContent }}"
+              @load="imageLoad"
+            />
+            <temp-image-uploader3
+              :rate.sync="src10Rate"
+              :mySrc.sync="src10"
+              :myShown.sync="editMode"
+              @onImageUploaded.user="onImageUploaded"
+            />
+          </view>
+        </view>
+      </blue-layout>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import BlueLayout from './blue-layout'
+import TempImageUploader from './temp-image-uploader'
+const pageNo = 6 // 当前页码
+export default class BluePage6 extends wepy.component {
+  components = {
+    'blue-layout': BlueLayout,
+    'temp-image-uploader': TempImageUploader,
+    'temp-image-uploader2': TempImageUploader,
+    'temp-image-uploader3': TempImageUploader
+  }
+  props = {
+    editMode: {
+      // 是否处于编辑模式
+      type: Boolean,
+      default: false
+    },
+    basicInfo: {
+      // 请柬基本信息
+      type: Object,
+      default: {}
+    },
+    p6: {
+      // 当前页信息
+      type: Object
+    },
+    a6: {
+      type: Object,
+      default: { shown: false, hide: false }
+    }
+  }
+  watch = {
+    src8(n, o) {
+      this.p6.contentInfos[0] = {
+        fieldName: 8,
+        contentType: 'PICTURE',
+        fieldContent: n
+      }
+      this.$apply()
+    },
+    src9(n, o) {
+      this.p6.contentInfos[1] = {
+        fieldName: 9,
+        contentType: 'PICTURE',
+        fieldContent: n
+      }
+      this.$apply()
+    },
+    src10(n, o) {
+      this.p6.contentInfos[2] = {
+        fieldName: 10,
+        contentType: 'PICTURE',
+        fieldContent: n
+      }
+      this.$apply()
+    }
+  }
+  data = {
+    src8: '',
+    src8Rate: '1.59',
+    src9: '',
+    src9Rate: '1.59',
+    src10: '',
+    src10Rate: '0.78',
+    changedList: [],
+    imageCount: 3, // 图片总数
+    imageLoadedCount: 0 // 已加载图片数量
+  }
+  methods = {
+    onImageUploaded(e) {
+      this.prepareChangedList()
+      this.$emit('onPageDataChanged', pageNo, {
+        contentInfos: this.changedList
+      })
+    },
+    imageLoad() {
+      this.imageLoadedCount++
+      this.$emit('onImageLoadedCountChanged', {
+        pageNo,
+        count: this.imageLoadedCount,
+        total: this.imageCount
+      }) // 加载进度改变
+    }
+  }
+  prepareChangedList() {
+    this.changedList = []
+    if (this.src8) {
+      this.changedList.push({
+        fieldName: 8,
+        contentType: 'PICTURE',
+        fieldContent: this.src8
+      })
+    }
+    if (this.src9) {
+      this.changedList.push({
+        fieldName: 9,
+        contentType: 'PICTURE',
+        fieldContent: this.src9
+      })
+    }
+    if (this.src10) {
+      this.changedList.push({
+        fieldName: 10,
+        contentType: 'PICTURE',
+        fieldContent: this.src10
+      })
+    }
+    this.$apply()
+  }
+}
+</script>

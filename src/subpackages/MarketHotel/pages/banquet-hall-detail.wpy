@@ -1,0 +1,249 @@
+<!--
+  宴会厅列表页
+  @Author: AndyPan
+  @CreateDate: 2019年4月26日14:41:47
+  @LastUpdateDate: 2019年4月26日14:41:50
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+
+.page-banquet-hall-main {
+  .hotel-thumb-wrap{
+    width: 100%;
+    // height: 300rpx;
+    height: 423rpx;
+    overflow: hidden;
+  }
+  .hotel-video-wrap{
+    height: 423rpx;
+  }
+  .hotel-thumb {
+    min-width: 100%;
+    min-height: 100%;
+  }
+  .hotel-video {
+    width: 100%;
+    height: 100%;
+  }
+  .banquet-hall-main-cont {
+    margin-bottom: 0;
+  }
+  .content-block {
+    width: auto;
+    padding: 0 15rpx;
+    margin-top: 20rpx;
+    .content-main-slot {
+      padding-top: 20rpx;
+      .clearfix();
+    }
+
+    .banquet-hall-text {
+      font-size: 24rpx;
+      color: @color-999999;
+      line-height: 30rpx;
+      text-align: left;
+    }
+  }
+  .block-cont-form {
+    padding-bottom: 20rpx;
+  }
+  .banquet-hall-detail {
+    margin-top: 20rpx;
+    margin-bottom: 174rpx;
+
+    .block-cont-title {
+      padding-top: 40rpx;
+    }
+    .detail-wrap {
+      padding-top: 20rpx;
+      .detail-thumb {
+        margin-bottom: 10rpx;
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-banquet-hall-main page-main-wrap">
+    <view class="hotel-thumb-wrap {{hallVideo ? 'hotel-video-wrap' : ''}}">
+      <!-- <video class="hotel-video" wx:if="{{hallVideo}}" src="{{hallVideo}}"
+        autoplay="true"
+        loop="true"
+        controls />
+      <image src="{{hallInfo.coverPicture}}" wx:else class="hotel-thumb" mode="widthFix" /> -->
+      <image src="{{hallInfo.coverPicture}}" class="hotel-thumb" mode="widthFix" />
+    </view>
+    <view class="banquet-hall-main-cont page-main-cont">
+      <content-block class="content-block" :title.sync="hallName">
+        <view slot="content-main-slot" class="content-main-slot">
+          <view class="banquet-hall-text">{{hallInfo.describes}}</view>
+          <view class="block-cont-title" wx:if="{{hallInfo.area || hallInfo.tables || hallInfo.storyHeight || hallInfo.storey || hallInfo.pillarNum || hallInfo.number}}">场地配置</view>
+          <view class="ui-form">
+            <view class="form-column-item" wx:if="{{hallInfo.area}}">
+              <text class="column-item-label">面积</text>{{hallInfo.area}}
+            </view>
+            <view class="form-column-item" wx:if="{{hallInfo.tables}}">
+              <text class="column-item-label">桌数</text>{{hallInfo.tables}}
+            </view>
+            <view class="form-column-item" wx:if="{{hallInfo.storyHeight}}">
+              <text class="column-item-label">层高</text>{{hallInfo.storyHeight}}
+            </view>
+            <view class="form-column-item" wx:if="{{hallInfo.storey}}">
+              <text class="column-item-label">楼层</text>{{hallInfo.storey}}
+            </view>
+            <view class="form-column-item" wx:if="{{hallInfo.pillarNum}}">
+              <text class="column-item-label">立柱</text>{{hallInfo.pillarNum}}
+            </view>
+            <view class="form-column-item" wx:if="{{hallInfo.number}}">
+              <text class="column-item-label">容纳人数</text>{{hallInfo.number}}
+            </view>
+          </view>
+          <view class="block-cont-title">通用设施</view>
+          <view class="block-cont-form ui-form form-label-icon">
+            <repeat for="{{hallFacilities}}" key="index" index="index" item="item">
+              <view class="{{ 'form-column-item ' + (item.type)}}">
+                <text class="{{ 'column-item-label ' + 'icon-' + (item.key)}}"></text>{{item.text}}
+              </view>
+            </repeat>
+          </view>
+        </view>
+      </content-block>
+    </view>
+    <view class="banquet-hall-main-cont banquet-hall-detail page-main-cont" wx:if="{{hallInfo && hallInfo.pictureLists && hallInfo.pictureLists.length}}">
+      <view class="block-cont-title">宴会厅介绍</view>
+      <view class="detail-wrap">
+        <repeat for="{{hallInfo.pictureLists}}" key="index" index="index" item="item">
+          <image src="{{item.thum}}" class="detail-thumb" mode="widthFix" />
+        </repeat>
+      </view>
+    </view>
+    <!-- 底部Footer -->
+    <footer />
+    <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" />
+  </view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import FooterComponent from '@/components/footer-component/index'
+import ContentBlockComponent from '../components/content-block-component/index'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import { IndexService } from '../services'
+import { Tips, PATCH } from '@/utils'
+import { STATUS } from '@/configs'
+
+export default class BanquetHallDetailPages extends wepy.page {
+  // 配置
+  config = {
+    // navigationBarTitleText: '宴会厅'
+    navigationBarTitleText: ''
+  }
+
+  // 组件
+  components = {
+    // 底部
+    footer: FooterComponent,
+    'content-block': ContentBlockComponent,
+    'user-authorize': UserAuthorizeComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    hallName: null,
+    // 宴会厅详情
+    hallInfo: null,
+    // 宴会厅视频
+    hallVideo: null,
+    // 宴会厅ID
+    hallId: null,
+    hotelId: null,
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    // 宴会厅设施
+    hallFacilities: [],
+    // 是否为分享链接
+    isShare: null
+  }
+
+  onAuthorizeAllFn(data) {
+    this.myHotelBanquetHallListInfo()
+  }
+
+  /**
+   * 酒店宴会厅详细数据
+   */
+  myHotelBanquetHallListInfo() {
+    IndexService.myHotelBanquetHallListInfo({ data: { hallId: this.hallId } })
+      .then(res => {
+        let hallInfo = res.data.hotelBanquetHallListInfo
+        if (hallInfo) {
+          this.hallInfo = hallInfo
+          this.hallVideo = ((hallInfo.videoLists || [])[0] || {}).picture
+          this.hallName = hallInfo.hallName
+          let facilities = JSON.parse(hallInfo.facilities || '{}')
+          let i = 1
+          for (let key in facilities) {
+            this.hallFacilities.push({
+              key: key,
+              text: facilities[key],
+              type: i % 2 === 0 ? 'right' : 'left'
+            })
+            i++
+          }
+          this.$apply()
+        }
+        this.hotelTrackAdd()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 增加酒店足迹
+   */
+  hotelTrackAdd() {
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (this.hotelId && this.isShare) {
+      IndexService.hotelTrackAdd({
+        data: { hotelId: this.hotelId, userNo }
+      }).then(res => {})
+    }
+  }
+
+  /**
+   * 分享转发
+   */
+  onShareAppMessage(res) {
+    return {
+      title: this.hallName,
+      path:
+        '/subpackages/MarketHotel/pages/banquet-hall-detail?id=' +
+        this.hallId +
+        '&isShare=true'
+    }
+  }
+
+  onLoad(option) {
+    PATCH.createPatch.call(this)
+    option = option || {}
+    wx.showShareMenu({ withShareTicket: true })
+    this.hallId = option.id
+    this.isShare = option.isShare
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (userNo) {
+      this.myHotelBanquetHallListInfo()
+    } else {
+      this.$invoke('user-authorize', 'authorizeActivation')
+    }
+  }
+}
+</script>  

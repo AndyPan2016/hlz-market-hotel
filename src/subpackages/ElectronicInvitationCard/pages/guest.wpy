@@ -1,0 +1,430 @@
+<!--
+  电子请柬-伴手礼
+  @Author: zongxunjiang
+  @CreateDate: 2019年6月4日13:55:25
+  @LastUpdateDate: 2019年6月4日13:55:29
+  @Remarks: 电子请柬-宾客
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+.page-gift {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  .tabs {
+    height: 80rpx;
+    line-height: 80rpx;
+    display: flex;
+    flex: 0 0 auto;
+    position: relative;
+    border-bottom: 10rpx solid #f2f2f2;
+    .tab {
+      width: 50%;
+      height: 100%;
+      text-align: center;
+      font-size: 26rpx;
+      color: #222;
+    }
+    .tab_selected {
+      color: #ff4c2f;
+      font-weight: bold;
+    }
+    .line {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 10rpx;
+      width: 50%;
+      .in {
+        height: 6rpx;
+        width: 70rpx;
+        background: #ff4c2f;
+        margin: 0 auto;
+      }
+    }
+    .move_0 {
+      animation: left_0 0.5s ease-out forwards;
+    }
+    .move_50 {
+      animation: left_50 0.5s ease-out forwards;
+    }
+  }
+
+  @keyframes left_0 {
+    from {
+      left: 50%;
+    }
+    to {
+      left: 0%;
+    }
+  }
+  @keyframes left_50 {
+    from {
+      left: 0%;
+    }
+    to {
+      left: 50%;
+    }
+  }
+
+  .swiper {
+    width: 100%;
+    display: flex;
+    flex: 1 0 auto;
+    height: 50%;
+    .item {
+      width: 100%;
+      height: 100%;
+    }
+    .item-one {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+
+      .list {
+        display: flex;
+        flex: 1;
+        ::-webkit-scrollbar {
+          width: 0;
+          height: 0;
+          color: transparent;
+        }
+        .cell {
+          height: 146rpx;
+          border-bottom: 10rpx solid #f2f2f2;
+          position: relative;
+          padding: 0 15rpx;
+          display: flex;
+          .v1 {
+            width: 60%;
+            .guest {
+              display: flex;
+              font-size: 28rpx;
+              padding-top: 32rpx;
+              .title {
+                color: #222;
+                padding-right: 20rpx;
+              }
+              .name {
+                color: #ff2e28;
+              }
+            }
+            .time {
+              font-size: 24rpx;
+              color: #888;
+              padding-top: 20rpx;
+            }
+          }
+          .v2 {
+            width: 40%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            font-size: 28rpx;
+            color: #333;
+            .num {
+              color: #ff2e28;
+              padding: 0 2rpx 0 8rpx;
+            }
+          }
+        }
+      }
+      .option {
+        position: relative;
+        width: 100%;
+        height: 100rpx;
+        background: #fff;
+        .total {
+          display: flex;
+          height: 100rpx;
+          align-items: center;
+          padding-left: 30rpx;
+          justify-content: center;
+          .v1 {
+            color: #222;
+            font-size: 32rpx;
+          }
+          .v2 {
+            color: #ff2e28;
+            font-size: 40rpx;
+            padding-left: 14rpx;
+            font-weight: bold;
+          }
+          .v3 {
+            color: #ff2e28;
+            font-size: 24rpx;
+            margin-top: 10rpx;
+            margin-left: 2rpx;
+          }
+        }
+      }
+    }
+
+    .item-two {
+      position: relative;
+      .list {
+        height: 100%;
+        ::-webkit-scrollbar {
+          width: 0;
+          height: 0;
+          color: transparent;
+        }
+        .cell {
+          min-height: 136rpx;
+          border-bottom: 10rpx solid #f2f2f2;
+          padding: 0 4%;
+          display: flex;
+          flex-direction: row;
+          .v1 {
+            width: 92rpx;
+            padding-top: 22px;
+            image {
+              height: 66rpx;
+              width: 66rpx;
+              border-radius: 100%;
+            }
+          }
+          .v2 {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            .top {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              width: 100%;
+              padding-top: 34rpx;
+              .name {
+                font-size: 28rpx;
+                color: #222;
+                font-weight: bold;
+              }
+              .time {
+                font-size: 24rpx;
+                color: #222;
+              }
+            }
+            .msg {
+              font-size: 26rpx;
+              color: #555;
+              padding-bottom: 20rpx;
+            }
+          }
+        }
+      }
+    }
+
+    .no-data {
+      padding-top: 50rpx;
+      color: #ccc;
+      font-size: 32rpx;
+      text-align: center;
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-gift">
+    <navigationBar :title="title"></navigationBar>
+    <view class="tabs">
+      <view class="tab" wx:for="{{tabs}}" wx:for-item="item" wx:key="key" wx:for-index="index" :class="{tab_selected:current==index}" data-item="{{index}}" @tap="tabTap">{{item.name}}</view>
+      <view class="line" :class="{move_0:(current==0 && first == true),move_50:current==1}">
+        <view class="in"></view>
+      </view>
+    </view>
+    <swiper class="swiper" duration="500" current="{{current}}" @change="swiperChange">
+      <swiper-item class="item item-one">
+        <scroll-view class="list" scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower">
+          <view wx:if="{{rows0.length}}">
+            <view class="cell" wx:for="{{rows0}}" wx:key="key" wx:for-index="index" wx:for-item="item">
+              <view class="v1">
+                <view class="guest">
+                  <view class="title">宾客:</view>
+                  <view class="name">{{item.attendUserName}}</view>
+                </view>
+                <view class="time">{{item.createTime}}</view>
+              </view>
+              <view class="v2" wx:if="{{item.attendStatus === 'ATTEND'}}">
+                <view>赴宴:</view>
+                <view class="num">{{item.attendNum}}</view>
+                <view>人</view>
+              </view>
+              <view class="v2" wx:if="{{item.attendStatus === 'UNDETERMINED'}}">
+                <view>待定</view>
+              </view>
+              <view class="v2" wx:if="{{item.attendStatus === 'BUSY'}}">
+                <view>有事</view>
+              </view>
+            </view>
+          </view>
+          <view wx:else class="no-data">暂无相关记录~</view>
+        </scroll-view>
+        <view class="option">
+          <view class="total">
+            <view class="v1">赴宴人数:</view>
+            <view class="v2">{{attendSum0}}</view>
+            <view class="v3">人</view>
+          </view>
+        </view>
+      </swiper-item>
+      <swiper-item class="item item-two">
+        <scroll-view class="list" scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower">
+          <view wx:if="{{rows1.length}}">
+            <view class="cell" wx:for="{{rows1}}" wx:key="key" wx:for-index="index" wx:for-item="item">
+              <view class="v1">
+                <image src='{{item.headImg}}' />
+              </view>
+              <view class="v2">
+                <view class="top">
+                  <view class="name">{{item.nickName}}</view>
+                  <view class="time">{{item.createTime}}</view>
+                </view>
+                <view class="msg">{{item.wishContent}}</view>
+              </view>
+            </view>
+          </view>
+          <view wx:else class="no-data">暂无相关记录~</view>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import navigationBar from '../components/navigation-bar/index'
+// import { STATUS } from '@/configs'
+import { IndexService } from '../services'
+import { Tips, Utils, PATCH } from '@/utils'
+export default class GuestPages extends wepy.page {
+  // 配置
+  config = {
+    navigationStyle: 'custom',
+    backgroundTextStyle: 'light',
+    navigationBarTextStyle: 'white',
+    disableScroll: true
+  }
+
+  components = {
+    navigationBar: navigationBar
+  }
+
+  // data
+  data = {
+    title: '宾客',
+    // 总页数
+    totalPage0: 1,
+    // 当前页码
+    currentPage0: 1,
+    // 数据集合
+    rows0: [],
+    // 出席总人数
+    attendSum0: 0,
+    // 总页数
+    totalPage1: 1,
+    // 当前页码
+    currentPage1: 1,
+    // 数据集合
+    rows1: [],
+    tabs: [{ id: 0, name: '出席反馈' }, { id: 1, name: '宾客回复' }],
+    current: 0,
+    first: false,
+    // 请柬ID
+    invitationId: ''
+  }
+
+  methods = {
+    // tab点击事件
+    tabTap(e) {
+      this.current = e.currentTarget.dataset.item
+      // this.getDataRows(true)
+    },
+
+    // 左右滑动事件
+    swiperChange(e) {
+      this.current = e.detail.current
+      if (this.first === false) {
+        this.first = true
+      }
+      this.getDataRows(true)
+    },
+    // 出席列表滚动
+    upper() {
+      this['currentPage' + this.current] = 1
+      this.getDataRows()
+    },
+    lower() {
+      this['currentPage' + this.current] += 1
+      this.getDataRows()
+    }
+  }
+
+  /**
+   * 获取宾客反馈列表信息
+   */
+  getDataRows(flag) {
+    let parmes = {}
+    let current = this.current
+    // if (flag) {
+    //   // 刷新当前页
+    //   if (this['currentPage' + current] > 1) {
+    //     this['currentPage' + current] -= 1
+    //   }
+    // }
+
+    let serviceName =
+      current === 0
+        ? 'invitationAttendancePageListQuery'
+        : 'invitationWishPageListQuery'
+
+    if (this['currentPage' + current] > this['totalPage' + current]) {
+      this['currentPage' + current] -= 1
+      return false
+    }
+
+    parmes['invitationId'] = this.invitationId
+    parmes['start'] = this['currentPage' + current]
+    parmes['limit'] = 10
+
+    IndexService[serviceName]({ data: parmes })
+      .then(res => {
+        let data = res.data
+        if (current === 0) {
+          this['attendSum' + current] = data.attendSum || 0
+        }
+        let rows = data.rows
+        if (rows.length) {
+          // this['currentPage' + current] += 1
+        }
+        this['totalPage' + current] = data.totalPages
+        if (this['currentPage' + current] === 1) {
+          this['rows' + current] = rows || []
+        } else {
+          Utils.forEach(rows, rowItem => {
+            this['rows' + current].push(rowItem)
+          })
+        }
+
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  // 加载完成
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    this.invitationId = options.invitationId
+    this.getDataRows()
+  }
+}
+</script>

@@ -1,0 +1,1512 @@
+
+<style lang="less">
+@import '../../../assets/less/commons.less';
+
+.page-screen{
+  .screen-elem-bgblock{
+      width: 680rpx;
+      height: 470rpx;
+      background: #FFD785;
+      border-radius: 40rpx;
+      transform: rotate(5deg);
+      position: absolute;
+      top: 464rpx;
+      left: 50%;
+      margin-left: -340rpx;
+  }
+  .elem-flag{
+      width: 100%;
+      height: 130rpx;
+      position: relative;
+      &::before{
+          float: left;
+          height: 100%;
+          width: 320rpx;
+          content: '';
+          .background('screen-elem-top.png', -195rpx -45rpx);
+          background-size: auto 130%;
+      }
+      &::after{
+          float: right;
+          height: 100%;
+          width: 380rpx;
+          content: '';
+          .background('screen-elem-top.png', -500rpx -45rpx);
+          background-size: auto 130%;
+      }
+  }
+  .elem-partytime{
+      width: 650rpx;
+      height: 196rpx;
+      position: absolute;
+      left: 78rpx;
+      top: 1058rpx;
+      .background('party-time.png');
+      background-size: 100% 100%;
+  }
+
+  &.default {
+      .elem-flag, .elem-partytime, .screen-elem-bgblock,
+      .screen-elem-hb, .screen-elem-photo, .screen-elem-info,
+      .elem-modifier-1, .elem-modifier-2, .elem-modifier-3,
+      .elem-modifier-startsmall, .elem-modifier-startbig,
+      .elem-modifier-lovely, .elem-modifier-gift, .elem-modifier-balloon,
+      .elem-modifier-crown, .elem-modifier-sugar,
+      .elem-modifier-start1, .elem-modifier-start2, .elem-modifier-start3,
+      .elem-modifier-bbsugar, .elem-modifier-angelscome,
+      .elem-heart, .elem-happy-birthday, .elem-map-wrap
+      {
+          opacity: 0;
+      }
+  }
+  &.animation {
+      .elem-flag{
+          @elemFlag: elem-flag;
+          .keyframes(@elemFlag, {
+              0%{
+                  transform: translate(0, -200rpx);
+                  opacity: 0;
+              }
+              100%{
+                  transform: translate(0, 0);
+                  opacity: 1;
+              }
+          });
+          animation: @elemFlag 1s forwards;
+      }
+      .elem-partytime{
+          @elemPartyTime: elem-partytime;
+          .keyframes(@elemPartyTime, {
+              0%{
+                  transform: translate(0, 200rpx);
+                  opacity: 0;
+              }
+              100%{
+                  transform: translate(0, 0);
+                  opacity: 1;
+              }
+          });
+          animation: @elemPartyTime 1s forwards;
+      }
+  }
+
+  &.page-two {
+      &.animation {
+          .elem-modifier-1, .elem-modifier-2, .elem-modifier-3 {
+              @elemModifier1: elem-modifier;
+              .keyframes(@elemModifier1, {
+                  0%{
+                      transform: scale(0.2, 0.2);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: scale(1, 1);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemModifier1 1s ease 0.5s forwards;
+          }
+          .elem-modifier-startsmall, .elem-modifier-startbig{
+              @elemStart: elem-start;
+              .keyframes(@elemStart, {
+                  0%{
+                      transform: scale(0.2, 0.2) rotate(-360deg);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: scale(1, 1) rotate(0deg);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemStart 1s ease 0.5s forwards;
+          }
+          .elem-modifier-lovely{
+              @elemLovely: elem-lovely;
+              .keyframes(@elemLovely, {
+                  0%{
+                      height: 0;
+                      opacity: 0;
+                  }
+                  100%{
+                      height: 96rpx;
+                      opacity: 1;
+                  }
+              });
+              animation: @elemLovely 1.5s ease 1s forwards;
+          }
+          .elem-modifier-gift{
+              @elemGift: elem-gift;
+              .keyframes(@elemGift, {
+                  0%{
+                      left: 0rpx;
+                      opacity: 0;
+                  }
+                  100%{
+                      left: 102rpx;
+                      opacity: 1;
+                  }
+              });
+              animation: @elemGift 1.5s ease 1.5s forwards;
+          }
+          .elem-modifier-balloon{
+              @elemBalloon: elem-balloon;
+              .keyframes(@elemBalloon, {
+                  0%{
+                      right: -158rpx;
+                      opacity: 0;
+                  }
+                  100%{
+                      right: 0rpx;
+                      opacity: 1;
+                  }
+              });
+              animation: @elemBalloon 1.5s ease 1.5s forwards;
+          }
+          .screen-elem-bgblock{
+              @elemBgblock: elem-bgblock;
+              .keyframes(@elemBgblock, {
+                  0%{
+                      opacity: 0;
+                      transform:rotate(0deg);
+                  }
+                  100%{
+                      opacity: 1;
+                      transform:rotate(5deg);
+                  }
+              });
+              animation: @elemBgblock 2s ease 1.2s forwards;
+          }
+          .photo-first{
+              @elemPhotoFirst: photo-first;
+              .keyframes(@elemPhotoFirst, {
+                  0%{
+                      opacity: 0;
+                      left: 0;
+                  }
+                  100%{
+                      opacity: 1;
+                      left: 50rpx;
+                  }
+              });
+              animation: @elemPhotoFirst 2s ease .2s forwards;
+          }
+          .photo-second{
+              @elemPhotoSecond: photo-second;
+              .keyframes(@elemPhotoSecond, {
+                  0%{
+                      opacity: 0;
+                      right: 0;
+                  }
+                  100%{
+                      opacity: 1;
+                      right: 52rpx;
+                  }
+              });
+              animation: @elemPhotoSecond 2s ease .2s forwards;
+          }
+      }
+      .elem-modifier-1{
+          width: 50rpx;
+          height: 46rpx;
+          position: absolute;
+          top: 82rpx;
+          left: 374rpx;
+          .background('hb-modifier-3.png');
+          background-size: 100% 100%;
+      }
+      .elem-modifier-2{
+          width: 62rpx;
+          height: 70rpx;
+          position: absolute;
+          top: 360rpx;
+          right: 116rpx;
+          .background('hb-modifier-1.png');
+          background-size: 100% 100%;
+      }
+      .elem-modifier-3{
+          width: 90rpx;
+          height: 84rpx;
+          position: absolute;
+          top: 532rpx;
+          right: 112rpx;
+          .background('hb-modifier-2.png');
+          background-size: 100% 100%;
+      }
+      .elem-modifier-startsmall{
+          width: 52rpx;
+          height: 52rpx;
+          .background('start-small.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 966rpx;
+          right: 414rpx;
+      }
+      .elem-modifier-startbig{
+          width: 72rpx;
+          height: 74rpx;
+          .background('start-big.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 1058rpx;
+          right: 32rpx;
+      }
+      .elem-modifier-gift{
+          width: 104rpx;
+          height: 120rpx;
+          .background('gift.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 976rpx;
+          left: 102rpx;
+      }
+      .elem-modifier-lovely{
+          width: 310rpx;
+          height: 96rpx;
+          .background('lovely.png', center center);
+          background-size: 100% 100%;
+          position: absolute;
+          top: 802rpx;
+          left: 64rpx;
+      }
+      .elem-modifier-balloon{
+          width: 158rpx;
+          height: 396rpx;
+          .background('balloon.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 152rpx;
+          right: 0rpx;
+      }
+      .bgblock-first{
+          width: 196rpx;
+          height: 444rpx;
+          top: 238rpx;
+          left: 360rpx;
+          margin: 0;
+      }
+      .bgblock-second{
+          width: 106rpx;
+          height: 238rpx;
+          top: 724rpx;
+          left: initial;
+          right: 260rpx;
+          margin: 0;
+      }
+      .screen-elem-photo{
+          width: 480rpx;
+          height: 600rpx;
+          left: 50rpx;
+          top: 158rpx;
+          &.photo-second{
+              width: 300rpx;
+              height: 400rpx;
+              top: 646rpx;
+              left: initial;
+              right: 52rpx;
+              overflow: initial;
+              &::before{
+                  display: inline-block;
+                  width: 90rpx;
+                  height: 62rpx;
+                  content: '';
+                  position: absolute;
+                  top: -20rpx;
+                  left: -36rpx;
+                  .background('heart.png');
+                  background-size: 100% 100%;
+              }
+          }
+      }
+  }
+  &.page-three {
+      &.animation {
+          .screen-elem-bgblock{
+              @elemBgblock: elem-bgblock;
+              .keyframes(@elemBgblock, {
+                  0%{
+                      transform:rotate(0deg);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform:rotate(5deg);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemBgblock 2s ease 1.5s forwards;;
+          }
+          .screen-elem-photo{
+              @elemPhoto: elem-photo-three;
+              .keyframes(@elemPhoto, {
+                  0%{
+                      top: 50rpx;
+                      opacity: 0;
+                  }
+                  100%{
+                      top: 158rpx;
+                      opacity: 1;
+                  }
+              });
+              animation: @elemPhoto 2s ease .5s forwards;
+          }
+          .elem-modifier-crown{
+              @elemCrown: elem-crown;
+              .keyframes(@elemCrown, {
+                  0%{
+                      top: 0rpx;
+                      opacity: 0;
+                  }
+                  100%{
+                      top: 76rpx;
+                      opacity: 1;
+                  }
+              });
+              animation: @elemCrown 2s ease 1s forwards;;
+          }
+          .elem-modifier-startbig, .elem-modifier-gift, .elem-modifier-sugar{
+              @elemModifierThree: elem-modifier-three;
+              .keyframes(@elemModifierThree, {
+                  0%{
+                      opacity: 0;
+                  }
+                  100%{
+                      opacity: 1;
+                  }
+              });
+              animation: @elemModifierThree 2s ease 2s forwards;;
+          }
+      }
+      .elem-modifier-crown{
+          width: 88rpx;
+          height: 60rpx;
+          position: absolute;
+          top: 76rpx;
+          left: 50%;
+          margin-left: -44rpx;
+          .background('crown.png');
+          background-size: 100% 100%;
+      }
+      .elem-modifier-startbig{
+          width: 72rpx;
+          height: 76rpx;
+          .background('start-big.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 582rpx;
+          right: 14rpx;
+      }
+      .elem-modifier-gift{
+          width: 104rpx;
+          height: 120rpx;
+          .background('gift.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 996rpx;
+          left: 42rpx;
+      }
+      .elem-modifier-sugar{
+          width: 98rpx;
+          height: 66rpx;
+          .background('sugar.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 1036rpx;
+          right: 14rpx;
+      }
+      .screen-elem-bgblock{
+          width: 618rpx;
+          height: 694rpx;
+          top: 385rpx;
+          left: 40rpx;
+          margin: 0;
+      }
+      .screen-elem-photo{
+          width: 650rpx;
+          height: 910rpx;
+          left: 50%;
+          top: 158rpx;
+          margin-left: -325rpx;
+      }
+  }
+  &.page-four{
+      &.animation {
+          .screen-elem-bgblock{
+              @elemBgblock: elem-bgblock-four;
+              .keyframes(@elemBgblock, {
+                  0%{
+                      transform:rotate(0deg);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform:rotate(5deg);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemBgblock 2s ease 1.5s forwards;;
+          }
+          .photo-first{
+              @elemPhoto: elem-photo-first-four;
+              .keyframes(@elemPhoto, {
+                  0%{
+                      transform: translate(0, -100rpx);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: translate(0, 0);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemPhoto 2s forwards;
+          }
+          .photo-second{
+              @elemPhoto: elem-photo-second-four;
+              .keyframes(@elemPhoto, {
+                  0%{
+                      transform: translate(0, -100rpx);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: translate(0, 0);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemPhoto 1.5s ease 0.5s forwards;
+          }
+          .elem-modifier-start1, .elem-modifier-start2, .elem-modifier-start3{
+              @elemStart: elem-start-four;
+              .keyframes(@elemStart, {
+                  0%{
+                      transform: rotate(-360deg);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: rotate(0deg);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemStart 2s ease 1s forwards;
+          }
+          .elem-modifier-bbsugar{
+              @elemBBSugar: elem-bbsugar;
+              .keyframes(@elemBBSugar, {
+                  0%{
+                      transform: translate(-100rpx, 0);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: translate(0, 0);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemBBSugar 2s ease 1.5s forwards;
+          }
+          .elem-modifier-angelscome{
+              @elemAngelsCome: elem-angelscome;
+              .keyframes(@elemAngelsCome, {
+                  0%{
+                      width: 100rpx;
+                      opacity: 0;
+                      margin-left: -50rpx;
+                  }
+                  100%{
+                      width: 500rpx;
+                      opacity: 1;
+                      margin-left: -250rpx;
+                  }
+              });
+              animation: @elemAngelsCome 1s ease 1.5s forwards;
+          }
+      }
+      .elem-modifier-bbsugar{
+          width: 90rpx;
+          height: 146rpx;
+          position: absolute;
+          top: 146rpx;
+          left: 20rpx;
+          .background('bb-sugar.png');
+          background-size: 100% 100%;
+      }
+      .elem-modifier-angelscome{
+          width: 500rpx;
+          height: 28rpx;
+          position: absolute;
+          top: 576rpx;
+          left: 50%;
+          margin-left: -250rpx;
+          .background('angels-come.png');
+          background-size: 100% 100%;
+
+          &::before, &::after{
+              display: inline-block;
+              width: 60rpx;
+              height: 42rpx;
+              position: absolute;
+              bottom: -6rpx;
+              content: '';
+          }
+          &::before {
+              .background('heart.png');
+              background-size: 100% 100%;
+              left: -90rpx;
+          }
+          &::after {
+              .background('heart-right.png');
+              background-size: 100% 100%;
+              right: -90rpx;
+          }
+      }
+      .elem-modifier-start1, .elem-modifier-start2 {
+          position: absolute;
+          .background('start-small.png');
+          background-size: 100% 100%;
+      }
+      .elem-modifier-start1 {
+          width: 46rpx;
+          height: 46rpx;
+          top: 1054rpx;
+          left: 64rpx;
+      }
+      .elem-modifier-start2 {
+          width: 30rpx;
+          height: 30rpx;
+          top: 1098rpx;
+          left: 50%;
+          margin-left: -15rpx;
+      }
+      .elem-modifier-start3 {
+          width: 72rpx;
+          height: 76rpx;
+          position: absolute;
+          top: 1042rpx;
+          right: 56rpx;
+          .background('start-big.png');
+          background-size: 100% 100%;
+      }
+      .bgblock-first{
+          width: 450rpx;
+          height: 268rpx;
+          top: 280rpx;
+          left: 50%;
+          margin-left: -225rpx;
+          transform: rotate(2deg);
+      }
+      .bgblock-second{
+          width: 534rpx;
+          height: 262rpx;
+          top: 780rpx;
+          left: 50%;
+          margin-left: -267rpx;
+          transform: rotate(-2deg);
+      }
+      .screen-elem-photo{
+          position: absolute;
+          width: 650rpx;
+          height: 370rpx;
+          left: 50%;
+          margin-left: -325rpx;
+          &.photo-first{
+              top: 158rpx;
+          }
+          &.photo-second{
+              top: 648rpx;
+          }
+      }
+  }
+  &.page-five {
+      &.animation {
+          .screen-elem-bgblock{
+              @elemBgblock: elem-bgblock-four;
+              .keyframes(@elemBgblock, {
+                  0%{
+                      transform:rotate(0deg);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform:rotate(5deg);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemBgblock 2s ease 1.5s forwards;;
+          }
+          .photo-first{
+              @elemPhoto: elem-photo-first-five;
+              .keyframes(@elemPhoto, {
+                  0%{
+                      transform: translate(100rpx, 0);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: translate(0, 0);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemPhoto 2s forwards;
+          }
+          .photo-second{
+              @elemPhoto: elem-photo-second-five;
+              .keyframes(@elemPhoto, {
+                  0%{
+                      transform: translate(0, 100rpx);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: translate(0, 0);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemPhoto 2s forwards;
+          }
+          .elem-modifier-balloon{
+              @elemBalloon: elem-balloon-five;
+              .keyframes(@elemBalloon, {
+                  0%{
+                      transform: translate(-100rpx, 0);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: translate(0, 0);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemBalloon 2s forwards;
+          }
+          .elem-modifier-1, .elem-modifier-2, .elem-modifier-3,
+          .elem-happy-birthday, .elem-modifier-gift, .elem-heart
+          {
+              @elemModifierFive: elem-modifier-five;
+              .keyframes(@elemModifierFive, {
+                  from{
+                      opacity: 1;
+                  }
+                  to{
+                      opacity: 1;
+                  }
+              });
+              animation: @elemModifierFive 2s ease 1.5 forwards;
+          }
+          .elem-modifier-startsmall, .elem-modifier-startbig{
+              @elemStart: elem-start-five;
+              .keyframes(@elemStart, {
+                  0%{
+                      transform: rotate(-360deg);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: rotate(0deg);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemStart 2s ease 1 forwards;
+          }
+      }
+      .elem-modifier-1{
+          width: 50rpx;
+          height: 46rpx;
+          position: absolute;
+          top: 82rpx;
+          left: 374rpx;
+          .background('hb-modifier-3.png');
+          background-size: 100% 100%;
+      }
+      .elem-modifier-2{
+          width: 62rpx;
+          height: 70rpx;
+          position: absolute;
+          top: 360rpx;
+          right: 116rpx;
+          .background('hb-modifier-1.png');
+          background-size: 100% 100%;
+      }
+      .elem-modifier-3{
+          width: 90rpx;
+          height: 84rpx;
+          position: absolute;
+          top: 532rpx;
+          right: 112rpx;
+          .background('hb-modifier-2.png');
+          background-size: 100% 100%;
+      }
+      .elem-modifier-startsmall{
+          width: 52rpx;
+          height: 52rpx;
+          .background('start-small.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 918rpx;
+          right: 156rpx;
+      }
+      .elem-modifier-startbig{
+          width: 72rpx;
+          height: 74rpx;
+          .background('start-big.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 1058rpx;
+          right: 32rpx;
+      }
+      .elem-modifier-gift{
+          width: 104rpx;
+          height: 120rpx;
+          .background('gift.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 976rpx;
+          right: 254rpx;
+      }
+      .elem-modifier-balloon{
+          width: 158rpx;
+          height: 396rpx;
+          .background('balloon-left.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 152rpx;
+          left: 0rpx;
+      }
+      .elem-happy-birthday{
+          width: 306rpx;
+          height: 96rpx;
+          .background('happy-birthday.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 802rpx;
+          right: 70rpx;
+      }
+      .elem-heart{
+          width: 90rpx;
+          height: 62rpx;
+          .background('heart.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 626rpx;
+          right: 306rpx;
+      }
+      .bgblock-first{
+          width: 196rpx;
+          height: 444rpx;
+          top: 238rpx;
+          right: 8rpx;
+          margin: 0;
+      }
+      .bgblock-second{
+          width: 106rpx;
+          height: 238rpx;
+          top: 724rpx;
+          left: 26rpx;
+          margin: 0;
+      }
+      .screen-elem-photo{
+          width: 480rpx;
+          height: 600rpx;
+          left: initial;
+          right: 50rpx;
+          top: 158rpx;
+          &.photo-second{
+              width: 300rpx;
+              height: 400rpx;
+              top: 646rpx;
+              left: 50rpx;
+          }
+      }
+  }
+  &.page-six {
+      &.animation {
+          .screen-elem-bgblock{
+              @elemBgblock: elem-bgblock;
+              .keyframes(@elemBgblock, {
+                  0%{
+                      transform:rotate(0deg);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform:rotate(5deg);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemBgblock 2s ease 1.5s forwards;;
+          }
+          .screen-elem-photo{
+              @elemPhoto: elem-photo-three;
+              .keyframes(@elemPhoto, {
+                  0%{
+                      transform: translate(0, -100rpx);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: translate(0, 0rpx);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemPhoto 2s ease .5s forwards;
+          }
+          .elem-modifier-crown{
+              @elemCrown: elem-crown;
+              .keyframes(@elemCrown, {
+                  0%{
+                      top: 0rpx;
+                      opacity: 0;
+                  }
+                  100%{
+                      top: 76rpx;
+                      opacity: 1;
+                  }
+              });
+              animation: @elemCrown 2s ease 1s forwards;;
+          }
+          .elem-modifier-startbig, .elem-modifier-startsmall{
+              @elemModifierThree: elem-modifier-three;
+              .keyframes(@elemModifierThree, {
+                  0%{
+                      opacity: 0;
+                  }
+                  100%{
+                      opacity: 1;
+                  }
+              });
+              animation: @elemModifierThree 2s ease 2s forwards;;
+          }
+          .elem-map-wrap{
+              @elemMap: elem-map-six;
+              .keyframes(@elemMap, {
+                  0%{
+                      transform: translate(0, 100rpx);
+                      opacity: 0;
+                  }
+                  100%{
+                      transform: translate(0, 0rpx);
+                      opacity: 1;
+                  }
+              });
+              animation: @elemMap 2s ease .5s forwards;
+          }
+      }
+      .elem-modifier-crown{
+          width: 88rpx;
+          height: 60rpx;
+          position: absolute;
+          top: 76rpx;
+          left: 50%;
+          margin-left: -44rpx;
+          .background('crown.png');
+          background-size: 100% 100%;
+      }
+      .elem-modifier-startbig{
+          width: 72rpx;
+          height: 76rpx;
+          .background('start-big.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 392rpx;
+          right: 14rpx;
+      }
+      .elem-modifier-startsmall{
+          width: 46rpx;
+          height: 48rpx;
+          .background('start-small.png');
+          background-size: 100% 100%;
+          position: absolute;
+          top: 700rpx;
+          left: 36rpx;
+      }
+      .screen-elem-bgblock{
+          width: 618rpx;
+          height: 694rpx;
+          top: 385rpx;
+          left: 40rpx;
+          margin: 0;
+      }
+      .screen-elem-photo{
+          width: 650rpx;
+          height: 910rpx;
+          left: 50%;
+          top: 158rpx;
+          margin-left: -325rpx;
+      }
+      .elem-map-wrap{
+          position: absolute;
+          width: 510rpx;
+          height: 430rpx;
+          background: #FFF;
+          top: 690rpx;
+          left: 50%;
+          margin-left: -255rpx;
+          box-shadow: 0 0 40px rgba(124,124,124,.2);
+          .map-wrap {
+            width: 470rpx;
+            height: 250rpx;
+            margin: 20rpx;
+            position: relative;
+            &::before{
+                content: '导航';
+                padding: 0 25rpx;
+                background: rgba(0, 0, 0, .4);
+                font-size: 32rpx;
+                color: #FFF;
+                display: inline-block;
+                height: 60rpx;
+                line-height: 60rpx;
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+            .map{
+                width: 100%;
+                height: 100%;
+            }
+            .map-remark{
+              position: absolute;
+              top: 0;
+              right: 0;
+              background: #CCC;
+              padding: 10rpx 20rpx;
+              font-size: 28rpx;
+            }
+          }
+          .date, .address {
+              margin: 10rpx 20rpx;
+              font-size: 24rpx;
+              text-align: center;
+              color: #333;
+          }
+      }
+      .goto-hotel{
+          position:absolute;
+          width:200rpx;
+          height:80rpx;
+          bottom: 20rpx;
+          left:50%;
+          background:#ff4c2f;
+          font-size: 30rpx;
+          color:#FFF;
+          line-height:80rpx;
+          margin-left:-100rpx;
+          text-align:center;
+      }
+  }
+}
+</style>
+
+<template>
+  <view class="invitation-template">
+    <navigationBar :title="title" class="title" :isFull="isFull"></navigationBar>
+    <view class="template-content">
+      <view class="music {{player.play ? 'play' : 'paused'}}" wx:if="{{isLoaded}}" @tap="musicSwich"></view>
+      <view class="arrow-up" wx:if="{{current < screenAll - 1}}"></view>
+      <view class="page-screen-load" wx:if="{{!isLoaded}}">
+        <screen-clone scale="scale" :photoThumb.sync="photoThumb" :current="-1" :themetype.sync="themeType" :doMain.sync="doMain" :pageData.sync="pageDatas" bottomType="msg" :onUploadImg="uploadImg" :onImageLoad="imageLoad" />
+        <view class="progress-bar">
+          <view class="progress" style="{{'width:' + loadImageProgress + '%'}}"></view>
+          <text class="progress-text">{{loadImageProgress}}%</text>
+        </view>
+      </view>
+      <swiper vertical class="swiper-box" easing-function="easeOutCubic" bindchange="swiperChange" wx:if="{{isLoadedBaseInfo != -1}}">
+        <swiper-item>
+          <screen1 :current.sync="current" :photoThumb.sync="photoThumb" :themetype.sync="themeType" :doMain.sync="doMain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <screen2 :current.sync="current" :photoThumb.sync="photoThumb" :doMain.sync="doMain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <screen3 :current.sync="current" :photoThumb.sync="photoThumb" :doMain.sync="doMain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <screen4 :current.sync="current" :photoThumb.sync="photoThumb" :doMain.sync="doMain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <screen5 :current.sync="current" :photoThumb.sync="photoThumb" :doMain.sync="doMain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <screen6 :current.sync="current" :photoThumb.sync="photoThumb" :doMain.sync="doMain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" :hotelType.sync="hotelType" :hotelId.sync="hotelId" />
+        </swiper-item>
+      </swiper>
+      <c-bottom :coverImage.sync="coverImage" :hotelId.sync="hotelId" :giftData.sync="giftData" :bottomType.sync="bottomType" :themetype.sync="themeType" :templateType.sync="templateType" :templateId.sync="templateId" :invitationId.sync="invitationid" :musicId.sync="musicId" wx:if="{{isPreview !== 'false' && isPreview !== false && bottomShow}}" autoMsgWidth="true" />
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import screen1 from './components/page1'
+import screen2 from './components/page2'
+import screen3 from './components/page3'
+import screen4 from './components/page4'
+import screen5 from './components/page5'
+import screen6 from './components/page6'
+import CBottom from '../../../components/bottom/index'
+import navigationBar from '../../../components/navigation-bar/index'
+import { IndexService } from '../../../services'
+import { RESOURCE_PATCH, STATUS } from '@/configs'
+import { Tips, Utils } from '@/utils'
+
+export default class InvatationBabyPages extends wepy.page {
+  // 配置
+  config = {
+    navigationStyle: 'custom',
+    backgroundTextStyle: 'light',
+    navigationBarTextStyle: 'white',
+    disableScroll: true
+  }
+  components = {
+    screen1,
+    screen2,
+    screen3,
+    screen4,
+    screen5,
+    screen6,
+    'screen-clone': screen1,
+    'c-bottom': CBottom,
+    navigationBar: navigationBar
+  }
+  data = {
+    photoThumb: false,
+    giftData: {},
+    current: -1,
+    title: 'With You',
+    templateType: '',
+    invitationid: '',
+    templateId: '',
+    musicId: '',
+    hotelId: '',
+    isFull: true,
+    isPreview: true,
+    bottomShow: true,
+    // 音乐播放器
+    player: {},
+    // 图片资源主路径
+    doMain: RESOURCE_PATCH + 'ElectronicInvitationCard/invitation_template/invitation_baby/',
+    // 默认按钮类型
+    bottomType: 'create',
+    // 模板页面数据
+    pageDatas: {
+      baseInfo: {},
+      imageInfo: {}
+    },
+    // 封面图
+    coverImage: RESOURCE_PATCH + 'ElectronicInvitationCard/invitation_template/invitation_baby/default-photo-1.png',
+    // 模板页面图片数据
+    pageImgDatas: {},
+    // 编辑后，接口中获取的页面数据信息
+    templateDatas: [],
+    // 上传图片索引
+    imageIndex: '',
+    showMap: false,
+    // 总模板屏数
+    screenAll: 6,
+    // 加载图片总数
+    loadImageAll: 10,
+    // 当前已加载完成
+    loadedImage: 0,
+    // 进度
+    loadImageProgress: 0,
+    // 是否加载完成
+    isLoaded: false,
+    // 基础数据是否加载完成(基础数据加载完成并展示后再完成图片加载效果)
+    isLoadedBaseInfo: -1,
+    // 请柬类型
+    themeType: '',
+    tpmdata: ''
+  }
+  methods = {
+    swiperChange(e) {
+      let that = this
+      setTimeout(() => {
+        that.current = e.detail.current
+        that.bottomShow = !(that.current === that.screenAll - 1)
+        if (that.bottomType !== 'msg' && !that.bottomShow) {
+          that.bottomShow = true
+        }
+        that.$apply()
+      }, 100)
+    }
+  }
+
+  showMapFn() {
+    this.showMap = true
+    this.$apply()
+  }
+  hideMapFn() {
+    this.showMap = false
+    this.$apply()
+  }
+
+  /**
+   * 图片加载
+   */
+  imageLoad(status) {
+    // if (!this.isLoaded) {
+    //   this.loadedImage++
+    //   this.loadImageProgress = Math.floor(this.loadedImage / this.loadImageAll * 100)
+    //   this.loadImageProgress = this.loadImageProgress > 100 ? 100 : this.loadImageProgress
+    //   if (this.loadedImage >= this.loadImageAll - 2) {
+    //     let that = this
+    //     setTimeout(() => {
+    //       that.current = 0
+    //       that.isLoaded = true
+    //       that.$apply()
+    //     }, 10)
+    //   }
+    //   this.$apply()
+    // }
+  }
+
+  imageLoads(status) {
+    if (!this.isLoaded) {
+      this.loadedImage++
+      this.loadImageProgress = Math.floor(this.loadedImage / this.loadImageAll * 100)
+      this.loadImageProgress = this.loadImageProgress > 100 ? 100 : this.loadImageProgress
+      let that = this
+      if (this.loadedImage >= this.loadImageAll - 2) {
+        setTimeout(() => {
+          that.current = 0
+          that.isLoaded = true
+          that.$apply()
+        }, 10)
+      }
+      this.$apply()
+      setTimeout(() => {
+        that.imageLoads()
+      }, 120)
+    }
+  }
+
+  /**
+   * 打开相册，选择图片，跳转到图片截取
+   */
+  imgUpLoad(e, rate) {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        Tips.loading()
+        setTimeout(() => {
+          wx.navigateTo({
+            url: '/subpackages/ElectronicInvitationCard/pages/img-upload?url=' + res.tempFilePaths + '&rate=' + (rate || '')
+          })
+        }, 500)
+      }
+    })
+  }
+
+  /**
+   * 图片上传
+   */
+  uploadImg(e) {
+    let dataset = e.currentTarget.dataset
+    this.imageIndex = dataset.index
+    let rate = dataset.rate
+    this.$apply()
+    this.imgUpLoad(e, rate)
+  }
+  // 音乐控制开关
+  musicSwich() {
+    if (this.player.canplay) {
+      if (this.player.play) {
+        this.player.play = false
+        this.player.ctx.pause()
+      } else {
+        this.player.play = true
+        this.player.ctx.play()
+      }
+    } else {
+      Tips.error('音乐加载中')
+    }
+  }
+  // 初始化播放器
+  initPlayer() {
+    this.player.ctx = wx.createInnerAudioContext()
+    // this.player.ctx.autoplay = true
+    this.player.canplay = false
+    // 播放器可以播放的时候触发
+    this.player.ctx.onCanplay(() => {
+      this.player.ctx.play()
+      this.player.play = true
+      this.player.canplay = true
+      this.player.ctx.loop = true
+      this.$apply()
+    })
+    this.player.ctx.src = this.player.src
+  }
+  // 关闭音乐
+  destroyMusic() {
+    if (this.player.ctx) {
+      this.player.ctx.destroy()
+      this.player.play = false
+      this.$apply()
+    }
+  }
+  // 清除storeage里面获取数据
+  clearnStoreage(key) {
+    if (wx.getStorageSync(key)) {
+      wx.removeStorageSync(key)
+    }
+  }
+  // 存储编辑的数据
+  saveEditInfo() {
+    let imgSrc = wx.getStorageSync('screenShotImg') || ''
+    if (imgSrc) {
+      let page = this.current
+      // 判断当前图片是否已经存储
+      let imageItemNull = true
+      let params = {
+        invitationPageNo: page,
+        contentInfos: []
+      }
+      // 每个编辑图片的数据
+      let imageItem = {
+        fieldName: this.imageIndex,
+        contentType: 'PICTURE',
+        fieldContent: imgSrc
+      }
+      if (this.templateDatas.length > 0) {
+        for (let list of this.templateDatas) {
+          if (list.invitationPageNo === page) {
+            params.contentInfos = list.contentInfos
+            params.contentInfos.forEach((element, index) => {
+              if (element.fieldName === this.imageIndex) {
+                params.contentInfos[index].fieldContent = imgSrc
+                imageItemNull = false
+              }
+            })
+          }
+        }
+      }
+      if (imageItemNull) {
+        params.contentInfos.push(imageItem)
+      }
+      this.saveTemplate(params, imgSrc)
+    } else {
+      // console.log('screenShotImg为空')
+    }
+  }
+  /**
+   * 编辑请柬信息保存
+   */
+  saveTemplate(param, src) {
+    let params = Object.assign({
+      invitationId: this.invitationid,
+      coverImage: this.current === 0 ? src : (this.pageDatas.imageInfo[0] && this.pageDatas.imageInfo[0][0] ? this.pageDatas.imageInfo[0][0].imagePath : (''))
+      // 封面图，始终保持第一屏的图片
+      // coverImage: this.current === 0 ? src : (this.pageDatas.imageInfo[0][0] ? this.pageDatas.imageInfo[0][0].imagePath : (this.doMain + 'photo-thumb-default/1.png'))
+    }, param)
+
+    IndexService.invitationContentSave({
+      data: params
+    })
+      .then(res => {
+        if (res.data.success) {
+          Tips.success('修改图片成功')
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 电子请柬模板列表
+   */
+  getTpmList() {
+    IndexService.invitationTemplateQuery({
+      data: {
+        invitationId: this.invitationId
+      }
+    }).then(res => {
+      if (res.data.success) {
+        let invitationTemplateInfos = (res.data || {}).invitationTemplateInfos || []
+        Utils.forEach(invitationTemplateInfos, item => {
+          if ((item.templateType).toLowerCase() === this.templateType) {
+            this.player.src = item.backgroundMusic
+            this.templateId = item.templateId
+
+            return 'break'
+          }
+        })
+        this.isLoadedBaseInfo += 2
+        this.$apply()
+        this.initPlayer()
+      }
+    })
+  }
+
+  /**
+   * 根据如果bottomType = setting
+   */
+  getTemplate() {
+    let parmes = {}
+    parmes['invitationId'] = this.invitationid
+    IndexService.invitationPagesQuery({
+      data: parmes
+    })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          let invitationPages = data.invitationPages
+          this.photoThumb = true
+          if (invitationPages) {
+            this.templateDatas = invitationPages
+            Utils.forEach(invitationPages, (pageItem, pageNo) => {
+              Utils.forEach(pageItem.contentInfos, (imageItem, imageNo) => {
+                if (imageItem.fieldContent) {
+                  this.pageDatas.imageInfo[pageItem.invitationPageNo] = this.pageDatas.imageInfo[pageItem.invitationPageNo] || {}
+                  this.pageDatas.imageInfo[pageItem.invitationPageNo][parseInt(imageItem.fieldName) - 1] = {
+                    // 图片路径
+                    imagePath: imageItem.fieldContent,
+                    // 内容类型
+                    contentType: imageItem.contentType,
+                    // 文件名称
+                    fieldName: imageItem.fieldName,
+                    // 请柬ID
+                    invitationId: pageItem.invitationId,
+                    // 请柬页码
+                    invitationPageNo: pageItem.invitationPageNo
+                  }
+                }
+              })
+            })
+            this.isLoadedBaseInfo++
+            this.$apply()
+            // this.imageLoad()
+          }
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 查询电子请柬基本信息
+   */
+  getBaseInfo() {
+    let parmes = {}
+    parmes['invitationId'] = this.invitationid
+    return IndexService.invitationBasicInfoQuery({
+      data: parmes
+    })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          let weddingTime = data.weddingTime
+          let mapPoint = (data.coordinate || '106.49773,29.56964').split(',')
+          this.giftData.babyName = data.babyName
+          if (data.coverImage) {
+            this.coverImage = data.coverImage
+          }
+          this.pageDatas.baseInfo = {
+            babyBanquetType: data.babyBanquetType,
+            babyDadName: data.babyDadName,
+            babyMomName: data.babyMomName,
+            babyName: data.babyName,
+            brideName: data.brideName,
+            bridegroomName: data.bridegroomName,
+            weddingTime: weddingTime.substring(0, weddingTime.lastIndexOf(':')),
+            // hotelAddress: data.hotelAddress + '(' + data.hotelName + '-' + data.hallAddress + ')',
+            hotelAddress: data.hotelAddress,
+            invitationId: data.invitationId,
+            templateId: data.templateId,
+            templateType: data.templateType,
+            hotelName: data.hotelName,
+            longitude: mapPoint[0] || 0,
+            latitude: mapPoint[1] || 0,
+            marker: [
+              {
+                id: 0,
+                iconPath:
+                  'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/local.png',
+                longitude: mapPoint[0],
+                latitude: mapPoint[1],
+                width: 50,
+                height: 50
+              }
+            ]
+          }
+          this.player.src = data.backgroundMusic
+          this.musicId = data.musicFileId
+          this.hotelId = data.hotelId
+          this.initPlayer()
+          this.getTemplate()
+          this.isLoadedBaseInfo++
+          this.$apply()
+          // this.imageLoad()
+          return res.data
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  getHotelInfo() {
+    IndexService.hotelInfo({
+      data: {
+        hotelId: this.hotelId,
+        userNo: wx.getStorageSync(STATUS.USER_NO)
+      }
+    }).then(res => {
+      let hotelInfo = res.data.apiHotelInfo
+      this.pageDatas.baseInfo = this.pageDatas.baseInfo || {}
+      this.pageDatas.baseInfo.hotelAddress = hotelInfo.address
+      this.pageDatas.baseInfo.hotelName = hotelInfo.name
+      let mapPoint = (hotelInfo.coordinate || '106.49773,29.56964').split(',')
+      this.pageDatas.baseInfo.longitude = mapPoint[0] || 0
+      this.pageDatas.baseInfo.latitude = mapPoint[1] || 0
+      this.pageDatas.baseInfo.weddingTime = '2019年12月12日 12:08'
+    })
+  }
+
+  onLoad(options) {
+    this.bottomType = options.bottomType || ''
+    this.hotelId = options.hotelId || ''
+    this.templateId = options.tpl_id || ''
+    this.invitationid = options.invitationid || ''
+    this.templateType = options.templateType || 'baby'
+    this.isPreview = options.isPreview || ''
+    this.hotelType =
+      options.hotelType || wx.getStorageSync('Invitation' + STATUS.HOTEL_TYPE)
+    // 请柬类型
+    this.tpmdata = JSON.parse(options.tpmdata || '{}')
+    this.themeType = options.themetype || this.tpmdata.themeType || ''
+    this.$apply()
+    this.clearnStoreage('screenShotImg')
+  }
+
+  onShow() {
+    this.imageLoads()
+    // console.info('show')
+    if (this.invitationid) {
+      this.getBaseInfo()
+      this.saveEditInfo()
+      this.$apply()
+    } else {
+      this.getTpmList()
+      this.getHotelInfo()
+      this.photoThumb = true
+    }
+    let address = wx.getStorageSync('ADDRESS') || ''
+    if (address) {
+      this.giftData['province'] = address[0]
+      this.giftData['city'] = address[1]
+      this.giftData['district'] = address[2]
+    }
+    this.$apply()
+    wx.removeStorageSync('ADDRESS')
+  }
+
+  onHide() {
+    // console.info('hide')
+    wx.removeStorageSync('ADDRESS')
+    this.clearnStoreage('screenShotImg')
+    this.destroyMusic()
+  }
+
+  onUnload() {
+    // console.info('onUnload')
+    this.clearnStoreage('screenShotImg')
+    this.destroyMusic()
+  }
+}
+</script>

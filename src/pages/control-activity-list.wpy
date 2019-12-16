@@ -1,0 +1,547 @@
+<!--
+  活动控制页
+  @Author: AndyPan
+  @CreateDate: 2019年5月16日14:51:35
+  @LastUpdateDate: 2019年5月16日14:51:50
+  @Remarks:
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../assets/less/mixin.less';
+
+.page-control-activity-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  padding-bottom: 220rpx;
+
+  .control-activity-item {
+    margin: 30rpx 26rpx;
+    height: 312rpx;
+    position: relative;
+    .clearfix();
+    padding: 14rpx 30rpx;
+
+    &.enable {
+      background: url('@{base64-bg-activity-in}') 0 0 no-repeat;
+      background-size: 100% 100%;
+      .activity-name {
+        .activity-name-text {
+          color: @color-FF2E28;
+        }
+        .activity-money {
+          color: @color-FF2E28;
+        }
+      }
+      .activity-detail {
+        margin-top: 26rpx;
+        .activity-btn {
+          background: url('@{base64-btn-in}') 0 0 no-repeat;
+          background-size: 100% 100%;
+          margin-top: 20rpx;
+        }
+        .detail-wrap {
+          .look-activity {
+            margin-top: 15rpx;
+          }
+        }
+      }
+    }
+    &.pause {
+      background: url('@{base64-bg-activity-unstarted}') 0 0 no-repeat;
+      background-size: 100% 100%;
+      .activity-name {
+        .activity-name-text {
+          color: @color-5FC669;
+        }
+        .activity-money {
+          color: @color-5FC669;
+        }
+      }
+      .activity-detail {
+        .detail-wrap {
+          .detail-cont {
+            margin-top: 0rpx;
+          }
+        }
+        .activity-btn {
+          background: url('@{base64-btn-unstarted}') 0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+    }
+    &.disable {
+      background: url('@{base64-bg-activity-ended}') 0 0 no-repeat;
+      background-size: 100% 100%;
+      .activity-name {
+        .activity-name-text {
+          color: @color-999999;
+        }
+        .activity-money {
+          color: @color-999999;
+        }
+      }
+      .activity-detail {
+        margin-top: 26rpx;
+        .detail-wrap {
+          right: 0;
+          .detail-cont {
+            margin-top: 0rpx;
+          }
+          .look-activity {
+            color: @color-999999;
+            border: 0.5rpx solid @color-999999;
+            margin-top: 15rpx;
+            .look-btn-text {
+              &::after {
+                background: url('@{base64-look-activity-disabled}') 0 0
+                  no-repeat;
+                background-size: 100% 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .activity-status-text {
+      display: block;
+      height: 30rpx;
+      line-height: 30rpx;
+      font-size: 30rpx;
+      text-align: left;
+      color: @color-ffffff;
+    }
+    .activity-name {
+      margin-top: 28rpx;
+      height: 52rpx;
+      .activity-name-text {
+        height: 52rpx;
+        line-height: 52rpx;
+        font-size: 32rpx;
+        float: left;
+        width: 430rpx;
+        .text-overflow();
+      }
+      .activity-money {
+        float: right;
+        .money-symbol {
+          height: 20rpx;
+          font-size: 20rpx;
+        }
+        .money-number {
+          height: 53rpx;
+          line-height: 52rpx;
+          font-size: 52rpx;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .activity-detail {
+      @detailHeight: 160rpx;
+      height: @detailHeight;
+      margin-top: 46rpx;
+      position: relative;
+      .detail-wrap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 180rpx;
+        // height: @detailHeight - 20rpx;
+        text-align: left;
+        .detail-cont {
+          display: inline-block;
+          width: 100%;
+          // margin-top: 16rpx;
+          .detail-text-name {
+            display: inline-block;
+            width: 100%;
+            height: 28rpx;
+            font-size: 28rpx;
+            line-height: 28rpx;
+            color: @color-333333;
+          }
+          .detail-text-date {
+            display: inline-block;
+            width: 100%;
+            height: 24rpx;
+            font-size: 24rpx;
+            line-height: 24rpx;
+            color: @color-999999;
+            margin-top: -5rpx;
+          }
+        }
+        .look-activity {
+          width: 160rpx;
+          height: 46rpx;
+          text-align: center;
+          line-height: 46rpx;
+          font-size: 24rpx;
+          color: @brand-primary;
+          border: 0.5rpx solid @brand-primary;
+          margin-top: 30rpx;
+          .border-radius(23rpx);
+          .look-btn-text {
+            display: inline-block;
+            position: relative;
+            &::after {
+              content: '';
+              display: inline-block;
+              width: 8rpx;
+              height: 14rpx;
+              background: url('@{base64-look-activity}') 0 0 no-repeat;
+              background-size: 100% 100%;
+              position: absolute;
+              top: 50%;
+              margin-top: -5rpx;
+              right: -14rpx;
+            }
+          }
+        }
+      }
+      .activity-disabled-status{
+        position: absolute;
+        top: 30rpx;
+        right: 20rpx;
+        margin-top:10rpx;
+        font-size:26rpx;
+      }
+      .activity-btn {
+        float: right;
+        width: 140rpx;
+        height: @detailHeight;
+        line-height: @detailHeight - 20rpx;
+        text-align: center;
+        font-size: 36rpx;
+        color: @color-ffffff;
+      }
+    }
+  }
+}
+.customized-popup-control {
+  &.popup-body-cont-slot {
+    .popup-tip-text {
+      margin: 0 40rpx;
+      .tip-text-message {
+        color: @color-333333;
+        font-size: 30rpx;
+        line-height: 50rpx;
+      }
+      .tip-text-remark {
+        color: @color-999999;
+        font-size: 24rpx;
+        line-height: 24rpx;
+        margin-top: 30rpx;
+        margin-bottom: 80rpx;
+      }
+    }
+  }
+}
+.refresh-btn {
+  width: 140rpx;
+  height: 160rpx;
+  background: url('@{base64-btn-unstarted}') 0 0 no-repeat;
+  background-size: 100% 100%;
+  position: fixed;
+  bottom: 30rpx;
+  left: 30rpx;
+  z-index: 10;
+  text-align: center;
+  line-height: 140rpx;
+  color: #fff;
+  font-size: 36rpx;
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-control-activity-wrap">
+    <repeat for="{{activityGameListInfos}}" key="index" index="index" item="item">
+      <view class="{{ 'control-activity-item ' + item.statusKey}}"
+        style="{{(item.status === 'ENABLE' || item.status === 'DISABLE') && (item.gameType === 'COUNT_NUM' || item.gameType === 'RED_PACK' || item.gameType === 'ANSWER_GAME') ? 'height: 340rpx;' : ''}}">
+        <text class="activity-status-text">{{item.statusText}}</text>
+        <view class="activity-name">
+          <text class="activity-name-text">{{item.activityName}}</text>
+          <view class="activity-money" wx:if="{{item.gameType !== 'COUNT_NUM' && item.gameType !== 'ANSWER_GAME'}}">
+            <text class="money-symbol">￥</text>
+            <text class="money-number">{{item.totalAmount}}</text>
+          </view>
+        </view>
+        <view class="activity-detail">
+          <view class="detail-wrap">
+            <text class="detail-cont">
+              <text class="detail-text-name">{{item.linkMan}}</text>
+              <text class="detail-text-date" wx:if="{{item.status === 'ENABLE'}}">开始时间：{{item.startTime}}</text>
+              <text class="detail-text-date" wx:if="{{item.status === 'ENABLE' && (item.gameType === 'COUNT_NUM' || item.gameType === 'ANSWER_GAME')}}">默认结束时间：{{item.endTime}}</text>
+              <text class="detail-text-date" wx:if="{{item.status === 'DISABLE'}}">开始时间：{{item.startTime || '未进行'}}</text>
+              <text class="detail-text-date" wx:if="{{item.status === 'DISABLE'}}">结束时间：{{item.endTime}}</text>
+              <!-- <text class="detail-text-date" wx:if="{{item.status === 'DISABLE' && item.gameType !== 'COUNT_NUM'}}">活动时间：{{item.startTime}} 至 {{item.endTime}}</text> -->
+              <!-- <text class="detail-text-date" wx:if="{{item.status === 'DISABLE' && item.gameType === 'COUNT_NUM'}}">开始时间：{{item.startTime || '未进行'}}</text>
+              <text class="detail-text-date" wx:if="{{item.status === 'DISABLE' && item.gameType === 'COUNT_NUM'}}">结束时间：{{item.endTime}}</text>
+              <text class="detail-text-date" wx:if="{{item.status === 'DISABLE' && item.gameType !== 'COUNT_NUM'}}">活动时间：{{item.startTime}} 至 {{item.endTime}}</text> -->
+            </text>
+            <view class="look-activity" @tap="lookActivity" data-item="{{item}}"><text class="look-btn-text">查看游戏</text></view>
+          </view>
+          <!-- <view class="activity-btn" wx:if="{{(item.status === 'ENABLE' || item.status === 'PAUSE')}}" data-item="{{item}}" @tap="activityHandle">{{item.status === 'ENABLE' ? '结束' : '开始'}}</view> -->
+          <view class="activity-btn" wx:if="{{(item.status === 'ENABLE' || item.status === 'PAUSE') && activityStart === 'YES'}}" data-item="{{item}}" @tap="activityHandle">{{item.status === 'ENABLE' ? '结束' : '开始'}}</view>
+          <!-- <view class="activity-disabled-status" wx:if="{{activityStart === 'NO'}}">等待活动开启</view> -->
+          <view class="activity-disabled-status" wx:if="{{activityStart === 'NO'}}">未在活动期限内</view>
+        </view>
+      </view>
+    </repeat>
+    <customized-popup customClass="customized-popup-control" />
+    <view class="refresh-btn" @tap="refreshFn">刷新</view>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { Tips, Utils, PATCH } from '@/utils'
+import { STATUS, LANG } from '@/configs'
+import CustomizedPopupComponent from '@/components/customized-popup-component/index'
+import { CommonsService } from '@/services'
+
+export default class IndexPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '活动'
+  }
+
+  // 组件
+  components = {
+    'customized-popup': CustomizedPopupComponent
+  }
+
+  // data
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    // 宴会厅ID
+    banquetId: null,
+    // 活动列表
+    activityGameListInfos: null,
+    // 当前操作活动项
+    activeItem: null,
+    // 控制失败提示
+    controlErrorTip: { message: '', remark: '' },
+    // 活动是否可以开始
+    activityStart: null,
+    // 宴席时间
+    banquetTime: ''
+  }
+
+  // 方法
+  methods = {
+    /**
+     * 活动操作
+     */
+    activityHandle(e) {
+      let dataItem = e.currentTarget.dataset.item || {}
+      this.activeItem = dataItem
+      let status = dataItem.status
+      // 刷新
+      this.bindAndGetActivity(() => {
+        if (this.activityStart === 'YES') {
+          if (status === 'PAUSE') {
+            let activityStatus = this.verifyActivity()
+            if (activityStatus !== false) {
+              this.$invoke('customized-popup', 'open', {
+                title: '提示',
+                message: '确定开始？',
+                remark: '活动开始后，用户可立即参与活动！',
+                onSure: () => {
+                  this.activityGameControl(1)
+                }
+              })
+            }
+          } else if (status === 'ENABLE') {
+            this.$invoke('customized-popup', 'open', {
+              title: '提示',
+              message: '确定结束？',
+              remark: '活动结束后，所有用户都不可参与!',
+              onSure: () => {
+                this.activityGameControl(0)
+              }
+            })
+          }
+        } else {
+          this.$invoke('customized-popup', 'open', {
+            title: '提示',
+            message: '活动已结束',
+            remark: '活动已结束，游戏不可开始!'
+          })
+        }
+      })
+    },
+    refreshFn() {
+      this.bindAndGetActivity()
+    },
+    lookActivity(e) {
+      let dataset = e.currentTarget.dataset.item
+      wx.navigateTo({
+        // url:
+        //   '../subpackages/MarketActivityShake/pages/receive-list?activity=' +
+        //   dataset.activityId +
+        //   '-_-' +
+        //   dataset.statusText
+        url:
+          '../subpackages/MarketActivityShake/pages/receive-list?activityId=' + dataset.activityId + '&statusText=' + dataset.statusText + '&gameType=' + dataset.gameType
+      })
+    }
+  }
+
+  /**
+   * 验证活动是否可以开始或结束
+   */
+  verifyActivity() {
+    let activityGameListInfos = this.activityGameListInfos
+    // 正在进行的活动
+    let enableActive = null
+    Utils.forEach(activityGameListInfos, item => {
+      let status = item.status
+      if (status === 'ENABLE') {
+        enableActive = item
+        return 'break'
+      }
+    })
+    if (enableActive) {
+      // 有活动正在进行
+      this.$invoke('customized-popup', 'open', {
+        title: '提示',
+        message:
+          '活动“' +
+          enableActive.activityName +
+          '”还未结束，结束后才可以开始新活动',
+        remark: '请结束活动后再开始新的活动哦~'
+      })
+      return false
+    } else {
+      if (this.activityStart !== 'YES') {
+        this.$invoke('customized-popup', 'open', {
+          title: '提示',
+          message: '只能在宴席当天开始活动哦~',
+          remark: '宴席时间：' + this.banquetTime
+        })
+        return false
+      }
+    }
+  }
+
+  /**
+   * 活动控制
+   */
+  activityGameControl(status) {
+    CommonsService.activityGameControl({
+      data: {
+        status,
+        // 1：activityId    变更为  activityGameId （2019年6月10日14:53:39）
+        // activityId: this.activeItem.activityId
+        activityGameId: this.activeItem.activityId
+      }
+    })
+      .then(res => {
+        let data = res.data || {}
+        // 活动开始提示
+        let apiActivityStartEnum = data.apiActivityStartEnum
+        // 宴会时间
+        let senceTime = data.senceTime
+        // 活动开始提示消息
+        let apiActivityStartText = data.apiActivityStartText
+        if (apiActivityStartEnum === 'YES') {
+          this.$invoke('customized-popup', 'open', {
+            title: '提示',
+            message: apiActivityStartText,
+            remark: '请结束活动后再开始新的活动哦~'
+          })
+        } else if (apiActivityStartEnum === 'NO') {
+          this.$invoke('customized-popup', 'open', {
+            title: '提示',
+            message: apiActivityStartText,
+            remark: '宴席时间：' + senceTime
+          })
+        } else {
+          // 刷新数据
+          this.bindAndGetActivity()
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 活动列表
+   */
+  bindAndGetActivity(callBack) {
+    CommonsService.activityBinding({
+      data: {
+        activityId: this.banquetId,
+        userNo: this.userNo
+      }
+    })
+      .then(res => {
+        let data = res.data || {}
+        // activityGameListInfos  变更为  activityGameInfos（2019年6月10日15:02:32）
+        // let activityGameListInfos = data.activityGameListInfos || []
+        let activityGameListInfos = data.activityGameInfos || []
+        Utils.forEach(activityGameListInfos, item => {
+          item.statusText = (LANG.activeStatus[item.status] || {}).text
+          item.statusKey = (LANG.activeStatus[item.status] || {}).key
+        })
+        this.activityStart = data.activityStart
+        this.banquetTime = data.banquetTime
+        this.activityGameListInfos = activityGameListInfos
+        this.$apply()
+        if (callBack) {
+          callBack()
+        }
+      }).catch(err => {
+        // // 模拟数据测试
+        // this.activityGameListInfos = [
+        //   {
+        //     gameType: 'RED_PACK',
+        //     activityId: '',
+        //     startTime: '2019年7月25日',
+        //     status: 'DISABLE',
+        //     statusKey: 'disable',
+        //     statusText: '已结束',
+        //     activityGameName: 'aaaa',
+        //     activityName: '抢红包抢红包抢红包抢红包抢红包抢红包抢红包抢红包抢红包',
+        //     endTime: '2019年7月25日',
+        //     linkMan: 'aaa&bbb',
+        //     totalAmount: '100.00'
+        //   }
+        // ]
+        // this.activityStart = 'YES'
+        // this.$apply()
+        this.$invoke('customized-popup', 'open', {
+          title: '提示',
+          message: err.message,
+          onClose: () => {
+            setTimeout(() => {
+              // wx.navigateBack({ delta: 1 })
+              wx.reLaunch({ url: '/pages/control-confirm' })
+            }, 200)
+          }
+        })
+      })
+  }
+
+  // 加载完成
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    this.banquetId = (options || {}).banquetId
+    this.userNo = wepy.getStorageSync(STATUS.USER_NO)
+
+    // 绑定并获取活动列表
+    this.bindAndGetActivity()
+  }
+}
+</script>

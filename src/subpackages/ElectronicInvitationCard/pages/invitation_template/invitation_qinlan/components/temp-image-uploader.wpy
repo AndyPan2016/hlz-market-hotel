@@ -1,0 +1,147 @@
+<style lang="less">
+.component-temp-image-uploader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 50%;
+  height: 100rpx;
+  width: 100rpx;
+  margin-left: -50rpx;
+  margin-top: -50rpx;
+  z-index: 100;
+  .img_ico {
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>
+<template>
+  <view
+    class="component-temp-image-uploader"
+    wx:if="{{myShown}}"
+  >
+    <image
+      class="img_ico"
+      src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png"
+      @tap.stop="imgUpLoad"
+    />
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class TempImageUploader extends wepy.component {
+  props = {
+    rate: {
+      type: String,
+      default: '1.0'
+    },
+    myId: String,
+    myShown: {
+      type: Boolean,
+      default: true
+    },
+    mySrc: {
+      type: String,
+      default: '',
+      twoWay: true
+    }
+  }
+  data = {
+    isChangeLifecycleFromMine: false // 是否是因为点击事件触发生命周期改变
+  }
+  events = {
+    onPageShow: function() {
+      // console.info('onShow')
+      this.myShow()
+    },
+    onPageHide: function() {
+      // console.info('onHide')
+      this.myHide()
+    },
+    notifyDatasetChanged: $event => {
+      this.$apply()
+    }
+  }
+  methods = {
+    imgUpLoad(e) {
+      // console.info('imgUpLoad')
+      this.navToUpload()
+    },
+    getSrc() {
+      return this.mySrc || ''
+    }
+  }
+  onLoad() {
+    // console.info('onLoad:' + this.myId + ',' + this.myKey + ',' + this.myKeys)
+    this.myLoad()
+  }
+  onUnload() {
+    // console.info('onUnload')
+    this.myUnload()
+  }
+  myLoad() {
+    this.clearnStoreage('screenShotImg')
+    this.isChangeLifecycleFromMine = false
+  }
+  myUnload() {
+    this.clearnStoreage('screenShotImg')
+    this.isChangeLifecycleFromMine = false
+  }
+  myShow() {
+    // 如果不是因为自己点击事件触发生命周期改变, 则不处理缓存图片
+    if (!this.isChangeLifecycleFromMine) {
+      return
+    }
+    this.getImageFromStorage()
+  }
+  myHide() {
+    this.clearnStoreage('screenShotImg')
+  }
+  /**
+   * 跳转到上传图片页面
+   */
+  navToUpload() {
+    this.isChangeLifecycleFromMine = true
+    // console.info('navToUpload()' + this.rate)
+    let rate = this.rate || '1.0'
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        // Tips.loading()
+        setTimeout(() => {
+          wx.navigateTo({
+            url: '../../img-upload?url=' + res.tempFilePaths + '&rate=' + rate
+          })
+        }, 500)
+      }
+    })
+  }
+  /**
+   * 从缓存中获取图片
+   */
+  getImageFromStorage() {
+    let src = wx.getStorageSync('screenShotImg')
+    this.clearnStoreage('screenShotImg')
+
+    if (src) {
+      this.isChangeLifecycleFromMine = false
+
+      this.mySrc = src
+      this.$apply()
+
+      let id = this.myId
+      this.$emit('onImageUploaded', { id, src })
+    }
+  }
+  /**
+   * 清除缓存
+   */
+  clearnStoreage(key) {
+    if (wx.getStorageSync(key)) {
+      wx.removeStorageSync(key)
+    }
+  }
+}
+</script>

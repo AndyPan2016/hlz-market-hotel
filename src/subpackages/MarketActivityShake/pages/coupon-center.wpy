@@ -1,0 +1,804 @@
+<!--
+  优惠券组件
+  @Author: AndyPan
+  @CreateDate: 2019年4月2日16:32:23
+  @LastUpdateDate: 2019年4月2日16:32:26
+  @Remarks: 备注
+-->
+
+<!-- 组件样式 -->
+<style lang="less">
+@import '../assets/less/mixin.less';
+@import '../assets/less/_variables.less';
+.coupon-center-wrap {
+  // width: 100%;
+  position: absolute;
+  top: 26rpx;
+  bottom: 0;
+  left: 26rpx;
+  right: 26rpx;
+  // padding: 0 26rpx;
+  overflow: auto;
+  background: #fafafa;
+}
+.coupon-list-wrap {
+  .clearfix();
+  overflow: hidden;
+  height: auto;
+
+  .list-wrap {
+    .clearfix();
+    width: 110%;
+    margin-left: -10rpx;
+  }
+  .list-wrap-new {
+    margin: 0rpx auto;
+  }
+  .coupon-list-item {
+    // float: left;
+    // width: 340rpx;
+    height: 246rpx;
+    position: relative;
+    margin: 0 10rpx;
+    margin-bottom: 20rpx;
+    // display: none;
+    background: url('@{resourcePath}MarketActivityShake/assets/images/background/bg-coupons-new.png') 0 0 no-repeat;
+    background-size: 100% 100%;
+    
+    &.received {
+      background: url('@{resourcePath}MarketActivityShake/assets/images/background/bg-coupons-new-received.png') 0 0 no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .coupon-item-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .look-more {
+      position: absolute;
+      width: 100%;
+      height: 30rpx;
+      top: 90rpx;
+      text-align: center;
+      font-size: 32rpx;
+      color: #b36a2d;
+    }
+    .coupon-item-cont {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+    .item-cont-main {
+      position: absolute;
+      top: 14rpx;
+      left: 10rpx;
+      right: 230rpx;
+      bottom: 14rpx;
+      overflow: hidden;
+      .item-type {
+        position: absolute;
+        z-index: 11;
+        top: 6px;
+        left: -60rpx;
+        background: #ffd791;
+        color: #fff;
+        font-size: 20rpx;
+        display: inline-block;
+        width: 180rpx;
+        padding: 5rpx 0;
+        text-align: center;
+        .rotate(-45deg);
+        .opacity(0.7);
+      }
+      .item-title {
+        position: relative;
+        height: 32rpx;
+        margin-top: 24rpx;
+        margin-left: 15rpx;
+        text-align: center;
+        color: #b36a2d;
+        font-size: 24rpx;
+        .item-title-line {
+          display: inline-block;
+          width: 144rpx;
+          height: 2rpx;
+          border-bottom: 2rpx solid #b36a2d;
+          position: absolute;
+          top: 50%;
+          margin-top: -1rpx;
+          left: 50%;
+          margin-left: -72rpx;
+        }
+        .item-title-text {
+          position: relative;
+          z-index: 10;
+          background: #fff;
+          padding: 0 10rpx;
+        }
+      }
+      .item-middle {
+        margin-top: 40rpx;
+        // height: 70rpx;
+        text-align: left;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 40rpx;
+        padding-right: 30rpx;
+        .text-overflow();
+        &.moneys{
+          margin-top: 20rpx;
+          .middle-wrap {
+            .item-value {
+              &.hotel {
+                margin: 0;
+              }
+            }
+          }
+        }
+        .middle-wrap {
+          width: 100%;
+          // background: #ccc;
+        }
+        .item-value {
+          font-size: 52rpx;
+          color: #ff2e28;
+          font-weight: bold;
+          // float: left;
+          // width: 100%;
+          .unit {
+            font-size: 22rpx;
+            // margin-left: -10rpx;
+          }
+          &.hotel, &.describes{
+            font-size: 24rpx;
+            color: #B36A2D;
+            font-weight: normal;
+            .text-overflow();
+          }
+          &.hotel {
+            margin-bottom: 18rpx;
+          }
+          &.describes {
+            margin-top: 10rpx;
+          }
+          &.text {
+            font-weight: bold;
+            font-size: 30rpx;
+            // width: 80%;
+            display: inline-block;
+            // height: 70rpx;
+            // line-height: 70rpx;
+            // overflow: hidden;
+            .text-overflow();
+          }
+          &.money {
+            height: 70rpx;
+            font-weight: bold;
+            margin: inherit;
+            margin-right: -15rpx;
+            .text-overflow();
+          }
+          &.name {
+            font-size: 24rpx;
+            color: #B36A2D;
+            font-weight: normal;
+            .text-overflow();
+          }
+        }
+        .item-remark {
+          font-size: 20rpx;
+          color: #b36a2d;
+          margin-top: -10rpx;
+          display: inline-block;
+          font-weight: normal;
+        }
+      }
+      .item-validity {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        font-size: 20rpx;
+        color: #b36a2d;
+        margin-top: 14rpx;
+      }
+    }
+    
+    .coupon-item-handle{
+      position: absolute;
+      right: 50rpx;
+      top: 50rpx;
+      bottom: 50rpx;
+      width: 150rpx;
+      text-align: center;
+      &.auth-phone {
+        right: 0rpx;
+        top: 0rpx;
+        bottom: 0rpx;
+        width: 100%;
+      }
+      &.received{
+        .btn-receive {
+          // background: #ccc;
+          // opacity: .5;
+        }
+      }
+      .item-validity {
+        // display: inline-block;
+        width: 130rpx;
+        text-align: center;
+        font-size: 20rpx;
+        color: #b36a2d;
+        line-height: 40rpx;
+        float: right;
+        margin-right: 50rpx;
+        margin-top: 40rpx;
+      }
+      .btn-receive {
+        // display: inline-block;
+        width: 130rpx;
+        height: 40rpx;
+        text-align: center;
+        font-size: 24rpx;
+        color: #FFF;
+        line-height: 40rpx;
+        .vertical(#FFB68C, #FF2434);
+        border-radius: 20rpx;
+        float: right;
+        margin-right: 50rpx;
+        margin-top: 40rpx;
+        position:absolute;
+        right:0;
+        top:100rpx;
+        font-weight: bold;
+      }
+    }
+    .btn-receive-wrap {
+      float: right;
+      height: 100%;
+      width: 30rpx;
+      overflow: hidden;
+      margin-right: 30rpx;
+      color: #ff2e28;
+      font-size: 22rpx;
+      position: relative;
+      padding-top: 50rpx;
+
+      &.auth-phone {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        .btn-receive {
+          float: right;
+          height: auto;
+          width: 30rpx;
+          margin-right: 30rpx;
+          margin-top: 50rpx;
+          .opacity(1);
+          position: static;
+        }
+      }
+    }
+    .btn-receive-phone {
+      float: right;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      .opacity(0);
+      z-index: 100;
+    }
+  }
+  .coupon-null {
+    width: 382rpx;
+    height: 206rpx;
+    position: absolute;
+    top: 256rpx;
+    left: 50%;
+    margin-left: -191rpx;
+    .coupon-null-bg {
+      width: 100%;
+      height: 100%;
+    }
+    .coupon-null-text {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      color: #666666;
+      font-size: 30rpx;
+    }
+  }
+}
+.customized-popup-control {
+  &.popup-body-cont-slot {
+    .popup-tip-text {
+      margin: 0 40rpx;
+      .tip-text-message {
+        color: @color-333333;
+        font-size: 30rpx;
+        line-height: 50rpx;
+      }
+      .tip-text-remark {
+        color: @color-999999;
+        font-size: 24rpx;
+        line-height: 24rpx;
+        margin-top: 30rpx;
+        margin-bottom: 80rpx;
+      }
+    }
+  }
+}
+</style>
+
+<!-- 组件模板 -->
+<template>
+  <pull-down :onPullDownRefresh="refreshPage">
+    <view slot="pull-down-content" class="coupon-center-wrap" id="j-pull-down-scroller">
+      <view class="coupon-list-wrap">
+        <view class="coupon-null" wx:if="{{(!coupons || !coupons.length) && !isLoading}}">
+          <image class="coupon-null-bg" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-coupon-null.png' : ''}}" lazy-load="true" />
+          <text class="coupon-null-text">暂无优惠券</text>
+        </view>
+        <view class="list-wrap-new" wx:else>
+          <repeat for="{{coupons}}" key="index" index="index" item="item">
+            <view class="coupon-list-item" :class="{received: item.isReceived}">
+              <view class="coupon-item-cont">
+                <view class="item-cont-main">
+                  <!-- <text class="item-type" wx:if="{{item.couponConsumeType && item.isShowType}}">{{item.couponConsumeType}}</text> -->
+                  <view class="item-middle" :class="{moneys: item.money || item.discount}">
+                    <view class="middle-wrap">
+                      <view class="item-value hotel" wx:if="{{item.hotelName}}">{{item.hotelName}}</view>
+                      <view class="item-value" wx:if="{{item.discount}}">{{item.discount}}
+                        <text class="unit">{{item.unit}}</text>
+                        <view class="item-remark" wx:if="{{item.moneyRemark}}" style="margin-left: 10rpx;">
+                          {{item.moneyRemark}}
+                        </view>
+                      </view>
+                      <view class="item-value text" wx:if="{{item.text}}">{{item.text}}</view>
+                      <view class="item-value money" wx:if="{{item.money}}"><text class="unit">{{item.unit}}</text>
+                        {{item.money}}
+                        <view class="item-remark" wx:if="{{item.moneyRemark}}">
+                          {{item.moneyRemark}}
+                        </view>
+                      </view>
+                      <view class="item-value name" wx:if="{{item.name}}">{{item.name}}</view>
+                      <view class="item-value describes" wx:if="{{item.describes}}">{{item.describes}}</view>
+                    </view>
+                  </view>
+                </view>
+                <!-- 已领取(不可领取) -->
+                <view class="coupon-item-handle auth-phone received" wx:if="{{item.isReceived}}">
+                  <view class="item-validity">
+                    <view>有效期至</view>
+                    <view>{{item.validity}}</view>
+                  </view>
+                </view>
+                <!-- 未领取，已授权手机号(不需授权) -->
+                <view class="coupon-item-handle auth-phone" wx:if="{{!item.isReceived && isAuthPhone}}" @tap="tapCouponItem" data-item="{{item}}">
+                  <view class="item-validity">
+                    <view>有效期至</view>
+                    <view>{{item.validity}}</view>
+                  </view>
+                  <text class="btn-receive">立即领取</text>
+                </view>
+                <!-- 未领取，未授权手机号(需要授权) -->
+                <view class="coupon-item-handle auth-phone" wx:if="{{!item.isReceived && !isAuthPhone}}">
+                  <view class="item-validity">
+                    <view>有效期至</view>
+                    <view>{{item.validity}}</view>
+                  </view>
+                  <text class="btn-receive">立即领取</text>
+                </view>
+                <button class="btn-receive-phone" wx:if="{{!item.isReceived && !isAuthPhone}}" data-item="{{item}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button>
+              </view>
+            </view>
+          </repeat>
+          <view class="coupon-list-item" wx:if="{{isShowMore}}">
+            <image class="coupon-item-bg" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-null.png' : ''}}" />
+            <text class="look-more">查看更多 ></text>
+          </view>
+        </view>
+      </view>
+      <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType.sync="authorizeType" :onCloseAuthorize="onCloseAuthorizeFn" />
+      <customized-popup customClass="customized-popup-control" />
+    </view>
+  </pull-down>
+</template>
+
+<!-- 组件业务逻辑 -->
+<script>
+import wepy from 'wepy'
+import { LANG, STATUS, RESOURCE_PATCH } from '../configs'
+import { Utils, Tips, WXBizDataCrypt, PATCH } from '@/utils'
+import {
+  CouponCenterService,
+  AuthorizeService,
+  MemberInfoService
+} from '../services'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import CustomizedPopupComponent from '@/components/customized-popup-component/index'
+import PullDownComponent from '@/components/pull-down-component/index'
+
+export default class CouponCenterPages extends wepy.page {
+  config = {
+    navigationBarTitleText: '领券中心'
+  }
+  components = {
+    // 下拉刷新
+    'pull-down': PullDownComponent,
+    // 用户认证授权组件
+    'user-authorize': UserAuthorizeComponent,
+    'customized-popup': CustomizedPopupComponent
+  }
+  // 模板(绑定)数据
+  data = {
+    resourcePath: RESOURCE_PATCH,
+    isShowMore: false,
+    coupons: [],
+    isAuthPhone: false,
+    isLoading: true,
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    hotelId: null,
+    activityGameId: '',
+    activityId: '',
+    eventObj: {},
+    hotelIndex: '',
+    isAddUnion: null
+  }
+  // 用于监听组件之间的通信与交互事件的事件处理函数集合
+  events = {}
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    this.hotelId = options.hotelId
+    let params = (options.activityGameId || '').split('_')
+    this.activityGameId = params[0]
+    this.activityId = params[1] || options.activityId
+    this.hotelIndex = options.hotelIndex
+    this.isAddUnion = options.isAddUnion
+
+    // this.isAuthPhone = wepy.getStorageSync(STATUS.IS_AUTH_PHONE)
+    this.$apply()
+    this.refreshPage()
+    // let userNo =
+    //   wepy.getStorageSync(STATUS.USER_NO) ||
+    //   (wepy.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo
+    // if (userNo) {
+    //   // this.couponList()
+    //   this.getMemberInfo()
+    // } else {
+    //   this.$invoke('user-authorize', 'authorizeActivation')
+    // }
+  }
+
+  /**
+   * 下拉刷新
+   */
+  refreshPage() {
+    let userNo =
+      wepy.getStorageSync(STATUS.USER_NO) ||
+      (wepy.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo
+    if (userNo) {
+      this.getMemberInfo()
+    } else {
+      this.$invoke('user-authorize', 'authorizeActivation')
+    }
+  }
+
+  onUnload() {}
+
+  /**
+   * 获取成员信息
+   * @remark: 如果手机号码存在，则设置缓存，不需要再验证手机号码授权
+   */
+  getMemberInfo() {
+    let that = this
+    let userNo =
+      wx.getStorageSync(STATUS.USER_NO) ||
+      (wx.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo
+    MemberInfoService.memberInfo({
+      data: {
+        userNo: userNo
+      }
+    })
+      .then(res => {
+        let memberInfo = res.memberInfo || {}
+        let mobileNo = memberInfo.mobileNo || ''
+        if (mobileNo) {
+          wx.setStorageSync(STATUS.IS_AUTH_PHONE, true)
+          that.isAuthPhone = true
+          that.$apply()
+        } else {
+          wx.setStorageSync(STATUS.IS_AUTH_PHONE, false)
+          that.isAuthPhone = false
+          that.$apply()
+        }
+        wx.setStorageSync(STATUS.PHONE_NUMBER, mobileNo)
+        that.couponList()
+      })
+      .catch(error => {
+        Tips.error(error.message)
+      })
+  }
+
+  /**
+   * 所有授权完成
+   */
+  onAuthorizeAllFn(data) {
+    // this.couponList()
+    if (data.phoneNumber) {
+      this.toBindMobile(data.phoneNumber, this.eventObj)
+    } else {
+      this.getMemberInfo()
+    }
+  }
+
+  /**
+   * 关闭授权
+   */
+  onCloseAuthorizeFn() {
+    wx.navigateBack({ delta: 1 })
+  }
+
+  /**
+   * (授权)获取手机号
+   */
+  getPhoneNumber(e) {
+    if (e.detail.errMsg !== 'getPhoneNumber:ok') {
+      Tips.error('领取失败')
+      return false
+    }
+    // 领券前，先获取手机号
+    let encryptedData = e.detail.encryptedData
+    let phoneNumber = wx.getStorageSync(STATUS.PHONE_NUMBER) || this.decryptPhoneNumber(encryptedData)
+    if (phoneNumber) {
+      this.toBindMobile(phoneNumber, e)
+    } else {
+      Tips.error('微信登录已过期，请重新操作')
+      this.eventObj = e
+      this.authorizeType = ['WXLogin', 'AccountInfo', 'UserInfo', 'PhoneNumber']
+      this.$apply()
+      this.$invoke('user-authorize', 'authorizeActivation')
+    }
+  }
+
+  toBindMobile(mobile, e) {
+    let openId = wepy.getStorageSync(STATUS.OPEN_ID)
+    let activityId = this.activityId || wepy.getStorageSync(STATUS.ACTIVITY_ID + 'Relationship')
+    let params = {
+      activityId: activityId,
+      mobileNo: mobile,
+      openId: openId
+    }
+    if (this.hotelId) {
+      params.hotelId = this.hotelId
+    }
+
+    AuthorizeService.wechatBindingMobile({
+      data: params
+    })
+      .then(res => {
+        // 设置已经授权手机号
+        wepy.setStorageSync(STATUS.IS_AUTH_PHONE, true)
+        this.isAuthPhone = true
+        this.$apply()
+        this.tapCouponItem(e)
+      })
+      .catch(error => {
+        Tips.error(error.message)
+      })
+  }
+
+  /**
+   * 解密手机号
+   */
+  decryptPhoneNumber(encryptedData) {
+    let sessionKey = wepy.getStorageSync(STATUS.SESSION_KEY)
+    let iv = wepy.getStorageSync(STATUS.ENCRYPT_IV)
+
+    let phoneNumber = WXBizDataCrypt.wechatDecrypt(
+      encryptedData,
+      sessionKey,
+      iv
+    )
+    return phoneNumber
+  }
+
+  // 卡券列表
+  async couponList() {
+    let userNo =
+      wepy.getStorageSync(STATUS.USER_NO) ||
+      (wepy.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo
+    let activityId =
+      this.activityId ||
+      wepy.getStorageSync(STATUS.ACTIVITY_ID + 'Relationship')
+
+    let params = {
+      // 会员编码
+      userNo: userNo,
+      // 分页页号
+      start: this.start,
+      // 分页大小
+      limit: this.limit
+    }
+    if (this.hotelIndex) {
+      if (this.hotelId) {
+        params['hotelId'] = this.hotelId
+      } else if (activityId) {
+        params['activityId'] = activityId
+      }
+    } else {
+      if (activityId) {
+        params['activityId'] = activityId
+      } else if (this.hotelId) {
+        params['hotelId'] = this.hotelId
+      }
+    }
+
+    let [error, res] = await Utils.promiseTo(
+      CouponCenterService.hotelTicketList({
+        data: params
+      })
+    )
+    this.isLoading = false
+    if (error) {
+      Tips.error(error.message)
+    } else {
+      if (res.success) {
+        let totelTicketDtoList = res.totelTicketDtoList
+        let coupons = Utils.forEach(totelTicketDtoList, (item, key) => {
+          if (this.limit) {
+            if (key >= this.limit) {
+              return 'break'
+            }
+          }
+          let isShowType = item.isShowType.toLowerCase()
+          let isShowTypeStatus = false
+          if (isShowType === 'yes') {
+            isShowTypeStatus = true
+          }
+          let unitPosition = item.unitPosition.toLowerCase()
+          let result = {
+            // 卡券ID
+            id: item.ticketId,
+            // 卡券类型
+            // couponType: (LANG.couponType[item.activityClass] || {}).text,
+            // 卡券消费类型
+            couponConsumeType:
+              (LANG.couponConsumeType[item.type] || {}).text || '',
+            // 有效期
+            validity: (item.overdueTime || '-').split(' ')[0],
+            // 剩余数量
+            surplusNum: item.surplusNum,
+            // 是否领取
+            isReceived: item.receive,
+            // 是否显示卡券消费类型
+            isShowType: isShowTypeStatus,
+            // 单位
+            unit: item.unit,
+            // 单位位置
+            unitPosition: unitPosition,
+            hotelName: item.hotelName,
+            describes: item.describes
+          }
+
+          if (unitPosition === 'after') {
+            if (isShowTypeStatus) {
+              result['discount'] = parseFloat(item.dataOneText)
+              result['name'] = item.name
+            } else {
+              let dataOneText = item.dataOneText || ''
+              result['text'] =
+                dataOneText.length > 8
+                  ? dataOneText.substring(0, 8)
+                  : dataOneText
+            }
+          } else {
+            if (isShowTypeStatus) {
+              result['money'] = parseInt(item.dataOneText || 0)
+              result['name'] = item.name
+            } else {
+              let dataOneText = item.dataOneText || ''
+              result['text'] =
+                dataOneText.length > 8
+                  ? dataOneText.substring(0, 8)
+                  : dataOneText
+            }
+          }
+          result['moneyRemark'] = item.dataTwoText || ''
+
+          return result
+        })
+        this.coupons = coupons
+      } else {
+        Tips.error(res.message)
+      }
+    }
+    this.$apply()
+  }
+
+  /**
+   * 更新卡券领取状态
+   */
+  renderDataReceived(item) {
+    Utils.forEach(this.coupons, coupon => {
+      if (coupon.id === item.id) {
+        coupon.isReceived = true
+        return 'break'
+      }
+    })
+    this.$apply()
+  }
+
+  /**
+   * 领取卡券
+   */
+  tapCouponItem(e) {
+    let couponItem = e.currentTarget.dataset.item
+    // 未领取的券，执行领取操作
+    if (!couponItem.isReceived) {
+      let userNo =
+        wepy.getStorageSync(STATUS.USER_NO) ||
+        (wepy.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo
+      // let activityId = wepy.getStorageSync(STATUS.ACTIVITY_ID + 'Relationship')
+      let params = {
+        // 卡券ID
+        ticketId: couponItem.id,
+        // 活动ID
+        // activityId: activityId,
+        // 会员编码
+        userNo: userNo
+      }
+      if (this.activityId) {
+        params.activityId = this.activityId
+      } else if (this.hotelId) {
+        params.hotelId = this.hotelId
+      } else if (this.activityGameId) {
+        params.activityGameId = this.activityGameId
+      }
+      // else {
+      //   if (this.activityId) {
+      //     params.activityId = this.activityId
+      //   } else if (this.activityGameId) {
+      //     params.activityGameId = this.activityGameId
+      //   }
+      // }
+      // if (this.isAddUnion && (this.isAddUnion === true || this.isAddUnion === 'true')) {
+      // 需要引流，加联盟ID
+      if (this.activityId) {
+        let unionID = wx.getStorageSync(STATUS.UNIONIDS + this.activityId)
+        if (unionID) {
+          // 来源用户id(联盟ID)
+          params.sourceMemberCustomerId = unionID
+        }
+      }
+      // }
+      // 绑定参与用户关系
+      CouponCenterService.receiveHotelTicket({
+        data: params
+      })
+        .then(res => {
+          // this.renderDataReceived(couponItem)
+          this.couponList()
+          Tips.success('领取成功')
+        })
+        .catch(error => {
+          // this.couponList()
+          // Tips.error(error.message)
+          this.$invoke('customized-popup', 'open', {
+            title: '提示',
+            message: error.message,
+            onSure: () => {
+              this.couponList()
+            }
+          })
+        })
+    }
+  }
+}
+</script>

@@ -1,0 +1,337 @@
+<!--
+  数钱排行榜页面
+  @Author: AndyPan
+  @CreateDate: 2019年7月9日11:04:09
+  @LastUpdateDate: 2019年7月9日11:04:14
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../../assets/less/mixin.less';
+
+.page-ranking-list {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #FFF1E9;
+
+  .ranking-head{
+      height: 202rpx;
+      background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/bg-rank-head.png') 0 0 no-repeat;
+      background-size: 100% 100%;
+      padding-top: 48rpx;
+      position: relative;
+      z-index: 10;
+
+      .ranking-head-cont{
+          width: 720rpx;
+          height: 272rpx;
+          margin: 0 auto;
+          background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/bg-rank-cont.png') 0 0 no-repeat;
+          background-size: 100% 100%;
+          position: relative;
+          .my-thumb{
+              width: 110rpx;
+              height: 110rpx;
+              border: 8rpx solid #FFD053;
+              border-radius: 50%;
+              position: absolute;
+              top: 70rpx;
+              left: 24rpx;
+          }
+          .ranking-head-detail{
+              position: absolute;
+              top: 84rpx;
+              left: 190rpx;
+              right: 180rpx;
+              .my-result{
+                  display: inline-block;
+                  width: 100%;
+                  color: #FFF;
+                  font-size: 30rpx;
+                  text-align: left;
+                  line-height: 30rpx;
+                  .text-overflow();
+              }
+              .my-beat{
+                  display: block;
+                  .text-overflow();
+                  height: 46rpx;
+                  line-height: 46rpx;
+                  margin-left: -20rpx;
+                  padding: 0 30rpx;
+                  .horizontal(#FFE98B, rgba(255, 233, 139, 0));
+                  border-radius: 22rpx;
+                  color: #BB1A11;
+                  text-align: left;
+                  font-size: 30rpx;
+                  margin-top: 26rpx;
+              }
+          }
+          .my-ranking-value{
+              display: inline-block;
+              position: absolute;
+              width: 150rpx;
+              height: 30rpx;
+              top: 50rpx;
+              right: 30rpx;
+              line-height: 30rpx;
+              text-align: center;
+              font-size: 40rpx;
+              color: #FFF;
+              .text-shadow(0 0 10rpx #FD493F);
+          }
+          .my-ranking-text{
+              display: inline-block;
+              position: absolute;
+              width: 150rpx;
+              height: 30rpx;
+              top: 114rpx;
+              right: 30rpx;
+              line-height: 30rpx;
+              text-align: center;
+              font-size: 24rpx;
+              color: #FFF;
+          }
+      }
+  }
+  
+  .bottom-btn{
+      position: fixed;
+      bottom: 20rpx;
+      height: 110rpx;
+      left: 20rpx;
+      right: 20rpx;
+      .btn-refresh{
+          width: 50%;
+          height: 96rpx;
+          float: left;
+          .refresh-text{
+              display: block;
+              margin-right: 10rpx;
+              text-align: center;
+              height: 96rpx;
+              line-height: 96rpx;
+              color: #FFF;
+              border-radius: 48rpx;
+              .vertical(#FFA35F, #FF4546);
+              .box-shadow(0rpx 10rpx 20rpx rgba(249, 66, 68, 0.57));
+          }
+          &.disabled{
+            .refresh-text{
+                .vertical(#9D9D9D, #B8B8B8);
+                .box-shadow(0rpx 10rpx 20rpx rgba(184, 184, 184, 0.57));
+            }
+          }
+      }
+      .btn-gift{
+          width: 50%;
+          height: 96rpx;
+          float: right;
+          .gift-text{
+              display: block;
+              margin-left: 10rpx;
+              text-align: center;
+              height: 96rpx;
+              line-height: 96rpx;
+              color: #FFF;
+              border-radius: 48rpx;
+              .vertical(#FFA35F, #FF4546);
+              .box-shadow(0rpx 10rpx 20rpx rgba(249, 66, 68, 0.57));
+          }
+      }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <pull-down :onPullDownRefresh="refreshRank">
+    <view slot="pull-down-content" class="page-ranking-list" id="j-pull-down-scroller">
+      <view class="ranking-head">
+          <view class="ranking-head-cont">
+              <image src="{{userInfo.headImg}}" class="my-thumb" />
+              <view class="ranking-head-detail">
+                  <text class="my-result">我的成绩：{{userInfo.num * currency}}</text>
+                  <text class="my-beat">打败了{{userInfo.overstepRate}}%的对手</text>
+              </view>
+              <text class="my-ranking-value">{{userInfo.rank}}</text>
+              <text class="my-ranking-text">我的排名</text>
+          </view>
+      </view>
+      <counting-ranking-list :dataset.sync="rankingList" />
+      <!-- <view class="ranking-list">
+          <repeat for="{{rankingList}}" key="index" index="index" item="item">
+              <view class="ranking-list-item {{'ranking-' + index}}">
+                  <view class="item-ranking-number">
+                      <text class="ranking-number">{{index + 1}}</text>
+                  </view>
+                  <view class="item-user">
+                      <image src="{{item.headImg}}" class="user-thumb" />
+                      {{item.nickName}}
+                  </view>
+                  <text class="item-my-record">{{item.num * currency}}</text>
+              </view>
+          </repeat>
+      </view> -->
+      <view class="bottom-btn">
+          <!-- <view class="btn-refresh {{userInfo.finalResults === 'yes' ? 'disabled' : ''}}" @tap="refreshRank">
+              <text class="refresh-text">{{theButtonText}}</text>
+          </view> -->
+          <view class="btn-refresh" @tap="moreGame">
+            <text class="refresh-text">更多游戏</text>
+            <!-- <text class="refresh-text">{{theButtonText}}</text> -->
+          </view>
+          <view class="btn-gift" @tap="goToCoupon">
+              <text class="gift-text">商户礼包</text>
+          </view>
+      </view>
+      <video-guide :activityId.sync="activityId" />
+    </view>
+  </pull-down>
+</template>
+
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { PATCH, Tips } from '@/utils'
+import { STATUS } from '@/configs'
+import { CountingMoneyService } from '../../services'
+import CountingRankingListComponent from '../../components/counting-ranking-list'
+import PullDownComponent from '@/components/pull-down-component/index'
+import VideoGuideComponent from '@/components/video-guide/index'
+
+export default class RankListPages extends wepy.page {
+  config = {
+    navigationBarTitleText: '排行榜'
+  }
+
+  components = {
+    // 下拉刷新
+    'pull-down': PullDownComponent,
+    'counting-ranking-list': CountingRankingListComponent,
+    'video-guide': VideoGuideComponent
+  }
+
+  data = {
+    // 货币单数
+    currency: 100,
+    // 活动ID
+    activityId: '',
+    // 活动游戏ID
+    activityGameId: '',
+    theButtonText: '刷新排名',
+    // 用户编号
+    userNo: '',
+    // 用户信息
+    userInfo: {},
+    rankingList: [
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100},
+      // {num: 10, nickName: 100}
+    ]
+  }
+
+  methods = {
+    /**
+     * 刷新排名
+     */
+    refreshRank() {
+      if (this.userInfo.finalResults === 'no') {
+        // 游戏进行中，刷新排名数据
+        this.gameCountNumRanking()
+      } else {
+        // 更多游戏
+        wx.reLaunch({ url: '../shake-purpose?id=' + this.activityId })
+      }
+    },
+    /**
+     * 更多游戏
+     */
+    moreGame() {
+      // 更多游戏
+      // wx.reLaunch({ url: '../shake-purpose?id=' + this.activityId })
+      wx.reLaunch({
+        url: '../activity-transfer?activityId=' + this.activityId
+      })
+    },
+    /**
+     * 商户礼包
+     */
+    goToCoupon() {
+      wx.navigateTo({
+        url:
+          '../coupon-center?activityGameId=' + this.activityGameId + '_' + this.activityId + '&isAddUnion=true'
+      })
+    }
+  }
+  /**
+   * 下拉刷新排名
+   */
+  refreshRank() {
+    // 游戏进行中，刷新排名数据
+    this.gameCountNumRanking()
+  }
+
+  /**
+   * 计数游戏排行榜
+   */
+  gameCountNumRanking() {
+    let userNo = this.userNo
+    let activityGameId = this.activityGameId
+    if (userNo && activityGameId) {
+      CountingMoneyService.gameCountNumRanking({
+        data: {
+          userNo,
+          activityGameId
+        }
+      }).then(res => {
+        this.userInfo = res
+        this.rankingList = res.rankingInfos
+        if (this.userInfo.finalResults === 'yes') {
+          // Tips.msg('当前排名已是最终排名')
+          this.theButtonText = '更多游戏'
+        }
+        this.$apply()
+        // 如果不是最终结果，继续请求刷新数据
+        // if (res.finalResults === 'no') {
+        //   setTimeout(() => {
+        //     this.gameCountNumRanking()
+        //   }, 5000)
+        // }
+      }).catch(err => {
+        Tips.error(err)
+      })
+    }
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    options = options || {}
+    this.activityId = options.activityId
+    this.activityGameId = options.activityGameId
+    this.userNo = wx.getStorageSync(STATUS.USER_NO)
+    this.$apply()
+    // 计数游戏排行榜
+    this.gameCountNumRanking()
+    // wx.setKeepScreenOn({
+    //   keepScreenOn: true,
+    //   complete: () => {}
+    // })
+  }
+}
+</script>

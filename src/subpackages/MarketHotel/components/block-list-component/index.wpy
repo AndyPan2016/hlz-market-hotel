@@ -1,0 +1,300 @@
+<!--
+  块内容列表组件-视图模板
+  @Author: AndyPan
+  @version: 1.0.0
+  @CreateDate: 2019年4月29日10:46:33
+  @LastUpdateDate: 2019年4月29日10:47:00
+  @Remarks: 备注
+-->
+
+<!-- 组件样式 -->
+<style lang="less">
+@import '../../../../assets/less/mixin.less';
+
+.block-list-component {
+  .block-list-null,
+  .block-list-loading {
+    padding: 100rpx 0;
+    text-align: center;
+    font-size: 40rpx;
+    color: @color-dddddd;
+  }
+
+  .block-list-wrap {
+  }
+
+  .block-list-item {
+    // height: 160rpx;
+    margin-bottom: 40rpx;
+
+    &.activity-game{
+      position: relative;
+      .list-item-title{
+        color: #FF4C2F;
+        font-size: 28rpx;
+        margin-bottom: 30rpx;
+      }
+      .list-item-wrap{
+        margin-top: 220rpx;
+        .item-cont-wrap{
+          width: 350rpx;
+        }
+        .goto-hotel{
+          position: absolute;
+          height: 28rpx;
+          line-height: 28rpx;
+          display: inline-block;
+          color: #999;
+          top: 50%;
+          margin-top: -14rpx;
+          right: 74rpx;
+        }
+      }
+      .list-item-child{
+        position:absolute;
+        top: 42rpx;
+        left: 0;
+        right: 0;
+        .child-wrap{
+          border: none;
+          border-bottom:1rpx solid #e3e3e3;
+          .item-cont-wrap {
+            width: 480rpx;
+            .block-list-name {
+              font-size: 28rpx;
+              font-weight: bold;
+            }
+          }
+        }
+        .icon-logo-thumb{
+          display: none;
+        }
+      }
+    }
+
+    .list-item-title {
+      height: 24rpx;
+      font-size: 24rpx;
+      line-height: 24rpx;
+      text-align: left;
+      color: #666;
+      margin: 20rpx auto;
+    }
+
+    .list-item-wrap {
+      padding: 32rpx 30rpx;
+      background-color: #fff;
+      position: relative;
+      .clearfix();
+    }
+
+    .list-item-child {
+      padding: 0rpx 30rpx;
+      background-color: #fff;
+      position: relative;
+      .clearfix();
+      .child-wrap {
+        border-top: 1rpx solid #e3e3e3;
+        position: relative;
+        .clearfix();
+        padding: 32rpx 0rpx;
+
+        .item-cont-wrap {
+          .block-list-name {
+            font-size: 30rpx;
+          }
+        }
+      }
+
+      .child-status {
+        display: inline-block;
+        height: 48rpx;
+        line-height: 48rpx;
+        .border-radius(24rpx);
+        padding: 0rpx 26rpx;
+        font-size: 28rpx;
+        color: #ff4c2f;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -24rpx;
+        border: 1rpx solid #ff4c2f;
+
+        &.ended,
+        &.pause,
+        &.disable {
+          background: transparent;
+        }
+        &.in-progress,
+        &.enable {
+          .vertical(#ffb98e, #ff2233);
+          color: #fff;
+          border: none;
+          height: 50rpx;
+          line-height: 50rpx;
+        }
+      }
+    }
+
+    &.appointment {
+      .list-item-wrap {
+        background-image: url('@{base64-icon-appointment}');
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    &.acceptance {
+      .list-item-wrap {
+        background-image: url('@{base64-icon-acceptance}');
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    &.default {
+      .list-item-wrap {
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 14rpx;
+          height: 24rpx;
+          background: url('@{base64-icon-mapright}') 0 0 no-repeat;
+          background-size: 100% 100%;
+          position: absolute;
+          top: 50%;
+          right: 32rpx;
+          margin-top: -12rpx;
+        }
+      }
+    }
+
+    .logo-thumb {
+      width: 96rpx;
+      height: 96rpx;
+      margin-right: 30rpx;
+      .border-radius(50%);
+      border: 1rpx solid @color-e3e3e3;
+      float: left;
+      //   display: inline-block;
+    }
+
+    .icon-logo-thumb {
+      width: 96rpx;
+      height: 96rpx;
+      margin-right: 30rpx;
+      .border-radius(50%);
+      float: left;
+      &.shake {
+        background: url('@{base64-icon-shake}') 0 0 no-repeat;
+        background-size: 100% 100%;
+      }
+      &.big-wheel {
+        background: url('@{base64-icon-redpack}') 0 0 no-repeat;
+        background-size: 100% 100%;
+      }
+      &.red-pack {
+        background: url('@{base64-icon-redpack}') 0 0 no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+
+    .item-cont-wrap {
+      // display: inline-block;
+      float: left;
+      width: 400rpx;
+      // height: 50rpx;
+      // .clearfix();
+
+      &.no-remark {
+        .block-list-name {
+          margin-top: 36rpx;
+        }
+      }
+    }
+
+    .block-list-name {
+      width: 100%;
+      height: 30rpx;
+      line-height: 30rpx;
+      font-size: 30rpx;
+      color: @color-333333;
+      //   float: left;
+      display: inline-block;
+      margin-top: 10rpx;
+      .text-overflow();
+    }
+    .block-list-remark {
+      width: 100%;
+      height: 30rpx;
+      line-height: 24rpx;
+      font-size: 24rpx;
+      color: @color-999999;
+      //   float: left;
+      display: inline-block;
+      margin-top: 10rpx;
+      .text-overflow();
+      .type{
+        display: inline-block;
+        border: 1px solid #FF4C2F;
+        color: #FF4C2F;
+        font-size: 20rpx;
+        padding: 0 6rpx;
+        height: 24rpx;
+        line-height: 24rpx;
+        border-radius: 10rpx;
+        margin-right: 11rpx;
+      }
+    }
+  }
+}
+</style>
+
+<!-- 组件视图 -->
+<template>
+  <view class="{{ 'block-list-component' + (' ' + class) }}">
+    <view class="block-list-null" wx:if="{{ !dataset || !dataset.length }}">{{nullTips}}</view>
+    <view class="block-list-loading" wx:elif="{{ dataset == 'loading' }}">加载中...</view>
+    <view class="block-list-wrap" wx:else>
+      <repeat for="{{dataset}}" key="index" index="index" item="item">
+        <!-- <view class="{{ 'block-list-item ' + (item.type || (item.merchantType !== 'wedding' ? 'default' : '')) }}"> -->
+        <view class="{{ 'block-list-item ' + (item.type || 'default') + (item.child ? ' activity-game' : '') }}">
+          <view class="list-item-title" wx:if="{{item.title}}">{{item.title}}</view>
+          <view class="list-item-wrap" data-index="{{index}}" data-item="{{item}}" @tap="itemTap">
+            <image class="logo-thumb" src="{{item.logo}}" wx:if="{{item.logo}}" />
+            <view class="logo-thumb" wx:if="{{!item.logo}}"></view>
+            <view class="{{ 'item-cont-wrap' + (!item.remark ? ' no-remark' : '') }}">
+              <text class="block-list-name">{{item.name}}</text>
+              <text class="block-list-remark" wx:if="{{item.remark}}">{{item.remark}}</text>
+            </view>
+            <view class="goto-hotel" wx:if="{{item.child}}">参观商家</view>
+          </view>
+          <view class="list-item-child" wx:if="{{item.child}}">
+            <repeat for="{{item.child}}" key="index" index="index" item="item">
+              <view class="child-wrap" data-index="{{index}}" data-item="{{item}}" @tap="childItemTap">
+                <image class="logo-thumb" src="{{item.childLogo}}" wx:if="{{item.childLogo}}" />
+                <i class="{{ 'icon-logo-thumb' + (' ' + item.childLogoIcon) }}" wx:if="{{item.childLogoIcon}}"></i>
+                <view class="{{ 'item-cont-wrap' + (!item.childRemark ? ' no-remark' : '') }}">
+                  <text class="block-list-name">{{item.activityName}}</text>
+                  <!-- <text class="block-list-remark"><text class="type">类型</text>{{item.childName}}</text> -->
+                  <text class="block-list-remark" wx:if="{{item.activityClass === 'marry' || activityClass === 'wedding'}}"><text class="type">{{item.activityClassText}}</text>新郎：{{item.weddingPeopleMan}} 新娘：{{item.weddingPeopleWoman}}</text>
+                  <text class="block-list-remark" wx:if="{{item.activityClass === 'baobao'}}"><text class="type">{{item.activityClassText}}</text>宝宝：{{item.childName}}</text>
+                  <text class="block-list-remark" wx:if="{{item.activityClass === 'birthday'}}"><text class="type">{{item.activityClassText}}</text>寿星：{{item.childName}}</text>
+                  <text class="block-list-remark" wx:if="{{item.activityClass === 'themeCustom'}}"><text class="type">{{item.activityClassText}}</text>主题：{{item.childName}}</text>
+                  <text class="block-list-remark" wx:if="{{item.childRemark}}">{{item.childRemark}}</text>
+                </view>
+                <text class="{{ 'child-status ' + (item.status) }}" wx:if="{{item.status}}">{{item.statusText}}</text>
+              </view>
+            </repeat>
+          </view>
+        </view>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<!-- 组件业务逻辑 -->
+<script>
+import BlockListComponent from './view'
+export default BlockListComponent
+</script>

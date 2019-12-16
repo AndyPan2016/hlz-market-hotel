@@ -1,0 +1,395 @@
+<!--
+  请柬第1屏
+  @Author: AndyPan
+  @CreateDate: 2019年7月25日14:47:58
+  @LastUpdateDate: 2019年7月25日14:48:01
+  @Remarks: 
+-->
+<style lang="less">
+@import '../../../../assets/less/commons.less';
+.page-screen{
+    .screen-elem-bgblock{
+        width: 680rpx;
+        height: 470rpx;
+        background: #FFD785;
+        border-radius: 40rpx;
+        transform: rotate(5deg);
+        position: absolute;
+        top: 464rpx;
+        left: 50%;
+        margin-left: -340rpx;
+    }
+    .elem-flag{
+        width: 100%;
+        height: 130rpx;
+        position: relative;
+        &::before{
+            float: left;
+            height: 100%;
+            width: 320rpx;
+            content: '';
+            .background('screen-elem-top.png', -195rpx -45rpx);
+            background-size: auto 130%;
+        }
+        &::after{
+            float: right;
+            height: 100%;
+            width: 380rpx;
+            content: '';
+            .background('screen-elem-top.png', -500rpx -45rpx);
+            background-size: auto 130%;
+        }
+    }
+    .elem-partytime{
+        width: 650rpx;
+        height: 196rpx;
+        position: absolute;
+        left: 78rpx;
+        top: 1058rpx;
+        .background('party-time.png');
+        background-size: 100% 100%;
+    }
+
+    &.default {
+        .elem-flag, .elem-partytime, .screen-elem-bgblock,
+        .screen-elem-hb, .screen-elem-photo, .screen-elem-info,
+        .elem-modifier-1, .elem-modifier-2, .elem-modifier-3,
+        .elem-modifier-startsmall, .elem-modifier-startbig,
+        .elem-modifier-lovely, .elem-modifier-gift, .elem-modifier-balloon,
+        .elem-modifier-crown, .elem-modifier-sugar,
+        .elem-modifier-start1, .elem-modifier-start2, .elem-modifier-start3,
+        .elem-modifier-bbsugar, .elem-modifier-angelscome,
+        .elem-heart, .elem-happy-birthday, .elem-map-wrap
+        {
+            opacity: 0;
+        }
+    }
+    &.animation {
+        .elem-flag{
+            @elemFlag: elem-flag;
+            .keyframes(@elemFlag, {
+                0%{
+                    transform: translate(0, -200rpx);
+                    opacity: 0;
+                }
+                100%{
+                    transform: translate(0, 0);
+                    opacity: 1;
+                }
+            });
+            animation: @elemFlag 1s forwards;
+        }
+        .elem-partytime{
+            @elemPartyTime: elem-partytime;
+            .keyframes(@elemPartyTime, {
+                0%{
+                    transform: translate(0, 200rpx);
+                    opacity: 0;
+                }
+                100%{
+                    transform: translate(0, 0);
+                    opacity: 1;
+                }
+            });
+            animation: @elemPartyTime 1s forwards;
+        }
+    }
+
+    &.page-one {
+        &.scale, &.cover {
+            transform: scale(0.7, 0.7);
+            box-shadow: 0 0 40px rgba(124,124,124,.2);
+            margin-top: -70rpx;
+            height: 1444rpx;
+            border-radius: 20rpx;
+            overflow: hidden;
+        }
+        &.cover {
+            transform: scale(0.45, 0.45);
+            margin-top: -180rpx;
+            height: 100%;
+            border-radius: 20rpx;
+            overflow: hidden;
+            .screen-elem-hb{
+                top: 70rpx;
+            }
+            .elem-partytime{
+                top: 910rpx;
+            }
+            .screen-elem-bgblock{
+                top: 400rpx;
+            }
+            .screen-elem-photo{
+                top: 260rpx;
+            }
+            .screen-elem-info{
+                top: 660rpx;
+            }
+        }
+
+        &.animation {
+            .screen-elem-hb{
+                @elemHb: elem-hb;
+                .keyframes(@elemHb, {
+                    0%{
+                        transform: scale(0.2, 0.2);
+                        opacity: 0;
+                    }
+                    100%{
+                        transform: scale(1, 1);
+                        opacity: 1;
+                    }
+                });
+                animation: @elemHb 1s ease 0.8s forwards;
+            }
+            .screen-elem-bgblock{
+                @elemBgblock: elem-bgblock;
+                .keyframes(@elemBgblock, {
+                    0%{
+                        opacity: 0;
+                        transform:rotate(0deg)
+                    }
+                    100%{
+                        opacity: 1;
+                        transform:rotate(5deg)
+                    }
+                });
+                animation: @elemBgblock 2s ease 0.5s forwards;
+            }
+            .screen-elem-photo{
+                @elemPhoto: elem-photo;
+                .keyframes(@elemPhoto, {
+                    0%{
+                        opacity: 0;
+                    }
+                    100%{
+                        opacity: 1;
+                    }
+                });
+                animation: @elemPhoto 2s ease 0.5s forwards;
+            }
+            .screen-elem-info{
+                @elemInfo: elem-info;
+                .keyframes(@elemInfo, {
+                    0%{
+                        opacity: 0;
+                    }
+                    100%{
+                        opacity: 1;
+                    }
+                });
+                animation: @elemInfo 2s ease 1.5s forwards;
+            }
+        }
+        
+        .screen-elem-hb{
+            width: 474rpx;
+            height: 170rpx;
+            .background('happy-birthday.png');
+            background-size: 100% 100%;
+            position: absolute;
+            top: 130rpx;
+            left: 50%;
+            margin-left: -237rpx;
+            .hb-modifier-1{
+                width: 82rpx;
+                height: 88rpx;
+                position: absolute;
+                left: -60rpx;
+                top: -30rpx;
+                .background('hb-modifier-1.png');
+                background-size: 100% 100%;
+            }
+            .hb-modifier-2{
+                width: 90rpx;
+                height: 84rpx;
+                position: absolute;
+                right: -30rpx;
+                top: -24rpx;
+                .background('hb-modifier-2.png');
+                background-size: 100% 100%;
+            }
+            .hb-modifier-3{
+                width: 50rpx;
+                height: 46rpx;
+                position: absolute;
+                left: -86rpx;
+                bottom: -24rpx;
+                .background('hb-modifier-3.png');
+                background-size: 100% 100%;
+            }
+            .hb-modifier-4{
+                width: 74rpx;
+                height: 106rpx;
+                position: absolute;
+                right: -100rpx;
+                bottom: -32rpx;
+                .background('hb-modifier-4.png');
+                background-size: 100% 100%;
+            }
+        }
+        .screen-elem-photo{
+            width: 650rpx;
+            height: 584rpx;
+            left: 50%;
+            top: 378rpx;
+            margin-left: -325rpx;
+        }
+        .screen-elem-info{
+            width: 520rpx;
+            height: 300rpx;
+            border: 4rpx solid #FFF;
+            background: #FFD785;
+            position: absolute;
+            left: 50%;
+            margin-left: -260rpx;
+            top: 810rpx;
+            box-shadow: 0 0 40px rgba(124,124,124,.2);
+            border-radius: 20rpx;
+            .info-baby-name{
+                width: 100%;
+                height: 50rpx;
+                font-size: 50rpx;
+                line-height: 48rpx;
+                text-align: center;
+                margin-top: 40rpx;
+                // font-family: 'pww';
+                color:#401314;
+                font-weight: bold;
+            }
+            .info-parent-name{
+                text-align: center;
+                height: 50rpx;
+                margin-top: 30rpx;
+                .parent-name{
+                    display: inline-block;
+                    padding: 0 34rpx;
+                    background: #401314;
+                    height: 50rpx;
+                    line-height: 50rpx;
+                    font-size: 26rpx;
+                    color: #F5FDFF;
+                    border-radius: 24rpx;
+                }
+            }
+            .date {
+                margin: 0 20rpx;
+                text-align: center;
+                font-size: 26rpx;
+                color: #333;
+                margin-top: 24rpx;
+                overflow: hidden;
+            }
+            .addresses{
+                margin: 0 20rpx;
+                text-align: center;
+                font-size: 26rpx;
+                color: #333;
+                margin-top: 10rpx;
+                overflow: hidden;
+            }
+            .edit-img{
+                bottom: 15rpx;
+                left: 50%;
+                margin-left: -50rpx;
+            }
+        }
+    }
+}
+</style>
+
+<template>
+  <view class="page-screen page-one {{(scale || 'default') + (!scale ? (current === 0 ? ' animation' : '') : '')}}">
+    <view class="elem-flag"></view>
+    <view class="screen-elem-hb">
+      <view class="hb-modifier-1"></view>
+      <view class="hb-modifier-2"></view>
+      <view class="hb-modifier-3"></view>
+      <view class="hb-modifier-4"></view>
+    </view>
+    <view class="elem-partytime"></view>
+
+    <view class="screen-elem-bgblock"></view>
+    <view class="screen-elem-photo">
+      <slot name="photo-thumb" wx:if="{{showSlot}}"></slot>
+      <!-- <image class="photo-thumb" src="{{pageData.imageInfo[current][0] ? pageData.imageInfo[current][0]['imagePath'] : (doMain + 'default-photo-1.png?v1')}}" @load="imageLoad" wx:if="{{!showSlot && doMain}}" /> -->
+      <image class="photo-thumb" src="{{pageData.imageInfo[current][0] ? pageData.imageInfo[current][0]['imagePath'] : (doMain + 'default-photo-1.png?v1')}}" @load="imageLoad" wx:if="{{!showSlot && doMain && photoThumb}}" />
+      <image class="photo-thumb" @load="imageLoad" wx:elif="{{!showSlot && doMain}}" />
+      <view class="upload-img" @tap="uploadImg" data-index="1" data-rate="0.9" wx:if="{{bottomType === 'setting'}}"></view>
+    </view>
+    <view class="screen-elem-info">
+      <slot name="info-baby-name" wx:if="{{showSlot}}"></slot>
+      <view class="info-baby-name" wx:if="{{!showSlot}}">{{pageData.baseInfo.babyName || '宝宝'}}{{pageData.baseInfo.babyBanquetTypeText}}</view>
+      <view class="info-parent-name">
+        <slot name="parent-name" wx:if="{{showSlot}}"></slot>
+        <text class="parent-name" wx:if="{{!showSlot}}">宝爸：{{pageData.baseInfo.babyDadName || 'XXX'}} | 宝妈：{{pageData.baseInfo.babyMomName || 'XXX'}}</text>
+      </view>
+      <slot name="screen-date" wx:if="{{showSlot}}"></slot>
+      <view class="date" wx:if="{{!showSlot}}">{{pageData.baseInfo.weddingTime || '2019年8月8日12时08分'}}</view>
+      <slot name="screen-address" wx:if="{{showSlot}}"></slot>
+      <!-- <view class="addresses" wx:if="{{!showSlot}}">{{pageData.baseInfo.hotelAddress || '重庆市大石坝街道东源D7酒店4F'}}</view> -->
+      <view class="addresses" wx:if="{{!showSlot}}">{{pageData.baseInfo.hotelName || '昏礼者礼典酒店'}}</view>
+      <view class="edit-img" @tap="toEditInfo" wx:if="{{bottomType === 'setting'}}"></view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import { RESOURCE_PATCH, LANG } from '@/configs'
+
+export default class OnePagesScreen extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    photoThumb: Boolean,
+    scale: String,
+    current: { type: Number, default: 0 },
+    doMain: { type: String, default: RESOURCE_PATCH + 'ElectronicInvitationCard/invitation_template/invitation_baby/' },
+    pageData: {
+      type: Object,
+      default: {
+        baseInfo: {},
+        imageInfo: {}
+      }
+    },
+    bottomType: String,
+    onUploadImg: Function,
+    onImageLoad: Function,
+    themetype: String,
+    showSlot: Boolean | String
+  }
+  watch = {
+    pageData() {
+      if (this.pageData.baseInfo.babyBanquetType) {
+        this.pageData.baseInfo.babyBanquetTypeText = (LANG.couponType[this.pageData.baseInfo.babyBanquetType] || {}).text || ''
+        this.$apply()
+      }
+    }
+  }
+  methods = {
+    uploadImg(e) {
+      if (this.onUploadImg) {
+        this.onUploadImg.call(this.$parent, e)
+      }
+      this.$emit('onUploadImg', e)
+    },
+    toEditInfo() {
+      let baseInfo = this.pageData.baseInfo
+      wx.navigateTo({
+        url: '/subpackages/ElectronicInvitationCard/pages/info?templateid=' +
+          baseInfo.templateId + '&invitationid=' + baseInfo.invitationId + '&templateType=' + baseInfo.templateType + '&themetype=' + this.themetype
+      })
+    },
+    imageLoad(e) {
+      let onImageLoad = this.onImageLoad
+      if (onImageLoad) {
+        onImageLoad.call(this.$parent, e)
+      }
+      this.$emit('onImageLoad', e)
+    }
+  }
+
+  onLoad() {}
+}
+</script>

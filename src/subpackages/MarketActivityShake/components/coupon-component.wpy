@@ -1,0 +1,435 @@
+<!--
+  优惠券组件
+  @Author: AndyPan
+  @CreateDate: 2019年4月2日16:32:23
+  @LastUpdateDate: 2019年4月2日16:32:26
+  @Remarks: 备注
+-->
+
+<!-- 组件样式 -->
+<style lang="less">
+  @import '../assets/less/mixin.less';
+  .coupon-list-wrap{
+    .clearfix();
+    overflow: hidden;
+    height: auto;
+
+    .list-wrap{
+        .clearfix();
+        width: 110%;
+        margin-left: -10rpx;
+    }
+    .coupon-list-item{
+        float: left;
+        width: 340rpx;
+        height: 228rpx;
+        position: relative;
+        margin: 0 10rpx;
+        margin-bottom: 20rpx;
+
+        .coupon-item-bg{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .look-more{
+            position: absolute;
+            width: 100%;
+            height: 30rpx;
+            top: 90rpx;
+            text-align: center;
+            font-size: 32rpx;
+            color: #B36A2D;
+        }
+        .coupon-item-cont{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+        .item-cont-main{
+            position: absolute;
+            top: 14rpx;
+            left: 10rpx;
+            right: 90rpx;
+            bottom: 14rpx;
+            overflow: hidden;
+            .item-type{
+                position: absolute;
+                z-index: 11;
+                top: 6px;
+                left: -60rpx;
+                background: #FFD791;
+                color: #FFF;
+                font-size: 20rpx;
+                display: inline-block;
+                width: 180rpx;
+                padding: 5rpx 0;
+                text-align: center;
+                .rotate(-45deg);
+                .opacity(.7);
+            }
+            .item-title{
+                position: relative;
+                height: 32rpx;
+                margin-top: 24rpx;
+                margin-left: 15rpx;
+                text-align: center;
+                color: #B36A2D;
+                font-size: 24rpx;
+                .item-title-line{
+                    display: inline-block;
+                    width: 144rpx;
+                    height: 2rpx;
+                    border-bottom: 2rpx solid #B36A2D;
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -1rpx;
+                    left: 50%;
+                    margin-left: -72rpx;
+                }
+                .item-title-text{
+                    position: relative;
+                    z-index: 10;
+                    background: #FFF;
+                    padding: 0 10rpx;
+                }
+            }
+            .item-middle{
+                margin-top: 12rpx;
+                height: 70rpx;
+                text-align: center;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                .middle-wrap{
+                    width: 100%;
+                }
+                .item-value{
+                    font-size: 52rpx;
+                    color: #FF2E28;
+                    font-weight: bold;
+                    .unit{
+                        font-size: 22rpx;
+                        margin-left: -10rpx;
+                    }
+                    &.text{
+                        font-weight: bold;
+                        font-size: 30rpx;
+                        // width: 80%;
+                        display: inline-block;
+                        // height: 70rpx;
+                        // line-height: 70rpx;
+                        // overflow: hidden;
+                        // .text-overflow();
+                    }
+                    &.money {
+                        height: 70rpx;
+                        font-weight: bold;
+                        margin: inherit;
+                        margin-right: -15rpx;
+                        .text-overflow();
+                    }
+                }
+                .item-remark{
+                    font-size: 20rpx;
+                    color: #B36A2D;
+                    margin-top: -10rpx;
+                }
+            }
+            .item-validity{
+                display: inline-block;
+                width: 100%;
+                text-align: center;
+                font-size: 20rpx;
+                color: #B36A2D;
+                margin-top: 14rpx;
+            }
+        }
+        .btn-receive-wrap{
+            float: right;
+            height: 100%;
+            width: 30rpx;
+            overflow: hidden;
+            margin-right: 30rpx;
+            color: #FF2E28;
+            font-size: 22rpx;
+            position: relative;
+            padding-top: 50rpx;
+        }
+        .btn-receive{
+            float: right;
+            height: 100%;
+            width: 70rpx;
+            margin-left: -2rpx;
+            position: absolute;
+            top: 0;
+            left: 0;
+            .opacity(0);
+        }
+    }
+    .coupon-null{
+        width: 382rpx;
+        height: 206rpx;
+        position: absolute;
+        top: 256rpx;
+        left: 50%;
+        margin-left: -191rpx;
+        .coupon-null-bg{
+            width: 100%;
+            height: 100%;
+        }
+        .coupon-null-text{
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            color: #666666;
+            font-size: 30rpx;
+        }
+    }
+}
+</style>
+
+<!-- 组件模板 -->
+<template>
+  <view class="coupon-list-wrap">
+    <view class="coupon-null" wx:if="{{(!coupons || !coupons.length) && !isShowSlot}}">
+        <image class="coupon-null-bg" src="../assets/images/bg/bg-coupon-null.png" lazy-load="true" />
+        <text class="coupon-null-text">暂无优惠券</text>
+    </view>
+    <view class="list-wrap" wx:else>
+        <repeat for="{{coupons}}" key="index" index="index" item="item">
+            <view class="coupon-list-item">
+                <image class="coupon-item-bg" wx:if="{{item.isReceived}}" src="../assets/images/bg/bg-coupon-item-received.png" />
+                <image class="coupon-item-bg" wx:else src="../assets/images/bg/bg-coupon-item.png" />
+                <view class="coupon-item-cont">
+                    <view class="item-cont-main">
+                        <text class="item-type" wx:if="{{item.couponConsumeType && item.isShowType}}">{{item.couponConsumeType}}</text>
+                        <view class="item-title">
+                            <text class="item-title-line" wx:if="{{item.couponType}}"></text>
+                            <text class="item-title-text" wx:if="{{item.couponType}}">{{item.couponType}}</text>
+                        </view>
+                        <view class="item-middle">
+                            <view class="middle-wrap">
+                                <view class="item-value" wx:if="{{item.discount}}">
+                                    {{item.discount}}
+                                    <text class="unit">{{item.unit}}</text>
+                                </view>
+                                <view class="item-value text" wx:if="{{item.text}}">
+                                    {{item.text}}
+                                </view>
+                                <view class="item-value money" wx:if="{{item.money}}">
+                                    <text class="unit">{{item.unit}}</text>
+                                    {{item.money}}
+                                </view>
+                                <view class="item-remark" wx:if="{{item.moneyRemark}}">
+                                    {{item.moneyRemark}}
+                                </view>
+                            </view>
+                        </view>
+                        <text class="item-validity">有效期至{{item.validity}}</text>
+                    </view>
+                    <!-- <text class="btn-receive" wx:if="{{!item.isReceived}}"  @tap="tapCouponItem" data-item="{{item}}">立即领取</text> -->
+                    <view class="btn-receive-wrap">
+                        立即领取
+                        <button class="btn-receive" wx:if="{{!item.isReceived}}" data-item="{{item}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button>
+                    </view>
+                </view>
+            </view>
+        </repeat>
+        <slot name="coupon-item-custom"></slot>
+        <view class="coupon-list-item" wx:if="{{isShowMore}}">
+            <image class="coupon-item-bg" src="../assets/images/bg/bg-null.png" />
+            <text class="look-more">查看更多  ></text>
+        </view>
+    </view>
+  </view>
+</template>
+
+<!-- 组件业务逻辑 -->
+<script>
+  import wepy from 'wepy'
+  import { LANG, STATUS } from '../configs'
+  import { Utils, Tips, WXBizDataCrypt } from '@/utils'
+  import { CouponCenterService, AuthorizeService } from '../services'
+
+  export default class CouponComponent extends wepy.component {
+    // 接收外部传入的参数
+    props = {
+      coupons: {
+        type: [Array, Object],
+        default: []
+      },
+      isShowSlot: {
+        type: Boolean,
+        default: false
+      },
+      isShowMore: {
+        type: Boolean,
+        default: false
+      },
+      limit: String
+    }
+    // 模板(绑定)数据
+    data = {
+      // 分页页号
+      start: 1
+    }
+    // 用于监听组件之间的通信与交互事件的事件处理函数集合
+    events = {}
+    /**
+     * 更新卡券领取状态
+     */
+    renderDataReceived(item) {
+      Utils.forEach(this.coupons, (coupon) => {
+        if (coupon.id === item.id) {
+          coupon.isReceived = true
+          coupon.surplusNum--
+          return 'break'
+        }
+      })
+      this.$apply()
+    }
+    /**
+     * (授权)获取手机号
+     */
+    getPhoneNumber(e) {
+      // 领券前，先获取手机号
+      let encryptedData = e.detail.encryptedData
+      let phoneNumber = this.decryptPhoneNumber(encryptedData)
+      let openId = wepy.getStorageSync(STATUS.OPEN_ID)
+      let activityId = wepy.getStorageSync(STATUS.ACTIVITY_ID)
+      AuthorizeService.wechatBindingMobile({
+        data: {
+          activityId: activityId,
+          mobileNo: phoneNumber,
+          openId: openId
+        }
+      }).then(res => { }).catch(error => {
+        Tips.error(error.message)
+      })
+    }
+    /**
+     * 解密手机号
+     */
+    decryptPhoneNumber(encryptedData) {
+      let sessionkey = wepy.getStorageSync(STATUS.SESSION_KEY)
+      let iv = wepy.getStorageSync(STATUS.ENCRYPT_IV)
+      let phoneNumber = WXBizDataCrypt.wechatDecrypt(encryptedData, sessionkey, iv)
+      return phoneNumber
+    }
+
+    methods = {
+      /**
+       * 领取红包
+       */
+      tapCouponItem(e) {
+        let couponItem = e.currentTarget.dataset.item
+        // 未领取的券，执行领取操作
+        if (!couponItem.isReceived) {
+          let userSpecialInfo = wepy.getStorageSync(STATUS.USER_SPECIAL_INFO)
+          let activityId = wepy.getStorageSync(STATUS.ACTIVITY_ID)
+          // 绑定参与用户关系
+          CouponCenterService.receiveHotelTicket({
+            data: {
+              // 卡券ID
+              ticketId: couponItem.id,
+              // 活动ID
+              activityId: activityId,
+              // 会员编码
+              userNo: userSpecialInfo.userNo
+            }
+          }).then(res => {
+            this.renderDataReceived(couponItem)
+            Tips.success('领取成功')
+          }).catch(error => {
+            Tips.error(error.message)
+          })
+        }
+      }
+    }
+
+    // 卡券列表
+    async couponList() {
+      let userSpecialInfo = wepy.getStorageSync(STATUS.USER_SPECIAL_INFO)
+      let activityId = wepy.getStorageSync(STATUS.ACTIVITY_ID)
+
+      let [error, res] = await Utils.promiseTo(CouponCenterService.hotelTicketList({
+        data: {
+          activityId: activityId,
+          // 会员编码
+          userNo: userSpecialInfo.userNo,
+          // 分页页号
+          start: this.start,
+          // 分页大小
+          limit: this.limit
+        }
+      }))
+
+      if (error) {
+        Tips.error(error.message)
+      } else {
+        if (res.success) {
+          let totelTicketDtoList = res.totelTicketDtoList
+          let coupons = Utils.forEach(totelTicketDtoList, (item, key) => {
+            if (this.limit) {
+              if (key >= this.limit) {
+                return 'break'
+              }
+            }
+            let isShowType = item.isShowType.toLowerCase()
+            let isShowTypeStatus = false
+            if (isShowType === 'yes') {
+              isShowTypeStatus = true
+            }
+            let unitPosition = item.unitPosition.toLowerCase()
+            let result = {
+              // 卡券ID
+              id: item.ticketId,
+              // 卡券类型
+              couponType: (LANG.couponType[item.activityClass] || {}).text,
+              // 卡券消费类型
+              couponConsumeType: (LANG.couponConsumeType[item.type] || {}).text || '-',
+              // 有效期
+              validity: (item.overdueTime || '-').split(' ')[0],
+              // 剩余数量
+              surplusNum: item.surplusNum,
+              // 是否领取
+              isReceived: item.receive,
+              // 是否显示卡券消费类型
+              isShowType: isShowTypeStatus,
+              // 单位
+              unit: item.unit,
+              // 单位位置
+              unitPosition: unitPosition
+            }
+
+            if (unitPosition === 'after') {
+              result['discount'] = ((parseFloat(item.dataOneText)) * 100) / 10
+            } else {
+              if (isShowType === 'yes') {
+                result['money'] = parseInt(item.dataOneText || 0)
+              } else if (isShowType === 'no') {
+                let dataOneText = item.dataOneText || ''
+                result['text'] = dataOneText.length > 6 ? dataOneText.substring(0, 6) : dataOneText
+              }
+            }
+            result['moneyRemark'] = item.dataTwoText
+
+            return result
+          })
+          this.coupons = coupons
+          this.$apply()
+        } else {
+          Tips.error(res.message)
+        }
+      }
+    }
+
+    onLoad() {
+      this.couponList()
+    }
+  }
+</script>

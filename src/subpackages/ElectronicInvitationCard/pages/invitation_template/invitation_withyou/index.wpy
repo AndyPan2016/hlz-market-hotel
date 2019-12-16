@@ -1,0 +1,672 @@
+
+<style lang="less">
+@import '../../../../../assets/less/mixin.less';
+/**
+ * @description: 关键帧动画
+ * @param {@name,@content} 
+ * @return: 
+ */
+.keyframes (@name,@content) {
+  @-webkit-keyframes @name {
+    @content();
+  }
+  @keyframes @name {
+    @content();
+  }
+}
+.keyframes(
+  rotate,
+  {0%{transform: rotate(0deg) ;} 100%{transform: rotate(360deg) ;}}
+);
+.tpl {
+  height: 100vh;
+}
+.contant {
+  position: relative;
+  height: calc(100% - 128rpx);
+  width: 100%;
+  .music {
+    width: 58rpx;
+    height: 58rpx;
+    position: absolute;
+    top: 30rpx;
+    right: 40rpx;
+    transition: all 5s;
+    animation: rotate 5s linear infinite;
+    z-index: 100;
+    border-radius: 50%;
+    border: 2rpx solid #333333;
+    background: url('@{resourcePath}ElectronicInvitationCard/invitation_template/invitation_concise/icon-music1.png') 50% 45% no-repeat;
+    background-size: 50% 50%;
+    &.paused {
+      animation-play-state: paused;
+    }
+    &.play {
+      animation-play-state: running;
+    }
+  }
+}
+.swiper-box {
+  width: 100%;
+  height: 100%;
+  background: #FFF;
+}
+.page-screen{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .upload-img, .edit-img{
+    position: absolute;
+    width: 100rpx;
+    height: 100rpx;
+    z-index: 100;
+    .ui-img{
+      width: 100rpx;
+      height:100rpx;
+    }
+  }
+  .circle{
+    border-radius: 50%;
+    border: 2rpx solid #BFBFBF;
+    position: absolute;
+    opacity: 0;
+  }
+  .photo{
+    position: absolute;
+    overflow: hidden;
+    opacity: 0;
+    .photo-thumb-wrap{
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .photo-thumb{
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+.arrow-up{
+  position: absolute;
+  width: 86rpx;
+  height: 38rpx;
+  z-index: 100;
+  left: 50%;
+  margin-left: -43rpx;
+  bottom: 120rpx;
+  .keyframes(
+    arrow-up,
+    {
+      from {
+        transform: translate(0, 0);
+      } 
+      to {
+        transform: translate(0, -50rpx);
+      }
+    }
+  );
+  animation: arrow-up .8s ease-out infinite;
+}
+
+.page-screen-load{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #FFF;
+    
+    .progress-bar{
+        height: 10rpx;
+        width: 80%;
+        position: absolute;
+        border-radius: 10rpx;
+        background: #eee;
+        left: 50%;
+        margin-left: -40%;
+        top: 1050rpx;
+        .progress{
+            position: absolute;
+            width: 0;
+            height: 100%;
+            background: #ff4c2f;
+            border-radius: 10rpx;
+        }
+        .progress-text{
+            display: inline-block;
+            width: 300rpx;
+            position: absolute;
+            left: 50%;
+            margin-left: -150rpx;
+            font-size: 34rpx;
+            color: #ff4c2f;
+            font-weight: bold;
+            text-align: center;
+            bottom: -50rpx;
+        }
+    }
+}
+</style>
+
+<template>
+  <view class="tpl">
+    <navigationBar :title="title" class="title"></navigationBar>
+    <view class="contant">
+      <view class="page-screen-load" wx:if="{{!isLoaded}}">
+        <screen-clone scale="scale" :photoThumb.sync="photoThumb" :current="0" :domain.sync="domain" :pageData.sync="pageDatas" bottomType="msg" :onUploadImg="uploadImg" :onImageLoad="imageLoad" />
+        <view class="progress-bar">
+          <view class="progress" style="{{'width:' + loadImageProgress + '%'}}"></view>
+          <text class="progress-text">{{loadImageProgress}}%</text>
+        </view>
+      </view>
+      <view class="music {{player.play ? 'play' : 'paused'}}" wx:if="{{isLoaded}}" @tap="musicSwich"></view>
+      <swiper vertical class="swiper-box" easing-function="easeOutCubic" bindchange="swiperChange" wx:if="{{isLoadedBaseInfo != -1}}">
+        <swiper-item>
+          <page1 :current.sync="current" :photoThumb.sync="photoThumb" :themetype.sync="themeType" :domain.sync="domain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <page2 :current.sync="current" :photoThumb.sync="photoThumb" :domain.sync="domain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <page3 :current.sync="current" :photoThumb.sync="photoThumb" :domain.sync="domain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <page4 :current.sync="current" :photoThumb.sync="photoThumb" :domain.sync="domain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <page5 :current.sync="current" :photoThumb.sync="photoThumb" :domain.sync="domain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <page6 :current.sync="current" :photoThumb.sync="photoThumb" :domain.sync="domain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" />
+        </swiper-item>
+        <swiper-item>
+          <page7 :current.sync="current" :photoThumb.sync="photoThumb" :domain.sync="domain" :pageData.sync="pageDatas" :onUploadImg="uploadImg" :onImageLoad="imageLoad" :bottomType.sync="bottomType" :hotelType.sync="hotelType" :hotelId.sync="hotelId" />
+        </swiper-item>
+      </swiper>
+      <image class="arrow-up" wx:if="{{current < screenAll - 1}}" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_arrow.png" />
+      <c-bottom :coverImage.sync="coverImage" :hotelId.sync="hotelId" :giftData.sync="giftData" :bottomType.sync="bottomType" :themetype.sync="themeType" :templateType.sync="templateType" :templateId.sync="templateId" :invitationId.sync="invitationid" :musicId.sync="musicId" wx:if="{{isPreview !== 'false' && isPreview !== false && bottomShow}}" autoMsgWidth="true" />
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import page1 from './components/page1'
+import page2 from './components/page2'
+import page3 from './components/page3'
+import page4 from './components/page4'
+import page5 from './components/page5'
+import page6 from './components/page6'
+import page7 from './components/page7'
+import CBottom from '../../../components/bottom/index'
+import navigationBar from '../../../components/navigation-bar/index'
+import { IndexService } from '../../../services'
+import { RESOURCE_PATCH, STATUS } from '@/configs'
+import { Tips, Utils } from '@/utils'
+
+export default class InvatationQinLanPages extends wepy.page {
+  // 配置
+  config = {
+    navigationStyle: 'custom',
+    backgroundTextStyle: 'light',
+    navigationBarTextStyle: 'white',
+    disableScroll: true
+  }
+  components = {
+    page1,
+    page2,
+    page3,
+    page4,
+    page5,
+    page6,
+    page7,
+    'screen-clone': page1,
+    'c-bottom': CBottom,
+    navigationBar: navigationBar
+  }
+  data = {
+    photoThumb: false,
+    giftData: {},
+    current: -1,
+    title: '电子请柬',
+    templateType: '',
+    invitationid: '',
+    templateId: '',
+    musicId: '',
+    hotelId: '',
+    isPreview: true,
+    bottomShow: true,
+    // 音乐播放器
+    player: {},
+    domain: RESOURCE_PATCH + 'ElectronicInvitationCard/invitation_template/invitation_concise/',
+    bottomType: 'create',
+    // 模板页面数据
+    pageDatas: {
+      baseInfo: {},
+      imageInfo: {}
+      // pageOneInfo: {},
+      // pageSevenInfo: {}
+    },
+    // 封面图
+    coverImage: RESOURCE_PATCH + 'ElectronicInvitationCard/invitation_template/invitation_concise/photo-thumb-default-2/12.png',
+    // 模板页面图片数据
+    pageImgDatas: {},
+    // 编辑后，接口中获取的页面数据信息
+    templateDatas: [],
+    // 上传图片索引
+    imageIndex: '',
+    showMap: false,
+    // 总模板屏数
+    screenAll: 7,
+    // 加载图片总数
+    loadImageAll: 13,
+    // 当前已加载完成
+    loadedImage: 0,
+    // 进度
+    loadImageProgress: 0,
+    // 是否加载完成
+    isLoaded: false,
+    // 基础数据是否加载完成(基础数据加载完成并展示后再完成图片加载效果)
+    isLoadedBaseInfo: -1,
+    // 请柬类型
+    themeType: '',
+    tpmdata: ''
+  }
+  methods = {
+    swiperChange(e) {
+      let that = this
+      setTimeout(() => {
+        that.current = e.detail.current
+        that.bottomShow = !(that.current === that.screenAll - 1)
+        if (that.bottomType !== 'msg' && !that.bottomShow) {
+          that.bottomShow = true
+        }
+        that.$apply()
+      }, 100)
+    }
+  }
+
+  showMapFn() {
+    this.showMap = true
+    this.$apply()
+  }
+  hideMapFn() {
+    this.showMap = false
+    this.$apply()
+  }
+
+  /**
+   * 图片加载
+   */
+  imageLoad(status) {
+    // if (!this.isLoaded) {
+    //   this.loadedImage++
+    //   this.loadImageProgress = Math.floor(this.loadedImage / this.loadImageAll * 100)
+    //   this.loadImageProgress = this.loadImageProgress > 100 ? 100 : this.loadImageProgress
+    //   if (this.loadedImage >= this.loadImageAll - 2) {
+    //     let that = this
+    //     setTimeout(() => {
+    //       that.current = 0
+    //       that.isLoaded = true
+    //       that.$apply()
+    //     }, 10)
+    //   }
+    //   this.$apply()
+    // }
+  }
+  imageLoads(status) {
+    if (!this.isLoaded) {
+      this.loadedImage++
+      this.loadImageProgress = Math.floor(this.loadedImage / this.loadImageAll * 100)
+      this.loadImageProgress = this.loadImageProgress > 100 ? 100 : this.loadImageProgress
+      let that = this
+      if (this.loadedImage >= this.loadImageAll - 2) {
+        setTimeout(() => {
+          that.current = 0
+          that.isLoaded = true
+          that.$apply()
+        }, 10)
+      }
+      this.$apply()
+      setTimeout(() => {
+        that.imageLoads()
+      }, 120)
+    }
+  }
+
+  /**
+   * 打开相册，选择图片，跳转到图片截取
+   */
+  imgUpLoad(e, rate) {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        Tips.loading()
+        setTimeout(() => {
+          wx.navigateTo({
+            url: '/subpackages/ElectronicInvitationCard/pages/img-upload?url=' + res.tempFilePaths + '&rate=' + (rate || '')
+          })
+        }, 500)
+      }
+    })
+  }
+
+  /**
+   * 图片上传
+   */
+  uploadImg(e) {
+    let dataset = e.currentTarget.dataset
+    this.imageIndex = dataset.index
+    let rate = dataset.rate
+    this.$apply()
+    this.imgUpLoad(e, rate)
+  }
+  // 音乐控制开关
+  musicSwich() {
+    if (this.player.canplay) {
+      if (this.player.play) {
+        this.player.play = false
+        this.player.ctx.pause()
+      } else {
+        this.player.play = true
+        this.player.ctx.play()
+      }
+    } else {
+      Tips.error('音乐加载中')
+    }
+  }
+  // 初始化播放器
+  initPlayer() {
+    this.player.ctx = wx.createInnerAudioContext()
+    // this.player.ctx.autoplay = true
+    this.player.canplay = false
+    // 播放器可以播放的时候触发
+    this.player.ctx.onCanplay(() => {
+      this.player.ctx.play()
+      this.player.play = true
+      this.player.canplay = true
+      this.player.ctx.loop = true
+      this.$apply()
+    })
+    this.player.ctx.src = this.player.src
+  }
+  // 关闭音乐
+  destroyMusic() {
+    if (this.player.ctx) {
+      this.player.ctx.destroy()
+      this.player.play = false
+      this.$apply()
+    }
+  }
+  // 清除storeage里面获取数据
+  clearnStoreage(key) {
+    if (wx.getStorageSync(key)) {
+      wx.removeStorageSync(key)
+    }
+  }
+  // 存储编辑的数据
+  saveEditInfo() {
+    let imgSrc = wx.getStorageSync('screenShotImg') || ''
+    if (imgSrc) {
+      let page = this.current
+      // 判断当前图片是否已经存储
+      let imageItemNull = true
+      let params = {
+        invitationPageNo: page,
+        contentInfos: []
+      }
+      // 每个编辑图片的数据
+      let imageItem = {
+        fieldName: this.imageIndex,
+        contentType: 'PICTURE',
+        fieldContent: imgSrc
+      }
+      if (this.templateDatas.length > 0) {
+        for (let list of this.templateDatas) {
+          if (list.invitationPageNo === page) {
+            params.contentInfos = list.contentInfos
+            params.contentInfos.forEach((element, index) => {
+              if (element.fieldName === this.imageIndex) {
+                params.contentInfos[index].fieldContent = imgSrc
+                imageItemNull = false
+              }
+            })
+          }
+        }
+      }
+      if (imageItemNull) {
+        params.contentInfos.push(imageItem)
+      }
+      this.saveTemplate(params, imgSrc)
+    } else {
+      // console.log('screenShotImg为空')
+    }
+  }
+  /**
+   * 编辑请柬信息保存
+   */
+  saveTemplate(param, src) {
+    let params = Object.assign({
+      invitationId: this.invitationid,
+      coverImage: this.current === 0 ? src : (this.pageDatas.imageInfo[0] && this.pageDatas.imageInfo[0][0] ? this.pageDatas.imageInfo[0][0].imagePath : (''))
+      // 封面图，始终保持第一屏的图片
+      // coverImage: this.current === 0 ? src : (this.pageDatas.imageInfo[0][0] ? this.pageDatas.imageInfo[0][0].imagePath : (this.domain + 'photo-thumb-default/1.png'))
+    }, param)
+
+    IndexService.invitationContentSave({
+      data: params
+    })
+      .then(res => {
+        if (res.data.success) {
+          Tips.success('修改图片成功')
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 电子请柬模板列表
+   */
+  getTpmList() {
+    IndexService.invitationTemplateQuery({
+      data: {
+        invitationId: this.invitationId
+      }
+    }).then(res => {
+      if (res.data.success) {
+        let invitationTemplateInfos = (res.data || {}).invitationTemplateInfos || []
+        Utils.forEach(invitationTemplateInfos, item => {
+          if ((item.templateType).toLowerCase() === this.templateType) {
+            this.player.src = item.backgroundMusic
+            this.templateId = item.templateId
+
+            return 'break'
+          }
+        })
+        this.isLoadedBaseInfo += 2
+        this.$apply()
+        this.initPlayer()
+      }
+    })
+  }
+
+  /**
+   * 根据如果bottomType = setting
+   */
+  getTemplate() {
+    let parmes = {}
+    parmes['invitationId'] = this.invitationid
+    IndexService.invitationPagesQuery({
+      data: parmes
+    })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          let invitationPages = data.invitationPages
+          this.photoThumb = true
+          if (invitationPages) {
+            this.templateDatas = invitationPages
+            Utils.forEach(invitationPages, (pageItem, pageNo) => {
+              Utils.forEach(pageItem.contentInfos, (imageItem, imageNo) => {
+                if (imageItem.fieldContent) {
+                  this.pageDatas.imageInfo[pageItem.invitationPageNo] = this.pageDatas.imageInfo[pageItem.invitationPageNo] || {}
+                  this.pageDatas.imageInfo[pageItem.invitationPageNo][parseInt(imageItem.fieldName) - 1] = {
+                    // 图片路径
+                    imagePath: imageItem.fieldContent,
+                    // 内容类型
+                    contentType: imageItem.contentType,
+                    // 文件名称
+                    fieldName: imageItem.fieldName,
+                    // 请柬ID
+                    invitationId: pageItem.invitationId,
+                    // 请柬页码
+                    invitationPageNo: pageItem.invitationPageNo
+                  }
+                }
+              })
+            })
+            this.isLoadedBaseInfo++
+            this.$apply()
+            // this.imageLoad()
+          }
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 查询电子请柬基本信息
+   */
+  getBaseInfo() {
+    let parmes = {}
+    parmes['invitationId'] = this.invitationid
+    return IndexService.invitationBasicInfoQuery({
+      data: parmes
+    })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          let weddingTime = data.weddingTime
+          let mapPoint = (data.coordinate || '106.49773,29.56964').split(',')
+          this.giftData.bridegroomName = data.bridegroomName
+          this.giftData.brideName = data.brideName
+          if (data.coverImage) {
+            this.coverImage = data.coverImage
+          }
+          this.pageDatas.baseInfo = {
+            brideName: data.brideName,
+            bridegroomName: data.bridegroomName,
+            weddingTime: weddingTime.substring(0, weddingTime.lastIndexOf(':')),
+            // hotelAddress: data.hotelAddress + '(' + data.hotelName + '-' + data.hallAddress + ')',
+            hotelAddress: data.hotelAddress,
+            invitationId: data.invitationId,
+            templateId: data.templateId,
+            templateType: data.templateType,
+            hotelName: data.hotelName,
+            longitude: mapPoint[0] || 0,
+            latitude: mapPoint[1] || 0,
+            marker: [
+              {
+                id: 0,
+                iconPath:
+                  'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/local.png',
+                longitude: mapPoint[0],
+                latitude: mapPoint[1],
+                width: 50,
+                height: 50
+              }
+            ]
+          }
+          this.player.src = data.backgroundMusic
+          this.musicId = data.musicFileId
+          this.hotelId = data.hotelId
+          this.initPlayer()
+          this.getTemplate()
+          this.isLoadedBaseInfo++
+          this.$apply()
+          // this.imageLoad()
+          return res.data
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  getHotelInfo() {
+    IndexService.hotelInfo({
+      data: {
+        hotelId: this.hotelId,
+        userNo: wx.getStorageSync(STATUS.USER_NO)
+      }
+    }).then(res => {
+      let hotelInfo = res.data.apiHotelInfo
+      this.pageDatas.baseInfo = this.pageDatas.baseInfo || {}
+      this.pageDatas.baseInfo.hotelAddress = hotelInfo.address
+      this.pageDatas.baseInfo.hotelName = hotelInfo.name
+      let mapPoint = (hotelInfo.coordinate || '106.49773,29.56964').split(',')
+      this.pageDatas.baseInfo.longitude = mapPoint[0] || 0
+      this.pageDatas.baseInfo.latitude = mapPoint[1] || 0
+      this.pageDatas.baseInfo.weddingTime = '2019年12月12日 12:08'
+    })
+  }
+
+  onLoad(options) {
+    this.bottomType = options.bottomType || ''
+    this.hotelId = options.hotelId || ''
+    this.templateId = options.tpl_id || ''
+    this.invitationid = options.invitationid || ''
+    this.templateType = options.templateType || 'withyou'
+    this.isPreview = options.isPreview || ''
+    this.hotelType =
+      options.hotelType || wx.getStorageSync('Invitation' + STATUS.HOTEL_TYPE)
+    // 请柬类型
+    this.tpmdata = JSON.parse(options.tpmdata || '{}')
+    this.themeType = options.themetype || this.tpmdata.themeType || ''
+    this.$apply()
+    this.clearnStoreage('screenShotImg')
+  }
+
+  onShow() {
+    this.imageLoads()
+    if (this.invitationid) {
+      this.getBaseInfo()
+      this.saveEditInfo()
+      this.$apply()
+    } else {
+      this.getTpmList()
+      this.getHotelInfo()
+      this.photoThumb = true
+    }
+    let address = wx.getStorageSync('ADDRESS') || ''
+    if (address) {
+      this.giftData['province'] = address[0]
+      this.giftData['city'] = address[1]
+      this.giftData['district'] = address[2]
+    }
+    this.$apply()
+    wx.removeStorageSync('ADDRESS')
+  }
+
+  onHide() {
+    wx.removeStorageSync('ADDRESS')
+    this.clearnStoreage('screenShotImg')
+    this.destroyMusic()
+  }
+
+  onUnload() {
+    this.clearnStoreage('screenShotImg')
+    this.destroyMusic()
+  }
+}
+</script>

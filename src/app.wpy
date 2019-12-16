@@ -1,0 +1,263 @@
+<style lang="less">
+@import './assets/less/commons.less';
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+page {
+  background: #fafafa;
+}
+// image{
+//   background: #ccc;
+//   position: relative;
+
+//   &::before{
+//     display: inline-block;
+//     width: 200rpx;
+//     height: 30rpx;
+//     text-align: center;
+//     line-height: 30rpx;
+//     content: '假装有图';
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     color: #FFF;
+//     margin-top: -15rpx;
+//     margin-left: -100rpx;
+//     font-size: 30rpx;
+//   }
+// }
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+// import { PATCH } from './utils/index'
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      // 首页
+      'pages/index',
+      // 控制权确认
+      'pages/control-confirm',
+      // 活动控制列表
+      'pages/control-activity-list',
+      'pages/web-view'
+    ],
+    // 分包
+    subPackages: [
+      // 喜事宝 - 摇一摇红包活动
+      {
+        // 分包根目录
+        root: 'subpackages/MarketActivityShake',
+        // 分包别名，分包预下载时可以使用
+        name: 'MAS',
+        // 分包页面路径，相对与分包根目录
+        pages: [
+          // 摇一摇游戏-通用皮肤页
+          'pages/shake-purpose',
+          // 摇一摇游戏-婚礼皮肤页
+          'pages/shake-wedding',
+          // 关系-第二版
+          'pages/relationship',
+          // 摇一摇游戏结果页
+          'pages/game-result',
+          // 活动红包领取记录
+          'pages/receive-list',
+          // 领券中心页
+          'pages/coupon-center',
+          // 无活动页面
+          'pages/no-activity',
+          // 活动中转页面
+          'pages/activity-transfer',
+          // 数钞票游戏(首页)
+          'pages/counting-money/index',
+          // 数钞票游戏(排名)
+          'pages/counting-money/ranking-list',
+          // 答题游戏
+          'pages/answer/index',
+          'pages/answer/ranking-list'
+        ]
+      },
+      // 喜事宝 - 酒店端
+      {
+        // 分包根目录
+        root: 'subpackages/MarketHotel',
+        // 分包别名，分包预下载时可以使用
+        name: 'MH',
+        // 分包页面路径，相对与分包根目录
+        pages: [
+          // 首页
+          'pages/index',
+          // 酒店详情
+          'pages/hotel-introduce',
+          // 宴会厅列表
+          'pages/banquet-hall-list',
+          // 宴会厅详情
+          'pages/banquet-hall-detail',
+          // 宴会菜单
+          'pages/banquet-bill-fare',
+          // 个人中心
+          'pages/personal-center',
+          // 我的钱包
+          'pages/my-wallet',
+          // 提现
+          'pages/cash-withdrawal',
+          // 提现结果页
+          'pages/withdraw-result',
+          // 我的优惠券
+          'pages/my-coupon',
+          // 使用我的优惠券
+          'pages/use-my-coupon',
+          // 我的预约单
+          'pages/my-appointment',
+          // 我的足迹
+          'pages/my-footmark',
+          // 婚礼作品
+          'pages/wedding-opus-list',
+          // 婚礼作品详情
+          'pages/wedding-opus-detail'
+        ]
+      },
+      // // 小视频
+      // {
+      //   // 分包根目录
+      //   root: 'subpackages/MiniVideo',
+      //   // 分包别名，分包预下载时可以使用
+      //   name: 'MV',
+      //   // 分包页面路径，相对与分包根目录
+      //   pages: [
+      //     // 首页
+      //     'pages/index',
+      //     'pages/index1',
+      //     'pages/index2',
+      //     'pages/index3',
+      //     'pages/product-detail',
+      //     'pages/web-view'
+      //   ]
+      // },
+      // // 电商
+      // {
+      //   // 分包根目录
+      //   root: 'subpackages/OnlineRetailers',
+      //   // 分包别名，分包预下载时可以使用
+      //   name: 'OR',
+      //   // 分包页面路径，相对与分包根目录
+      //   pages: [
+      //     // 首页
+      //     'pages/index',
+      //     // 商品搜索
+      //     'pages/goods-search',
+      //     // 商品详情
+      //     'pages/goods-detail',
+      //     // 填写订单
+      //     'pages/goods-order',
+      //     // 收货地址
+      //     'pages/address-list',
+      //     // 新增收货地址
+      //     'pages/address-add',
+      //     // 选择区域
+      //     'pages/address-city',
+      //     // 我的订单
+      //     'pages/my-order',
+      //     // 订单详情
+      //     'pages/order-detail',
+      //     // 物流
+      //     'pages/logistics',
+      //     // 订单跟踪
+      //     'pages/order_track',
+      //     // 联系售后
+      //     'pages/contact-us',
+      //     'pages/drapMoney'
+      //   ]
+      // },
+      // 电子请柬
+      {
+        // 分包根目录
+        root: 'subpackages/ElectronicInvitationCard',
+        // 分包别名，分包预下载时可以使用
+        name: 'EIC',
+        // 分包页面路径，相对与分包根目录
+        pages: [
+          // 首页
+          'pages/index',
+          // 伴手礼
+          'pages/gift',
+          // 宾客
+          'pages/guest',
+          // 请帖信息
+          'pages/info',
+          // 模板列表
+          'pages/templates-list',
+          // 音乐文件选择列表
+          'pages/music-list',
+          // 分享
+          'pages/share',
+          // 图片截图
+          'pages/img-upload',
+          // 地址选择
+          'pages/address-city',
+          // 请柬模板
+          'pages/invitation_template/invitation_qinlan/index',
+          'pages/invitation_template/invitation_simplesong/index',
+          'pages/invitation_template/invitation_flowery/index',
+          'pages/invitation_template/invitation_withyou/index',
+          'pages/invitation_template/invitation_baby/index',
+          'pages/invitation_template/invitation_longevity/index'
+        ]
+      }
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: '喜事宝',
+      navigationBarTextStyle: 'black'
+      // navigationStyle: 'custom'
+    },
+    permission: {
+      'scope.userLocation': {
+        desc: '你的位置信息将用于小程序位置接口使用'
+      }
+    },
+    navigateToMiniProgramAppIdList: [
+      'wxb3b29916859d5120',
+      'wx1edf489cb248852c'
+    ]
+  }
+
+  globalData = {
+    userInfo: null,
+    iphoneX: false,
+    tempVideoContext: {}
+  }
+
+  constructor() {
+    super()
+    this.use('requestfix')
+    this.use('promisify')
+  }
+
+  onLaunch() {
+    // PATCH.createPatch.call(this)
+  }
+
+  getUserInfo(cb) {
+    const that = this
+    if (this.globalData.userInfo) {
+      return this.globalData.userInfo
+    }
+    wepy.getUserInfo({
+      success(res) {
+        that.globalData.userInfo = res.userInfo
+        cb && cb(res.userInfo)
+      }
+    })
+  }
+}
+</script>

@@ -1,0 +1,410 @@
+<!--
+  请柬第3屏
+  @Author: AndyPan
+  @CreateDate: 2019年7月25日16:35:29
+  @LastUpdateDate: 2019年7月25日16:35:33
+  @Remarks: 
+-->
+
+<style lang="less" scoped>
+// @import '../../../../../../assets/less/mixin.less';
+.keyframes (@name,@content) {
+  @-webkit-keyframes @name {
+    @content();
+  }
+  @keyframes @name {
+    @content();
+  }
+}
+.page-three {
+  &.animation{
+    .bride-groom-photo-one{
+      @keyframeName: three-photo-one;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            right: -333rpx;
+          } 
+          to {
+            opacity: 1;
+            right: 44rpx;
+          }
+        }
+      );
+      animation: @keyframeName 2.5s ease 0.5s forwards;
+    }
+    .bride-groom-circle-one{
+      @keyframeName: three-circle-one;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            left: -300rpx;
+          } 
+          to {
+            opacity: 1;
+            left: 70rpx;
+          }
+        }
+      );
+      animation: @keyframeName 2s ease 1s forwards;
+    }
+    .bride-groom-photo-two{
+      @keyframeName: three-photo-two;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            left: -100rpx;
+          } 
+          to {
+            opacity: 1;
+            left: 0rpx;
+          }
+        }
+      );
+      animation: @keyframeName 3s ease 0.8s forwards;
+    }
+    .bride-groom-circle-two{
+      @keyframeName: three-circle-two;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            bottom: 0rpx;
+            left: -230rpx;
+          } 
+          to {
+            opacity: 1;
+            bottom: -200rpx;
+            left: -30rpx;
+          }
+        }
+      );
+      animation: @keyframeName 1.5s ease 1.5s forwards;
+    }
+    .wedding{
+      @keyframeName: three-wedding;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            transform: translate(0, -120rpx) rotate(90deg);
+          } 
+          to {
+            opacity: 1;
+            transform: translate(0, 0rpx) rotate(90deg);
+          }
+        }
+      );
+      animation: @keyframeName 3s ease 2s forwards;
+    }
+    .dear-marry{
+      @keyframeName: three-dear-marry;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+          } 
+          to {
+            opacity: 1;
+          }
+        }
+      );
+      animation: @keyframeName 1.5s ease 3s forwards;
+    }
+    .semicircle{
+      @keyframeName: three-semicircle;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            top: 0rpx;
+          } 
+          to {
+            opacity: 1;
+            top: 196rpx;
+          }
+        }
+      );
+      animation: @keyframeName 2.5s ease 2.5s forwards;
+    }
+    .dream{
+      @keyframeName: three-dream;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            left: 0rpx;
+          } 
+          to {
+            opacity: 1;
+            left: 84rpx;
+          }
+        }
+      );
+      animation: @keyframeName 1.5s ease 1s forwards;
+    }
+    .line{
+      @keyframeName: three-line;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            height: 0rpx;
+          } 
+          to {
+            opacity: 1;
+            height: 104rpx;
+          }
+        }
+      );
+      animation: @keyframeName 1s ease 3s forwards;
+    }
+  }
+
+  .bride-groom-circle-one{
+    width: 576rpx;
+    height: 576rpx;
+    top: 30rpx;
+    left: 70rpx;
+  }
+  .bride-groom-circle-two{
+    width: 700rpx;
+    height: 650rpx;
+    bottom: -200rpx;
+    left: -30rpx;
+  }
+  .semicircle{
+    position: absolute;
+    width: 82rpx;
+    height: 178rpx;
+    top: 196rpx;
+    right: 130rpx;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 2;
+    &::before{
+      display: inline-block;
+      content: '';
+      background: #ff4c2f;
+      opacity: .5;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 178rpx;
+      height: 178rpx;
+      border-radius: 50%;
+      z-index: 10;
+    }
+  }
+  .wedding{
+    height: 76rpx;
+    width: 510rpx;
+    text-align: left;
+    font-size: 40rpx;
+    color: #333333;
+    line-height: 76rpx;
+    position: absolute;
+    z-index: 2;
+    left: 130rpx;
+    top: 300rpx;
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+  .dear-marry{
+    height: 80rpx;
+    width: 136rpx;
+    text-align: left;
+    font-size: 24rpx;
+    color: #333333;
+    line-height: 36rpx;
+    position: absolute;
+    z-index: 2;
+    left: 220rpx;
+    top: 120rpx;
+    opacity: 0;
+    transform: rotate(90deg);
+    text-transform: Uppercase;
+
+    &::after{
+      content: '';
+      display: inline-block;
+      height: 2rpx;
+      width: 104rpx;
+      border-bottom: 2rpx solid #535353;
+      margin-bottom: -150rpx;
+    }
+  }
+  .dream{
+    font-size: 24rpx;
+    color: #333333;
+    position: absolute;
+    left: 84rpx;
+    top: 660rpx;
+    text-transform: Uppercase;
+    opacity: 0;
+    &::before{
+      display: inline-block;
+      content: '';
+      width: 34rpx;
+      height: 2rpx;
+      border-top: 2rpx solid #535353;
+      position: absolute;
+      top: 60%;
+      left: -50rpx;
+    }
+  }
+
+  .line{
+    border-left: 2rpx solid #535353;
+    width: 2rpx;
+    height: 104rpx;
+    position: absolute;
+    right: 40rpx;
+    bottom: 140rpx;
+    opacity: 0;
+  }
+
+  .bride-groom-photo-one{
+    width: 666rpx;
+    height: 378rpx;
+    top: 320rpx;
+    right: 44rpx;
+
+    .photo-thumb-wrap{
+      width: 750rpx;
+      height: 750rpx;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+
+      .photo-thumb.thumb-custom{
+        width: 666rpx;
+        height: 378rpx;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+      }
+    }
+  }
+  
+  .bride-groom-photo-two{
+    overflow: hidden;
+    position: absolute;
+    width: 596rpx;
+    height: 480rpx;
+    bottom: 0rpx;
+    left: 0rpx;
+    opacity: 0;
+    .photo-thumb-wrap{
+      width: 680rpx;
+      height: 680rpx;
+      border-radius: 50%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      overflow: hidden;
+      .photo-thumb.thumb-custom{
+        width: 100%;
+        height: 480rpx;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+  }
+  
+  .upload-img{
+    &.first{
+      top: 410rpx;
+      right: 290rpx;
+    }
+    &.second{
+      left: 180rpx;
+      bottom: 180rpx;
+    }
+  }
+}
+</style>
+
+<template>
+  <view class="page-screen page-three" :class="{animation:current==2}">
+    <view class="circle bride-groom-circle-one"></view>
+    <view class="circle bride-groom-circle-two"></view>
+    <view class="semicircle"></view>
+    <view class="wedding">WEDDING.</view>
+    <view class="dear-marry">
+      <view>Dear</view>
+      <view>marry me</view>
+      <view>yes i do</view>
+    </view>
+    <view class="dream">dream</view>
+    <view class="line"></view>
+    <view class="photo bride-groom-photo-one">
+      <view class="photo-thumb-wrap">
+        <image class="photo-thumb thumb-custom" wx:if="{{domain && photoThumb}}"
+          src="{{pageData.imageInfo[current][0] ? pageData.imageInfo[current][0]['imagePath'] : (domain + 'photo-thumb-default-2/9.png')}}"
+          @load="imageLoad" />
+        <image class="photo-thumb" @load="imageLoad" wx:elif="{{domain}}" />
+      </view>
+    </view>
+    <view class="photo bride-groom-photo-two">
+      <view class="photo-thumb-wrap">
+        <image class="photo-thumb thumb-custom" wx:if="{{domain && photoThumb}}"
+          src="{{pageData.imageInfo[current][1] ? pageData.imageInfo[current][1]['imagePath'] : (domain + 'photo-thumb-default-2/8.png')}}"
+          @load="imageLoad" />
+        <image class="photo-thumb" @load="imageLoad" wx:elif="{{domain}}" />
+      </view>
+    </view>
+    
+    <view class="upload-img first" @tap="uploadImg" data-index="1" data-rate="0.57" wx:if="{{bottomType === 'setting'}}">
+      <image class="ui-img" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" />
+    </view>
+    <view class="upload-img second" @tap="uploadImg" data-index="2" data-rate="0.71" wx:if="{{bottomType === 'setting'}}">
+      <image class="ui-img" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" />
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class TherePagesComponent extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    photoThumb: Boolean,
+    current: { type: Number, default: 0 },
+    domain: String,
+    pageData: { type: Object, default: {} },
+    bottomType: String,
+    onUploadImg: Function,
+    onImageLoad: Function
+  }
+  methods = {
+    uploadImg(e) {
+      if (this.onUploadImg) {
+        this.onUploadImg.call(this.$parent, e)
+      }
+      this.$emit('onUploadImg', e)
+    },
+    imageLoad(e) {
+      let onImageLoad = this.onImageLoad
+      if (onImageLoad) {
+        onImageLoad.call(this.$parent, e)
+      }
+      this.$emit('onImageLoad', e)
+    }
+  }
+}
+</script>

@@ -1,0 +1,97 @@
+<!--
+  块内容列表组件-视图模板
+  @Author: AndyPan
+  @version: 1.0.0
+  @CreateDate: 2019年4月29日10:46:33
+  @LastUpdateDate: 2019年4月29日10:47:00
+  @Remarks: 备注
+-->
+
+<!-- 组件样式 -->
+<style lang="less">
+@import '../../../../assets/less/mixin.less';
+
+.wedding-opus-component {
+  .wedding-opus-list {
+    .no-dataset {
+      font-size: 32rpx;
+      color: @color-999999;
+      text-align: center;
+      padding-top: 30rpx;
+      padding-bottom: 50rpx;
+    }
+    .opus-list-item {
+      padding-bottom: 40rpx;
+      .opus-thumb-wrap {
+        width: 100%;
+        // height: 300rpx;
+        height: 386rpx;
+        overflow: hidden;
+      }
+      .opus-item-thumb {
+        min-width: 100%;
+        min-height: 100%;
+      }
+      .opus-item-video {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .opus-item-text {
+        margin-top: 20rpx;
+        .clearfix();
+        .item-text-name {
+          width: 70%;
+          float: left;
+          text-align: left;
+          color: @color-333333;
+          font-size: 30rpx;
+          .text-overflow();
+        }
+        .item-text-remark {
+          width: 30%;
+          float: right;
+          text-align: right;
+          color: @color-999999;
+          font-size: 24rpx;
+          .text-overflow();
+        }
+      }
+    }
+  }
+}
+</style>
+
+<!-- 组件视图 -->
+<template>
+  <view class="wedding-opus-component">
+    <view class="wedding-opus-list">
+      <view wx:if="{{dataset && dataset.length}}">
+        <repeat for="{{dataset}}" key="index" index="index" item="item">
+          <view class="opus-list-item">
+            <view class="opus-thumb-wrap">
+              <!-- <video class="opus-item-video" id="j-video-{{index}}" wx:if="{{item.video}}" src="{{item.video}}"
+                bindplay="playVideo"
+                controls />
+              <image wx:elif="{{item.coverImg}}" src="{{item.coverImg}}" class="opus-item-thumb" mode="widthFix"
+                 data-id="{{item.id}}" data-data="{{item}}" @tap="onLookDetail" /> -->
+              <image src="{{item.coverImg}}" class="opus-item-thumb" mode="widthFix"
+                 data-id="{{item.id}}" data-data="{{item}}" @tap="onLookDetail" />
+            </view>
+            <view class="opus-item-text" data-id="{{item.id}}" data-data="{{item}}" @tap="onLookDetail">
+              <text class="item-text-name">{{item.caseName}}</text>
+              <text class="item-text-remark">{{item.envText}}</text>
+            </view>
+          </view>
+        </repeat>
+      </view>
+      <view class="no-dataset" wx:else>暂无作品~</view>
+    </view>
+  </view>
+</template>
+
+<!-- 组件业务逻辑 -->
+<script>
+import WeddingOpusComponent from './view'
+export default WeddingOpusComponent
+</script>

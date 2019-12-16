@@ -1,0 +1,1422 @@
+<!--
+  答题游戏页面
+  @Author: AndyPan
+  @CreateDate: 2019年10月31日16:07:26
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../../assets/less/mixin.less';
+
+// 进度条旋转
+.animation-progress-rotate(@name: fn-animation){
+  @keyframes @name {
+    0% {
+      .rotate(0);
+    }
+    100% {
+      .rotate(360deg);
+    }
+  }
+}
+
+@progress-rotate: progress-rotate;
+.animation-progress-rotate(@progress-rotate);
+//动画样式设置
+.animation-class-progress-rotate() {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@progress-rotate);
+  //设置动画时间(1秒)
+  .animation-duration(1s);
+  //动画延时播放
+  .animation-delay(0s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(ease-out);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(normal);
+}
+
+.animation-rotate-slow(@name: fn-animation){
+  @keyframes @name {
+    0% {
+      .rotate(0);
+      opacity: .2;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      .rotate(360deg);
+      opacity: 0.2;
+    }
+  }
+}
+@progress-rotate-slow: progress-rotate-slow;
+.animation-rotate-slow(@progress-rotate-slow);
+//动画样式设置
+.animation-class-progress-rotate-slow() {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@progress-rotate-slow);
+  //设置动画时间(1秒)
+  .animation-duration(3s);
+  //动画延时播放
+  .animation-delay(0s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(linear);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(normal);
+}
+.progress-rotate-animation {
+  .animation-class-progress-rotate()
+}
+// 指针放大
+.animation-scale(@name: fn-animation){
+  @keyframes @name {
+    1% {
+      transform: scale(1, 1);
+    }
+    2% {
+      transform: scale(1.2, 1.2) rotate(0deg);
+    }
+    89% {
+      transform: scale(1.2, 1.2) rotate(1080deg);
+    }
+    91% {
+      transform: scale(0.8, 0.8);
+    }
+    93% {
+      transform: scale(1, 1);
+    }
+  }
+}
+
+@elem-scale: elem-scale-name;
+.animation-scale(@elem-scale);
+//动画样式设置
+.animation-class-scale() {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@elem-scale);
+  //设置动画时间(1秒)
+  .animation-duration(5s);
+  //动画延时播放
+  .animation-delay(.2s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(linear);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(normal);
+  // animation-fill-mode: forwards;
+}
+.animation-scale-class {
+  // transform: scale(0.8, 0.8);
+  .animation-class-scale()
+}
+
+// 弹出框背景光闪烁
+.animation-opacity-bg(@name: fn-animation){
+  @keyframes @name {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@opacity-bg-name: opacity-bg;
+.animation-opacity-bg(@opacity-bg-name);
+//动画样式设置
+.animation-class-opacity-bg() {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@opacity-bg-name);
+  //设置动画时间(1秒)
+  .animation-duration(1s);
+  //动画延时播放
+  .animation-delay(0s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(linear);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(alternate);
+}
+
+.page-answer-game{
+  background: #E03C18;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .label-wrap{
+    position: absolute;
+    bottom: 90rpx;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .label-item-wrap{
+    display: inline-block;
+    background: #E03C18;
+    border-radius: 40rpx;
+    border: 1rpx solid #333333;
+    padding: 10rpx;
+    .label-item-text{
+      display: inline-block;
+      padding: 15rpx 33rpx;
+      background: #E97D2A;
+      border: 1rpx solid #333333;
+      border-radius: 30rpx;
+      font-size: 30rpx;
+      color: #FFF;
+      font-weight: bold;
+    }
+  }
+  .answer-game-begin{
+    // margin-top: 92rpx;
+    // margin-left: 57rpx;
+    // margin-right: 57rpx;
+    // height: 1072rpx;
+    // position: relative;
+    margin-left: 57rpx;
+    margin-right: 57rpx;
+    // height: 1072rpx;
+    position: absolute;
+    top: 92rpx;
+    bottom: 180rpx;
+    .begin-head{
+      height: 221rpx;
+      width: 635rpx;
+      background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-layout-ready-head.png') 0 0 no-repeat;
+      background-size: 100% 100%;
+      position: relative;
+      z-index: 10;
+      &::before, &::after {
+        content: '';
+        display: inline-block;
+        width: 82rpx;
+        height: 165rpx;
+        position: absolute;
+        bottom: -165rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-modifier-ready-7.png') 0 0 no-repeat;
+        background-size: 100% 100%;
+      }
+      &::before{
+        left: 55rpx;
+      }
+      &::after{
+        right: 55rpx;
+      }
+    }
+    .begin-foot{
+      width: 750rpx;
+      height: 204rpx;
+      position: absolute;
+      bottom: -150rpx;
+      left: 50%;
+      margin-left: -375rpx;
+      background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-modifier-ready-8.png?123') 0 0 no-repeat;
+      background-size: 100% 100%;
+    }
+    .begin-cont{
+      position: absolute;
+      left: 20rpx;
+      right: 20rpx;
+      bottom: 0;
+      top: 96rpx;
+      background: #1A5672;
+      border: 1rpx solid #000000;
+      border-top-left-radius: 30rpx;
+      border-top-right-radius: 30rpx;
+      .ag-modifier-ready-left{
+        background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-modifier-ready-1.png') 0 0 no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        z-index: 5;
+        width: 76rpx;
+        height: 76rpx;
+        left: -52rpx;
+        top: 535rpx;
+      }
+      .ag-modifier-ready-right{
+        background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-modifier-ready-1.png') 0 0 no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        z-index: 5;
+        width: 52rpx;
+        height: 52rpx;
+        right: -40rpx;
+        top: 361rpx;
+        transform: rotate(-30deg);
+      }
+      .ag-modifier-ready-rightbottom{
+        background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-modifier-ready-2.png') 0 0 no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        z-index: 5;
+        width: 238rpx;
+        height: 222rpx;
+        right: -78rpx;
+        bottom: -136rpx;
+      }
+      .ag-layout-ready{
+        width: 204rpx;
+        height: 107rpx;
+        position: absolute;
+        top: 165rpx;
+        left: 50%;
+        margin-left: -102rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-layout-ready.png') 0 0 no-repeat;
+        background-size: 100% 100%;
+      }
+      .ag-layout-ready-wrap{
+        width: 472rpx;
+        height: 472rpx;
+        border-radius: 100%;
+        background: #296079;
+        position: absolute;
+        // top: 297rpx;
+        top: 30%;
+        left: 50%;
+        margin-left: -236rpx;
+        .ag-layout-wrap-1{
+          width: 450rpx;
+          height: 450rpx;
+          position: absolute;
+          background: #1a5672;
+          left: 11rpx;
+          top: 11rpx;
+          border-radius: 100%;
+          z-index: 2;
+          .progress-bar{
+            width: 100%;
+            height: 100%;
+            background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-modifier-ready-6.png') 0 0 no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+        .ag-layout-wrap-2{
+          width: 410rpx;
+          height: 410rpx;
+          position: absolute;
+          background: #0e4b68;
+          left: 31rpx;
+          top: 31rpx;
+          border-radius: 100%;
+          z-index: 3;
+        }
+        .ag-layout-wrap-3{
+          width: 354rpx;
+          height: 354rpx;
+          position: absolute;
+          left: 59rpx;
+          top: 59rpx;
+          z-index: 4;
+          background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-layout-ready-clock.png') 0 0 no-repeat;
+          background-size: 100% 100%;
+          .num {
+            width: 130rpx;
+            height: 180rpx;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -80rpx;
+            margin-left: -65rpx;
+            transform: scale(1.5, 1.5);
+          }
+          &.num-1{
+            .num{
+              background: url('@{resourcePath}MarketActivityShake/assets/answer/images/num-1.png') center center no-repeat;
+              background-size: 180rpx auto;
+            }
+          }
+          &.num-2{
+            .num{
+              background: url('@{resourcePath}MarketActivityShake/assets/answer/images/num-2.png') center center no-repeat;
+              background-size: 180rpx auto;
+            }
+          }
+          &.num-3{
+            .num{
+              background: url('@{resourcePath}MarketActivityShake/assets/answer/images/num-3.png') center center no-repeat;
+              background-size: 180rpx auto;
+            }
+          }
+          &.num-4{
+            .num{
+              background: url('@{resourcePath}MarketActivityShake/assets/answer/images/num-4.png') center center no-repeat;
+              background-size: 180rpx auto;
+            }
+          }
+          &.num-5{
+            .num{
+              background: url('@{resourcePath}MarketActivityShake/assets/answer/images/num-5.png') center center no-repeat;
+              background-size: 180rpx auto;
+            }
+          }
+        }
+        .ag-layout-rotate{
+          position: absolute;
+          top: 39rpx;
+          left: 39rpx;
+          width: 394rpx;
+          height: 394rpx;
+          background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-modifier-ready-3.png') center center no-repeat;
+          background-size: 100% 100%;
+          z-index: 5;
+        }
+      }
+    }
+  }
+
+
+  /**
+  * 摇摆动画(关键帧)
+  * @remark 无
+  */
+  .animation-tada-modify(@name: fn-animation){
+    @keyframes @name {
+      0% {
+        transform:rotate(2deg);
+        transform-origin:50% 0
+      }
+      20% {
+        transform:rotate(10deg);
+        transform-origin:50% 0
+      }
+      40% {
+        transform:rotate(0deg);
+        transform-origin:50% 0
+      }
+      60% {
+        transform:rotate(-2deg);
+        transform-origin:50% 0
+      }
+      80% {
+        transform:rotate(-10deg);
+        transform-origin:50% 0
+      }
+      100% {
+        transform:rotate(0deg);
+        transform-origin:50% 0
+      }
+    }
+  }
+  .answer-game-main{
+    position: absolute;
+    top: 120rpx;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    .game-main-head{
+      height: 100rpx;
+      position: relative;
+      z-index: 2;
+      .head-left-info{
+        height: 100rpx;
+        width: 520rpx;
+        float: left;
+        margin-left: -2rpx;
+        border: 1rpx solid #333333;
+        background: #E97D2A;
+        border-top-right-radius: 50rpx;
+        border-bottom-right-radius: 50rpx;
+        position: relative;
+        .head-info-item{
+          width: 150rpx;
+          height: 65rpx;
+          background: url('@{resourcePath}MarketActivityShake/assets/answer/images/icon-item-bg.png') 0 0 no-repeat;
+          background-size: 100% 100%;
+          float: left;
+          margin-left: 40rpx;
+          margin-top: 20rpx;
+          font-size: 30rpx;
+          font-weight: bold;
+          color: #FFF;
+          padding-left: 50rpx;
+          text-align: center;
+          line-height: 62rpx;
+          position: relative;
+          &.icon-answer-item{
+            &::before {
+              content: '';
+              display: inline-block;
+              width: 66rpx;
+              height: 66rpx;
+              position: absolute;
+              top: -6rpx;
+              left: -3rpx;
+              background: url('@{resourcePath}MarketActivityShake/assets/answer/images/icon-answer-item.png') 0 0 no-repeat;
+              background-size: 100% 100%;
+            }
+          }
+          &.icon-count-down{
+            float: right;
+            margin-right: 15rpx;
+            &::before {
+              content: '';
+              display: inline-block;
+              width: 62rpx;
+              height: 71rpx;
+              position: absolute;
+              top: -8rpx;
+              left: -5rpx;
+              background: url('@{resourcePath}MarketActivityShake/assets/answer/images/icon-count-down.png') 0 0 no-repeat;
+              background-size: 100% 100%;
+            }
+          }
+        }
+      }
+      @tada-name: tada-modify;
+      .animation-tada-modify(@tada-name);
+      //动画样式设置
+      .animation-class-tada-name1() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@tada-name);
+        //设置动画时间(1秒)
+        .animation-duration(2s);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(linear);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(infinite);
+        // 	规定是否应该轮流反向播放动画
+        .animation-direction(alternate);
+      }
+      .animation-class-tada-name2() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@tada-name);
+        //设置动画时间(1秒)
+        .animation-duration(3s);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(linear);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(infinite);
+        // 	规定是否应该轮流反向播放动画
+        .animation-direction(alternate);
+      }
+      &::before, &::after{
+        content: '';
+        display: inline-block;
+        width: 104rpx;
+        height: 210rpx;
+        position: absolute;
+        bottom: -225rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ag-modifier-ready-7.png') 0 0 no-repeat;
+        background-size: 100% 100%;
+      }
+      &::before{
+        left: 10rpx;
+        .animation-class-tada-name1();
+      }
+      &::after{
+        right: 10rpx;
+        .animation-class-tada-name2();
+      }
+      .count-down-wrap{
+        border: 1rpx solid #333;
+        background: #E97D2A;
+        border-radius: 50rpx;
+        float: right;
+        margin-right: 20rpx;
+        width: 150rpx;
+        height: 85rpx;
+        padding: 10rpx;
+        .count-down{
+          border: 1rpx solid #333;
+          background: #1A5672;
+          height: 80rpx;
+          border-radius: 40rpx;
+          font-size: 64rpx;
+          font-weight: bold;
+          color: #FFF;
+          text-align: center;
+          line-height: 80rpx;
+        }
+      }
+    }
+    .game-main-cont{
+      position: absolute;
+      top: 120rpx;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #1A5672;
+      border-top: 1rpx solid #333;
+      .answer-wrap{
+        width: 690rpx;
+        height: 310rpx;
+        margin: 0 auto;
+        position: relative;
+        .answer-mask-bg{
+          width: 660rpx;
+          height: 310rpx;
+          margin: 0 auto;
+          background: rgba(0, 0, 0, 0.2);
+          border-radius: 0 0 20rpx 20rpx;
+        }
+        .answer-bg{
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 300rpx;
+          background: #0E2F3F;
+          border-radius: 0 0 20rpx 20rpx;
+          .answer-progress{
+            width: 150rpx;
+            height: 40rpx;
+            line-height: 40rpx;
+            border-radius: 20rpx;
+            background: #041D29;
+            font-size: 28rpx;
+            color: #FFF;
+            margin: 26rpx auto;
+            text-align: center;
+            letter-spacing: 4rpx;
+          }
+          .answer-text{
+            width: 464rpx;
+            height: 170rpx;
+            margin: 12rpx auto;
+            // overflow-y: auto;
+            font-size: 30rpx;
+            line-height: 40rpx;
+            text-align: left;
+            color: #FFF;
+            // overflow: hidden;
+            &.text-leave-1{
+              font-weight: bold;
+              font-size: 40rpx;
+              text-align: center;
+              line-height: 170rpx;
+            }
+            &.text-leave-2{
+              font-weight: bold;
+              font-size: 40rpx;
+              // text-align: center;
+              line-height: 60rpx;
+            }
+            &.text-leave-3{
+              font-weight: bold;
+              font-size: 30rpx;
+              // text-align: center;
+              line-height: 43rpx;
+            }
+            &.text-leave-4{
+              font-weight: bold;
+              font-size: 24rpx;
+              line-height: 30rpx;
+              height: 182rpx;
+              overflow: hidden;
+              overflow-y: auto;
+            }
+          }
+        }
+        .answer-options-wrap{
+          margin-top: 50rpx;
+          height: auto;
+          text-align: center;
+          .answer-option{
+            margin-bottom: 20rpx;
+            .option-item{
+              height: 110rpx;
+              width: 480rpx;
+              display: inline-block;
+              background: #75D3FF;
+              border-radius: 55rpx;
+              border: 1rpx solid #333;
+              box-shadow: 0 10rpx 10rpx rgba(0, 0, 0, 0.2);
+              .option-item-text{
+                height: 100rpx;
+                line-height: 100rpx;
+                background: #FFF;
+                border-radius: 55rpx;
+                color: #75D3FF;
+                font-size: 40rpx;
+                font-weight: bold;
+              }
+              .animation-item-active(@name: fn-animation){
+                @keyframes @name {
+                  0% {
+                    transform: scale(1, 1);
+                  }
+                  25% {
+                    transform: scale(0.95, 0.95);
+                  }
+                  50% {
+                    transform: scale(1, 1);
+                  }
+                  75% {
+                    transform: scale(1.08, 1.08);
+                  }
+                  100% {
+                    transform: scale(1, 1);
+                  }
+                }
+              }
+              @item-active: item-active;
+              .animation-item-active(@item-active);
+              //动画样式设置
+              .animation-class-item-active() {
+                //通过动画名称将动画添加到样式中
+                .animation-name(@item-active);
+                //设置动画时间(1秒)
+                .animation-duration(.25s);
+                //动画延时播放
+                .animation-delay(0s);
+                //设置动画速度曲线(直线匀速)
+                .animation-timing-function(linear);
+                //动画的播放次数(重复播放)
+                .animation-iteration-count(1);
+                // 	规定是否应该轮流反向播放动画
+                .animation-direction(normal);
+              }
+              &.active {
+                background: #FFF;
+                .animation-class-item-active();
+                .option-item-text{
+                  background: #75D3FF;
+                  color: #FFF;
+                }
+              }
+              &.error {
+                background: #FFF;
+                .option-item-text{
+                  background: #ED4848;
+                  color: #FFF;
+                  position: relative;
+                  &::after {
+                    content: '';
+                    display: inline-block;
+                    width: 38rpx;
+                    height: 38rpx;
+                    position: absolute;
+                    right: 43rpx;
+                    top: 33rpx;
+                    background: url('@{resourcePath}MarketActivityShake/assets/answer/images/icon-answer-error.png') 0 0 no-repeat;
+                    background-size: 100% 100%;
+                  }
+                }
+              }
+              &.success {
+                background: #FFF;
+                .option-item-text{
+                  background: #40CB88;
+                  color: #FFF;
+                  position: relative;
+                  &::after {
+                    content: '';
+                    display: inline-block;
+                    width: 37rpx;
+                    height: 38rpx;
+                    position: absolute;
+                    right: 42rpx;
+                    top: 32rpx;
+                    background: url('@{resourcePath}MarketActivityShake/assets/answer/images/icon-answer-success.png') 0 0 no-repeat;
+                    background-size: 100% 100%;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .answer-button-next{
+        width: 720rpx;
+        height: 176rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/answer/images/btn-bg-sure.png') 0 0 no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        bottom: calc(0rpx + constant(safe-area-inset-bottom));
+        bottom: calc(0rpx + env(safe-area-inset-bottom));
+        margin-left: -360rpx;
+        text-align: center;
+        font-size: 50rpx;
+        font-weight: bold;
+        color: #FFF;
+        line-height: 150rpx;
+      }
+      .cont-mask{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+      }
+    }
+  }
+  
+  .answer-end-popup{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -100;
+
+    &.show {
+      z-index: 1000;
+      .answer-popup {
+        .scale-all();
+        .opacity(1);
+      }
+    }
+
+    .answer-popup{
+      width: 100%;
+      height: 997rpx;
+      position: relative;
+      .transition(all .5s ease);
+      .opacity(0.2);
+      .scale-all(0.2);
+
+      .popup-light-wrap {
+        position: relative;
+        height: 563rpx;
+        &::before{
+          content: '';
+          display: inline-block;
+          width: 100%;
+          height: 370rpx;
+          background: url('@{resourcePath}MarketActivityShake/assets/answer/images/light-bg.png') 0 0 no-repeat;
+          background-size: 100% 370rpx;
+          .animation-class-opacity-bg();
+          margin-bottom: 30rpx;
+        }
+        &::after{
+          content: '';
+          display: inline-block;
+          width: 386rpx;
+          height: 386rpx;
+          background: url('@{resourcePath}MarketActivityShake/assets/answer/images/light.png') 0 0 no-repeat;
+          background-size: 100% 100%;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          margin-left: -193rpx;
+          opacity: .5;
+          .animation-class-progress-rotate-slow()
+        }
+      }
+      .popup-cont-bg {
+        height: 762rpx;
+        width: 684rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/answer/images/answer-end-popup.png') 0 0 no-repeat;
+        background-size: 684rpx 762rpx;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        margin-left: -342rpx;
+
+        .answer-yes, .answer-take-time {
+          width: 162rpx;
+          height: 80rpx;
+          text-align: center;
+          line-height: 80rpx;
+          font-size: 50rpx;
+          font-weight: bold;
+          color: #e03c18;
+          text-shadow:#FFF 2rpx 0 0,#FFF 0 2rpx 0,#FFF -2rpx 0 0,#FFF 0 -2rpx 0;
+          -webkit-text-shadow:#FFF 2rpx 0 0,#FFF 0 2rpx 0,#FFF -2rpx 0 0,#FFF 0 -2rpx 0;
+          -moz-text-shadow:#FFF 2rpx 0 0,#FFF 0 2rpx 0,#FFF -2rpx 0 0,#FFF 0 -2rpx 0;
+          position: absolute;
+        }
+        .answer-yes {
+          left: 160rpx;
+          bottom: 354rpx;
+        }
+        .answer-take-time{
+          right: 160rpx;
+          bottom: 354rpx;
+        }
+        .popup-count-down{
+          width: 94rpx;
+          height: 94rpx;
+          font-size: 70rpx;
+          font-weight: bold;
+          color: #FFF;
+          text-align: center;
+          line-height: 94rpx;
+          position: absolute;
+          bottom: 200rpx;
+          left: 50%;
+          margin-left: -47rpx;
+        }
+
+        .popup-btn{
+          height: 110rpx;
+          width: 450rpx;
+          position: absolute;
+          bottom: 30rpx;
+          left: 50%;
+          margin-left: -225rpx;
+          font-size: 34rpx;
+          color: #FFF;
+          font-weight: bold;
+          line-height: 100rpx;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-answer-game">
+    <navigation-bar wx:if="{{answerStatus}}" :title.sync="title"/>
+    <view class="answer-game-begin" wx:if="{{!answerStatus}}">
+      <view class="begin-head"></view>
+      <view class="begin-cont">
+        <view class="ag-modifier-ready-right"></view>
+        <view class="ag-modifier-ready-left"></view>
+        <view class="ag-modifier-ready-rightbottom"></view>
+        <view class="ag-layout-ready"></view>
+        <view class="ag-layout-ready-wrap">
+          <view class="ag-layout-wrap-1">
+            <view class="{{ 'progress-bar' + (readyBegin ? ' progress-rotate-animation' : '') }}"></view>
+          </view>
+          <view class="ag-layout-wrap-2"></view>
+          <view class="{{ 'ag-layout-wrap-3 num-' + readyTimer}}">
+            <view class="num"></view>
+          </view>
+          <view class="{{ 'ag-layout-rotate' + (readyBegin ? (' animation-scale-class') : '') }}"></view>
+        </view>
+        <view class="label-wrap">
+          <view class="label-item-wrap">
+            <view class="label-item-text">每 题 有 {{answerItemTimer}} 秒 时 间 作 答</view>
+          </view>
+        </view>
+      </view>
+      <view class="begin-foot"></view>
+    </view>
+    <view class="answer-game-main" style="{{navBarHeight ? ('top:' + navBarHeight + 'rpx;') : ''}}" wx:if="{{answerStatus}}">
+      <view class="game-main-head">
+        <view class="head-left-info">
+          <view class="head-info-item icon-answer-item">{{answerRightAll}}题</view>
+          <view class="head-info-item icon-count-down">{{answerTimeAll}}s</view>
+        </view>
+        <view class="count-down-wrap">
+          <view class="count-down">{{currentAnswerItem.countTimerStr}}</view>
+        </view>
+      </view>
+      <!-- 答题状态音效(答题正确或错误) -->
+      <audio class="audio-hide" src="{{resourcePath + 'MarketActivityShake/assets/answer/music/answer-success-music.mp3'}}" id="j-audio-answer-success" />
+      <audio class="audio-hide" src="{{resourcePath + 'MarketActivityShake/assets/answer/music/answer-error-music.mp3'}}" id="j-audio-answer-error" />
+      <!-- 答题背景音乐 -->
+      <audio class="audio-hide" loop src="{{resourcePath + 'MarketActivityShake/assets/answer/music/answer-count-down.mp3'}}" id="j-audio-answer-countdown" />
+      <!-- 所有答题结束(游戏结束背景音乐) -->
+      <audio class="audio-hide" src="{{resourcePath + 'MarketActivityShake/assets/answer/music/answer-submit-music.mp3'}}" id="j-audio-answer-submit" />
+      <view class="game-main-cont">
+        <view class="answer-wrap">
+          <view class="answer-mask-bg"></view>
+          <view class="answer-bg">
+            <view class="answer-progress">{{currentAnswerNumber}}/{{answerList.length}}</view>
+            <view class="{{'answer-text ' + currentAnswerItem.class}}">{{currentAnswerItem.title}}</view>
+          </view>
+          <view class="answer-options-wrap" @tap="optionChoose">
+            <repeat for="{{currentAnswerItem.options}}" key="index" index="index" item="item">
+              <view class="answer-option">
+                <view class="{{'option-item ' + item.status}}">
+                  <view class="option-item-text" data-id="{{item.id}}">{{item.text}}</view>
+                </view>
+              </view>
+            </repeat>
+          </view>
+        </view>
+        <view class="answer-button-next" @tap="answerSure">确定</view>
+      </view>
+    </view>
+    <view class="{{'answer-end-popup' + (answerComplate ? ' show' : '')}}">
+      <view class="answer-popup">
+        <view class="popup-light-wrap"></view>
+        <view class="popup-cont-bg">
+          <view class="answer-yes">{{answerRightAll}}</view>
+          <view class="answer-take-time">{{answerTimeAll}}</view>
+          <view class="popup-count-down">{{popupCountDown}}</view>
+          <view class="popup-btn" @tap="goRankingListClick">前往排行榜</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { Utils, Tips } from '@/utils'
+import { STATUS, RESOURCE_PATCH } from '@/configs'
+import { AnswerService } from '../../services'
+import NavigationBarComponent from '@/components/navigation-bar/index'
+
+export default class CountingMoneyPages extends wepy.page {
+  config = {
+    navigationStyle: 'custom',
+    navigationBarTextStyle: 'white',
+    disableScroll: true
+  }
+
+  components = {
+    'navigation-bar': NavigationBarComponent
+  }
+
+  data = {
+    resourcePath: RESOURCE_PATCH,
+    // 答题状态音效(答题正确或错误)
+    answerStatusMusic: null,
+    // 导航高度
+    navBarHeight: null,
+    // 标题
+    title: '欢乐答题',
+    // 活动ID
+    activityId: null,
+    // 活动游戏ID
+    activityGameId: null,
+    // userNo
+    userNo: null,
+    // 准备倒计时开始
+    readyBegin: true,
+    // 准备倒计时(秒)
+    readyTimer: 5,
+    // 每道题的倒计时(秒)
+    answerItemTimer: 10,
+    // 当前题倒计时
+    currentAnswerItemTimer: 10,
+    // 答题时间String
+    currentAnswerItemTimerStr: '10',
+    // 答题状态
+    answerStatus: false,
+    // 答题是否完成
+    answerComplate: false,
+    // 弹出框倒计时(秒)
+    popupCountDown: 5,
+    // 答题列表
+    answerList: [
+      // {
+      //   title: '新娘是哪里人',
+      //   // title字数：<=10.text-leave-1, <=20.text-leave-2, <=60.text-leave-3, >60.text-leave-4
+      //   class: 'text-leave-1',
+      //   options: [{ text: '重庆', id: 0 }, { text: '四川', id: 1 }, { text: '北京', id: 2 }, { text: '上海', id: 3 }],
+      //   answer: 1,
+      //   countTimer: 10,
+      //   countTimerStr: 10
+      // },
+      // {
+      //   title: '新郎是哪里人',
+      //   class: 'text-leave-1',
+      //   options: [{ text: '重庆', id: 0 }, { text: '四川', id: 1 }, { text: '北京', id: 2 }, { text: '上海', id: 3 }],
+      //   answer: 0,
+      //   countTimer: 10,
+      //   countTimerStr: 10
+      // },
+      // {
+      //   title: '新郎新娘在同一个单位上班',
+      //   class: 'text-leave-2',
+      //   options: [{ text: '是', id: 0 }, { text: '不是', id: 1 }],
+      //   answer: 0,
+      //   countTimer: 10,
+      //   countTimerStr: 10
+      // }
+    ],
+    // 当前第几题
+    currentAnswerNumber: 1,
+    // 当前题
+    currentAnswerItem: null,
+    // 答题总耗时
+    answerTimeAll: 0,
+    // 用户总共答对题数
+    answerRightAll: 0,
+    // 答题选择
+    answerChoose: {},
+    // 答题中倒计时线程
+    answerCountDownThread: null,
+    // 答题终止进行中线程
+    answerThreadStop: null,
+    endCountDownThread: null
+  }
+
+  methods = {
+    /**
+     * 确定
+     */
+    answerSure () {
+      // this.toAnswerSure()
+      if (!this.answerThreadStop) {
+        let currentChoose = this.answerChoose[this.currentAnswerNumber]
+        if (currentChoose) {
+          // 终止当前倒计时线程
+          clearTimeout(this.answerCountDownThread)
+          this.answerThreadStop = true
+          this.sureRenderAnswer()
+        } else {
+          Tips.error('请先选择')
+        }
+      }
+    },
+    /**
+     * 选项选择
+     */
+    optionChoose (e) {
+      if (!this.answerThreadStop) {
+        let dataset = e.target.dataset
+        let dataID = dataset.id
+        let answerOptions = this.answerList[this.currentAnswerNumber - 1].options
+
+        Utils.forEach(answerOptions, (item) => {
+          item.status = item.id === dataID ? 'active' : ''
+        })
+        this.$apply()
+        this.answerChoose[this.currentAnswerNumber] = {
+          // 当前题下标
+          current: this.currentAnswerNumber - 1,
+          // 当前用户选择的选项ID
+          chooseAnswer: dataID,
+          // 当前答案是否正确
+          isRight: this.currentAnswerItem.answer === dataID
+        }
+      }
+    },
+    /**
+     * 去排行榜
+     */
+    goRankingListClick () {
+      this.goRankingList()
+    }
+  }
+
+  /**
+   * 渲染选项及答案状态
+   */
+  sureRenderAnswer () {
+    // 关闭答题背景音乐
+    let audioAnswerCountDown = wx.createAudioContext('j-audio-answer-countdown')
+    audioAnswerCountDown.pause()
+    let answerOptions = this.answerList[this.currentAnswerNumber - 1].options
+    let chooseItem = this.answerChoose[this.currentAnswerNumber]
+    let currentAnswerItem = this.currentAnswerItem
+    // 将正确或选错的答案展示给用户
+    let answerIsRight
+    Utils.forEach(answerOptions, (item) => {
+      if (chooseItem && item.id === chooseItem.chooseAnswer) {
+        item.status = chooseItem.isRight ? 'success' : 'error'
+        answerIsRight = item.status
+      } else {
+        item.status = item.id === currentAnswerItem.answer ? 'success' : ''
+      }
+    })
+    if (!chooseItem || !chooseItem.chooseAnswer) {
+      answerIsRight = 'error'
+    }
+    let audioAnswerStatus = wx.createAudioContext('j-audio-answer-' + answerIsRight)
+    setTimeout(() => {
+      audioAnswerStatus.play()
+    }, 50)
+    // 计算用户答题的正确数量
+    let answerChoose = this.answerChoose
+    let count = 0
+    Utils.forEach(answerChoose, item => {
+      if (item.isRight) {
+        count++
+      }
+    })
+    this.answerRightAll = count
+    this.$apply()
+    // 下一题
+    let currentAnswerNumber = this.currentAnswerNumber
+    if (currentAnswerNumber === this.answerList.length) {
+      // 答题结束
+      this.toAnswerSure()
+    } else {
+      // 下一题
+      let that = this
+      setTimeout(() => {
+        that.currentAnswerNumber += 1
+        that.currentAnswerItem = that.answerList[that.currentAnswerNumber - 1]
+        // 重新启动倒计时
+        that.answerThreadStop = false
+        that.answerCountDown()
+        that.$apply()
+        // 启动答题背景音乐
+        audioAnswerCountDown.play()
+      }, 2000)
+    }
+  }
+
+  toAnswerSure () {
+    // this.answerComplate = true
+    // // 启动倒计时
+    // this.gameCountDown()
+    // 提交数据
+    let that = this
+    setTimeout(() => {
+      that.gameCountNumSubmitResult(() => {
+        let audioAnswerSubmit = wx.createAudioContext('j-audio-answer-submit')
+        audioAnswerSubmit.play()
+        that.answerComplate = true
+        // 启动倒计时
+        that.gameCountDown()
+      })
+    }, 1000)
+  }
+
+  goRankingList () {
+    clearTimeout(this.endCountDownThread)
+    wx.reLaunch({
+      url: 'ranking-list?activityId=' + this.activityId + '&activityGameId=' + this.activityGameId
+    })
+  }
+
+  /**
+   * 答题完成游戏倒计时
+   */
+  gameCountDown() {
+    let that = this
+    this.endCountDownThread = setTimeout(() => {
+      that.popupCountDown--
+      that.$apply()
+
+      if (that.popupCountDown > 0) {
+        that.gameCountDown()
+      } else {
+        that.goRankingList()
+      }
+    }, 1000)
+  }
+
+  /**
+   * 答题倒计时
+   */
+  answerCountDown() {
+    let currentAnswerItem = this.currentAnswerItem
+    let that = this
+    currentAnswerItem.countTimer = that.currentAnswerItemTimer || 10
+    let countDown = () => {
+      this.answerCountDownThread = setTimeout(() => {
+        if (that.answerThreadStop) {
+          return false
+        }
+        // 答题总时间
+        that.answerTimeAll += 1
+        // that.currentAnswerItemTimer--
+        currentAnswerItem.countTimer--
+        let count = (currentAnswerItem.countTimer + '')
+        currentAnswerItem.countTimerStr = count.length === 1 ? ('0' + count) : count
+        that.$apply()
+
+        if (currentAnswerItem.countTimer > 0) {
+          // if (currentAnswerItem.countTimer === 3) {
+          //   wx.vibrateLong()
+          // }
+          countDown()
+        } else {
+          that.answerThreadStop = true
+          that.answerChoose[that.currentAnswerNumber] = {
+            // 当前题下标
+            current: that.currentAnswerNumber - 1,
+            // 当前用户选择的选项ID
+            chooseAnswer: null,
+            // 当前答案是否正确
+            isRight: false
+          }
+          that.sureRenderAnswer()
+          // currentAnswerItem.countTimer = that.answerItemTimer
+          // currentAnswerItem.countTimerStr = that.answerItemTimer
+          // that.$apply()
+        }
+      }, 1000)
+    }
+    countDown()
+  }
+
+  /**
+   * 准备倒计时
+   */
+  readyBeginCountDown () {
+    let that = this
+    setTimeout(() => {
+      that.readyTimer--
+      that.$apply()
+
+      if (that.readyTimer > 0) {
+        that.readyBeginCountDown()
+      } else {
+        that.readyBegin = false
+        that.answerStatus = true
+        that.currentAnswerItem = that.answerList[that.currentAnswerNumber - 1]
+        that.$apply()
+        that.answerCountDown()
+        // 开始答题背景音乐
+        let audioAnswerCountDown = wx.createAudioContext('j-audio-answer-countdown')
+        audioAnswerCountDown.play()
+      }
+    }, 1000)
+  }
+
+  /**
+   * title字数：<=10.text-leave-1, <=20.text-leave-2, <=60.text-leave-3, >60.text-leave-4
+   */
+  getTitleLeave (title) {
+    if (title) {
+      let len = title.length
+      let titleLeave = ''
+      if (len <= 10) {
+        titleLeave = 'text-leave-1'
+      } else if (len <= 20) {
+        titleLeave = 'text-leave-2'
+      } else if (len <= 60) {
+        titleLeave = 'text-leave-3'
+      } else {
+        titleLeave = 'text-leave-4'
+      }
+      return titleLeave
+    }
+  }
+
+  /**
+   * 获取游戏配置
+   */
+  qaGameConfig () {
+    AnswerService.qaGameConfig({
+      data: {},
+      isLoading: false
+    }).then(res => {
+      if (res.success) {
+        let answerTime = res.answerTime
+        // 每道题的倒计时(秒)
+        this.answerItemTimer = answerTime
+        // 当前题倒计时
+        this.currentAnswerItemTimer = answerTime
+        // 答题时间String
+        this.currentAnswerItemTimerStr = answerTime + ''
+        this.$apply()
+      }
+    }).catch(err => {
+      Tips.error(err.message)
+    })
+  }
+
+  /**
+   * 答题游戏问题列表
+   */
+  qaGameQuestionsList () {
+    AnswerService.qaGameQuestionsList({
+      data: {
+        gameId: this.activityGameId,
+        userNo: this.userNo
+      },
+      isLoading: false
+    }).then(res => {
+      if (res.success) {
+        let questionInfos = res.questionInfos
+        if (questionInfos && questionInfos.length) {
+          let tempAnswerList = []
+          Utils.forEach(questionInfos, (item, idx) => {
+            let question = item.question
+            let answerItem = {
+              title: question,
+              // title字数：<=10.text-leave-1, <=20.text-leave-2, <=60.text-leave-3, >60.text-leave-4
+              class: this.getTitleLeave(question),
+              answer: 0,
+              countTimer: this.answerItemTimer,
+              countTimerStr: this.answerItemTimer
+            }
+            // 遍历答题选项
+            let itemOptions = item.answers
+            let answerOptions = []
+            Utils.forEach(itemOptions, (option, optionIdx) => {
+              // 以下标作为ID
+              answerOptions.push({text: option.content, id: optionIdx})
+              if (option.rightAnswer) {
+                // 保存正确答案下标
+                answerItem.answer = optionIdx
+              }
+            })
+            answerItem.options = answerOptions
+            tempAnswerList.push(answerItem)
+          })
+          this.shuffle(tempAnswerList)
+          this.answerList = tempAnswerList
+          this.$apply()
+        }
+      }
+    }).catch(err => {
+      Tips.error(err.message)
+    })
+  }
+
+  /**
+   * 结果提交
+   */
+  gameCountNumSubmitResult (callBack) {
+    AnswerService.gameCountNumSubmitResult({
+      data: {
+        // 总耗时
+        usedTime: this.answerTimeAll,
+        // 答题（正确）数
+        num: this.answerRightAll,
+        activityGameId: this.activityGameId,
+        userNo: this.userNo
+      }
+    }).then(res => {
+      if (res.success) {
+        if (callBack) {
+          callBack()
+        }
+      } else {
+        this.answerThreadStop = false
+        Tips.error(res.message)
+      }
+    }).catch(err => {
+      this.answerThreadStop = false
+      Tips.error(err.message)
+    })
+  }
+
+  shuffle (arr) {
+    let i = arr.length
+    let j
+    let t
+    while (i) {
+      j = Math.floor(Math.random() * i--)
+      t = arr[i]
+      arr[i] = arr[j]
+      arr[j] = t
+    }
+  }
+
+  onLoad(options) {
+    options = options || {}
+    this.activityId = options.activityId
+    //  || 873
+    this.activityGameId = options.activityGameId
+    this.userNo = wx.getStorageSync(STATUS.USER_NO)
+    // 准备倒计时
+    this.readyBeginCountDown()
+    // 获取游戏配置
+    this.qaGameConfig()
+    // 答题游戏问题列表
+    this.qaGameQuestionsList()
+    // 设置屏幕长亮
+    wx.setKeepScreenOn({ keepScreenOn: true })
+    // navBar高度
+    this.navBarHeight = Utils.getNavBarHeight()
+    this.$apply()
+  }
+}
+</script>

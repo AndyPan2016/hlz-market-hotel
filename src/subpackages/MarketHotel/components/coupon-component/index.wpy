@@ -1,0 +1,250 @@
+<!--
+  卡券组件-视图模板
+  @Author: AndyPan
+  @version: 1.0.0
+  @CreateDate: 2019年4月28日16:42:07
+  @LastUpdateDate: 2019年4月28日16:42:29
+  @Remarks: 备注
+-->
+
+<!-- 组件样式 -->
+<style lang="less">
+@import '../../../../assets/less/mixin.less';
+
+.coupon-component {
+  overflow: hidden;
+  .coupon-list-null {
+    padding: 100rpx 0;
+    text-align: center;
+    font-size: 40rpx;
+    color: @color-dddddd;
+  }
+  .coupon-list-wrap {
+    margin: 30rpx;
+    .coupon-list-item {
+      width: 100%;
+      height: 246rpx;
+      background: url('@{base64-coupon-default}') 0 0 no-repeat;
+      background-size: 100% 100%;
+      margin-bottom: 20rpx;
+      position: relative;
+      margin-top: 52rpx;
+      margin-bottom: 70rpx;
+
+      .coupon-item-code {
+        text-align: right;
+        font-size: 22rpx;
+        height: 22rpx;
+        line-height: 24rpx;
+        color: #b36a2d;
+        position: relative;
+        top: -32rpx;
+        right: 0;
+      }
+
+      .list-item-wrap {
+        position: absolute;
+        top: 10rpx;
+        left: 9rpx;
+        right: 10rpx;
+        bottom: 10rpx;
+        overflow: hidden;
+        color: #b36a2d;
+
+        .item-type {
+          position: absolute;
+          z-index: 11;
+          top: 6px;
+          left: -60rpx;
+          background: #ffd791;
+          color: #fff;
+          font-size: 20rpx;
+          display: inline-block;
+          width: 180rpx;
+          padding: 5rpx 0;
+          text-align: center;
+          .rotate(-45deg);
+          .opacity(0.7);
+        }
+
+        .item-detail {
+          position: absolute;
+          top: 20rpx;
+          left: 30rpx;
+          right: 250rpx;
+          bottom: 20rpx;
+          padding-top: 20rpx;
+
+          .item-name {
+            display: inline-block;
+            width: 100%;
+            .text-overflow();
+          }
+          .item-type-name {
+            display: inline-block;
+            width: 100%;
+            text-align: left;
+            font-size: 24rpx;
+          }
+          .hotel-name {
+            display: inline-block;
+            width: 100%;
+            text-align: left;
+            font-size: 24rpx;
+          }
+          .item-cont-group {
+            // margin: 8rpx auto;
+            color: #ff2e28;
+          }
+          .item-group-unit {
+            font-size: 22rpx;
+          }
+          .item-group-value {
+            font-size: 38rpx;
+            font-weight: bold;
+          }
+          .item-group-remark {
+            font-size: 20rpx;
+            margin-left: 20rpx;
+          }
+          .item-explain {
+            display: inline-block;
+            width: 100%;
+            text-align: left;
+            font-size: 20rpx;
+          }
+        }
+        .item-operation {
+          float: right;
+          margin: 20rpx 10rpx 20rpx auto;
+          height: 186rpx;
+          width: 200rpx;
+
+          .operation-item-text {
+            font-size: 20rpx;
+            text-align: center;
+            line-height: 32rpx;
+          }
+          .operation-item-btn {
+            text-align: center;
+            margin: 20rpx auto;
+          }
+          .operation-btn {
+            display: inline-block;
+            border: 0;
+            width: 120rpx;
+            height: 40rpx;
+            line-height: 40rpx;
+            // padding: 0rpx 12rpx;
+            .border-radius(20rpx);
+            font-size: 24rpx;
+            color: #fff;
+            .vertical(#ffb98e, #ff2233);
+          }
+          .operation-item-remark {
+            font-size: 24rpx;
+            text-align: center;
+          }
+        }
+      }
+
+      &.used {
+        background: url('@{base64-coupon-used}') 0 0 no-repeat;
+        background-size: 100% 100%;
+
+        .coupon-item-code {
+          color: #999999;
+        }
+
+        .list-item-wrap {
+          color: #999999;
+
+          .item-type {
+            background: #cfcfcf;
+          }
+
+          .item-detail {
+            .item-cont-group {
+              color: #999999;
+            }
+          }
+          .item-operation {
+            .operation-btn {
+              background: #f2f2f2;
+            }
+          }
+        }
+      }
+      &.overdue {
+        background: url('@{base64-coupon-overdue}') 0 0 no-repeat;
+        background-size: 100% 100%;
+
+        .coupon-item-code {
+          color: #999999;
+        }
+
+        .list-item-wrap {
+          color: #999999;
+
+          .item-type {
+            background: #cfcfcf;
+          }
+
+          .item-detail {
+            .item-cont-group {
+              color: #999999;
+            }
+          }
+          .item-operation {
+            .operation-btn {
+              background: #f2f2f2;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+
+<!-- 组件视图 -->
+<template>
+  <view class="{{ 'coupon-component' + (' ' + class) }}">
+    <view class="coupon-list-null" wx:if="{{ !dataset || !dataset.length }}">暂无优惠券~</view>
+    <view class="coupon-list-wrap" wx:else>
+      <repeat for="{{dataset}}" key="index" index="index" item="item">
+        <view class="{{ 'coupon-list-item' + (item.status ? ' ' + item.status : '') }}">
+          <view class="coupon-item-code">优惠券编码：{{item.ticketCode}}</view>
+          <view class="list-item-wrap" @tap="couponItemTap" data-item="{{item}}">
+            <text class="item-type" wx:if="{{item.isShowType == 'YES'}}">{{item.type}}</text>
+            <view class="item-detail">
+              <!-- <text class="item-type-name">{{item.activityClass}}</text> -->
+              <view class="item-name">{{item.hotelName}}</view>
+              <view class="item-cont-group">
+                <text class="item-group-unit" wx:if="{{item.unitPosition == 'before'}}">{{item.unit}}</text>
+                <text class="item-group-value">{{item.dataOneText}}</text>
+                <text class="item-group-unit" wx:if="{{item.unitPosition == 'after'}}">{{item.unit}}</text>
+                <text class="item-group-remark" wx:if="{{item.typeStatus === 'full_reduction'}}">{{item.dataTwoText}}</text>
+              </view>
+              <text class="item-explain">{{item.describes}}</text>
+            </view>
+            <view class="item-operation">
+              <view class="operation-item-text">有效期至</view>
+              <view class="operation-item-text">{{item.overdueTime}}</view>
+              <view class="operation-item-btn">
+                <text class="operation-btn">{{item.btnText}}</text>
+              </view>
+              <view class="operation-item-remark">{{item.discountScopeText}}</view>
+            </view>
+          </view>
+        </view>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<!-- 组件业务逻辑 -->
+<script>
+import CouponComponent from './view'
+export default CouponComponent
+</script>

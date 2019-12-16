@@ -1,0 +1,340 @@
+<!--
+  请柬第7屏
+  @Author: AndyPan
+  @CreateDate: 2019年7月26日10:49:26
+  @LastUpdateDate: 2019年7月26日10:49:30
+  @Remarks: 
+-->
+<style lang="less" scoped>
+.keyframes (@name,@content) {
+  @-webkit-keyframes @name {
+    @content();
+  }
+  @keyframes @name {
+    @content();
+  }
+}
+.page-seven{
+  &.animation{
+    .bride-groom-photo-one{
+      @keyframeName: seven-photo-one;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            transform: translate(-300rpx, 0) rotate(-120deg);
+          } 
+          to {
+            opacity: 1;
+            transform: translate(0rpx, 0) rotate(0deg);
+          }
+        }
+      );
+      animation: @keyframeName 2.5s ease 0.1s forwards;
+    }
+    .address-map{
+      @keyframeName: seven-address;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            bottom: 0;
+          } 
+          to {
+            opacity: 1;
+            bottom: 122rpx;
+          }
+        }
+      );
+      animation: @keyframeName 3.5s ease 1s forwards;
+      .date, .address, .map{
+        @keyframeName: seven-address-map;
+        .keyframes(
+          @keyframeName,
+          {
+            from {
+              opacity: 0;
+            } 
+            to {
+              opacity: 1;
+            }
+          }
+        );
+        animation: @keyframeName 1s ease 3s forwards;
+      }
+    }
+    .bride-groom-circle-one{
+      @keyframeName: seven-circle-one;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            left: 0;
+          } 
+          to {
+            opacity: 1;
+            left: 50%;
+          }
+        }
+      );
+      animation: @keyframeName 3s ease 2s forwards;
+    }
+    .bride-groom-circle-two, .bride-groom-circle-three{
+      @keyframeName: seven-circle-two;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+          } 
+          to {
+            opacity: 1;
+          }
+        }
+      );
+      animation: @keyframeName 1s ease 2s forwards;
+    }
+  }
+  .welcome{
+    width: 600rpx;
+    height: 60rpx;
+    position: absolute;
+    top: 78rpx;
+    left: 50%;
+    margin-left: -285rpx;
+    color: #333333;
+    font-size: 80rpx;
+    .welcome-item{
+      display: inline-block;
+      margin: 0 12rpx;
+    }
+  }
+  .bride-groom-circle-one{
+    width: 680rpx;
+    height: 674rpx;
+    top: -128rpx;
+    left: 50%;
+    margin-left: -340rpx;
+  }
+  .bride-groom-circle-two{
+    width: 532rpx;
+    height: 532rpx;
+    top: 182rpx;
+    left: 50%;
+    margin-left: -266rpx;
+  }
+  .bride-groom-circle-three{
+    width: 616rpx;
+    height: 616rpx;
+    // bottom: -208rpx;
+    top: 800rpx;
+    left: 50%;
+    margin-left: -308rpx;
+  }
+  .bride-groom-photo-one{
+    width: 620rpx;
+    height: 620rpx;
+    border-radius: 50%;
+    top: 210rpx;
+    left: 50%;
+    margin-left: -320rpx;
+  }
+  .address-map{
+    width: 566rpx;
+    height: 410rpx;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -283rpx;
+    // bottom: 122rpx;
+    top: 676rpx;
+    opacity: 0;
+    .map-wrap{
+      width: 566rpx;
+      height: 566rpx;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      background: rgba(0, 0, 0, .8);
+      .date {
+        position: absolute;
+        top: 60rpx;
+        color: #ffffff;
+        font-size: 24rpx;
+        text-align: center;
+        // .text-overflow();
+        width: 320rpx;
+        line-height: 24rpx;
+        height: 26rpx;
+        left: 50%;
+        margin-left: -160rpx;
+        opacity: 0;
+      }
+      .address{
+        position: absolute;
+        top: 102rpx;
+        color: #ffffff;
+        font-size: 24rpx;
+        text-align: center;
+        // .text-overflow();
+        overflow: hidden;
+        width: 320rpx;
+        line-height: 24rpx;
+        height: 26rpx;
+        left: 50%;
+        margin-left: -160rpx;
+        opacity: 0;
+      }
+      .map{
+        position: absolute;
+        width: 432rpx;
+        height: 242rpx;
+        top: 150rpx;
+        left: 50%;
+        margin-left: -216rpx;
+        opacity: 0;
+        .map-target{
+          width: 100%;
+          height: 100%;
+        }
+        .map-remark{
+          position: absolute;
+          top: 0;
+          right: 0;
+          background: #CCC;
+          padding: 10rpx 20rpx;
+          font-size: 28rpx;
+          z-index: 10;
+        }
+      }
+    }
+  }
+  .goto-hotel{
+    position:absolute;
+    width:200rpx;
+    height:80rpx;
+    // bottom: 20rpx;
+    top: 1100rpx;
+    left:50%;
+    background:#ff4c2f;
+    font-size: 30rpx;
+    color:#FFF;
+    line-height:80rpx;
+    margin-left:-100rpx;
+    text-align:center;
+  }
+  .upload-img{
+    top: 460rpx;
+    left: 50%;
+    margin-left: -50rpx;
+  }
+}
+</style>
+
+<template>
+  <view class="page-screen page-seven" :class="{animation:current==6}">
+    <view class="welcome">
+      <text class="welcome-item">W</text>
+      <text class="welcome-item">E</text>
+      <text class="welcome-item">L</text>
+      <text class="welcome-item">C</text>
+      <text class="welcome-item">O</text>
+      <text class="welcome-item">M</text>
+      <text class="welcome-item">E</text>
+    </view>
+    <view class="circle bride-groom-circle-one"></view>
+    <view class="circle bride-groom-circle-two"></view>
+    <view class="circle bride-groom-circle-three"></view>
+    <view class="photo bride-groom-photo-one">
+      <image class="photo-thumb" wx:if="{{domain && photoThumb}}" 
+        src="{{pageData.imageInfo[current][0] ? pageData.imageInfo[current][0]['imagePath'] : (domain + 'photo-thumb-default-2/1.png')}}"
+        @load="imageLoad" />
+        <image class="photo-thumb" @load="imageLoad" wx:elif="{{domain}}" />
+    </view>
+    <view class="upload-img" @tap="uploadImg" data-index="1" wx:if="{{bottomType === 'setting'}}">
+      <image class="ui-img" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" />
+    </view>
+    <view class="address-map">
+      <view class="map-wrap">
+        <view class="date">{{pageData.baseInfo.weddingTime || "2019年8月8日12时08分"}}</view>
+        <view class="address">{{pageData.baseInfo.hotelName || '重庆市大石坝街道东源D7酒店4F'}}</view>
+        <view class="map">
+          <map class="map-target" 
+            wx:if="{{current === 6}}"
+            longitude="{{pageData.baseInfo.longitude}}" 
+            latitude="{{pageData.baseInfo.latitude}}" 
+            markers="{{pageData.baseInfo.marker}}" scale="14" show-location 
+            @tap="toMap"></map>
+          <text class="map-remark">导航</text>
+        </view>
+      </view>
+    </view>
+    <!-- <view class="goto-hotel" wx:if="{{bottomType==='msg'}}" @tap="goHotal">{{hotelType === 'HOTEL' ? '参观酒店' : '参观商家'}}</view> -->
+    <view class="goto-hotel" wx:if="{{bottomType==='msg'}}" @tap="goHotal">参观商家</view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class SevenPagesComponent extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    photoThumb: Boolean,
+    current: { type: Number, default: 0 },
+    domain: String,
+    pageData: { type: Object, default: {} },
+    bottomType: String,
+    onUploadImg: Function,
+    onImageLoad: Function,
+    hotelId: String | Number,
+    hotelType: String
+  }
+  methods = {
+    toMap() {
+      if (this.bottomType !== 'create') {
+        wx.openLocation({
+          latitude: parseFloat(this.pageData.baseInfo.latitude),
+          longitude: parseFloat(this.pageData.baseInfo.longitude),
+          scale: 18
+        })
+      }
+    },
+    uploadImg(e) {
+      if (this.onUploadImg) {
+        this.onUploadImg.call(this.$parent, e)
+      }
+      this.$emit('onUploadImg', e)
+    },
+    imageLoad(e) {
+      let onImageLoad = this.onImageLoad
+      if (onImageLoad) {
+        onImageLoad.call(this.$parent, e)
+      }
+      this.$emit('onImageLoad', e)
+    },
+    /**
+     * 跳转到商家页面
+     * */
+    goHotal() {
+      wx.navigateTo({
+        url: '/subpackages/MarketHotel/pages/index?id=' + this.hotelId
+      })
+    }
+  }
+  data = {
+    pagesInfo: {
+      bridegroomName: '',
+      brideName: '',
+      weddingTime: '',
+      hotelAddress: '',
+      marker: [],
+      longitude: '106.49773',
+      latitude: '29.56964'
+    }
+  }
+}
+</script>

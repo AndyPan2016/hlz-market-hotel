@@ -1,0 +1,44 @@
+<!--
+  web-view
+  @Author: AndyPan
+  @CreateDate: 2019年10月25日10:49:29
+  @LastUpdateDate: 2019年10月25日10:49:32
+  @Remarks:
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-index-main">
+    <web-view src="{{shortUrl}}" wx:if="{{shortUrl}}" />
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+
+export default class WebViewPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: ''
+  }
+
+  // data
+  data = {
+    shortUrl: null
+  }
+
+  // 方法
+  methods = {}
+
+  // 加载完成
+  onLoad(options) {
+    this.shortUrl = options.shortUrl
+    this.$apply()
+  }
+}
+</script>

@@ -1,0 +1,351 @@
+<!--
+  首页
+  @Author: AndyPan
+  @CreateDate: 2019年4月23日13:55:25
+  @LastUpdateDate: 2019年4月23日13:55:29
+  @Remarks: 首页页面
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+.page-packagemain-container {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+  text-align: center;
+  .logo {
+    display: inline-block;
+    width: 240rpx;
+    height: 240rpx;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    margin: 50rpx auto;
+  }
+  .title {
+    display: inline-block;
+    width: 100%;
+    font-size: 32rpx;
+    text-align: left;
+    margin-bottom: 20rpx;
+  }
+
+  .mapping-item {
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 28rpx;
+    border-top: 0.5rpx solid #eee;
+
+    &:first-child {
+      border: 0;
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-index-main">
+    <view
+      class="page-packagemain-container"
+      wx:if="{{packageMain}}"
+    >
+      <image
+        class="logo"
+        src="{{resourcePath ? resourcePath + 'assets/images/logo-big.png' : '' }}"
+      />
+      <text class="title">入口：</text>
+      <view @tap="entryTap">
+        <repeat
+          for="{{sceneMapping}}"
+          key="index"
+          index="index"
+          item="item"
+        >
+          <view
+            class="mapping-item"
+            data-item="{{item}}"
+          >{{ item.text }}</view>
+        </repeat>
+        <button open-type="contact" bindcontact="handleContact">客服</button>
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { RESOURCE_PATCH, STATUS } from '../configs'
+import { Tips, PATCH, Utils } from '@/utils'
+import { CommonsService } from '@/services'
+
+export default class IndexPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '喜事宝'
+  }
+
+  // data
+  data = {
+    resourcePath: RESOURCE_PATCH,
+    packageMain: false,
+    // 活动ID
+    activityId: null,
+    // 场景映射
+    sceneMapping: {
+      // 酒店端首页
+      hotel: {
+        page: '../subpackages/MarketHotel/pages/index',
+        text: '酒店端首页'
+      },
+      // 摇一摇活动首页
+      activity: {
+        page: '../subpackages/MarketActivityShake/pages/shake-purpose',
+        text: '摇一摇活动首页'
+      },
+      // activity: { sceneHandleFn: 'activityTransfer', text: '摇一摇活动首页' },
+      // 电商首页
+      online: {
+        page: '../subpackages/OnlineRetailers/pages/index',
+        text: '电商首页'
+      },
+      // 电商首页
+      onlineOrder: {
+        page: '../subpackages/OnlineRetailers/pages/my-order',
+        text: '电商首页-订单'
+      },
+      // 小视频
+      // miniVideo: {
+      //   page: '../subpackages/MiniVideo/pages/index',
+      //   text: '小视频'
+      // },
+      // miniVideo1: {
+      //   page: '../subpackages/MiniVideo/pages/index1',
+      //   text: '小视频1'
+      // },
+      miniVideo2: {
+        page: '../subpackages/MiniVideo/pages/index2',
+        text: '小视频2'
+      },
+      // 控场页
+      activityBinding: { page: 'control-confirm', text: '活动控场页' },
+      // 宴会厅页
+      hall: { sceneHandleFn: 'hallQRPageFn', text: '宴会厅页' },
+      hall1: { sceneHandleFn: 'hallQRPageFn', text: '宴会厅固定测试', scene: 'UId_businessId,CId_123456789' },
+      hall2: { sceneHandleFn: 'hallQRPageFn', text: '联盟固定测试', scene: 'hall2_hallId' },
+      // webview
+      webView: { page: 'web-view', text: 'WebView' },
+      unino: { sceneHandleFn: 'goUnion', text: 'goUnion' },
+      // 打开新的小程序
+      newProcedures: { sceneHandleFn: 'openNewProcedures', text: '打开新的小程序' }
+    },
+    CID: null,
+    UID: null
+  }
+
+  sceneHandleFn = {
+    /**
+     * 打开新的小程序
+     */
+    openNewProcedures() {
+      Utils.openNewProcedures('subpackages/OnlineRetailers/pages/index')
+    },
+    /**
+     * 宴会厅二维码进入不同页面逻辑
+     */
+    hallQRPageFn(mappingKey) {
+      if (this.CID && this.UID) {
+        // wx.setStorageSync(STATUS.UID, this.UID)
+        // wx.setStorageSync(STATUS.CID, this.CID)
+        CommonsService.activityRoute({
+          data: {
+            activityFixedMarkType: 'union',
+            businessId: this.UID
+          }
+        }).then(res => {
+          let data = res.data || {}
+          let businessId = data.businessId
+          let businessType = data.businessType
+          let banquetHallName = data.banquetHallName
+          if (businessType === 'activity') {
+            wx.setStorageSync(STATUS.UNIONIDS + businessId, this.CID)
+            // 跳转-活动
+            wepy.redirectTo({
+              url:
+                '../subpackages/MarketActivityShake/pages/shake-purpose?id=' +
+                businessId
+            })
+          } else if (businessType === 'hotel') {
+            // 跳转-无活动提示页
+            wx.redirectTo({
+              url:
+                '../subpackages/MarketActivityShake/pages/no-activity?business=' +
+                businessId +
+                '-_-' +
+                banquetHallName
+            })
+          }
+        }).catch(err => {
+          Tips.error(err.message)
+        })
+      } else {
+        let hallId = mappingKey[1]
+        CommonsService.hotelBanquetHallRoute({
+          data: { hallId }
+        }).then(res => {
+          let data = res.data || {}
+          let businessId = data.businessId
+          let businessType = data.businessType
+          let banquetHallName = data.banquetHallName
+          if (businessType === 'activity') {
+            // 跳转-活动
+            wepy.redirectTo({
+              url:
+                '../subpackages/MarketActivityShake/pages/shake-purpose?id=' +
+                businessId
+            })
+          } else if (businessType === 'hotel') {
+            // 跳转-无活动提示页
+            wx.redirectTo({
+              url:
+                '../subpackages/MarketActivityShake/pages/no-activity?business=' +
+                businessId +
+                '-_-' +
+                banquetHallName
+            })
+          }
+        }).catch(err => {
+          Tips.error(err.message)
+        })
+      }
+    },
+    /**
+     * 活动中转
+     */
+    activityTransfer(mappingKey) {
+      this.activityId = null
+      Utils.activityTransfer({
+        callBack: res => {}
+      })
+    },
+    goUnion() {
+      wx.navigateToMiniProgram({
+        appId: 'wx1edf489cb248852c',
+        path: 'pages/proxy/union/union?spreadUrl=https://u.jd.com/BHoDiO',
+        extraData: {spreadUrl: 'https://u.jd.com/BHoDiO'},
+        // develop.开发版 trial.体验版 release.正式版
+        envVersion: 'release',
+        success(res) {
+          console.info('navigateToMiniProgram success')
+        },
+        fail(res) {
+          console.info('navigateToMiniProgram error' + JSON.stringify(res))
+        },
+        complete(res) {
+          console.info('navigateToMiniProgram complete')
+        }
+      })
+    }
+  }
+
+  // 方法
+  methods = {
+    /**
+     * 手动点击进入入口
+     */
+    entryTap(e) {
+      let mapping = e.target.dataset.item
+      if (mapping) {
+        let scene = mapping.scene || ''
+        this.mappingRedirectTo(scene, mapping)
+      }
+    },
+    handleContact(e) {
+      console.info(e)
+    }
+  }
+
+  /**
+   * 跳转到对应映射路径
+   */
+  mappingRedirectTo(scene, mapping) {
+    let mappingKey = ''
+    let sceneArys = []
+    if (scene) {
+      if (scene.indexOf('UId') > -1 && scene.indexOf('CId') > -1) {
+        let UID
+        let CID
+        if (scene.indexOf('%2C') > -1) {
+          UID = (scene.split('%2C')[0] || '').split('_')[1]
+          CID = (scene.split('%2C')[1] || '').split('_')[1]
+        } else if (scene.indexOf(',')) {
+          UID = (scene.split(',')[0] || '').split('_')[1]
+          CID = (scene.split(',')[1] || '').split('_')[1]
+        }
+        // console.info(UID + ',' + CID)
+        this.CID = CID
+        this.UID = UID
+        mappingKey = 'hall'
+      } else {
+        sceneArys = scene.split('_') || []
+        mappingKey = sceneArys[0]
+        if (!mappingKey) {
+          this.packageMain = true
+          this.$apply()
+          Tips.loaded()
+        }
+      }
+    }
+    // 默认为酒店端首页'hotel'
+    let sceneMapping = mapping || this.sceneMapping[mappingKey || 'hotel']
+
+    let page = sceneMapping.page
+    let sceneHandleFn = sceneMapping.sceneHandleFn
+    if (sceneHandleFn) {
+      // 业务判断(函数)
+      this.sceneHandleFn[sceneHandleFn].call(this, sceneArys)
+    } else if (page) {
+      // 跳转
+      wepy.redirectTo({ url: page + '?id=' + (sceneArys[1] || '') })
+      // if (page.indexOf('MiniVideo') > -1) {
+      //   wepy.navigateTo({ url: page + '?id=' + (sceneArys[1] || '') })
+      // } else {
+      //   wepy.redirectTo({ url: page + '?id=' + (sceneArys[1] || '') })
+      // }
+    }
+  }
+
+  // 加载完成
+  onLoad(options) {
+    wx.removeStorageSync('GIFT_DATA')
+    Utils.getSystemInfo.call(this)
+
+    // wepy.redirectTo({
+    //   // url: '../subpackages/MarketActivityShake/pages/answer/index?activityId=423&activityGameId=905'
+    //   url: '../subpackages/MarketActivityShake/pages/answer/ranking-list'
+    //   // url: '../subpackages/MiniVideo/pages/index2'
+    //   // url: '../subpackages/MarketActivityShake/pages/activity-transfer'
+    //   // url: '../subpackages/MarketHotel/pages/index'
+    //   // url: '../subpackages/MarketActivityShake/pages/game-result?activityId=814-_-352'
+    //   // url: '../subpackages/MarketActivityShake/pages/counting-money/ranking-list'
+    // })
+
+    PATCH.createPatch.call(this)
+    Tips.loading()
+    let scene = options.scene
+    // 除扫码外所有进入都进入酒店端
+    // this.mappingRedirectTo(scene)
+
+    // 测试时添加入口页
+    if (scene) {
+      this.mappingRedirectTo(scene)
+    } else {
+      this.packageMain = true
+      this.$apply()
+      Tips.loaded()
+    }
+  }
+}
+</script>

@@ -1,0 +1,329 @@
+<!--
+  酒店信息
+  @Author: AndyPan
+  @CreateDate: 2019年6月14日16:06:08
+  @LastUpdateDate: 2019年6月14日16:06:17
+  @Remarks:
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../../assets/less/mixin.less';
+
+.page-index-main {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-bottom: 174rpx;
+
+  .index-main-cont {
+    margin: 0 25rpx;
+    margin-top: -44rpx;
+    position: relative;
+    z-index: 2;
+
+    .hotel-main {
+      background: @color-ffffff;
+      padding: 0 24rpx;
+      padding-bottom: 24rpx;
+      .border-radius(4rpx);
+
+      .hotel-logo-wrap {
+        height: 74rpx;
+        text-align: center;
+
+        image {
+          width: 124rpx;
+          height: 124rpx;
+          border: 4rpx solid @color-ffffff;
+          .box-shadow(0 0 10px rgba(124, 124, 124, 0.5));
+          .border-radius(50%);
+          margin-top: -62rpx;
+        }
+      }
+      .hotel-name {
+        display: block;
+        margin: 25rpx auto;
+        text-align: center;
+        color: @color-333333;
+        font-size: 36rpx;
+        line-height: 40rpx;
+      }
+      .hotel-level {
+        display: block;
+        margin: 15rpx auto;
+        text-align: center;
+        color: @color-666666;
+        font-size: 24rpx;
+        line-height: 24rpx;
+      }
+      .hotel-home {
+        display: inline-block;
+        padding: 0 30rpx;
+        background: @brand-primary;
+        font-size: 30rpx;
+        height: 50rpx;
+        line-height: 50rpx;
+        font-size: 30rpx;
+        color: @color-ffffff;
+        .border-radius(50rpx);
+      }
+      .hotel-address {
+        border-top: 1px solid @color-e3e3e3;
+        position: relative;
+        margin-top: 30rpx;
+        margin-bottom: 30rpx;
+        padding: 35rpx 0;
+        text-align: right;
+
+        .address-text {
+          display: block;
+          margin-right: 140rpx;
+          font-size: 30rpx;
+          line-height: 40rpx;
+          color: @color-030303;
+          text-align: left;
+        }
+        .address-icon {
+          display: inline-block;
+          width: 126rpx;
+          height: 32rpx;
+          line-height: 32rpx;
+          font-size: 30rpx;
+          color: @color-030303;
+          position: absolute;
+          right: 0;
+          top: 50%;
+          margin-top: -16rpx;
+          text-align: left;
+
+          &:before {
+            content: '';
+            float: left;
+            width: 22rpx;
+            height: 32rpx;
+            margin-right: 12rpx;
+            background: url('@{base64-icon-position}') 0 0 no-repeat;
+            background-size: 100% 100%;
+          }
+          &:after {
+            content: '';
+            float: right;
+            width: 17rpx;
+            height: 27rpx;
+            margin-top: 5rpx;
+            background: url('@{base64-icon-mapright}') 0 0 no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-index-main">
+    <!-- 顶部swiper banner -->
+    <swiper-banner :dataset.sync="swiperDataSet" width="100%" height="384rpx"></swiper-banner>
+    <view class="index-main-cont">
+      <!-- 酒店主体信息 -->
+      <view class="hotel-main">
+        <view class="hotel-logo-wrap">
+          <image src="{{hotelInfo.logo}}" />
+        </view>
+        <text class="hotel-name">{{hotelInfo.name}}</text>
+        <view class="hotel-level">
+          <text class="hotel-home" @tap="toHotel">查看酒店</text>
+        </view>
+        <view class="hotel-address" @tap="toMap">
+          <text class="address-text">{{hotelInfo.address}}</text>
+          <text class="address-icon">地图</text>
+        </view>
+        <!-- 文字图标集合 -->
+        <!-- <icon-text :dataset.sync="iconDataSet" :onIconItemTap="onIconItemTapFn"></icon-text> -->
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import SwiperComponent from '@/components/swiper-component/index'
+// import IconTextComponent from '@/components/icon-text-component/index'
+import { HotelInfoService } from '../../services'
+import { DataPipe, Tips } from '@/utils'
+import { LANG, STATUS } from '@/configs'
+
+export default class hotelInfoComponent extends wepy.component {
+  // 配置
+  config = {
+    navigationBarTitleText: '酒店首页'
+  }
+
+  // 组件
+  components = {
+    // 文本图标组件
+    // 'icon-text': IconTextComponent,
+    // 图片切换组件
+    'swiper-banner': SwiperComponent
+  }
+
+  // data
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    // 酒店ID
+    hotelId: null,
+    // swiper数据
+    swiperDataSet: null,
+    // 酒店信息
+    hotelInfo: null,
+    // 酒店广告图信息
+    hotelAdvertisingListInfos: null,
+    // 图标数据
+    iconDataSet: [
+      { key: 'icon-card', class: 'icon-card', text: '优惠券', data: {} },
+      {
+        key: 'icon-invitation',
+        class: 'icon-invitation',
+        text: '电子请帖',
+        data: {}
+      },
+      { key: 'icon-phone', class: 'icon-phone', text: '联系我们' }
+    ]
+  }
+
+  // 方法
+  methods = {
+    // 打开地图
+    toMap(e) {
+      let hotelInfo = this.hotelInfo
+      let coordinate = hotelInfo.coordinate
+      if (coordinate) {
+        coordinate = coordinate.split(',')
+        wx.openLocation({
+          latitude: parseFloat(coordinate[1]),
+          longitude: parseFloat(coordinate[0]),
+          scale: 18
+        })
+      } else {
+        Tips.error('定位失败，无法打开地图')
+      }
+    },
+    // 去酒店主页
+    toHotel(e) {
+      let hotelId = this.hotelId
+      if (hotelId) {
+        // wepy.redirectTo({ url: '/subpackages/MarketHotel/pages/personal-center' })
+        wx.reLaunch({
+          url: '/subpackages/MarketHotel/pages/index?id=' + hotelId
+        })
+      } else {
+        Tips.message('酒店ID为空')
+      }
+    }
+  }
+
+  /**
+   * 文字图标点击事件
+   */
+  onIconItemTapFn(dataset, e) {
+    let key = dataset.key
+    if (key === 'icon-phone') {
+      // 联系我们
+      let phone = (dataset.data || {}).phone
+      if (phone) {
+        wx.makePhoneCall({
+          phoneNumber: phone.toString()
+        })
+      }
+    } else if (key === 'icon-card') {
+      wepy.navigateTo({
+        url:
+          '/subpackages/MarketActivityShake/pages/coupon-center?hotelId=' +
+          this.hotelId
+      })
+    } else if (key === 'icon-invitation') {
+      // Tips.msg('即将上线，敬请期待')
+      wx.navigateTo({
+        url:
+          '/subpackages/ElectronicInvitationCard/pages/index?hotelId=' +
+          this.hotelId
+      })
+    }
+  }
+
+  /**
+   * 酒店基本信息
+   */
+  hotelInfoFn(callBack) {
+    let params = {
+      userNo: wepy.getStorageSync(STATUS.USER_NO)
+    }
+    this.hotelId = wx.getStorageSync('Invitation' + STATUS.HOTEL_ID)
+    if (this.hotelId) {
+      params['hotelId'] = this.hotelId
+    }
+    HotelInfoService.hotelInfo({ data: params })
+      .then(res => {
+        let hotelInfo = res.data.apiHotelInfo
+        if (!LANG.hotelStar[hotelInfo.star]) {
+          hotelInfo.star = ''
+        }
+        DataPipe.basePipe({ data: hotelInfo, ruleBoolean: LANG.hotelStar })
+        this.hotelInfo = hotelInfo
+        this.hotelId = hotelInfo.id
+        wepy.setStorageSync(STATUS.HOTEL_ID, hotelInfo.id)
+        this.iconDataSet[2]['data'] = { phone: hotelInfo.telephone }
+        this.$apply()
+        if (callBack) {
+          callBack()
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 酒店广告图信息
+   */
+  hotelAdvertisingListInfoFn() {
+    HotelInfoService.hotelAdvertisingListInfo({
+      data: { hotelId: this.hotelId }
+    })
+      .then(res => {
+        let hotelAdvertisingListInfos = res.data.hotelAdvertisingListInfos
+        if (hotelAdvertisingListInfos) {
+          this.swiperDataSet = hotelAdvertisingListInfos
+          this.$apply()
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  // 加载完成
+  onLoad(options) {
+    options = options || {}
+    if (options.scene || options.id) {
+      this.hotelId = parseInt(options.scene || options.id)
+      wepy.setStorageSync(STATUS.HOTEL_ID, this.hotelId)
+    } else {
+      this.hotelId = wepy.getStorageSync(STATUS.HOTEL_ID)
+    }
+
+    // // 酒店基本信息
+    // this.hotelInfoFn(() => {
+    //   // // 酒店拓展信息
+    //   this.hotelAdvertisingListInfoFn()
+    // })
+  }
+}
+</script>

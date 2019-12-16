@@ -1,0 +1,109 @@
+<template>
+  <view
+    class="pages page2"
+    :class="{animation:current==2}"
+  >
+    <view class="text-bg">
+      <view class="user-img">
+        <block wx:if="{{pageImgData['page'+current]}}">
+          <image
+            class="img"
+            mode="aspectFill"
+            src="{{pageImgData['page'+current]['img'+1] || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_longevity/default-photo-1.png'}}"
+          ></image>
+        </block>
+        <block wx:else>
+          <image
+            class="img"
+            mode="aspectFill"
+            src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_longevity/default-photo-1.png"
+          ></image>
+        </block>
+      </view>
+      <view class="text-list">
+        <view class="repeart-item"><text class="text">各位亲朋好友</text></view>
+        <view class="repeart-item"><text class="text">今逢<text class="text-ft {{fontBold}}">{{ pageData.pageOneInfo.birthdayStar ? pageData.pageOneInfo.birthdayStar :'王大娘'}}{{ pageData.pageOneInfo.birthdayAge ? pageData.pageOneInfo.birthdayAge :'80'}}岁</text>大寿</text></view>
+        <view class="repeart-item"><text class="text">幸得身体健康，儿孙绕膝，不胜珍惜</text></view>
+        <view class="repeart-item"><text class="text">遂为<text class="text-ft {{fontBold}}">{{ pageData.pageOneInfo.birthdayStar ? pageData.pageOneInfo.birthdayStar :'王大娘'}}</text>举办寿宴。</text></view>
+        <view class="repeart-item"><text class="text">席设<text class="text-ft {{fontBold}}">{{ pageData.pageOneInfo.hotelName ? pageData.pageOneInfo.hotelName :'昏礼者礼典酒店'}}</text></text></view>
+        <view class="repeart-item"><text class="text">诚挚邀请大家到来</text></view>
+        <view class="repeart-item"><text class="text">恭候光临</text></view>
+      </view>
+    </view>
+    <view class="tree-left"></view>
+    <view class="tree-right"></view>
+    <view
+      class="upload_img"
+      @tap="uploadImg"
+      data-index="1"
+      data-rang="0.7"
+      wx:if="{{bottomType === 'setting'}}"
+    >
+      <view class="ui-img"></view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import { STATUS } from '@/configs'
+
+export default class TwoPagesComponent extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    pageData: {
+      type: Object,
+      default: {}
+    },
+    current: {
+      type: Number,
+      default: 0
+    },
+    domain: {
+      type: String,
+      default:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/'
+    },
+    onUploadImg: {
+      type: Function
+    },
+    pageImgData: {
+      type: Object
+    },
+    bottomType: {
+      type: Object,
+      default: 'create'
+    }
+  }
+  data = {
+    fontBold: ''
+  }
+  methods = {
+    uploadImg(e) {
+      let index = e.currentTarget.dataset.index || ''
+      let rang = e.currentTarget.dataset.rang || 0
+      if (this.onUploadImg) {
+        this.onUploadImg.call(
+          this.$parent,
+          {
+            img_index: this.current + ',' + index + ',' + rang
+          },
+          e
+        )
+      }
+      this.$emit('onUploadImg', e)
+    }
+  }
+  watch = {
+    current(newValue, oldValue) {}
+  }
+  onLoad() {
+    let phoneSystem = wx.getStorageSync(STATUS.PHONESYSTEM)
+    if (phoneSystem === 'android') {
+      this.fontBold = 'bold'
+      this.$apply()
+    }
+  }
+}
+</script>

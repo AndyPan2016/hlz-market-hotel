@@ -1,0 +1,39 @@
+<!--
+  首页
+  @Author: AndyPan
+  @CreateDate: 2019年4月23日13:55:25
+  @LastUpdateDate: 2019年4月23日13:55:29
+  @Remarks: 首页页面
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-index-main">
+    <web-view src="http://item.jd.com/47749565624.html" />
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+
+export default class WebViewPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '喜事宝'
+  }
+
+  // data
+  data = {}
+
+  // 方法
+  methods = {}
+
+  // 加载完成
+  onLoad(options) {}
+}
+</script>

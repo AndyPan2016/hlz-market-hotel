@@ -1,0 +1,970 @@
+<!--
+  摇一摇游戏结果页
+  @Author: AndyPan
+  @CreateDate: 2019年4月2日10:35:59
+  @LastUpdateDate: 2019年4月2日10:36:12
+  @Remarks: 摇一摇游戏结果页
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../assets/less/mixin.less';
+
+// 红包领取详情前三名图标
+@base64-icon-crown-0: 'data:image/png;base64,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';
+@base64-icon-crown-1: 'data:image/png;base64,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';
+@base64-icon-crown-2: 'data:image/png;base64,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';
+
+.page-game-result-wrap {
+  width: 100%;
+  height: 100%;
+  background: #fafafa;
+  overflow: auto;
+  .page-game-result-header {
+    width: 100%;
+    height: 320rpx;
+    position: relative;
+
+    .game-result-header-thumb {
+      width: 100%;
+      height: 240rpx;
+    }
+    .user-header-thumb {
+      width: 200rpx;
+      height: 200rpx;
+      .border-radius(50%);
+      border: 8rpx solid #fff;
+      position: absolute;
+      left: 50%;
+      bottom: 10rpx;
+      margin-left: -108rpx;
+      .box-shadow(0px 0px 10px #bbb);
+    }
+  }
+  .page-game-result-main {
+    //   position: absolute;
+    //   left: 0rpx;
+    //   right: 0rpx;
+    //   top: 320rpx;
+    //   bottom: 0rpx;
+    padding-top: 20rpx;
+    padding-left: 26rpx;
+    padding-right: 26rpx;
+    background: #fafafa;
+
+    .game-result-text {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      color: #666666;
+      font-size: 36rpx;
+      &.red-packet {
+        color: #ff2e28;
+        font-size: 36rpx;
+        font-weight: bold;
+      }
+    }
+    .look-wallet-wrap {
+      height: 50rpx;
+      margin: 50rpx auto;
+      margin-top: 30rpx;
+      text-align: center;
+      .btn-look-wallet {
+        display: inline-block;
+        padding: 0 38rpx;
+        height: 50rpx;
+        line-height: 50rpx;
+        border: 1rpx solid #ff4c2f;
+        color: #ff4c2f;
+        font-size: 24rpx;
+        .border-radius(25rpx);
+        position: relative;
+        .icon-look-wallet {
+          position: absolute;
+          width: 18rpx;
+          height: 18rpx;
+          right: 12rpx;
+          top: 17rpx;
+        }
+      }
+    }
+  }
+  .detail-list-wrap {
+    // height: 120rpx;
+    margin: 0 26rpx;
+    padding-bottom: 136rpx;
+    margin-top: 20rpx;
+    &.no-list {
+      text-align: center;
+      color: #ccc;
+      font-size: 24rpx;
+    }
+    .detail-item {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      .item-thumb {
+        width: 88rpx;
+        height: 88rpx;
+        .border-radius(50%);
+        margin-top: 16rpx;
+      }
+      &.crown-0 {
+        .detail-item-cont {
+          .item-cont-value {
+            &::before {
+              content: '';
+              display: inline-block;
+              width: 62rpx;
+              height: 47rpx;
+              background: url('@{base64-icon-crown-0}') 0 0 no-repeat;
+              background-size: 100% 100%;
+              position: absolute;
+              left: -68rpx;
+              top: -5rpx;
+            }
+          }
+        }
+      }
+      &.crown-1 {
+        .detail-item-cont {
+          .item-cont-value {
+            &::before {
+              content: '';
+              display: inline-block;
+              width: 62rpx;
+              height: 47rpx;
+              background: url('@{base64-icon-crown-1}') 0 0 no-repeat;
+              background-size: 100% 100%;
+              position: absolute;
+              left: -68rpx;
+              top: -5rpx;
+            }
+          }
+        }
+      }
+      &.crown-2 {
+        .detail-item-cont {
+          .item-cont-value {
+            &::before {
+              content: '';
+              display: inline-block;
+              width: 62rpx;
+              height: 47rpx;
+              background: url('@{base64-icon-crown-2}') 0 0 no-repeat;
+              background-size: 100% 100%;
+              position: absolute;
+              left: -68rpx;
+              top: -5rpx;
+            }
+          }
+        }
+      }
+      .detail-item-cont {
+        position: absolute;
+        left: 108rpx;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        border-bottom: 2rpx solid #e3e3e3;
+
+        .item-cont-value {
+          float: right;
+          color: #ff4c2f;
+          font-size: 30rpx;
+          margin-top: 38rpx;
+          position: relative;
+        }
+        .item-cont-name {
+          position: absolute;
+          top: 15rpx;
+          left: 0;
+          right: 120rpx;
+          .text-overflow();
+          font-size: 30rpx;
+          color: #333333;
+        }
+        .item-cont-date {
+          position: absolute;
+          left: 0;
+          bottom: 15rpx;
+          right: 120rpx;
+          .text-overflow();
+          font-size: 22rpx;
+          color: #999;
+        }
+      }
+    }
+  }
+  .btn-bottom-wrap {
+    position: fixed;
+    z-index: 12;
+    width: 100%;
+    height: 96rpx;
+    bottom: 20rpx;
+    left: 0;
+    text-align: center;
+    .btn-bottom {
+      display: inline-block;
+      width: 40%;
+      height: 100%;
+      // background: #ff4c2f;
+      font-size: 30rpx;
+      color: #fff;
+      line-height: 96rpx;
+      .vertical(#FF985C, #FD4445);
+      border-radius: 48rpx;
+    }
+  }
+}
+
+.coupon-list-wrap {
+  .clearfix();
+  overflow: hidden;
+  height: auto;
+
+  .list-wrap {
+    .clearfix();
+    width: 110%;
+    margin-left: -10rpx;
+  }
+  .coupon-list-item {
+    float: left;
+    width: 340rpx;
+    height: 228rpx;
+    position: relative;
+    margin: 0 10rpx;
+    margin-bottom: 20rpx;
+
+    .coupon-item-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .look-more {
+      position: absolute;
+      width: 100%;
+      height: 30rpx;
+      top: 90rpx;
+      text-align: center;
+      font-size: 32rpx;
+      color: #b36a2d;
+    }
+    .coupon-item-cont {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+    .item-cont-main {
+      position: absolute;
+      top: 14rpx;
+      left: 10rpx;
+      right: 90rpx;
+      bottom: 14rpx;
+      overflow: hidden;
+      .item-type {
+        position: absolute;
+        z-index: 11;
+        top: 6px;
+        left: -60rpx;
+        background: #ffd791;
+        color: #fff;
+        font-size: 20rpx;
+        display: inline-block;
+        width: 180rpx;
+        padding: 5rpx 0;
+        text-align: center;
+        .rotate(-45deg);
+        .opacity(0.7);
+      }
+      .item-title {
+        position: relative;
+        height: 32rpx;
+        margin-top: 24rpx;
+        margin-left: 15rpx;
+        text-align: center;
+        color: #b36a2d;
+        font-size: 24rpx;
+        .item-title-line {
+          display: inline-block;
+          width: 144rpx;
+          height: 2rpx;
+          border-bottom: 2rpx solid #b36a2d;
+          position: absolute;
+          top: 50%;
+          margin-top: -1rpx;
+          left: 50%;
+          margin-left: -72rpx;
+        }
+        .item-title-text {
+          position: relative;
+          z-index: 10;
+          background: #fff;
+          padding: 0 10rpx;
+        }
+      }
+      .item-middle {
+        margin-top: 40rpx;
+        height: 70rpx;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .middle-wrap {
+          width: 100%;
+        }
+        .item-value {
+          font-size: 52rpx;
+          color: #ff2e28;
+          font-weight: bold;
+          .unit {
+            font-size: 22rpx;
+            margin-left: -10rpx;
+          }
+          &.text {
+            font-weight: bold;
+            font-size: 30rpx;
+            // width: 80%;
+            display: inline-block;
+            // height: 70rpx;
+            // line-height: 70rpx;
+            // overflow: hidden;
+            // .text-overflow();
+          }
+          &.money {
+            height: 70rpx;
+            font-weight: bold;
+            margin: inherit;
+            margin-right: -15rpx;
+            .text-overflow();
+          }
+        }
+        .item-remark {
+          font-size: 20rpx;
+          color: #b36a2d;
+          margin-top: -10rpx;
+        }
+      }
+      .item-validity {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        font-size: 20rpx;
+        color: #b36a2d;
+        margin-top: 14rpx;
+      }
+    }
+    .btn-receive-wrap {
+      float: right;
+      height: 100%;
+      width: 30rpx;
+      overflow: hidden;
+      margin-right: 30rpx;
+      color: #ff2e28;
+      font-size: 22rpx;
+      position: relative;
+      padding-top: 50rpx;
+      &.auth-phone {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        .btn-receive {
+          float: right;
+          height: auto;
+          width: 30rpx;
+          margin-right: 30rpx;
+          margin-top: 50rpx;
+          .opacity(1);
+          position: static;
+        }
+      }
+    }
+    .btn-receive {
+      float: right;
+      height: 100%;
+      width: 100%;
+      // margin-left: -2rpx;
+      position: absolute;
+      top: 0;
+      left: 0;
+      .opacity(0);
+      z-index: 100;
+    }
+  }
+  .coupon-null {
+    width: 382rpx;
+    height: 206rpx;
+    position: absolute;
+    top: 256rpx;
+    left: 50%;
+    margin-left: -191rpx;
+    .coupon-null-bg {
+      width: 100%;
+      height: 100%;
+    }
+    .coupon-null-text {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      color: #666666;
+      font-size: 30rpx;
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-game-result-wrap">
+    <view class="page-game-result-header">
+      <image class="game-result-header-thumb" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-game-head.png' : '' }}" lazy-load="true" />
+      <image class="user-header-thumb" wx:if="{{userThumb}}" src="{{userThumb}}" lazy-load="true" />
+    </view>
+    <view class="page-game-result-main">
+      <text class="{{ 'game-result-text' + (redPacket ? ' red-packet' : '') }}">{{redPacket ? ('￥' + redPacket) : gameResultText}}</text>
+      <view class="look-wallet-wrap">
+        <view class="btn-look-wallet" @tap="lookWallet">
+          查看我的钱包
+          <image class="icon-look-wallet" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/icon/icon-right.png' : ''}}" />
+        </view>
+      </view>
+      <view class="coupon-list-wrap">
+        <view class="list-wrap">
+          <repeat for="{{coupons}}" key="index" index="index" item="item">
+            <view class="coupon-list-item">
+              <image class="coupon-item-bg" wx:if="{{item.isReceived}}" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-coupon-item-received.png' : '' }}" />
+              <image class="coupon-item-bg" wx:else src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-coupon-item.png' : ''}}" />
+              <view class="coupon-item-cont">
+                <view class="item-cont-main">
+                  <text class="item-type" wx:if="{{item.couponConsumeType && item.isShowType}}">{{item.couponConsumeType}}</text>
+                  <!-- <view class="item-title">
+                                    <text class="item-title-line" wx:if="{{item.couponType}}"></text>
+                                    <text class="item-title-text" wx:if="{{item.couponType}}">{{item.couponType}}</text>
+                                </view> -->
+                  <view class="item-middle">
+                    <view class="middle-wrap">
+                      <view class="item-value" wx:if="{{item.discount}}">
+                        {{item.discount}}
+                        <text class="unit">{{item.unit}}</text>
+                      </view>
+                      <view class="item-value text" wx:if="{{item.text}}">
+                        {{item.text}}
+                      </view>
+                      <view class="item-value money" wx:if="{{item.money}}">
+                        <text class="unit">{{item.unit}}</text>
+                        {{item.money}}
+                      </view>
+                      <view class="item-remark" wx:if="{{item.moneyRemark}}">
+                        {{item.moneyRemark}}
+                      </view>
+                    </view>
+                  </view>
+                  <text class="item-validity">有效期至{{item.validity}}</text>
+                </view>
+                <view class="btn-receive-wrap auth-phone" wx:if="{{!item.isReceived && isAuthPhone}}" @tap="tapCouponItem" data-item="{{item}}">
+                  <text class="btn-receive">立即领取</text>
+                  <!-- <button class="btn-receive" data-item="{{item}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button> -->
+                </view>
+                <text class="btn-receive-wrap" wx:if="{{!item.isReceived && !isAuthPhone}}" @tap="tapCouponItem" data-item="{{item}}">立即领取</text>
+
+                <button class="btn-receive" wx:if="{{!item.isReceived && !isAuthPhone}}" data-item="{{item}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button>
+              </view>
+            </view>
+          </repeat>
+          <view class="coupon-list-item" wx:if="{{isShowMore}}" @tap="lookMore">
+            <image class="coupon-item-bg" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-null.png' : ''}}" />
+            <text class="look-more">查看更多 ></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <block-split text="领取详情" background="#FAFAFA"></block-split>
+    <view class="detail-list-wrap" wx:if="{{receiveDetail && receiveDetail.length}}">
+      <repeat for="{{receiveDetail}}" key="index" index="index" item="item">
+        <view class="detail-item {{'crown-' + index}}">
+          <!-- <view class="detail-item"> -->
+          <image class="item-thumb" src="{{item.thumb}}" />
+          <view class="detail-item-cont">
+            <text class="item-cont-name">{{item.name}}</text>
+            <text class="item-cont-date">{{item.date}}</text>
+            <text class="item-cont-value">{{item.money}}</text>
+          </view>
+        </view>
+      </repeat>
+    </view>
+    <view class="detail-list-wrap no-list" wx:else>暂无记录</view>
+    <!-- <view class="btn-bottom-wrap">
+      <text class="btn-bottom" @tap="myBalance">我的</text>
+    </view> -->
+    <view class="btn-bottom-wrap">
+      <text class="btn-bottom" @tap="moreGame">更多游戏</text>
+      <text class="btn-bottom" @tap="lookMore" style="margin-left: 5%;">商家礼包</text>
+    </view>
+    <customized-popup customClass="customized-popup-control" />
+    <video-guide :activityId.sync="activityId" />
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { LANG, STATUS, RESOURCE_PATCH } from '../configs'
+import { Utils, Tips, WXBizDataCrypt, PATCH } from '@/utils'
+import BlockSplitComponent from '../components/block-split-component'
+import CustomizedPopupComponent from '@/components/customized-popup-component/index'
+import VideoGuideComponent from '@/components/video-guide/index'
+import {
+  RedpacketService,
+  CouponCenterService,
+  AuthorizeService,
+  MemberInfoService
+} from '../services'
+
+export default class GameResultPages extends wepy.page {
+  config = {
+    navigationBarTitleText: '摇一摇领红包'
+  }
+  components = {
+    'block-split': BlockSplitComponent,
+    'customized-popup': CustomizedPopupComponent,
+    'video-guide': VideoGuideComponent
+  }
+
+  data = {
+    resourcePath: RESOURCE_PATCH,
+    // 是否显示插槽内容
+    isShowSlot: true,
+    // 头像缩略图
+    userThumb: null,
+    // 游戏结果提示文本
+    gameResultText: '',
+    // 红包
+    redPacket: null,
+    activityGameId: '',
+    activityId: '',
+    // 领取详情
+    // { thumb: '头像', name: '名称', date: '日期', money: '金额' },
+    receiveDetail: [],
+    isShowMore: false,
+    coupons: null,
+    isAuthPhone: false,
+    resultStatus: ''
+  }
+
+  computed = {}
+
+  methods = {
+    // 查看我的钱包
+    lookWallet(e) {
+      // wepy.navigateTo({ url: 'balance?tabIndex=1' })
+      wepy.navigateTo({ url: '/subpackages/MarketHotel/pages/my-wallet' })
+    },
+    myBalance(e) {
+      // wepy.navigateTo({ url: 'balance?tabIndex=0' })
+      wepy.redirectTo({ url: '/subpackages/MarketHotel/pages/personal-center' })
+    },
+    // 查看更多
+    lookMore(e) {
+      wepy.navigateTo({
+        url:
+          'coupon-center?activityGameId=' +
+          (this.activityGameId || wepy.getStorageSync(STATUS.ACTIVITY_ID)) +
+          '_' +
+          (this.activityId ||
+            wepy.getStorageSync(STATUS.ACTIVITY_ID + 'Relationship')) + '&isAddUnion=true'
+      })
+      // wepy.redirectTo({ url: '/subpackages/MarketHotel/pages/my-coupon' })
+    },
+    // 更多游戏
+    moreGame() {
+      let activityId =
+        this.activityId ||
+        wepy.getStorageSync(STATUS.ACTIVITY_ID + 'Relationship')
+      wx.reLaunch({
+        url: 'activity-transfer?activityId=' + activityId
+      })
+      // wx.reLaunch({ url: 'shake-purpose?id=' + activityId })
+    }
+  }
+
+  events = {}
+
+  /**
+   * 获取成员信息
+   * @remark: 如果手机号码存在，则设置缓存，不需要再验证手机号码授权
+   */
+  getMemberInfo() {
+    let that = this
+    let userNo =
+      wepy.getStorageSync(STATUS.USER_NO) ||
+      (wepy.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo
+    MemberInfoService.memberInfo({
+      data: {
+        userNo: userNo
+      }
+    })
+      .then(res => {
+        let memberInfo = res.memberInfo || {}
+        let mobileNo = memberInfo.mobileNo
+        if (mobileNo) {
+          wepy.setStorageSync(STATUS.IS_AUTH_PHONE, true)
+          that.isAuthPhone = true
+          that.$apply()
+        }
+        // that.couponList()
+      })
+      .catch(error => {
+        Tips.error(error.message)
+      })
+  }
+
+  // 领取红包
+  async receiveRedPack() {
+    let userNo =
+      wepy.getStorageSync(STATUS.USER_NO) ||
+      (wepy.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo
+    let activityGameId = this.activityGameId || wepy.getStorageSync(STATUS.ACTIVITY_ID)
+
+    let [error, res] = await Utils.promiseTo(
+      RedpacketService.receiveRedPack({
+        data: {
+          // 活动ID
+          // 请求参数：activityId  变更为  activityGameId (2019年6月10日15:17:01)
+          // activityId: activityId,
+          activityGameId: activityGameId,
+          // 会员编码
+          userNo: userNo
+        }
+      })
+    )
+
+    if (error) {
+      Tips.error(error.message)
+    } else {
+      if (typeof this.$parent.openRedPackCallback === 'function') {
+        this.$parent.openRedPackCallback()
+        this.$parent.openRedPackCallback = undefined
+      }
+      if (res.resultType === 0) {
+        this.redPacket = res.resultText
+        this.gameResultText = ''
+      } else if (res.resultType === 1) {
+        this.redPacket = undefined
+        this.gameResultText = res.resultText
+      } else {
+        this.redPacket = undefined
+        this.gameResultText = ''
+      }
+      this.$apply()
+      // 红包领取记录
+      this.redPackOrder()
+    }
+  }
+
+  // 红包领取记录
+  async redPackOrder() {
+    let activityId =
+      this.activityGameId || wepy.getStorageSync(STATUS.ACTIVITY_ID)
+
+    let [error, res] = await Utils.promiseTo(
+      RedpacketService.redPackOrder({
+        data: {
+          // 活动ID
+          activityGameId: activityId
+        }
+      })
+    )
+
+    if (error) {
+      Tips.error(error.message)
+    } else {
+      let receiveDetail = []
+      let redPackOrderInfos = res.redPackOrderInfos
+      receiveDetail = Utils.forEach(redPackOrderInfos, (item, key) => {
+        return {
+          thumb: item.headImg,
+          name: item.nickName || '-',
+          date: item.receiveTime || '-',
+          money: (item.amount || '0') + '元'
+        }
+      })
+      this.receiveDetail = receiveDetail
+      this.$apply()
+    }
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    options = options || {}
+    console.info(options)
+    let params = (options.activityId || '').split('-_-')
+    this.activityGameId = params[0]
+    this.activityId = params[1]
+    this.resultStatus = options.resultStatus
+
+    let phoneNumber = wepy.getStorageSync(STATUS.PHONE_NUMBER)
+    if (phoneNumber) {
+      this.isAuthPhone = true
+    } else {
+      this.isAuthPhone = false
+    }
+    this.$apply()
+  }
+
+  // 首次进入和后退进入都重新刷新数据
+  onShow() {
+    let userInfo = wepy.getStorageSync(STATUS.USER_INFO)
+    // 设置用户头像
+    this.userThumb = userInfo.avatarUrl
+    if (this.resultStatus === 0 || this.resultStatus === '0') {
+      // 从暖场页游戏结果
+      this.gameResultText = '暂无参与记录'
+      this.$apply()
+      // 红包领取记录
+      this.redPackOrder()
+    } else {
+      // 抽红包
+      this.receiveRedPack()
+    }
+    // 红包领取记录
+    // this.redPackOrder()
+
+    // 获取成员信息
+    // this.getMemberInfo()
+  }
+
+  /**
+   * (授权)获取手机号
+   */
+  getPhoneNumber(e) {
+    if (e.detail.errMsg !== 'getPhoneNumber:ok') {
+      Tips.error('领取失败')
+      return false
+    }
+    // 领券前，先获取手机号
+    let encryptedData = e.detail.encryptedData
+    let phoneNumber = this.decryptPhoneNumber(encryptedData)
+    let openId = wepy.getStorageSync(STATUS.OPEN_ID)
+    let activityId = wepy.getStorageSync(STATUS.ACTIVITY_ID)
+    AuthorizeService.wechatBindingMobile({
+      data: {
+        activityId: activityId,
+        mobileNo: phoneNumber,
+        openId: openId
+      }
+    })
+      .then(res => {
+        // 设置已经授权手机号
+        wepy.setStorageSync(STATUS.IS_AUTH_PHONE, true)
+        this.isAuthPhone = true
+        this.$apply()
+        this.tapCouponItem(e)
+      })
+      .catch(error => {
+        Tips.error(error.message)
+      })
+  }
+  /**
+   * 解密手机号
+   */
+  decryptPhoneNumber(encryptedData) {
+    let sessionKey = wepy.getStorageSync(STATUS.SESSION_KEY)
+    let iv = wepy.getStorageSync(STATUS.ENCRYPT_IV)
+    let phoneNumber = WXBizDataCrypt.wechatDecrypt(
+      encryptedData,
+      sessionKey,
+      iv
+    )
+    return phoneNumber
+  }
+
+  // 卡券列表
+  async couponList() {
+    let userNo =
+      wepy.getStorageSync(STATUS.USER_NO) ||
+      (wepy.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo
+    let activityId =
+      this.activityId ||
+      wepy.getStorageSync(STATUS.ACTIVITY_ID + 'Relationship')
+
+    let [error, res] = await Utils.promiseTo(
+      CouponCenterService.hotelTicketList({
+        data: {
+          activityId: activityId,
+          // 会员编码
+          userNo: userNo,
+          // 分页页号
+          start: this.start,
+          // 分页大小
+          limit: this.limit
+        }
+      })
+    )
+
+    if (error) {
+      Tips.error(error.message)
+    } else {
+      if (res.success) {
+        let totelTicketDtoList = res.totelTicketDtoList
+        // 超过4张才显示更多
+        this.isShowMore = totelTicketDtoList.length > 4
+        let coupons = Utils.forEach(totelTicketDtoList, (item, key) => {
+          if ((this.isShowMore && key >= 3) || key >= 4) {
+            // 显示更多的时候只显示3张, 否则要显示
+            // return 'break'
+          } else {
+            let isShowType = item.isShowType.toLowerCase()
+            let isShowTypeStatus = false
+            if (isShowType === 'yes') {
+              isShowTypeStatus = true
+            }
+            let unitPosition = item.unitPosition.toLowerCase()
+            let result = {
+              // 卡券ID
+              id: item.ticketId,
+              // 卡券类型
+              // couponType: (LANG.couponType[item.activityClass] || {}).text,
+              // 卡券消费类型
+              couponConsumeType:
+                (LANG.couponConsumeType[item.type] || {}).text || '',
+              // 有效期
+              validity: (item.overdueTime || '-').split(' ')[0],
+              // 剩余数量
+              surplusNum: item.surplusNum,
+              // 是否领取
+              isReceived: item.receive,
+              // 是否显示卡券消费类型
+              isShowType: isShowTypeStatus,
+              // 单位
+              unit: item.unit,
+              // 单位位置
+              unitPosition: unitPosition
+            }
+
+            if (unitPosition === 'after') {
+              if (isShowType === 'yes') {
+                result['discount'] = parseFloat(item.dataOneText)
+              } else if (isShowType === 'no') {
+                let dataOneText = item.dataOneText || ''
+                result['text'] =
+                  dataOneText.length > 6
+                    ? dataOneText.substring(0, 6)
+                    : dataOneText
+              }
+            } else {
+              if (isShowType === 'yes') {
+                result['money'] = parseInt(item.dataOneText || 0)
+              } else if (isShowType === 'no') {
+                let dataOneText = item.dataOneText || ''
+                result['text'] =
+                  dataOneText.length > 6
+                    ? dataOneText.substring(0, 6)
+                    : dataOneText
+              }
+            }
+            result['moneyRemark'] = item.dataTwoText
+
+            return result
+          }
+        })
+        this.coupons = coupons
+        this.$apply()
+      } else {
+        Tips.error(res.message)
+
+        let coupons = [
+          {
+            // 卡券ID
+            id: 11,
+            // 卡券类型
+            // couponType: (LANG.couponType['birthday'] || {}).text,
+            // 卡券消费类型
+            couponConsumeType:
+              (LANG.couponConsumeType['full_reduction'] || {}).text || '-',
+            // 有效期
+            validity: '2019年4月18日19:11:19',
+            // 剩余数量
+            surplusNum: 12,
+            // 是否领取
+            isReceived: false,
+            // 是否显示卡券消费类型
+            isShowType: true,
+            // 单位
+            unit: '$',
+            // 单位位置
+            unitPosition: 'before'
+          }
+        ]
+        this.coupons = coupons
+        this.$apply()
+      }
+    }
+  }
+
+  /**
+   * 更新卡券领取状态
+   */
+  renderDataReceived(item) {
+    Utils.forEach(this.coupons, coupon => {
+      if (coupon.id === item.id) {
+        coupon.isReceived = true
+        return 'break'
+      }
+    })
+    this.$apply()
+  }
+
+  /**
+   * 领取卡券
+   */
+  tapCouponItem(e) {
+    let couponItem = e.currentTarget.dataset.item
+    // 未领取的券，执行领取操作
+    if (!couponItem.isReceived) {
+      let userNo =
+        wepy.getStorageSync(STATUS.USER_NO) ||
+        (wepy.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo
+      let activityGameId =
+        this.activityGameId || wepy.getStorageSync(STATUS.ACTIVITY_ID)
+      // wepy.getStorageSync(STATUS.ACTIVITY_ID + 'Relationship')
+      let activityId =
+        this.activityId ||
+        wepy.getStorageSync(STATUS.ACTIVITY_ID + 'Relationship')
+      let unionID = wx.getStorageSync(STATUS.UNIONIDS + activityId)
+      let paramsData = {
+        // 卡券ID
+        ticketId: couponItem.id,
+        // 活动ID
+        activityGameId: activityGameId,
+        // 会员编码
+        userNo: userNo
+      }
+      if (unionID) {
+        // 来源用户id(联盟ID)
+        paramsData.sourceMemberCustomerId = unionID
+      }
+      // 绑定参与用户关系
+      CouponCenterService.receiveHotelTicket({
+        data: paramsData
+      }).then(res => {
+        // this.renderDataReceived(couponItem)
+        this.couponList()
+        Tips.success('领取成功')
+      }).catch(error => {
+        // this.couponList()
+        // Tips.error(error.message)
+        this.$invoke('customized-popup', 'open', {
+          title: '提示',
+          message: error.message,
+          onSure: () => {
+            this.couponList()
+          }
+        })
+      })
+    }
+  }
+}
+</script>

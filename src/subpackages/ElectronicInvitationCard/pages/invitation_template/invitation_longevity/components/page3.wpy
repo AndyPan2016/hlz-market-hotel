@@ -1,0 +1,109 @@
+<template>
+  <view
+    class="pages page3"
+    :class="{animation:current==3}"
+  >
+    <view class="text-bg">
+      <block wx:if="{{pageImgData['page'+current]}}">
+        <view class="user-img1">
+          <image
+            class="img"
+            mode="aspectFill"
+            src="{{pageImgData['page'+current]['img'+1] || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_longevity/default-photo-2.png'}}"
+          ></image>
+        </view>
+        <view class="user-img2">
+          <image
+            class="img"
+            mode="aspectFill"
+            src="{{pageImgData['page'+current]['img'+2] || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_longevity/default-photo-3.png'}}"
+          ></image>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="user-img1">
+          <image
+            class="img"
+            mode="aspectFill"
+            src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_longevity/default-photo-2.png"
+          ></image>
+        </view>
+        <view class="user-img2">
+          <image
+            class="img"
+            mode="aspectFill"
+            src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_longevity/default-photo-3.png"
+          ></image>
+        </view>
+      </block>
+    </view>
+    <view class="tree-left"></view>
+    <view class="tree-right"></view>
+    <view class="bird"></view>
+    <view class="dz-text"></view>
+    <view
+      class="upload_img load1"
+      @tap="uploadImg"
+      data-index="1"
+      wx:if="{{bottomType === 'setting'}}"
+    >
+      <view class="ui-img"></view>
+    </view>
+    <view
+      class="upload_img load2"
+      @tap="uploadImg"
+      data-index="2"
+      wx:if="{{bottomType === 'setting'}}"
+    >
+      <image class="ui-img"></image>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class TherePagesComponent extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    current: {
+      type: Number,
+      default: 0
+    },
+    domain: {
+      type: String,
+      default:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/'
+    },
+    onUploadImg: {
+      type: Function
+    },
+    pageImgData: {
+      type: Object
+    },
+    bottomType: {
+      type: Object,
+      default: 'create'
+    }
+  }
+  methods = {
+    uploadImg(e) {
+      let index = e.currentTarget.dataset.index || ''
+      let rang = e.currentTarget.dataset.rang || 0
+      if (this.onUploadImg) {
+        this.onUploadImg.call(
+          this.$parent,
+          {
+            img_index: this.current + ',' + index + ',' + rang
+          },
+          e
+        )
+      }
+      this.$emit('onUploadImg', e)
+    }
+  }
+  watch = {
+    current(newValue, oldValue) {}
+  }
+}
+</script>

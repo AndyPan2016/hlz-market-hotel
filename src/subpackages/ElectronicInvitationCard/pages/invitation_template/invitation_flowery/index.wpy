@@ -1,0 +1,2268 @@
+<!--
+  首页
+  @Author: AndyPan
+  @CreateDate: 2019年4月23日13:55:25
+  @LastUpdateDate: 2019年4月23日13:55:29
+  @Remarks: 首页页面
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+.page-flower {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  .bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+  }
+
+  .boxs {
+    position: absolute;
+    left: 0;
+    top: 128rpx;
+    width: 100%;
+    height: calc(100% - 128rpx);
+    display: none;
+    overflow: hidden;
+    .txt_ico {
+      position: absolute;
+      height: 100rpx;
+      width: 100rpx;
+      margin-left: -50rpx;
+      z-index: 100;
+    }
+
+    .img_ico {
+      position: absolute;
+      height: 100rpx;
+      width: 100rpx;
+      margin-left: -50rpx;
+      z-index: 100;
+    }
+  }
+
+  .box1 {
+    .txt_ico {
+      left: 50%;
+      bottom: 200rpx;
+    }
+
+    .img_ico {
+      left: 50%;
+      top: 480rpx;
+    }
+
+    .v1 {
+      position: absolute;
+      left: 50%;
+      top: 82rpx;
+      width: 622rpx;
+      height: 112rpx;
+      margin-left: -311rpx;
+      opacity: 0;
+
+      image {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .v2 {
+      position: absolute;
+      left: 50%;
+      top: 240rpx;
+      height: 596rpx;
+      width: 648rpx;
+      margin-left: -324rpx;
+      opacity: 0;
+
+      .i1 {
+        width: 100%;
+        height: 100%;
+      }
+
+      .i2 {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 430rpx;
+        width: 430rpx;
+        margin-left: -229rpx;
+        margin-top: -236rpx;
+        z-index: -1;
+        overflow: hidden;
+        -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box1_img_effect.png');
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+
+        image {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    .v3 {
+      position: absolute;
+      top: 67vh;
+      height: 40rpx;
+      font-size: 32rpx;
+      color: #333;
+      font-family: 'hy';
+      font-size: 42rpx;
+      color: #c34355;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      .v3-a {
+        opacity: 0;
+        width: calc(50% - 25rpx);
+        text-align: right;
+        padding-right: 20rpx;
+      }
+
+      .v3-b {
+        height: 48rpx;
+        width: 50rpx;
+        opacity: 0;
+      }
+
+      .v3-c {
+        top: 0;
+        opacity: 0;
+        width: calc(50% - 25rpx);
+        padding-left: 20rpx;
+      }
+    }
+
+    .v4 {
+      position: absolute;
+      left: 0;
+      top: 71vh;
+      width: 50%;
+      padding: 0 25%;
+      height: 30rpx;
+      font-size: 30rpx;
+      color: #333;
+      text-align: center;
+      opacity: 0;
+    }
+
+    .v5 {
+      position: absolute;
+      left: 0;
+      top: 74vh;
+      width: 100%;
+      text-align: center;
+      height: 30rpx;
+      font-size: 30rpx;
+      color: #333;
+      text-align: center;
+      opacity: 0;
+    }
+
+    .v6 {
+      position: absolute;
+      left: 64vh;
+      bottom: 4%;
+      width: 206rpx;
+      height: 70rpx;
+      margin-left: -103rpx;
+      opacity: 0;
+    }
+
+    .v7 {
+      position: absolute;
+      left: 9%;
+      bottom: 72rpx;
+      width: 82%;
+      display: flex;
+      justify-content: space-between;
+      opacity: 0;
+
+      .line {
+        width: 200rpx;
+        border-bottom: 2rpx dashed #ff4c2f;
+      }
+    }
+  }
+
+  .box1Animation {
+    display: block;
+
+    .v1 {
+      animation: box1-v1 2s ease-out 2s forwards;
+    }
+
+    .v2 {
+      animation: box1-v2 4s ease-out forwards;
+    }
+
+    .v3 {
+      .v3-a {
+        animation: box1-v3-a 2s ease-out 2s forwards;
+      }
+
+      .v3-b {
+        animation: box1-v3-b 2s ease-out 2s forwards;
+      }
+
+      .v3-c {
+        animation: box1-v3-c 2s ease-out 2s forwards;
+      }
+    }
+
+    .v4 {
+      animation: box1-v4 2s ease-out 2.5s forwards;
+    }
+
+    .v5 {
+      animation: box1-v5 2s ease-out 3s forwards;
+    }
+
+    .v6 {
+      animation: box1-v6 2s ease-out 3s forwards;
+    }
+
+    .v7 {
+      animation: box1-v7 2s ease-out 3s forwards;
+    }
+  }
+
+  @keyframes box1-v1 {
+    from {
+      top: 42rpx;
+      opacity: 0;
+    }
+
+    to {
+      top: 82rpx;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box1-v2 {
+    from {
+      transform: scale(0.3);
+      opacity: 0;
+    }
+
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes box1-v3-a {
+    from {
+      left: 20%;
+      opacity: 0;
+    }
+
+    to {
+      left: 30%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box1-v3-b {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes box1-v3-c {
+    from {
+      right: 20%;
+      opacity: 0;
+    }
+
+    to {
+      right: 30%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box1-v4 {
+    from {
+      bottom: 26%;
+      opacity: 0;
+    }
+
+    to {
+      bottom: 23%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box1-v5 {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes box1-v6 {
+    from {
+      transform: rotate(90deg);
+      transform-origin: 100% 100%;
+      opacity: 0;
+    }
+
+    to {
+      transform: rotate(0deg);
+      transform-origin: 100% 100%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box1-v7 {
+    from {
+      bottom: 90rpx;
+      transform: scale(0.6);
+      opacity: 0;
+    }
+
+    to {
+      bottom: 72rpx;
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .box2 {
+    text-align: center;
+
+    .img_ico {
+      left: 50%;
+      top: 400rpx;
+    }
+
+    .v1 {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 750rpx;
+      height: 750rpx;
+      overflow: hidden;
+      -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box2_img_effect.png');
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+
+      image {
+        width: 750rpx;
+        height: 750rpx;
+      }
+    }
+
+    .v2 {
+      position: absolute;
+      left: 0;
+      top: 60vh;
+      width: 100%;
+      height: 46rpx;
+      font-size: 40rpx;
+      opacity: 0;
+
+      image {
+        width: 334rpx;
+        height: 46rpx;
+        margin: 0 auto;
+      }
+    }
+
+    .v3 {
+      position: absolute;
+      left: 0;
+      top: 65vh;
+      width: 100%;
+      height: 54rpx;
+      opacity: 0;
+
+      image {
+        width: 610rpx;
+        height: 54rpx;
+        margin: 0 auto;
+      }
+    }
+
+    .v4 {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 180rpx;
+      width: 100%;
+      width: 100%;
+      opacity: 0;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .box2Animation {
+    display: block;
+
+    .v1 {
+      animation: box2-v1 3s ease-out;
+    }
+
+    .v2 {
+      animation: box2-v2 2s ease-out 2s forwards;
+    }
+
+    .v3 {
+      animation: box2-v3 2s ease-out 2.5s forwards;
+    }
+
+    .v4 {
+      animation: box2-v4 2s ease-out 3s forwards;
+    }
+  }
+
+  @keyframes box2-v1 {
+    from {
+      top: -30%;
+      opacity: 0;
+    }
+
+    to {
+      top: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box2-v2 {
+    from {
+      bottom: 300rpx;
+      opacity: 0;
+    }
+
+    to {
+      bottom: 326rpx;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box2-v3 {
+    from {
+      bottom: 200rpx;
+      opacity: 0;
+    }
+
+    to {
+      bottom: 220rpx;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box2-v4 {
+    from {
+      bottom: -80rpx;
+      opacity: 0;
+    }
+
+    to {
+      bottom: 0;
+      opacity: 1;
+    }
+  }
+
+  .box3 {
+    .img_ico1 {
+      left: 225rpx;
+      top: 240rpx;
+    }
+
+    .img_ico2 {
+      left: 500rpx;
+      top: 840rpx;
+    }
+
+    .v1 {
+      position: absolute;
+      left: 0;
+      top: -150rpx;
+      width: 700rpx;
+      height: 700rpx;
+      // width: 506rpx;
+      // height: 710rpx;
+      overflow: hidden;
+      -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box3_img1_effect.png');
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .v2 {
+      position: absolute;
+      right: 0;
+      top: 33vh;
+      width: 750rpx;
+      height: 750rpx;
+      overflow: hidden;
+      -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box3_img2_effect.png');
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .v3 {
+      position: absolute;
+      right: 26rpx;
+      top: 318rpx;
+      width: 230rpx;
+      height: 108rpx;
+      opacity: 0;
+
+      image {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .v4 {
+      position: absolute;
+      right: 50rpx;
+      top: 242rpx;
+      width: 178rpx;
+      height: 64rpx;
+      opacity: 0;
+
+      image {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .v5 {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 180rpx;
+      width: 100%;
+      width: 100%;
+      opacity: 0;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .box3Animation {
+    display: block;
+
+    .v1 {
+      animation: box3-v1 3s ease-out;
+    }
+
+    .v2 {
+      animation: box3-v2 3s ease-out;
+    }
+
+    .v3 {
+      animation: box3-v3 2s ease-out 1.5s forwards;
+    }
+
+    .v4 {
+      animation: box3-v4 1.5s ease-out 1.5s forwards;
+    }
+
+    .v5 {
+      animation: box3-v5 2s ease-out 2s forwards;
+    }
+  }
+
+  @keyframes box3-v1 {
+    from {
+      left: -20%;
+      opacity: 0;
+    }
+
+    to {
+      left: 0%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box3-v2 {
+    from {
+      right: -20%;
+      opacity: 0;
+    }
+
+    to {
+      right: 0%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box3-v3 {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes box3-v4 {
+    from {
+      transform: rotate(-90deg);
+      transform-origin: 0 100%;
+      opacity: 0;
+    }
+
+    to {
+      transform: rotate(0deg);
+      transform-origin: 0 100%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box3-v5 {
+    from {
+      bottom: -80rpx;
+      opacity: 0;
+    }
+
+    to {
+      bottom: 0;
+      opacity: 1;
+    }
+  }
+
+  .box4 {
+    .img_ico1 {
+      left: 300rpx;
+      top: 210rpx;
+    }
+
+    .img_ico2 {
+      left: 570rpx;
+      top: 52vh;
+    }
+
+    .v1 {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 650rpx;
+      height: 650rpx;
+      overflow: hidden;
+      -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box4_img_effect.png');
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .v2 {
+      position: absolute;
+      right: 20rpx;
+      top: 42vh;
+      width: 425rpx;
+      height: 425rpx;
+      overflow: hidden;
+      opacity: 0;
+      -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box4_img2_effect.png');
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .v3 {
+      position: absolute;
+      left: 80rpx;
+      bottom: 414rpx;
+      width: 178rpx;
+      height: 64rpx;
+      opacity: 0;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .v4 {
+      position: absolute;
+      left: 38rpx;
+      bottom: 288rpx;
+      width: 268rpx;
+      height: 116rpx;
+      opacity: 0;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .v5 {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 180rpx;
+      width: 100%;
+      width: 100%;
+      opacity: 0;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .box5 {
+    .img_ico1 {
+      left: 525rpx;
+      top: 17vh;
+    }
+
+    .img_ico2 {
+      left: 335rpx;
+      top: 55vh;
+    }
+
+    image {
+      width: 100%;
+      height: 100%;
+    }
+
+    .v1 {
+      position: absolute;
+      top: 5vh;
+      right: 20rpx;
+      width: 440rpx;
+      height: 440rpx;
+      overflow: hidden;
+      -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box5_img_effect.png');
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+    }
+
+    .v2 {
+      position: absolute;
+      top: 35vh;
+      left: 40rpx;
+      width: 615rpx;
+      height: 615rpx;
+      overflow: hidden;
+      -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box5_img2_effect.png');
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+    }
+
+    .v3 {
+      position: absolute;
+      left: 30rpx;
+      top: 13vh;
+      width: 264rpx;
+      opacity: 0;
+
+      .i1 {
+        width: 264rpx;
+        height: 66rpx;
+        margin-bottom: 20rpx;
+      }
+
+      .i2 {
+        width: 230rpx;
+        height: 108rpx;
+        margin: 0 auto;
+      }
+    }
+
+    .v4 {
+      position: absolute;
+      right: 54rpx;
+      top: 30vh;
+      width: 144rpx;
+      height: 136rpx;
+      opacity: 0;
+    }
+
+    .v5 {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 180rpx;
+      width: 100%;
+      width: 100%;
+      opacity: 0;
+    }
+  }
+
+  .box6 {
+    .img_ico {
+      left: 260rpx;
+      top: 410rpx;
+    }
+
+    .v1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 924rpx;
+      width: 924rpx;
+      overflow: hidden;
+      -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box6_img_effect.png');
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .v2 {
+      position: absolute;
+      right: 40rpx;
+      bottom: 234rpx;
+      width: 254rpx;
+      height: 116rpx;
+      opacity: 0;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .v3 {
+      position: absolute;
+      left: 314rpx;
+      top: 638rpx;
+      width: 232rpx;
+      height: 248rpx;
+      opacity: 0;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .v4 {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 180rpx;
+      width: 100%;
+      opacity: 0;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .box7 {
+    .call-me {
+      width: 300rpx;
+      height: 70rpx;
+      border-radius: 4rpx;
+      background: #ff4c2f;
+      text-align: center;
+      line-height: 70rpx;
+      color: #ffffff;
+      font-size: 32rpx;
+      position: absolute;
+      top: 73vh;
+      left: 50%;
+      margin-left: -150rpx;
+      z-index: 801;
+    }
+    .txt_ico {
+      left: 50%;
+      top: 530rpx;
+    }
+
+    text-align: center;
+
+    .v1 {
+      position: absolute;
+      left: 50%;
+      top: 90rpx;
+      margin-left: -258rpx;
+      width: 516rpx;
+      height: 110rpx;
+      opacity: 0;
+
+      image {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .v2 {
+      position: absolute;
+      left: 50%;
+      top: 17vh;
+      margin-left: -261rpx;
+      width: 522rpx;
+      height: 68rpx;
+      opacity: 0;
+
+      .i1 {
+        width: 100%;
+        height: 100%;
+      }
+
+      .i2 {
+        position: absolute;
+        left: 15rpx;
+        bottom: 5rpx;
+        height: 24rpx;
+        width: 24rpx;
+      }
+
+      .i3 {
+        position: absolute;
+        right: 15rpx;
+        bottom: 5rpx;
+        height: 24rpx;
+        width: 24rpx;
+      }
+    }
+
+    .map {
+      height: 496rpx;
+      width: 680rpx;
+      position: absolute;
+      left: 50%;
+      margin-left: -350rpx;
+      top: 25vh;
+      border: 10rpx solid#FF8C8A;
+      z-index: 100;
+      .map-target {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .v4 {
+      font-size: 30rpx;
+      color: #333;
+      text-align: center;
+      position: absolute;
+      left: 0;
+      top: 65vh;
+      width: 100%;
+      opacity: 0;
+    }
+
+    .v5 {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 66vh;
+      height: 50rpx;
+      width: 100%;
+      margin-top: 30rpx;
+      opacity: 0;
+      text-align: center;
+
+      .text {
+        font-size: 30rpx;
+        color: #333;
+        height: 46rpx;
+        line-height: 46rpx;
+        display: inline-block;
+      }
+    }
+
+    .v6 {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 180rpx;
+      width: 100%;
+      opacity: 0;
+
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .music {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 101;
+    display: none;
+  }
+
+  .music-swich {
+    position: absolute;
+    right: 30rpx;
+    top: 190rpx;
+    height: 76rpx;
+    width: 76rpx;
+    border-radius: 100%;
+    z-index: 100;
+    animation: rot360 5s linear infinite;
+
+    image {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .music-paused {
+    animation-play-state: paused;
+  }
+
+  .music-running {
+    animation-play-state: running;
+  }
+
+  .arrow-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 142rpx;
+    width: 86rpx;
+    height: 38rpx;
+    margin-left: -43rpx;
+    z-index: 100;
+    animation: arrow-up-down 2s ease-out infinite;
+
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  @keyframes rot360 {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes arrow-up-down {
+    0% {
+      bottom: 122rpx;
+    }
+
+    50% {
+      bottom: 142rpx;
+    }
+
+    100% {
+      bottom: 122rpx;
+    }
+  }
+
+  .box4Animation {
+    display: block;
+
+    .v1 {
+      animation: box4-v1 2s ease-out;
+    }
+
+    .v2 {
+      animation: box4-v2 2s ease-out 0.5s forwards;
+    }
+
+    .v3 {
+      animation: box4-v3 1.5s ease-out 1.5s forwards;
+    }
+
+    .v4 {
+      animation: box4-v4 2s ease-out 1s forwards;
+    }
+
+    .v5 {
+      animation: box4-v5 2s ease-out 1.5s forwards;
+    }
+  }
+
+  @keyframes box4-v1 {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes box4-v2 {
+    from {
+      transform: rotate(-90deg);
+      opacity: 0;
+      right: 500rpx;
+    }
+
+    to {
+      transform: rotate(0deg);
+      opacity: 1;
+      right: 0;
+    }
+  }
+
+  @keyframes box4-v3 {
+    from {
+      transform: rotate(90deg);
+      transform-origin: 100% 100%;
+      opacity: 0;
+    }
+
+    to {
+      transform: rotate(0deg);
+      transform-origin: 100% 100%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box4-v4 {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes box4-v5 {
+    from {
+      bottom: -80rpx;
+      opacity: 0;
+    }
+
+    to {
+      bottom: 0;
+      opacity: 1;
+    }
+  }
+
+  .box5Animation {
+    display: block;
+
+    .v1 {
+      animation: box5-v1 2s ease-out;
+    }
+
+    .v2 {
+      animation: box5-v2 2s ease-out;
+    }
+
+    .v3 {
+      animation: box5-v3 2s ease-out 1s forwards;
+    }
+
+    .v4 {
+      animation: box5-v4 2s ease-out 1s forwards;
+    }
+
+    .v5 {
+      animation: box5-v5 2s ease-out 2s forwards;
+    }
+  }
+
+  @keyframes box5-v1 {
+    from {
+      right: -20%;
+      opacity: 0;
+    }
+
+    to {
+      right: 20rpx;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box5-v2 {
+    from {
+      left: -20%;
+      opacity: 0;
+    }
+
+    to {
+      left: 40rpx;
+      opacity: 1;
+    }
+  }
+
+  @keyframes box5-v3 {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes box5-v4 {
+    from {
+      transform: scale(0.3);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes box5-v5 {
+    from {
+      bottom: -80rpx;
+      opacity: 0;
+    }
+    to {
+      bottom: 0;
+      opacity: 1;
+    }
+  }
+  .box6Animation {
+    display: block;
+    .v1 {
+      animation: box6-v1 2s ease-out;
+    }
+    .v2 {
+      animation: box6-v2 2s ease-out 1.5s forwards;
+    }
+    .v3 {
+      animation: box6-v3 1.5s ease-out 1.5s forwards;
+    }
+    .v4 {
+      animation: box6-v4 2s ease-out 2s forwards;
+    }
+  }
+  @keyframes box6-v1 {
+    from {
+      left: -20%;
+      opacity: 0;
+    }
+    to {
+      left: 0;
+      opacity: 1;
+    }
+  }
+  @keyframes box6-v2 {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes box6-v3 {
+    from {
+      transform: rotate(45deg);
+      transform-origin: 0 100%;
+      opacity: 0;
+    }
+    to {
+      transform: rotate(0deg);
+      transform-origin: 0 100%;
+      opacity: 1;
+    }
+  }
+  @keyframes box6-v4 {
+    from {
+      bottom: -80rpx;
+      opacity: 0;
+    }
+    to {
+      bottom: 0;
+      opacity: 1;
+    }
+  }
+  .box7Animation {
+    display: block;
+    .v1 {
+      animation: box7-v1 2s ease-out forwards;
+    }
+    .v2 {
+      animation: box7-v2 2s ease-out 0.5s forwards;
+      .i3 {
+        animation: rot360 5s linear 2s infinite;
+      }
+      .i2 {
+        animation: rot360 5s linear 2s infinite;
+      }
+    }
+    .v3 {
+      animation: box7-v3 2s ease-out 1s forwards;
+    }
+    .v4 {
+      animation: box7-v4 2s ease-out 1.5s forwards;
+    }
+    .v5 {
+      animation: box7-v5 2s ease-out 2s forwards;
+    }
+    .v6 {
+      animation: box7-v6 2s ease-out 2.5s forwards;
+    }
+  }
+  @keyframes box7-v1 {
+    from {
+      top: 50rpx;
+      opacity: 0;
+    }
+    to {
+      top: 7vh;
+      opacity: 1;
+    }
+  }
+  @keyframes box7-v2 {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes box7-v3 {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes box7-v4 {
+    from {
+      top: 64vh;
+      opacity: 0;
+    }
+    to {
+      top: 65vh;
+      opacity: 1;
+    }
+  }
+  @keyframes box7-v5 {
+    from {
+      bottom: 286rpx;
+      opacity: 0;
+    }
+    to {
+      bottom: 256rpx;
+      opacity: 1;
+    }
+  }
+  @keyframes box7-v6 {
+    from {
+      bottom: -80rpx;
+      opacity: 0;
+    }
+    to {
+      bottom: 0;
+      opacity: 1;
+    }
+  }
+  .box8Animation {
+    display: block;
+  }
+  .hide {
+    animation: hide 0.5s ease-out forwards;
+  }
+  @keyframes hide {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      display: none;
+    }
+  }
+  .page-loading {
+    position: fixed;
+    left: 0;
+    top: 128rpx;
+    height: calc(100% - 128rpx);
+    width: 100%;
+    background: #fff;
+    z-index: 999999;
+    text-align: center;
+    display: none;
+    .tpm-box {
+      margin-top: -80rpx;
+    }
+    .loading {
+      width: 500rpx;
+      height: 12rpx;
+      border-radius: 6rpx;
+      background: #eee;
+      position: relative;
+      margin: 0 auto;
+      overflow: hidden;
+      position: absolute;
+      bottom: 200rpx;
+      left: 50%;
+      transform: translateX(-50%);
+
+      .bar {
+        height: 12rpx;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 6rpx;
+        background: #ff4c2f;
+      }
+    }
+  }
+  .showLoading {
+    display: block;
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-flower" @touchstart='touchstart' @touchend='touchEnd'>
+    <navigationBar :title="title"></navigationBar>
+    <image class="bg" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_bg.png" @load="imageLoad"></image>
+    <view class="boxs box1" :class="{box1Animation: animationList[0].play, hide:animationList[0].hide,iphonex:iphoneX}">
+      <!-- <image class="txt_ico" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_text_edit.png" wx:if="{{showUpLoadBtn}}" @tap="linkToInfo"></image> -->
+      <image class="img_ico" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" wx:if="{{showUpLoadBtn}}" data-info="0" @tap="imgUpLoad"></image>
+      <view class="v1">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_text.png" @load="imageLoad"></image>
+      </view>
+      <view class="v2">
+        <image class="i1" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_garland.png" @load="imageLoad"></image>
+        <view class="i2">
+          <image src="{{customList[0].src}}" @load="imageLoad"></image>
+        </view>
+      </view>
+      <view class="v3">
+        <view class="v3-a">{{pagesInfo[0].bridegroomName || '张志明'}}</view>
+        <image class="v3-b" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower.png" @load="imageLoad"></image>
+        <view class="v3-c">{{pagesInfo[0].brideName || '于春娇'}}</view>
+      </view>
+      <view class="v4">{{pagesInfo[0].weddingTime || '2019年10月30日12时08分'}}
+      </view>
+      <text class="v5">{{pagesInfo[0].hotelAddressName || '昏礼者礼典酒店'}}</text>
+      <image class="v6" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower2.png" @load="imageLoad"></image>
+      <!-- <view class="v7">
+        <view class="line"></view>
+        <view class="line"></view>
+      </view> -->
+    </view>
+
+    <view class="boxs box2" :class="{box2Animation: animationList[1].play, hide:animationList[1].hide,iphonex:iphoneX}">
+      <image class="img_ico" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" wx:if="{{showUpLoadBtn}}" data-info="1" @tap="imgUpLoad"></image>
+      <view class="v1">
+        <image src="{{customList[1].src}}" @load="imageLoad"></image>
+      </view>
+      <view class="v2">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box_text.png" @load="imageLoad"></image>
+      </view>
+      <view class="v3">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box_text2.png" @load="imageLoad"></image>
+      </view>
+      <view class="v4">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower3.png" @load="imageLoad"></image>
+      </view>
+    </view>
+
+    <view class="boxs box3" :class="{box3Animation: animationList[2].play, hide:animationList[2].hide,iphonex:iphoneX}">
+      <image class="img_ico img_ico1" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" wx:if="{{showUpLoadBtn}}" data-info="2" data-rate="1.09" @tap="imgUpLoad"></image>
+      <image class="img_ico img_ico2" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" wx:if="{{showUpLoadBtn}}" data-info="3" data-rate="1.39" @tap="imgUpLoad"></image>
+      <view class="v1">
+        <image src="{{customList[2].src}}" @load="imageLoad" style="width: 506rpx;height: 552rpx;margin-top: 150rpx;" />
+      </view>
+      <view class="v2">
+        <image src="{{customList[3].src}}" @load="imageLoad" style="width: 540rpx;float: right;" />
+      </view>
+      <view class="v3">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box3_text.png" @load="imageLoad"></image>
+      </view>
+      <view class="v4">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower2.png" @load="imageLoad"></image>
+      </view>
+      <view class="v5">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower3.png" @load="imageLoad"></image>
+      </view>
+    </view>
+
+    <view class="boxs box4" :class="{box4Animation: animationList[3].play, hide:animationList[3].hide,iphonex:iphoneX}">
+      <image class="img_ico img_ico1" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" wx:if="{{showUpLoadBtn}}" data-info="4" @tap="imgUpLoad"></image>
+      <image class="img_ico img_ico2" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" wx:if="{{showUpLoadBtn}}" data-info="5" @tap="imgUpLoad"></image>
+      <view class="v1">
+        <image src="{{customList[4].src}}" @load="imageLoad"></image>
+      </view>
+      <view class="v2">
+        <image src="{{customList[5].src}}" @load="imageLoad"></image>
+      </view>
+      <view class="v3">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower2.png" @load="imageLoad"></image>
+      </view>
+      <view class="v4">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box4_text.png" @load="imageLoad"></image>
+      </view>
+      <view class="v5">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower3.png" @load="imageLoad"></image>
+      </view>
+    </view>
+
+    <view class="boxs box5" :class="{box5Animation: animationList[4].play, hide:animationList[4].hide,iphonex:iphoneX}">
+      <image class="img_ico img_ico1" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" wx:if="{{showUpLoadBtn}}" data-info="6" @tap="imgUpLoad"></image>
+      <image class="img_ico img_ico2" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" wx:if="{{showUpLoadBtn}}" data-info="7" @tap="imgUpLoad"></image>
+      <view class="v1">
+        <image src="{{customList[6].src}}" @load="imageLoad"></image>
+      </view>
+      <view class="v2">
+        <image src="{{customList[7].src}}" @load="imageLoad"></image>
+      </view>
+      <view class="v3">
+        <image class="i1" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box5_text.png" @load="imageLoad"></image>
+        <image class="i2" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box5_text2.png" @load="imageLoad"></image>
+      </view>
+      <view class="v4">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower4.png" @load="imageLoad"></image>
+      </view>
+      <view class="v5">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower3.png" @load="imageLoad"></image>
+      </view>
+    </view>
+    <view class="boxs box6" :class="{box6Animation: animationList[5].play, hide:animationList[5].hide,iphonex:iphoneX}">
+      <image class="img_ico" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" wx:if="{{showUpLoadBtn}}" data-info="8" data-rate="1.54" @tap="imgUpLoad"></image>
+      <view class="v1">
+        <image src="{{customList[8].src}}" @load="imageLoad" style="width:600rpx;" />
+      </view>
+      <view class="v2">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box6_text.png" @load="imageLoad"></image>
+      </view>
+      <view class="v3">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower5.png" @load="imageLoad"></image>
+      </view>
+      <view class="v4">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower3.png" @load="imageLoad"></image>
+      </view>
+    </view>
+
+    <view class="boxs box7" :class="{box7Animation: animationList[6].play, hide:animationList[6].hide,iphonex:iphoneX}">
+      <!-- <image class="txt_ico" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_text_edit.png" wx:if="{{showUpLoadBtn}}" @tap="linkToInfo"></image> -->
+      <view class="v1">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box7_text.png" @load="imageLoad"></image>
+      </view>
+      <view class="v2">
+        <image class="i1" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box7_text2.png" @load="imageLoad"></image>
+        <image class="i2" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower6.png" @load="imageLoad"></image>
+        <image class="i3" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower6.png" @load="imageLoad"></image>
+      </view>
+      <view class="map" wx:if="{{showMap}}">
+        <map class="map-target" longitude="{{pagesInfo[0].longitude}}" latitude="{{pagesInfo[0].latitude}}" markers="{{pagesInfo[0].marker}}" scale="14" show-location @tap="toMap"></map>
+      </view>
+      <!-- <view class="call-me" wx:if="{{bottomType==='msg' && showMap}}" @tap="goHotal">{{hotelType === 'HOTEL' ? '参观酒店' : '参观商家'}}</view> -->
+      <view class="call-me" wx:if="{{bottomType==='msg' && showMap}}" @tap="goHotal">参观商家</view>
+      <view class="v4">{{pagesInfo[0].weddingTime || ''}}</view>
+      <view class="v5">
+        <text class="text">{{pagesInfo[0].hotelAddressName || ''}}</text>
+      </view>
+      <view class="v6">
+        <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower3.png" @load="imageLoad"></image>
+      </view>
+    </view>
+
+    <view class="boxs box8" :class="{box8Animation: animationList[7].play, hide:animationList[7].hide,iphonex:iphoneX}">
+      <hotelInfo></hotelInfo>
+    </view>
+    <view class="music-swich {{player.play ? 'music-running' : 'music-paused'}}" @tap="musicSwich">
+      <image src='https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_music_ico.png' @load="imageLoad"></image>
+    </view>
+    <view class="arrow-btn" wx:if="{{arrowShow}}">
+      <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_arrow.png" @load="imageLoad"></image>
+    </view>
+    <!-- 页面加载动画 -->
+    <pageLoading :pageScal="scalMiddle" :tempDatas.sync="tpm" :onComplete="onComplete" />
+    <bottom :coverImage.sync="coverImage" :hotelId.sync="hotelId" :bottomType.sync="bottomType" :themetype.sync="themetype" :templateType.sync="templateType" :show.sync="bottomShow" :giftData.sync="giftData" :templateId.sync="templateId" :invitationId.sync="invitationid" :musicId.sync="musicId" wx:if="{{isPreview !== 'false' && isPreview !== false && bottomShow}}"></bottom>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import navigationBar from '../../../components/navigation-bar/index'
+import bottom from '../../../components/bottom/index'
+import pageLoading from '../../../components/page-loading/index'
+import { STATUS } from '@/configs'
+import { IndexService } from '../../../services'
+import { Tips, PATCH } from '@/utils'
+import hotelInfo from '../../../components/hotel-info/index'
+export default class FlowerPages extends wepy.page {
+  // 配置
+  config = {
+    navigationStyle: 'custom',
+    backgroundTextStyle: 'light',
+    navigationBarTextStyle: 'white',
+    disableScroll: true
+  }
+
+  components = {
+    navigationBar: navigationBar,
+    bottom: bottom,
+    hotelInfo: hotelInfo,
+    pageLoading
+  }
+
+  // data
+  data = {
+    photoThumb: false,
+    giftData: {},
+    // 默认不显示地图，当动画到box7，显示地图
+    showMap: false,
+    // 是否显示上传图片按钮
+    showUpLoadBtn: true,
+    // bottom组件的类型
+    bottomType: 'setting',
+    // 标题
+    title: '电子请柬',
+    // 请柬ID
+    invitationid: '',
+    scalMiddle: 'middles',
+    tpm: '',
+    // 显示下拉箭头
+    arrowShow: true,
+    // 页面信息
+    pagesInfo: [
+      {
+        bridegroomName: '',
+        brideName: '',
+        weddingTime: '',
+        hotelAddress: '',
+        marker: [],
+        longitude: '106.49773',
+        latitude: '29.56964'
+      }
+    ],
+    player: {
+      play: false,
+      src:
+        'http://market.test.ihunlizhe.com/media/2019/06/17/201906171135480670279.mp3',
+      ctx: null
+    },
+    customId: 0,
+    // 封面图
+    coverImage: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box1_img.png',
+    customList: [
+      {
+        id: 0,
+        src:
+          'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box1_img.png',
+        name: 'pic0'
+      },
+      {
+        id: 1,
+        src:
+          'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box2_img.jpg',
+        name: 'pic1'
+      },
+      {
+        id: 2,
+        src:
+          'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box3_img.png',
+        name: 'pic2'
+      },
+      {
+        id: 3,
+        src:
+          'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box3_img2.png',
+        name: 'pic3'
+      },
+      {
+        id: 4,
+        src:
+          'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box4_img.png',
+        name: 'pic4'
+      },
+      {
+        id: 5,
+        src:
+          'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box4_img2.png',
+        name: 'pic5'
+      },
+      {
+        id: 6,
+        src:
+          'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box5_img.png',
+        name: 'pic6'
+      },
+      {
+        id: 7,
+        src:
+          'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box5_img2.png',
+        name: 'pic7'
+      },
+      {
+        id: 8,
+        src:
+          'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box6_img.png',
+        name: 'pic8'
+      }
+    ],
+    // 图片加载的数量，imgList 里面数量
+    imgNum: 37,
+    // 图片加载index
+    imgLoadIndex: 0,
+    // 加载bar的宽度
+    barWidth: 0,
+    // 是否显示加载页面
+    showLoading: true,
+
+    // 当前动画窗口
+    index: 0,
+    // 坐标
+    loc: {
+      x: 0,
+      y: 0
+    },
+
+    animationList: [
+      {
+        id: 0,
+        play: false,
+        hide: false
+      },
+      {
+        id: 1,
+        play: false,
+        hide: false
+      },
+      {
+        id: 2,
+        play: false,
+        hide: false
+      },
+      {
+        id: 3,
+        play: false,
+        hide: false
+      },
+      {
+        id: 4,
+        play: false,
+        hide: false
+      },
+      {
+        id: 5,
+        play: false,
+        hide: false
+      },
+      {
+        id: 6,
+        play: false,
+        hide: false
+      }
+    ],
+    // 音乐id
+    musicId: '',
+    // 是否预览
+    isPreview: false,
+    // 暂存页面列表数据
+    saveListData: [],
+    // 模板接口数据缓存
+    templateDatas: [],
+    // 屏幕高度
+    screenHeight: '',
+    // 模板id
+    templateId: '',
+    // 酒店ID
+    hotelId: '',
+    // 商户类型
+    hotelType: 'HOTEL',
+    iphoneX: false,
+    bottomShow: true,
+    templateType: '',
+    themetype: ''
+  }
+  onComplete(e) {}
+  // 加载完成
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    this.clearnStoreage('screenShotImg')
+    this.bottomType = options.bottomType
+    this.invitationid = options.invitationid || ''
+    this.isPreview = options.isPreview || ''
+    this.hotelId = options.hotelId
+    this.templateType = options.templateType || ''
+    this.themetype = options.themetype
+    this.templateId = options.tpl_id || ''
+    this.hotelType =
+      options.hotelType || wx.getStorageSync('Invitation' + STATUS.HOTEL_TYPE)
+    wx.setStorageSync('Invitation' + STATUS.HOTEL_ID, this.hotelId)
+    let tpm = options.tpmdata || ''
+    if (tpm) {
+      this.tpm = JSON.parse(tpm)
+    }
+    if (this.bottomType !== 'setting') {
+      this.showUpLoadBtn = false
+    }
+    this.getScreen()
+    this.$apply()
+  }
+  onShow() {
+    if (this.invitationid) {
+      this.getBaseInfo()
+      this.getImgInStoreage()
+      this.$apply()
+    } else {
+      this.getTpmList()
+    }
+    let address = wx.getStorageSync('ADDRESS') || ''
+    if (address) {
+      this.giftData['province'] = address[0]
+      this.giftData['city'] = address[1]
+      this.giftData['district'] = address[2]
+    }
+    this.$apply()
+    wx.removeStorageSync('ADDRESS')
+  }
+  onHide() {
+    wx.removeStorageSync('ADDRESS')
+    this.clearnStoreage('screenShotImg')
+    this.destroyMusic()
+  }
+  onUnload() {
+    this.clearnStoreage('screenShotImg')
+    this.destroyMusic()
+  }
+  methods = {
+    imageLoad(e) {
+      let _this = this
+      this.imgLoadIndex++
+      this.barWidth = (this.imgLoadIndex / this.imgNum) * 100
+      // 如果图片加载完成，隐藏loading
+      if (this.imgLoadIndex === this.imgNum) {
+        setTimeout(() => {
+          _this.showLoading = false
+          _this.startAnimation()
+          _this.$apply()
+        }, 500)
+      }
+    },
+    // 跳转到请柬信息页面
+    linkToInfo() {
+      wx.navigateTo({
+        url: '../../info?invitationid=' + this.invitationid
+      })
+    },
+    // 打开相册，选择图片，跳转到图片截取
+    imgUpLoad(e) {
+      this.customId = e.currentTarget.dataset.info
+      let rate = e.currentTarget.dataset.rate
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original'],
+        sourceType: ['album', 'camera'],
+        success(res) {
+          Tips.loading()
+          setTimeout(() => {
+            wx.navigateTo({
+              url: '/subpackages/ElectronicInvitationCard/pages/img-upload?url=' + res.tempFilePaths + '&rate=' + (rate || '')
+            })
+          }, 500)
+        }
+      })
+    },
+    toMap() {
+      let pagesInfo = this.pagesInfo
+      if (this.bottomType !== 'create') {
+        wx.openLocation({
+          latitude: parseFloat(pagesInfo[0].latitude),
+          longitude: parseFloat(pagesInfo[0].longitude),
+          scale: 18
+        })
+      }
+    }
+  }
+  /**
+   * 跳转到商家页面
+   * */
+  goHotal() {
+    // let hotalId =
+    //   wx.getStorageSync('hotelId') ||
+    //   wx.getStorageSync('Invitation' + STATUS.HOTEL_ID) ||
+    //   ''
+    wx.navigateTo({
+      url: '/subpackages/MarketHotel/pages/index?id=' + this.hotelId
+    })
+  }
+  /**
+   * 获取屏幕尺寸
+   */
+  getScreen() {
+    let _this = this
+    wx.getSystemInfo({
+      success: function(res) {
+        _this.screenHeight = res.windowHeight
+        _this.$apply()
+      }
+    })
+  }
+  // 音乐控制开关
+  musicSwich() {
+    if (this.player.canplay) {
+      if (this.player.play) {
+        this.player.play = false
+        this.player.ctx.pause()
+      } else {
+        this.player.play = true
+        this.player.ctx.play()
+      }
+    } else {
+      Tips.error('音乐加载中')
+    }
+  }
+
+  // 获取Y坐标
+  touchstart(e) {
+    if (e.changedTouches[0]) {
+      this.loc.y = e.changedTouches[0].clientY
+    }
+  }
+  // 对比Y坐标，判断滑动方向
+  touchEnd(e) {
+    // console.info(e)
+    let dataset = e.target.dataset
+    if (dataset.type === 'disabled') {
+      return false
+    }
+    let y = e.changedTouches[0].clientY
+    let _index = this.index
+    if (Math.abs(this.loc.y - y) > 30) {
+      if (this.loc.y - y > 0) {
+        this.saveListData = []
+        _index = this.index + 1
+        if (_index < this.animationList.length) {
+          this.initAnimation(_index)
+        }
+      } else {
+        this.saveListData = []
+        // console.log('down')
+        _index = this.index - 1
+        if (_index >= 0) {
+          this.initAnimation(_index)
+        }
+      }
+    }
+    if (_index + 1 < this.animationList.length) {
+      this.arrowShow = true
+      this.$apply()
+    } else {
+      this.arrowShow = false
+      this.$apply()
+    }
+    this.$apply()
+  }
+
+  hideMapFn() {
+    this.showMap = false
+    this.$apply()
+  }
+
+  showMapFn() {
+    this.showMap = true
+    this.$apply()
+  }
+
+  // 执行隐藏，然后再执行动画
+  initAnimation(_index) {
+    this.animationList[this.index].hide = true
+    let that = this
+    setTimeout(() => {
+      this.animationList[this.index].hide = false
+      this.index = _index
+      // 判断显示box7 地图
+
+      let idxStatus = this.index === 6
+      that.bottomShow = !(idxStatus)
+      this.showMap = idxStatus
+      if (that.bottomType !== 'msg' && !that.bottomShow) {
+        that.bottomShow = true
+      }
+      that.$apply()
+
+      // if (this.index === 6) {
+      //   this.showMap = true
+      //   that.bottomShow = false
+      //   // （发送后）最后一页隐藏底部按钮
+      //   // this.isPreview = false
+      // } else {
+      //   this.showMap = false
+      //   that.bottomShow = true
+      // }
+      // that.$apply()
+
+      this.startAnimation()
+    }, 500)
+  }
+  // 清除所有模块动画，设置play = false
+  startAnimation() {
+    for (let i = 0; i < this.animationList.length; i++) {
+      this.animationList[i].play = false
+    }
+    this.animationList[this.index].play = true
+    this.$apply()
+  }
+  // 初始化播放器
+  initPlayer() {
+    this.player.ctx = wx.createInnerAudioContext()
+    // this.player.ctx.autoplay = true
+    this.player.canplay = false
+    // console.log(this.player.ctx)
+    // 播放器可以播放的时候触发
+    this.player.ctx.onCanplay(() => {
+      // console.log('可以播放')
+      this.player.ctx.play()
+      this.player.play = true
+      this.player.canplay = true
+      this.player.ctx.loop = true
+      this.$apply()
+    })
+    this.player.ctx.src = this.player.src
+  }
+  // 初始化加载页面
+  initLoading() {
+    // 计算img的数量
+    this.checkObject(this.imgList)
+  }
+
+  // 判断是否是object
+  checkObject(obj) {
+    for (let i in obj) {
+      if (typeof obj[i] === 'object') {
+        this.checkObject(obj[i])
+      } else {
+        this.imgNum++
+      }
+    }
+  }
+  /**
+   * 关闭音乐
+   */
+
+  destroyMusic() {
+    if (this.player.ctx) {
+      this.player.ctx.destroy()
+      this.player.play = false
+      // console.log(this.player)
+      this.$apply()
+    }
+  }
+  /**
+   * 根据如果bottomType = setting
+   */
+  getTemplate() {
+    let parmes = {}
+    parmes['invitationId'] = this.invitationid
+    IndexService.invitationPagesQuery({
+      data: parmes
+    })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          this.templateDatas = data.invitationPages
+          this.photoThumb = true
+          if (data.invitationPages) {
+            for (let item of data.invitationPages) {
+              for (let list of item.contentInfos) {
+                let customListIndex = Number(list.fieldName)
+                this.customList[customListIndex].src = list.fieldContent
+              }
+            }
+          }
+          this.$apply()
+        } else {
+          Tips.error(res.message)
+        }
+        // console.log(res)
+      })
+      .catch(err => {
+        // console.log(err)
+        Tips.error(err.message)
+      })
+  }
+  /**
+   * 查询电子请柬基本信息
+   */
+  getBaseInfo() {
+    let parmes = {}
+    parmes['invitationId'] = this.invitationid
+    return IndexService.invitationBasicInfoQuery({
+      data: parmes
+    })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          let mapPoint = data.coordinate.split(',')
+          this.giftData.bridegroomName = data.bridegroomName
+          this.giftData.brideName = data.brideName
+          this.pagesInfo[0].bridegroomName = data.bridegroomName
+          this.pagesInfo[0].brideName = data.brideName
+          // 去掉日期中的秒
+          this.pagesInfo[0].weddingTime = data.weddingTime.substring(
+            0,
+            data.weddingTime.lastIndexOf(':')
+          )
+          this.pagesInfo[0].longitude = mapPoint[0]
+          this.pagesInfo[0].latitude = mapPoint[1]
+          this.pagesInfo[0].marker = []
+          this.pagesInfo[0].marker.push({
+            id: 0,
+            iconPath:
+              'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/local.png',
+            longitude: mapPoint[0],
+            latitude: mapPoint[1],
+            width: 50,
+            height: 50
+          })
+          // this.pagesInfo[0].hotelAddress =
+          //   data.hotelAddress + '\n' + data.hotelName + data.hallAddress
+          // this.pagesInfo[0].hotelAddressName =
+          //   data.hotelName + '(' + data.hallAddress + ')'
+          this.pagesInfo[0].hotelAddress = data.hotelAddress
+          this.pagesInfo[0].hotelAddressName = data.hotelName
+          this.player.src = data.backgroundMusic
+          this.musicId = data.musicFileId
+          this.hotelId = data.hotelId
+          this.initPlayer()
+          this.getTemplate()
+          this.$apply()
+          return res.data
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 编辑请柬信息保存
+   */
+  saveTemplate(parme) {
+    let parmes = Object.assign({}, parme)
+    parmes['invitationId'] = this.invitationid
+    parmes['invitationPageNo'] = this.index + 1
+    parmes['coverImage'] = this.customList[0].src
+    IndexService.invitationContentSave({
+      data: parmes
+    })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+  /**
+   * 电子请柬模板列表
+   */
+  getTpmList() {
+    IndexService.invitationTemplateQuery({}).then(res => {
+      if (res.data.success) {
+        this.player.src = res.data.invitationTemplateInfos[0].backgroundMusic
+        this.templateId = res.data.invitationTemplateInfos[0].templateId
+        // console.log(this.templateId)
+        this.initPlayer()
+        this.$apply()
+      }
+    })
+  }
+  /**
+   * 图片上传后从storeage里面获取数据
+   */
+  getImgInStoreage() {
+    if (wx.getStorageSync('screenShotImg')) {
+      this.customList[this.customId].src =
+        wx.getStorageSync('screenShotImg') || this.customList[this.customId]
+      let parme = {}
+      let _index = Number(this.index)
+      let _customId = Number(this.customId)
+
+      let datas = {
+        fieldName: this.customList[_customId].id,
+        contentType: 'PICTURE',
+        fieldContent: this.customList[_customId].src
+      }
+
+      if (this.templateDatas) {
+        for (let item of this.templateDatas) {
+          if (_index + 1 === item.invitationPageNo) {
+            this.saveListData = item.contentInfos
+            this.$apply()
+          }
+        }
+      }
+
+      if (_index === 2 || _index === 3 || _index === 4) {
+        if (_customId === 2 || _customId === 4 || _customId === 6) {
+          this.saveListData[0] = datas
+        } else if (_customId === 3 || _customId === 5 || _customId === 7) {
+          if (!this.saveListData[1]) {
+            this.saveListData[1] = datas
+          } else {
+            this.saveListData.push(datas)
+          }
+        }
+      } else {
+        this.saveListData[0] = datas
+      }
+      parme.contentInfos = this.saveListData.filter(val => val)
+      this.saveTemplate(parme)
+      this.$apply()
+    }
+  }
+  /**
+   * 清除storeage里面获取数据
+   */
+  clearnStoreage(key) {
+    if (wx.getStorageSync(key)) {
+      wx.removeStorageSync(key)
+    }
+  }
+}
+</script>

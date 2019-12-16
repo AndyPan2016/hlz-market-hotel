@@ -1,0 +1,184 @@
+<template>
+  <view class="msg-box">
+    <view class="msg">
+      <view class="scoll" style="{{'transform:translateY(' + (scollY * -80) + 'rpx)'}}">
+        <view class="msg-item" wx:for="{{msg}}" :class="{ishide:item.ishide}">
+          {{item.text}}
+        </view>
+      </view>
+    </view>
+    <view class="input-msg">
+      <input placeholder="这是一个可以自动聚焦的input" auto-focus class="ui-input" bindinput="valueChange" value="{{inputText}}" />
+      <view class="ui-btn" @tap="submit">留言</view>
+      <view class="ui-btn" @tap="cancle">重置</view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class leaveMsgComponent extends wepy.component {
+  data = {
+    msg: [
+      {
+        id: '11',
+        text: '11'
+      },
+      {
+        id: '22',
+        text: '22'
+      }
+    ],
+    inputText: '',
+    ishide: false,
+    scollY: 0
+  }
+  onLoad() {
+    setInterval(() => {
+      this.isFull(2, 20)
+    }, 2000)
+  }
+  methods = {
+    valueChange(e) {
+      let value = e.detail.value
+      this.inputText = value
+      this.$apply()
+    },
+    submit() {
+      if (this.inputText) {
+        this.msg.push({
+          id: '',
+          text: this.inputText
+        })
+        this.inputText = ''
+      } else {
+        console.log('请输入留言内容')
+        return false
+      }
+      this.$apply()
+    }
+  }
+  /**
+   * @description: 弹幕滚动动画
+   * @param {minLen:最小滚动长度，maxLen:最大滚动长度}
+   * @return:
+   */
+  isFull(minLen, maxLen) {
+    if (this.scollY < maxLen) {
+      if (minLen < this.msg.length) {
+        this.scollY++
+        if (this.scollY > 0 && this.scollY < maxLen) {
+          this.msg[this.scollY].ishide = true
+        }
+        if (this.msg.length < maxLen) {
+          this.msg.push({
+            id: '',
+            text: '测试'
+          })
+        }
+        this.$apply()
+      }
+    } else {
+      this.msg = []
+      this.scollY = -2
+      setTimeout(() => {
+        this.msg.push(
+          {
+            id: '11',
+            text: '11'
+          },
+          {
+            id: '22',
+            text: '22'
+          },
+          {
+            id: '22',
+            text: '22'
+          },
+          {
+            id: '22',
+            text: '22'
+          }
+        )
+        this.$apply()
+      }, 500)
+      this.$apply()
+    }
+  }
+  cancle() {}
+}
+</script>
+<style lang="less" scoped>
+.msg-box {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 280rpx;
+  z-index: 200001;
+  .msg {
+    height: 160rpx;
+    padding-top: 20rpx;
+    margin: 0 30rpx 20rpx 30rpx;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1) 70%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    .scoll {
+      transition: all 0.5s;
+      &.ishide {
+        transform: translateY(-50rpx);
+      }
+      .msg-item {
+        width: 320rpx;
+        height: 60rpx;
+        background: #eb402f;
+        border-radius: 60rpx;
+        box-sizing: border-box;
+        padding-right: 20rpx;
+        font-size: 28rpx;
+        color: #fff;
+        opacity: 0.8;
+        line-height: 60rpx;
+        margin-bottom: 20rpx;
+        &.ishide {
+          background: none;
+          background-image: -webkit-linear-gradient(
+            top,
+            rgba(255, 36, 0, 0.4),
+            rgba(255, 36, 0, 1)
+          );
+        }
+      }
+    }
+  }
+  .input-msg {
+    height: 100rpx;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30rpx;
+    .ui-input {
+      flex: 1 0 auto;
+      width: 50%;
+      margin-right: 20rpx;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 100rpx;
+      font-size: 28rpx;
+      color: #fff;
+      text-align: left;
+      height: 60rpx;
+    }
+    .ui-btn {
+      flex: 0 0 auto;
+      height: 60rpx;
+      width: 120rpx;
+      border-radius: 60rpx;
+      background: #eb402f;
+      font-size: 28rpx;
+      color: #ffffff;
+      line-height: 60rpx;
+    }
+  }
+}
+</style>

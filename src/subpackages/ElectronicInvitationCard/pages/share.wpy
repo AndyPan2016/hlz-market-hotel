@@ -1,0 +1,573 @@
+<!--
+  电子请柬-微信分享
+  @Author: zongxunjiang
+  @CreateDate: 2019年6月12日 14:08:12
+  @LastUpdateDate: 2019年6月12日 14:08:12
+  @Remarks: 微信分享
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+.share {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  .content {
+    position: absolute;
+    left: 0;
+    top: 128rpx;
+    width: 100%;
+    height: calc(100% - 128rpx);
+    .v1 {
+      margin-top: 84rpx;
+      text-align: center;
+      .thumb-wrap {
+        // height: 300rpx;
+        width: 350rpx;
+        margin: 0 auto;
+        position: relative;
+        .thumb {
+          width: 180rpx;
+          height: 180rpx;
+          border-radius: 60rpx;
+          margin-top: 30rpx;
+        }
+        .thumb-bg {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          background: url('@{resourcePath}ElectronicInvitationCard/assets/images/invitation-thumb.png')
+            0 0 no-repeat;
+          background-size: 100% 100%;
+        }
+        .wedding-info {
+          position: absolute;
+          bottom: 70rpx;
+          left: 0;
+          text-align: center;
+          color: @color-FF2E28;
+          font-size: 20rpx;
+          width: 100%;
+        }
+        .wedding-date {
+          position: absolute;
+          bottom: 46rpx;
+          left: 0;
+          text-align: center;
+          color: @color-555555;
+          font-size: 20rpx;
+          width: 100%;
+        }
+        .wedding-hotel {
+          position: absolute;
+          bottom: 16rpx;
+          left: 0;
+          text-align: center;
+          color: @color-555555;
+          font-size: 20rpx;
+          width: 100%;
+          .text-overflow();
+        }
+      }
+      .qinlan {
+        // height: 494rpx;
+        .top {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/frame01.png')
+            0 0 no-repeat;
+          background-size: 100% auto;
+          .photo {
+            z-index: -1;
+            position: absolute;
+            width: 100%;
+            padding: 0 38rpx;
+            box-sizing: border-box;
+            margin-top: 62rpx;
+            .photo-outter {
+              width: 100%;
+              padding-bottom: 94.9%;
+              height: 0;
+              position: relative;
+              .photo-wrapper {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                image {
+                  -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/mask01_top.png');
+                  -webkit-mask-repeat: no-repeat;
+                  -webkit-mask-size: 100% auto;
+                  -webkit-mask-position: top center;
+                  height: 100%;
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+        .wedding-info {
+          bottom: 180rpx;
+        }
+        .wedding-date {
+          bottom: 150rpx;
+        }
+        .wedding-hotel {
+          bottom: 120rpx;
+        }
+      }
+      .simplesong {
+        // height: 453rpx;
+        .thumb-bg {
+          background-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/template_post4.png');
+        }
+        .name1,
+        .name2 {
+          position: absolute;
+          left: 0;
+          text-align: center;
+          color: @color-555555;
+          font-size: 20rpx;
+          width: 100%;
+        }
+        .name1 {
+          top: 52rpx;
+          margin-left: -10rpx;
+        }
+        .name2 {
+          top: 105rpx;
+          margin-left: -10rpx;
+        }
+        .wedding-date {
+          bottom: auto;
+          top: 140rpx;
+        }
+        .wedding-hotel {
+          bottom: auto;
+          top: 170rpx;
+        }
+      }
+      // image {
+      //   height: 302rpx;
+      //   width: 278rpx;
+      // }
+    }
+    .v2 {
+      text-align: center;
+      font-size: 28rpx;
+      color: #222;
+      margin-top: 58rpx;
+      font-weight: bold;
+      display: block;
+    }
+    .v3 {
+      // padding: 0 20%;
+      padding: 22rpx;
+      font-size: 24rpx;
+      color: #222;
+      margin: 0 auto;
+      margin-top: 52rpx;
+      width: 500rpx;
+      border: 0.5rpx solid #eeeeee;
+    }
+    .v4 {
+      display: flex;
+      padding: 0 25%;
+      justify-content: center;
+      margin-top: 94rpx;
+      .ico {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border: none;
+        background: none;
+        position: static;
+        image {
+          height: 112rpx;
+          width: 112rpx;
+        }
+        .text {
+          font-size: 28rpx;
+          color: #222;
+          margin-top: 30rpx;
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .cover-image {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 30rpx;
+      // box-shadow: 0 0 20px rgba(124,124,124, .6);
+      margin: 0 auto;
+      // opacity: 0;
+
+      &.cover-image-h {
+        max-height: 100%;
+        opacity: 1;
+        width: 80%;
+      }
+      &.cover-image-w {
+        max-width: 100%;
+        opacity: 1;
+        height: 80%;
+      }
+    }
+  }
+  .thumb-wrap.flowery {
+    .flowery-wrap{
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('@{resourcePath}ElectronicInvitationCard/assets/images/flower/flower_bg.png') 0 0 no-repeat;
+      background-size: 100% 100%;
+      transform: scale(0.5, 0.5);
+    }
+    .img_ico {
+      position:absolute;
+      height:100rpx;
+      width:100rpx;
+      margin-left:-50rpx;
+      z-index:100;
+      left:50%;
+      top:480rpx;
+    }
+    .v1 {
+      position:absolute;
+      left:50%;
+      top:82rpx;
+      width:622rpx;
+      height:112rpx;
+      margin-left:-311rpx;
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .v2 {
+      position: absolute;
+      left: 50%;
+      top: 240rpx;
+      height: 596rpx;
+      width: 648rpx;
+      margin-left: -324rpx;
+
+      .i1 {
+        width: 100%;
+        height: 100%;
+      }
+
+      .i2 {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 430rpx;
+        width: 430rpx;
+        margin-left: -229rpx;
+        margin-top: -236rpx;
+        z-index: -1;
+        overflow: hidden;
+        -webkit-mask-box-image: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box1_img_effect.png');
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+
+        image {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    .v3 {
+      position: absolute;
+      top: 67vh;
+      height: 40rpx;
+      font-size: 32rpx;
+      color: #333;
+      font-family: 'hy';
+      font-size: 42rpx;
+      color: #c34355;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      .v3-a {
+        width: calc(50% - 25rpx);
+        text-align: right;
+        padding-right: 20rpx;
+      }
+
+      .v3-b {
+        height: 48rpx;
+        width: 50rpx;
+      }
+
+      .v3-c {
+        top: 0;
+        width: calc(50% - 25rpx);
+        padding-left: 20rpx;
+      }
+    }
+
+    .v4 {
+      position: absolute;
+      left: 0;
+      top: 71vh;
+      width: 50%;
+      padding: 0 25%;
+      height: 30rpx;
+      font-size: 30rpx;
+      color: #333;
+      text-align: center;
+    }
+
+    .v5 {
+      position: absolute;
+      left: 0;
+      top: 74vh;
+      width: 100%;
+      text-align: center;
+      height: 30rpx;
+      font-size: 30rpx;
+      color: #333;
+      text-align: center;
+    }
+  }
+
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="share">
+    <navigationBar :title="title"></navigationBar>
+    <view class="content">
+      <view class="v1">
+        <!-- <image class="img" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/share_img.png" /> -->
+        <view class="thumb-wrap {{ templateType }}">
+          <image class="cover-image {{coverImageClass}}" src="{{ coverImage || defaultCoverImage || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo01.png'}}"  mode="widthFix" />
+          <!-- <block wx:if="{{templateType == 'qinlan'}}">
+            <view class="top">
+              <view class="photo">
+                <view class="photo-outter">
+                  <view class="photo-wrapper">
+                    <image src="{{ coverImage || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo01.png'}}" />
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+          <block wx:else>
+            <image class="thumb" src="{{coverImage || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/share_img.png'}}" />
+            <view class="thumb-bg"></view>
+          </block> -->
+          <!-- <block wx:if="{{templateType === 'flowery'}}">
+            <view class="flowery-wrap">
+              <image class="img_ico" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" wx:if="{{showUpLoadBtn}}" data-info="0" @tap="imgUpLoad" />
+              <view class="v1">
+                <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_text.png" @load="imageLoad" />
+              </view>
+              <view class="v2">
+                <image class="i1" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_garland.png" @load="imageLoad" />
+                <view class="i2">
+                  <image src="{{customList[0].src}}" @load="imageLoad" />
+                </view>
+              </view>
+              <view class="v3">
+                <view class="v3-a">{{bridegroomName}}</view>
+                <image class="v3-b" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_flower.png" @load="imageLoad" />
+                <view class="v3-c">{{brideName}}</view>
+              </view>
+              <view class="v4">{{weddingDate}}
+              </view>
+              <text class="v5">{{hotelName}}</text>
+            </view>
+          </block>
+          <block wx:if="{{templateType == 'simplesong'}}">
+            <view class="name1">{{bridegroomName}}</view>
+            <view class="name2">{{brideName}}</view>
+            <view class="wedding-date">{{weddingDate}}</view>
+            <view class="wedding-hotel">{{hotelName}}</view>
+          </block>
+          <block wx:else>
+            <view class="wedding-info">{{bridegroomName}} & {{brideName}}</view>
+            <view class="wedding-date">{{weddingDate}}</view>
+            <view class="wedding-hotel">{{hotelName}}</view>
+          </block> -->
+        </view>
+      </view>
+
+      <view class="v2">{{shareTitle}}</view>
+      <!-- <view class="v3">{{shareDetail}}</view> -->
+      <view class="v4">
+        <button class="ico ico1" open-type="share">
+          <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/share_wx_ico.png" />
+          <view class="text">微信好友</view>
+        </button>
+        <!-- <view class="ico ico2">
+                <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/share_wxpyq_ico.png"  />
+                <view class="text">朋友圈</view>
+            </view> -->
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import navigationBar from '../components/navigation-bar/index'
+import { IndexService } from '../services'
+import { Tips, PATCH } from '@/utils'
+import { STATUS } from '@/configs'
+
+export default class SharePages extends wepy.page {
+  // 配置
+  config = {
+    navigationStyle: 'custom',
+    backgroundTextStyle: 'light',
+    navigationBarTextStyle: 'white'
+  }
+  components = {
+    navigationBar: navigationBar
+  }
+  // data
+  data = {
+    defaultCoverImage: '',
+    title: '发送',
+    shareTitle: '婚礼邀请',
+    shareDetail: '来参加我们的 婚礼吧~打开看看，送上祝福',
+    // 封面图
+    coverImage: '',
+    coverImageClass: '',
+    bridegroomName: '',
+    brideName: '',
+    weddingDate: '',
+    hotelName: '',
+    hotelId: '',
+    hotelType: '',
+    templateType: '',
+    bgPic: {
+      baby:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_baby/default-photo-1.png',
+      flowery:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_box1_img.png',
+      longevity:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_longevity/default-photo-1.png',
+      qinlan:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo01.png',
+      simplesong:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_2/page1.png',
+      withyou:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_concise/photo-thumb-default-2/12.png'
+    }
+  }
+
+  methods = {}
+  /**
+   * 分享转发
+   */
+  onShareAppMessage(res) {
+    let tpmdata = {
+      coverImage: this.coverImage,
+      bridegroomName: this.bridegroomName,
+      brideName: this.brideName,
+      weddingDate: this.weddingDate,
+      hotelName: this.hotelName
+    }
+    // console.info(tpmdata)
+    IndexService.invitationShare({
+      data: { invitationId: this.invitationId }
+    })
+    let sharePath =
+      '/subpackages/ElectronicInvitationCard/pages/invitation_template/invitation_' +
+      this.templateType +
+      '/index?bottomType=msg&invitationid=' +
+      this.invitationId +
+      '&hotelId=' +
+      this.hotelId +
+      '&hotelType=' +
+      this.hotelType +
+      '&tpmdata=' +
+      JSON.stringify(tpmdata)
+
+    // console.info(sharePath)
+    // console.info(this.templateType.toLowerCase())
+    return {
+      success: res => { },
+      title: this.shareTitle,
+      path: sharePath,
+      imageUrl: this.coverImage || this.bgPic[this.templateType.toLowerCase()]
+    }
+  }
+  invitationBasicInfoQuery() {
+    IndexService.invitationBasicInfoQuery({
+      data: {
+        invitationId: this.invitationId
+      }
+    })
+      .then(res => {
+        let data = res.data
+        this.bridegroomName = data.bridegroomName
+        this.brideName = data.brideName
+        this.weddingDate = data.weddingTime.split(' ')[0]
+        this.hotelName = data.hotelName
+        this.hotelId = data.hotelId
+        this.coverImage = data.coverImage
+        if (data.themeType === 'baobao') {
+          this.shareTitle = data.babyName + '的宝宝宴邀请'
+          // this.coverImage = data.coverImage || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_baby/default-photo-1.png'
+        } else if (data.themeType === 'marry') {
+          this.shareTitle =
+            data.bridegroomName + '&' + data.brideName + '的婚礼邀请'
+        } else if (data.themeType === 'birthday') {
+          this.shareTitle = data.birthdayStar + '的寿宴邀请'
+        } else {
+          this.shareTitle = '宴会邀请'
+        }
+        this.shareDetail =
+          '我们将在' +
+          this.weddingDate +
+          '举行婚礼，来参加我们的 婚礼吧~打开看看，送上祝福'
+        // let that = this
+        // wx.getImageInfo({
+        //   src: this.coverImage || this.defaultCoverImage || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo01.png',
+        //   success(res) {
+        //     if (res.width > res.height) {
+        //       that.coverImageClass = 'cover-image-w'
+        //     } else {
+        //       that.coverImageClass = 'cover-image-h'
+        //     }
+        //     that.$apply()
+        //   }
+        // })
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+  // 加载完成
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    this.invitationId = options.invitationid
+    this.templateType = options.templateType.toLowerCase() || ''
+    this.defaultCoverImage = options.coverImage
+    // console.info(this.templateType)
+    this.hotelType = wx.getStorageSync('Invitation' + STATUS.HOTEL_TYPE)
+    this.$apply()
+    this.invitationBasicInfoQuery()
+  }
+}
+</script>

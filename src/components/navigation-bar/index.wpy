@@ -1,0 +1,145 @@
+<!--
+  电子请柬-顶部导航
+  @Author: zongxunjiang
+  @CreateDate: 2019年6月11日13:55:25
+  @LastUpdateDate: 2019年6月11日13:55:29
+  @Remarks: 顶部导航
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@base64-back: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAjCAYAAACU9ioYAAABF0lEQVRIS63WOw7CMAwGYP8DR+CedKMT7QQbHJQTVEhGjpoqzdN5dIZPduz8LajzYeYnEd2JaALwQY/nYJaZmsEIJuivCUxgAtZXmMVqz7CESYnqljWYGsxgM4CXuynFCpn5QURLZL0CrFghM8vCyuL6TxTLgi1YEmzFomAPFoAZbAUQG0xwuMeUM9gLwKwNEQOOwkzLzHwjonekgqrK7P8F3Ijo4oFfAFdtm6ebMrzC/QyHte1OeQh6CofMtBcAq+ZMg7QZelNsBT1oMg9b0WzAtqCaxK4K2SK476kkjbwKismtAnfUfsP4qPmmOe6yZrec6RdRdYVatBostl/TsvvbxMt/a6ow037915ffETNL2ktSmWn/AUDBrMZVby4rAAAAAElFTkSuQmCC';
+.nbox {
+  height: 128rpx;
+  width: 100%;
+  position: relative;
+
+  &.box-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    .navigation-bar {
+      background: none;
+      .back {
+        height: 60rpx;
+        width: 60rpx;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        overflow: hidden;
+        bottom: 10rpx;
+        &::before {
+          display: inline-block;
+          width: 50rpx;
+          height: 50rpx;
+          content: '';
+          background: url('@{base64-back}') 0 0 no-repeat;
+          background-size: 16rpx 26rpx;
+          background-position: center center;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin-top: -25rpx;
+          margin-left: -29rpx;
+        }
+      }
+    }
+  }
+}
+.navigation-bar {
+  height: 128rpx;
+  width: 100%;
+  // background: -webkit-linear-gradient(#ff4c2f, #ff2828);
+  position: relative;
+  z-index: 99;
+  position: fixed;
+  .title {
+    font-size: 36rpx;
+    color: #fff;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 0rpx;
+    height: 98rpx;
+    line-height: 98rpx;
+    text-align: center;
+  }
+  .back {
+    height: 50rpx;
+    width: 40rpx;
+    background: url('@{base64-back}') 0 0 no-repeat;
+    background-size: 20rpx 36rpx;
+    background-position: left center;
+    position: absolute;
+    left: 26rpx;
+    bottom: 26rpx;
+    display: block;
+    z-index: 100;
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="nbox {{isFull ? 'box-full' : ''}}"
+    style="{{modelHeight ? ('height:' + modelHeight + 'rpx;') : ''}}">
+    <view class="navigation-bar"
+      style="{{modelHeight ? ('height:' + modelHeight + 'rpx;') : ''}}">
+      <view class="back" @tap="goBack" wx:if="{{show}}"></view>
+      <view class="title" wx:if="{{!isFull}}">{{title}}</view>
+    </view>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { Utils } from '@/utils'
+
+export default class NavigationBarComponent extends wepy.component {
+  props = {
+    title: String,
+    isFull: Boolean,
+    // 是否显示返回按钮
+    isShowBack: Boolean
+  }
+  // data
+  data = {
+    // 页面堆栈
+    pagesLength: '',
+    show: false,
+    modelHeight: ''
+  }
+
+  methods = {
+    goBack() {
+      // 返回上一页
+      wx.navigateBack()
+    }
+  }
+
+  // getSystemInfo() {
+  //   let that = this
+  //   wx.getSystemInfo({
+  //     success(res) {
+  //       let model = res.model
+  //       if (model.indexOf('X') > -1) {
+  //         that.modelXHeight = 180
+  //         that.$apply()
+  //       }
+  //     }
+  //   })
+  // }
+
+  // 加载完成
+  onLoad(options) {
+    var pages = this.getCurrentPages()
+    if (pages.length > 1 && this.isShowBack !== false) {
+      this.show = true
+    } else {
+      this.show = false
+    }
+    this.modelHeight = Utils.getNavBarHeight()
+    this.$apply()
+  }
+}
+</script>

@@ -1,0 +1,95 @@
+<template>
+  <view
+    class="pages page4"
+    :class="{animation:current==4}"
+  >
+    <view class="text-bg">
+      <view class="page4-img"></view>
+      <view class="map-box">
+        <map
+          id="map"
+          class="map"
+          longitude="{{pageData.pageSevenInfo.longitude || '106.49773'}}"
+          latitude="{{pageData.pageSevenInfo.latitude || '29.56964'}}"
+          markers="{{pageData.pageSevenInfo.marker}}"
+          scale="14"
+          show-location
+          @tap="toMap"
+        ></map>
+      </view>
+      <!-- <view
+        class="call-me"
+        @tap="goHotal"
+        wx:if="{{bottomType==='msg' && showMap}}"
+      >{{hotelType === 'HOTEL' ? '参观酒店' : '参观商家'}}</view> -->
+      
+      <text class="texts">{{ pageData.pageOneInfo.hotelAddress ? pageData.pageOneInfo.hotelAddress :'威斯丁酒店'}}\n{{ pageData.pageOneInfo.weddingTime ? pageData.pageOneInfo.weddingTime :'2019年12月12日12时08分'}}</text>
+      <view
+        class="call-me"
+        @tap="goHotal"
+        wx:if="{{bottomType==='msg' && showMap}}"
+      >参观商家</view>
+    </view>
+    <view class="tree-left"></view>
+    <view class="tree-right"></view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class SevenPagesComponent extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    current: {
+      type: Number,
+      default: 0
+    },
+    domain: {
+      type: String,
+      default:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/'
+    },
+    pageData: {
+      type: Object,
+      default: {}
+    },
+    bottomType: {
+      type: String
+    },
+    showMap: {
+      type: Boolean,
+      default: true
+    },
+    hotelType: {
+      type: Boolean
+    }
+  }
+  methods = {
+    toMap() {
+      if (this.bottomType !== 'create') {
+        wx.openLocation({
+          latitude: parseFloat(this.pageData.pageSevenInfo.latitude),
+          longitude: parseFloat(this.pageData.pageSevenInfo.longitude),
+          scale: 18
+        })
+      }
+    },
+    /**
+     * 跳转到商家页面
+     * */
+    goHotal() {
+      // let hotalId =
+      //   wx.getStorageSync('hotelId') ||
+      //   wx.getStorageSync('Invitation' + STATUS.HOTEL_ID) ||
+      //   ''
+      wx.navigateTo({
+        url: '/subpackages/MarketHotel/pages/index?id=' + this.hotelId
+      })
+    }
+  }
+  watch = {
+    current(newValue, oldValue) {}
+  }
+}
+</script>

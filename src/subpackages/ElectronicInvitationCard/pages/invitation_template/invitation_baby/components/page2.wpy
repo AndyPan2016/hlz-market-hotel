@@ -1,0 +1,71 @@
+<!--
+  请柬第2屏
+  @Author: AndyPan
+  @CreateDate: 2019年7月25日16:35:29
+  @LastUpdateDate: 2019年7月25日16:35:33
+  @Remarks: 
+-->
+
+<style lang="less"></style>
+
+<template>
+  <view class="page-screen page-two default" :class="{animation:current==1}">
+    <view class="screen-elem-bgblock bgblock-first"></view>
+    <view class="screen-elem-bgblock bgblock-second"></view>
+    <view class="screen-elem-photo photo-first">
+      <!-- <image class="photo-thumb" src="{{pageData.imageInfo[1][0] ? pageData.imageInfo[1][0]['imagePath'] : (doMain + 'default-photo-2.png?v1')}}" @load="imageLoad" wx:if="{{doMain}}" /> -->
+      <image class="photo-thumb" src="{{pageData.imageInfo[1][0] ? pageData.imageInfo[1][0]['imagePath'] : (doMain + 'default-photo-2.png?v1')}}" @load="imageLoad" wx:if="{{doMain && photoThumb}}" />
+      <image class="photo-thumb" @load="imageLoad" wx:elif="{{doMain}}" />
+      <view class="upload-img" @tap="uploadImg" data-index="1" data-rate="1.25" wx:if="{{bottomType === 'setting'}}"></view>
+    </view>
+    <view class="screen-elem-photo photo-second">
+      <!-- <image class="photo-thumb" src="{{pageData.imageInfo[1][1] ? pageData.imageInfo[1][1]['imagePath'] : (doMain + 'default-photo-3.png?v1')}}" @load="imageLoad" wx:if="{{doMain}}" /> -->
+      <image class="photo-thumb" src="{{pageData.imageInfo[1][1] ? pageData.imageInfo[1][1]['imagePath'] : (doMain + 'default-photo-3.png?v1')}}" @load="imageLoad" wx:if="{{doMain && photoThumb}}" />
+      <image class="photo-thumb" @load="imageLoad" wx:elif="{{doMain}}" />
+      <view class="upload-img" @tap="uploadImg" data-index="2" data-rate="1.33" wx:if="{{bottomType === 'setting'}}"></view>
+    </view>
+
+    <view class="elem-flag"></view>
+    <view class="elem-modifier-1"></view>
+    <view class="elem-modifier-2"></view>
+    <view class="elem-modifier-3"></view>
+    <view class="elem-modifier-startsmall"></view>
+    <view class="elem-modifier-startbig"></view>
+    <view class="elem-modifier-lovely"></view>
+    <view class="elem-modifier-gift"></view>
+    <view class="elem-modifier-balloon"></view>
+    <view class="elem-partytime"></view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class TwoPagesComponent extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    photoThumb: Boolean,
+    current: { type: Number, default: 0 },
+    doMain: String,
+    pageData: { type: Object, default: {} },
+    bottomType: String,
+    onUploadImg: Function,
+    onImageLoad: Function
+  }
+  methods = {
+    uploadImg(e) {
+      if (this.onUploadImg) {
+        this.onUploadImg.call(this.$parent, e)
+      }
+      this.$emit('onUploadImg', e)
+    },
+    imageLoad(e) {
+      let onImageLoad = this.onImageLoad
+      if (onImageLoad) {
+        onImageLoad.call(this.$parent, e)
+      }
+      this.$emit('onImageLoad', e)
+    }
+  }
+}
+</script>

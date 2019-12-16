@@ -1,0 +1,441 @@
+<style lang="less">
+.component-blue-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #c7e3f1;
+  .hidden {
+    display: none;
+  }
+  // 音乐
+  @keyframes rot360 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .music-swich {
+    position: absolute;
+    right: 30rpx;
+    top: 40rpx;
+    height: 64rpx;
+    width: 64rpx;
+    border-radius: 100%;
+    z-index: 100;
+    animation: rot360 5s linear infinite;
+
+    image {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .music-paused {
+    animation-play-state: paused;
+  }
+  .music-running {
+    animation-play-state: running;
+  }
+  // 向下箭头
+  @keyframes arrow-up-down {
+    0% {
+      bottom: 180rpx;
+    }
+    50% {
+      bottom: 220rpx;
+    }
+    100% {
+      bottom: 180rpx;
+    }
+  }
+  .arrow-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 220rpx;
+    width: 86rpx;
+    height: 38rpx;
+    margin-left: -43rpx;
+    z-index: 100;
+    animation: arrow-up-down 2s ease-out infinite;
+
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+</style>
+<template>
+  <view class="component-blue-card">
+    <card-layout>
+      <blue-page1 :editMode.sync="editMode" :a1.sync="animation0" :p1.sync="p1" :basicInfo.sync="basicInfo" class="{{index==0?'':'hidden'}}" wx:if="{{index === 0}}"></blue-page1>
+      <blue-page2 :editMode.sync="editMode" :a2.sync="animation1" :p2.sync="p2" :basicInfo.sync="basicInfo" class="{{index==1?'':'hidden'}}" wx:if="{{index === 1}}"></blue-page2>
+      <blue-page3 :editMode.sync="editMode" :a3.sync="animation2" :p3.sync="p3" :basicInfo.sync="basicInfo" class="{{index==2?'':'hidden'}}" wx:if="{{index === 2}}"></blue-page3>
+      <blue-page4 :editMode.sync="editMode" :a4.sync="animation3" :p4.sync="p4" :basicInfo.sync="basicInfo" class="{{index==3?'':'hidden'}}" wx:if="{{index === 3}}"></blue-page4>
+      <blue-page5 :editMode.sync="editMode" :a5.sync="animation4" :p5.sync="p5" :basicInfo.sync="basicInfo" class="{{index==4?'':'hidden'}}" wx:if="{{index === 4}}"></blue-page5>
+      <blue-page6 :editMode.sync="editMode" :a6.sync="animation5" :p6.sync="p6" :basicInfo.sync="basicInfo" class="{{index==5?'':'hidden'}}" wx:if="{{index === 5}}"></blue-page6>
+      <blue-page7 :editMode.sync="editMode" :a7.sync="animation6" :p7.sync="p7" :basicInfo.sync="basicInfo" :bottomType.sync="bottomType" :hotelType.sync="hotelType" class="{{index==6?'':'hidden'}}" wx:if="{{index === 6}}"></blue-page7>
+    </card-layout>
+    <view class="music-swich {{musicState ? 'music-running' : 'music-paused'}}" @tap.stop="musicSwich">
+      <image src='https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/icon_music.png'></image>
+    </view>
+    <view class="arrow-btn" wx:if="{{index < indexCount - 1}}">
+      <image src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_arrow.png"></image>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import CardLayout from './card-layout'
+import BluePage1 from './blue-page1'
+import BluePage2 from './blue-page2'
+import BluePage3 from './blue-page3'
+import BluePage4 from './blue-page4'
+import BluePage5 from './blue-page5'
+import BluePage6 from './blue-page6'
+import BluePage7 from './blue-page7'
+const defaultBlueBasicInfo = {
+  bridegroomName: '张志明',
+  brideName: '于春娇',
+  weddingTime: '2019年10月30日12时08分',
+  hotelAddress: '威斯丁酒店'
+}
+const defaultBlueCover = 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo01.png'
+const defaultBluePageInfos = [
+  {
+    contentInfos: [
+      {
+        fieldName: 0,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo01.png'
+      }
+    ]
+  },
+  {
+    contentInfos: [
+      {
+        fieldName: 1,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo02.png'
+      },
+      {
+        fieldName: 2,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo03.png'
+      }
+    ]
+  },
+  {
+    contentInfos: [
+      {
+        fieldName: 3,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo04.png'
+      }
+    ]
+  },
+  {
+    contentInfos: [
+      {
+        fieldName: 4,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo05.png'
+      }
+    ]
+  },
+  {
+    contentInfos: [
+      {
+        fieldName: 5,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo06.png'
+      },
+      {
+        fieldName: 6,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo07.png'
+      },
+      {
+        fieldName: 7,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo08.png'
+      }
+    ]
+  },
+  {
+    contentInfos: [
+      {
+        fieldName: 8,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo09.png'
+      },
+      {
+        fieldName: 9,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo10.png'
+      },
+      {
+        fieldName: 10,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo11.png'
+      }
+    ]
+  },
+  {
+    contentInfos: [
+      {
+        fieldName: 11,
+        contentType: 'PICTURE',
+        fieldContent: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo12.png'
+      }
+    ]
+  }
+]
+export default class BlueCard extends wepy.component {
+  components = {
+    'card-layout': CardLayout,
+    'blue-page1': BluePage1,
+    'blue-page2': BluePage2,
+    'blue-page3': BluePage3,
+    'blue-page4': BluePage4,
+    'blue-page5': BluePage5,
+    'blue-page6': BluePage6,
+    'blue-page7': BluePage7
+  }
+  props = {
+    editMode: {
+      type: Boolean,
+      default: false,
+      twoWay: true
+    },
+    musicState: {
+      type: Boolean,
+      default: false,
+      twoWay: true
+    },
+    invitationId: {
+      type: Number,
+      default: 0,
+      twoWay: true
+    },
+    basicInfo: {
+      type: Object,
+      default: defaultBlueBasicInfo,
+      twoWay: true
+    },
+    pageInfos: {
+      type: Array,
+      default: defaultBluePageInfos,
+      twoWay: true
+    },
+    playing: {
+      type: Boolean,
+      default: true,
+      twoWay: true
+    },
+    bottomType: {
+      type: String,
+      default: '',
+      twoWay: true
+    },
+    hotelType: {
+      type: String,
+      default: '',
+      twoWay: true
+    },
+    onPageCardShow: Function
+  }
+  data = {
+    coverImage: defaultBlueCover,
+    animationList: [
+      { shown: true, hide: false },
+      { shown: false, hide: false },
+      { shown: false, hide: false },
+      { shown: false, hide: false },
+      { shown: false, hide: false },
+      { shown: false, hide: false },
+      { shown: false, hide: false }
+    ],
+    p1: defaultBluePageInfos[0],
+    p2: defaultBluePageInfos[1],
+    p3: defaultBluePageInfos[2],
+    p4: defaultBluePageInfos[3],
+    p5: defaultBluePageInfos[4],
+    p6: defaultBluePageInfos[5],
+    p7: defaultBluePageInfos[6],
+    index: 0,
+    indexCount: 7,
+    // playing: true,
+    arrowShow: true
+  }
+  watch = {
+    basicInfo(n, o) {
+      if (n) {
+        this.coverImage = n.coverImage
+        this.$apply()
+      }
+    },
+    pageInfos(n, o) {
+      // console.info('--watch:')
+      // console.info(n)
+      if (this.isArrayNotEmpty(n)) {
+        this.p1 = this.getPageData(1) || this.p1
+        this.p2 = this.getPageData(2) || this.p2
+        this.p3 = this.getPageData(3) || this.p3
+        this.p4 = this.getPageData(4) || this.p4
+        this.p5 = this.getPageData(5) || this.p5
+        this.p6 = this.getPageData(6) || this.p6
+        this.p7 = this.getPageData(7) || this.p7
+        this.$apply()
+      }
+    }
+  }
+  computed = {
+    animation0() {
+      return this.animationList[0]
+    },
+    animation1() {
+      return this.animationList[1]
+    },
+    animation2() {
+      return this.animationList[2]
+    },
+    animation3() {
+      return this.animationList[3]
+    },
+    animation4() {
+      return this.animationList[4]
+    },
+    animation5() {
+      return this.animationList[5]
+    },
+    animation6() {
+      return this.animationList[6]
+    }
+  }
+  events = {
+    'onPageDataChanged': (pageNo, data, $event) => {
+      // 更新数据
+      this.setPageData(pageNo, data)
+      // ... 更新封面
+      if (pageNo === 1 && data && Array.isArray(data.contentInfos) && data.contentInfos.length === 1) {
+        this.coverImage = data.contentInfos[0].fieldContent
+      }
+      this.$apply()
+
+      let parmes = {}
+      parmes['invitationId'] = this.invitationId + ''
+      parmes['invitationPageNo'] = pageNo
+      parmes['coverImage'] = this.coverImage
+      parmes['contentInfos'] = data.contentInfos
+      // 发送保存模板事件
+      this.$emit('saveTemplate', parmes)
+    },
+    notifyDatasetChanged: ($event) => {
+      this.$apply()
+    },
+    'onPageIndexChanged': (e, $event) => {
+      let direct = e.direct || 0
+      this.$apply()
+      if (direct === 0) {
+        return
+      }
+      if (direct < 0 && this.index <= 0) {
+        return
+      }
+      if (direct > 0 && this.index >= this.indexCount - 1) {
+        return
+      }
+
+      this.animationList[this.index] = { shown: false, hide: true }
+      let oldIndex = this.index
+      this.index += direct
+      this.animationList[this.index] = { shown: true, hide: false }
+      // this.arrowShow = !this.editMode && this.index < (this.indexCount - 1)
+      this.$apply()
+      if (this.onPageCardShow) {
+        this.onPageCardShow.call(this.$parent, this.index)
+      }
+
+      this.$broadcast('onPageCardHide', { pageNo: oldIndex })
+      this.$broadcast('onPageCardShow', { pageNo: this.index })
+    }
+  }
+  methods = {
+    musicSwich() {
+      // this.playing = !this.playing
+      this.$apply()
+      this.$emit('musicSwich')
+    }
+  }
+  /**
+   * 获取页数据
+   */
+  getPageData(pageNo) {
+    if (!this.isArrayNotEmpty(this.pageInfos)) {
+      return null
+    }
+    for (let item of this.pageInfos) {
+      if (item.invitationPageNo === pageNo) {
+        let obj = Object.assign({}, item)
+        if (pageNo === 1) {
+          obj.contentInfos = this.mixContentInfos(obj.contentInfos, defaultBluePageInfos[0].contentInfos)
+        } else if (pageNo === 2) {
+          obj.contentInfos = this.mixContentInfos(obj.contentInfos, defaultBluePageInfos[1].contentInfos)
+        } else if (pageNo === 3) {
+          obj.contentInfos = this.mixContentInfos(obj.contentInfos, defaultBluePageInfos[2].contentInfos)
+        } else if (pageNo === 4) {
+          obj.contentInfos = this.mixContentInfos(obj.contentInfos, defaultBluePageInfos[3].contentInfos)
+        } else if (pageNo === 5) {
+          obj.contentInfos = this.mixContentInfos(obj.contentInfos, defaultBluePageInfos[4].contentInfos)
+        } else if (pageNo === 6) {
+          obj.contentInfos = this.mixContentInfos(obj.contentInfos, defaultBluePageInfos[5].contentInfos)
+        } else if (pageNo === 7) {
+          obj.contentInfos = this.mixContentInfos(obj.contentInfos, defaultBluePageInfos[6].contentInfos)
+        }
+        return obj
+      }
+    }
+    return null
+  }
+  /**
+   * 设置页数据
+   */
+  setPageData(pageNo, pageData) {
+    if (!this.isArrayNotEmpty(this.pageInfos)) {
+      return
+    }
+    for (var i = 0; i < this.pageInfos.length; i++) {
+      if (this.pageInfos[i].invitationPageNo !== pageNo) {
+        continue
+      }
+      // this.pageInfos[i] = pageData
+    }
+  }
+  /**
+   * 是否为非空数组
+   */
+  isArrayNotEmpty(arr) {
+    return arr && typeof arr === 'object' && Array.isArray(arr) && arr.length > 0
+  }
+  mixContentInfos(arr1, arr2) {
+    if (!arr1 || typeof arr1 !== 'object' || !Array.isArray(arr1)) {
+      return arr2
+    }
+    if (arr1.length === 0) {
+      return arr2
+    }
+    for (let i = 0; i < arr2.length; i++) {
+      for (let j = 0; j < arr1.length; j++) {
+        if (parseInt(arr2[i].fieldName) === parseInt(arr1[j].fieldName)) {
+          arr2[i] = arr1[j]
+          arr2[i].fieldName = parseInt(arr2[i].fieldName)
+        }
+      }
+    }
+    return arr2
+  }
+}
+</script>

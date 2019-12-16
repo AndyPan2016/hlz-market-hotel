@@ -1,0 +1,365 @@
+<!--
+  婚礼作品列表
+  @Author: AndyPan
+  @CreateDate: 2019年6月27日14:44:20
+  @LastUpdateDate: 2019年6月27日14:44:25
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+
+.page-opus-detail-main {
+  .detail-video{
+    height: 423rpx;
+    width: 100%;
+    position: relative;
+  }
+  .opus-detail-cont {
+    margin: 20rpx 13rpx;
+    margin-bottom: 100rpx;
+    margin-bottom: calc(100rpx + constant(safe-area-inset-bottom));
+    margin-bottom: calc(100rpx + env(safe-area-inset-bottom));
+    background: @color-ffffff;
+    padding: 20rpx;
+    padding-bottom: 100rpx;
+    .opus-name-type {
+      .clearfix();
+      .opus-name {
+        width: 70%;
+        float: left;
+        text-align: left;
+        color: @color-333333;
+        font-size: 30rpx;
+        .text-overflow();
+      }
+      .opus-type {
+        width: 30%;
+        float: right;
+        text-align: right;
+        color: @color-999999;
+        font-size: 24rpx;
+        .text-overflow();
+      }
+    }
+    .opus-logo-title {
+      position: relative;
+      margin-top: 45rpx;
+      .clearfix();
+      .opus-logo {
+        float: left;
+        width: 88rpx;
+        height: 88rpx;
+        .border-radius(50%);
+        overflow: hidden;
+        // background: #ccc;
+        border: 1rpx solid @color-e3e3e3;
+      }
+      .opus-title {
+        position: absolute;
+        left: 114rpx;
+        top: 0;
+        right: 0rpx;
+        height: 88rpx;
+        line-height: 88rpx;
+        font-size: 26rpx;
+        color: @color-333333;
+        .text-overflow();
+        padding-right: 30rpx;
+
+        &::after {
+          content: '';
+          display: inline-block;
+          width: 14rpx;
+          height: 20rpx;
+          background: url('@{base64-icon-mapright}') 100% center no-repeat;
+          background-size: 14rpx 20rpx;
+          position: absolute;
+          right: 8rpx;
+          top: 50%;
+          margin-top: -10rpx;
+        }
+      }
+    }
+    .opus-thumb {
+      // width: 100%;
+      min-width: 100%;
+      min-height: 100%;
+      margin-top: 20rpx;
+    }
+  }
+  .opus-detail-bottom {
+    @btmHeight: 96rpx;
+    width: 100%;
+    height: @btmHeight;
+    background: @color-eeeeee;
+    position: fixed;
+    left: 0;
+    bottom: 0rpx;
+    bottom: calc(0rpx + constant(safe-area-inset-bottom));
+    bottom: calc(0rpx + env(safe-area-inset-bottom));
+
+    .btm-item {
+      float: right;
+      width: 150rpx;
+      height: @btmHeight;
+      background-color: @color-ffffff;
+      margin-left: 2rpx;
+
+      &.btm-share {
+        background-image: url('@{resourcePath}assets/images/icon-send.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 64rpx 62rpx;
+        button {
+          .opacity(0);
+          width: 100%;
+          height: 100%;
+        }
+      }
+      &.btm-call {
+        background-image: url('@{base64-icon-phone}');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 64rpx 62rpx;
+      }
+    }
+    .btm-look-price {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 302rpx;
+      line-height: @btmHeight;
+      font-size: 30rpx;
+      color: @color-ffffff;
+      background: @brand-primary;
+      text-align: center;
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-opus-detail-main">
+    <!-- <video class="detail-video" wx:if="{{caseData.video}}" src="{{caseData.video}}"
+      poster="{{caseData.coverImg}}"
+      autoplay="true"
+      loop="true"
+      controls /> -->
+    <view class="opus-detail-cont">
+      <view class="opus-name-type">
+        <text class="opus-name">{{caseData.caseName}}</text>
+        <text class="opus-type">{{caseData.categoryText}} | {{caseData.envText}}</text>
+      </view>
+      <view class="opus-logo-title" @tap="hotelHome">
+        <image src="{{apiHotelInfo.logo}}" class="opus-logo" />
+        <view class="opus-title">{{apiHotelInfo.name}}</view>
+      </view>
+      <repeat for="{{caseData.casesPictureInfos}}" key="index" index="index" item="item">
+        <image src="{{item.thum}}" class="opus-thumb" mode="widthFix" />
+      </repeat>
+    </view>
+    <view class="opus-detail-bottom">
+      <view class="btm-item btm-share">
+        <button open-type="share"></button>
+      </view>
+      <view class="btm-item btm-call" @tap="callPhone"></view>
+      <view class="btm-look-price" @tap="lookPrice">{{priceText}}</view>
+    </view>
+    <user-authorize wx:if="{{isShowAuthorize}}" :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" :onCloseAuthorize="onCloseAuthorizeFn" />
+  </view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import { Tips, PATCH } from '@/utils'
+import { STATUS } from '@/configs'
+import { WeddingOpusService, IndexService } from '../services'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+
+export default class MyCouponPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '婚礼作品'
+  }
+
+  // 组件
+  components = {
+    // 用户认证授权组件
+    'user-authorize': UserAuthorizeComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo', 'PhoneNumber'],
+    // 婚礼作品ID
+    id: '',
+    // 查看价格
+    priceText: '查看价格',
+    priceTextStatus: false,
+    isShowAuthorize: false,
+    // 作品数据
+    caseData: null,
+    // 酒店信息
+    apiHotelInfo: null
+  }
+
+  methods = {
+    /**
+     * 拨打电话
+     */
+    callPhone() {
+      let phone = this.apiHotelInfo.telephone
+      if (phone) {
+        wx.makePhoneCall({
+          phoneNumber: phone.toString()
+        })
+      } else {
+        Tips.error('暂未提供电话')
+      }
+    },
+    /**
+     * 查看价格
+     */
+    lookPrice() {
+      if (!this.priceTextStatus) {
+        let userNo = wx.getStorageSync(STATUS.USER_NO)
+        let phoneNumber = wx.getStorageSync(STATUS.PHONE_NUMBER)
+        if (userNo && phoneNumber) {
+          this.casesBehaviorCollect(() => {
+            this.priceText = this.caseData.price
+            this.priceTextStatus = true
+            this.$apply()
+          })
+        } else {
+          this.isShowAuthorize = true
+          this.$apply()
+          this.$invoke('user-authorize', 'authorizeActivation')
+        }
+      }
+    },
+    /**
+     * 去酒店主页
+     */
+    hotelHome() {
+      wx.reLaunch({ url: 'index?id=' + this.apiHotelInfo.id })
+    }
+  }
+
+  /**
+   * 获取作品详情
+   */
+  getCaseDetail() {
+    WeddingOpusService.casesDetailQuery({
+      data: {
+        caseId: this.id
+      }
+    })
+      .then(res => {
+        this.caseData = res.data
+        this.caseData.video = ((res.data.videoList || [])[0] || {}).picture
+        if (res.data.showPrice === 'yes') {
+          this.priceText = res.data.price
+          this.priceTextStatus = true
+        }
+        this.$apply()
+        this.getHotelInfo()
+      })
+      .catch(err => {
+        Tips.error(err)
+      })
+  }
+
+  /**
+   * 用户浏览案例行为收集
+   */
+  casesBehaviorCollect(callBack) {
+    let userNo = wx.getStorageSync(STATUS.USER_NO)
+    if (userNo) {
+      WeddingOpusService.casesBehaviorCollect({
+        data: {
+          caseId: this.id,
+          userNo
+        }
+      })
+        .then(res => {
+          if (callBack) {
+            callBack()
+          }
+        })
+        .catch(err => {
+          Tips.error(err)
+        })
+    }
+  }
+
+  /**
+   * 获取酒店信息
+   */
+  getHotelInfo() {
+    IndexService.hotelInfo({
+      data: {
+        hotelId: this.caseData.hotelId
+      }
+    })
+      .then(res => {
+        let apiHotelInfo = res.data.apiHotelInfo
+        this.apiHotelInfo = apiHotelInfo
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err)
+      })
+  }
+
+  /**
+   * 所有授权完成
+   */
+  onAuthorizeAllFn(data) {
+    if (data.phoneNumber) {
+      this.casesBehaviorCollect(() => {
+        this.priceText = this.caseData.price
+        this.priceTextStatus = true
+        this.$apply()
+      })
+    }
+  }
+
+  /**
+   * 关闭授权
+   */
+  onCloseAuthorizeFn() {
+    this.priceText = '查看价格'
+    this.priceTextStatus = false
+    this.$apply()
+    Tips.error('授权成功后查看')
+    let that = this
+    setTimeout(() => {
+      that.isShowAuthorize = false
+      that.$apply()
+    }, 1200)
+  }
+
+  /**
+   * 分享转发
+   */
+  onShareAppMessage(res) {
+    return {
+      title: this.caseData.caseName,
+      imageUrl: this.caseData.coverImg,
+      path: '/subpackages/MarketHotel/pages/wedding-opus-detail?id=' + this.id
+    }
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    this.id = options.id
+
+    this.getCaseDetail()
+  }
+}
+</script>  

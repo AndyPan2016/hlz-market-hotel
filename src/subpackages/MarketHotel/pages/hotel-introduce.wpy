@@ -1,0 +1,168 @@
+<!--
+  酒店详情表页
+  @Author: AndyPan
+  @CreateDate: 2019年4月28日10:49:34
+  @LastUpdateDate: 2019年4月28日11:20:58
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+.page-hotel-introduce-main {
+  .content-block {
+    width: auto;
+    padding: 0 15rpx;
+    margin-top: 20rpx;
+    .content-main-slot {
+      padding-top: 20rpx;
+
+      .image-thumb {
+        width: 100%;
+        // max-height: 300rpx;
+        // margin-bottom: 30rpx;
+      }
+      .holte-remark {
+        color: #666666;
+        font-size: 24rpx;
+        line-height: 40rpx;
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 40rpx;
+        margin-top: 15rpx;
+        text-align: left;
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-hotel-introduce-main page-main-wrap">
+    <view class="page-main-cont">
+      <!-- 酒店介绍 -->
+      <content-block-hotel-introduce class="content-block" :title.sync="hotelTypeText">
+        <view slot="content-main-slot" class="content-main-slot">
+          <view class="holte-remark">{{hotelExtendsInfo.hoteIntro}}</view>
+          <repeat for="{{hotelExtendsInfo.pictureListApiInfos}}" key="index" index="index" item="item">
+            <image class="image-thumb" src="{{item.thum}}" mode="widthFix" />
+            <view class="holte-remark" wx:if="{{item.intro}}">{{item.intro}}</view>
+          </repeat>
+        </view>
+      </content-block-hotel-introduce>
+    </view>
+    <!-- 底部Footer -->
+    <footer />
+    <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" />
+  </view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import ContentBlockComponent from '../components/content-block-component/index'
+import FooterComponent from '@/components/footer-component/index'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import { IndexService } from '../services'
+import { Tips, PATCH } from '@/utils'
+import { STATUS, LANG } from '@/configs'
+
+export default class HotelIntroducePages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '简介'
+  }
+
+  // 组件
+  components = {
+    // 酒店介绍
+    'content-block-hotel-introduce': ContentBlockComponent,
+    // 底部
+    footer: FooterComponent,
+    'user-authorize': UserAuthorizeComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    placeholderText: LANG.placeholderText,
+    hotelExtendsInfo: {},
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    hotelId: null,
+    hotelType: '',
+    hotelTypeText: '',
+    // 是否为分享链接
+    isShare: null
+  }
+
+  onAuthorizeAllFn(data) {
+    this.hotelExtendsInfoFn()
+  }
+
+  /**
+   * 酒店拓展信息
+   */
+  hotelExtendsInfoFn() {
+    IndexService.hotelExtendsInfo({ data: { hotelId: this.hotelId } })
+      .then(res => {
+        let hotelExtendsApiInfo = res.data.hotelExtendsApiInfo
+        if (hotelExtendsApiInfo) {
+          this.hotelExtendsInfo = hotelExtendsApiInfo
+          this.$apply()
+        }
+        this.hotelTrackAdd()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 增加酒店足迹
+   */
+  hotelTrackAdd() {
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (this.hotelId && this.isShare) {
+      IndexService.hotelTrackAdd({
+        data: { hotelId: this.hotelId, userNo }
+      }).then(res => {})
+    }
+  }
+
+  /**
+   * 分享转发
+   */
+  onShareAppMessage(res) {
+    return {
+      title: this.hotelExtendsInfo.hotelName,
+      path:
+        '/subpackages/MarketHotel/pages/hotel-introduce?hotelId=' +
+        this.hotelId +
+        '&isShare=true'
+    }
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    options = options || {}
+    wx.showShareMenu({ withShareTicket: true })
+    let hotelId = options.hotelId
+    this.isShare = options.isShare
+    this.hotelType = options.hotelType
+    this.hotelTypeText = this.hotelType === 'WEDDING' ? '商户介绍' : '酒店介绍'
+    if (hotelId) {
+      this.hotelId = parseInt(hotelId)
+    } else {
+      this.hotelId = wepy.getStorageSync(STATUS.HOTEL_ID)
+    }
+    this.$apply()
+
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (userNo) {
+      this.hotelExtendsInfoFn()
+    } else {
+      this.$invoke('user-authorize', 'authorizeActivation')
+    }
+  }
+}
+</script>  

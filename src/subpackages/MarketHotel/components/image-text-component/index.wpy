@@ -1,0 +1,236 @@
+<!--
+  图文组件-视图模板
+  @Author: AndyPan
+  @version: 1.0.0
+  @CreateDate: 2019年4月26日11:38:17
+  @LastUpdateDate: 2019年4月26日11:38:20
+  @Remarks: 备注
+-->
+
+<!-- 组件样式 -->
+<style lang="less">
+@import '../../../../assets/less/mixin.less';
+
+.image-text-component {
+  .image-text-item {
+    width: 100%;
+    height: auto;
+    // margin: 20rpx auto;
+    padding-bottom: 40rpx;
+    .item-thumb-wrap{
+      // height: 300rpx;
+      height: 386rpx;
+      overflow: hidden;
+      &.item-video-wrap{
+        height: 386rpx;
+      }
+    }
+    .item-thumb {
+      display: block;
+      min-width: 100%;
+      min-height: 100%;
+      // height: 300rpx;
+    }
+    .item-thumb-video {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .item-title {
+      display: inline-block;
+      width: 100%;
+      margin-top: 20rpx;
+      line-height: 30rpx;
+      color: #030303;
+      font-size: 30rpx;
+      text-align: left;
+    }
+    .item-more {
+      margin-top: 2rpx;
+      position: relative;
+      text-align: right;
+      min-height: 50rpx;
+      // &:before{
+      //     content: '';
+      //     display: inline-block;
+      //     vertical-align: middle;
+      //     height: 100%;
+      // }
+      .item-more-look {
+        display: block;
+        height: 50rpx;
+        line-height: 50rpx;
+        width: 120rpx;
+        text-align: center;
+        background: #ff4c2f;
+        font-size: 30rpx;
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        margin-top: -25rpx;
+        right: 0;
+        .border-radius(25rpx);
+      }
+      .item-more-label {
+        // position: relative;
+        // top: 0;
+        // left: 0;
+        // bottom: 0;
+        // right: 150rpx;
+        margin-right: 150rpx;
+        line-height: 50rpx;
+        text-align: left;
+
+        .label-item {
+          display: inline-block;
+          height: 30rpx;
+          line-height: 30rpx;
+          font-size: 24rpx;
+          color: #ff4c2f;
+          padding: 0rpx 10rpx;
+          border: 1px solid #ff4c2f;
+          .border-radius(12rpx);
+          margin-right: 10rpx;
+          margin-top: 10rpx;
+          .opacity(0.6);
+        }
+      }
+    }
+    .item-remark {
+      color: #666666;
+      font-size: 24rpx;
+      line-height: 40rpx;
+      display: inline-block;
+      width: 100%;
+      margin-top: 20rpx;
+      text-align: left;
+    }
+  }
+}
+</style>
+
+<!-- 组件视图 -->
+<template>
+  <view class="{{ 'image-text-component' + (' ' + class) }}">
+    <repeat for="{{dataset}}" key="index" index="index" item="item">
+      <view class="image-text-item" wx:if="{{ index < maxNumber }}">
+        <view class="item-thumb-wrap {{item.video ? 'item-video-wrap' : ''}}">
+          <!-- <video class="item-thumb-video" id="j-video-hall-{{index}}" wx:if="{{item.video}}" src="{{item.video}}"
+            bindplay="playVideo"
+            controls />
+          <image class="item-thumb" wx:else src="{{item.thumb}}" mode="widthFix" data-key="{{item.key}}" data-hallId="{{item.hallId}}" data-data="{{item.data}}" @tap="onLookDetail" /> -->
+          <image class="item-thumb" src="{{item.thumb}}" mode="widthFix" data-key="{{item.key}}" data-hallId="{{item.hallId}}" data-data="{{item.data}}" @tap="onLookDetail" />
+        </view>
+        <text class="item-title" wx:if="{{item.title}}">{{item.title}}</text>
+        <view class="item-more" data-key="{{item.key}}" data-hallId="{{item.hallId}}" data-data="{{item.data}}" @tap="onLookDetail">
+          <view class="item-more-label">
+            <repeat for="{{item.label}}" key="index" index="index" item="labelitem">
+              <text class="label-item">{{labelitem}}</text>
+            </repeat>
+          </view>
+          <text class="item-more-look" wx:if="{{!item.isShowLook}}">查看</text>
+          <!-- <text class="item-more-look"
+            wx:if="{{!item.isShowLook}}"
+            data-key="{{item.key}}"
+            data-hallId="{{item.hallId}}"
+            data-data="{{item.data}}"
+            @tap="onLookDetail">查看</text> -->
+        </view>
+        <text class="item-remark" wx:if="{{item.remark}}">{{item.remark}}</text>
+      </view>
+    </repeat>
+  </view>
+</template>
+
+<!-- 组件业务逻辑 -->
+<script>
+// import ImageTextComponent from './view'
+// export default ImageTextComponent
+import wepy from 'wepy'
+
+export default class ImageTextComponent extends wepy.component {
+  // 接收外部传入的参数
+  props = {
+    // 自定义class
+    class: { type: String },
+    // 数据集合
+    dataset: { type: Array },
+    // 底部项点击事件
+    onLookDetail: { type: Function },
+    // 最大显示记录条数
+    maxNumber: { type: Number, default: 1000 }
+  }
+  // 模板(绑定)数据
+  data = {
+    tempVideoContext: {}
+  }
+  // 用于监听组件之间的通信与交互事件的事件处理函数集合
+  events = {}
+
+  seekVideo() {
+    let dataset = this.dataset
+    if (dataset) {
+      let i = 0
+      let thisID
+      let videoContext
+      let seek = () => {
+        thisID = 'j-video-hall-' + i
+        videoContext = wx.createVideoContext(thisID)
+        this.$parent.$parent.globalData.tempVideoContext[thisID] = videoContext
+        videoContext.seek(1)
+        if (i < dataset.length - 1) {
+          i++
+          setTimeout(seek, 500)
+        }
+      }
+      seek()
+    }
+  }
+
+  watch = {
+    dataset: () => {
+      this.seekVideo()
+    }
+  }
+
+  methods = {
+    /**
+    * 查看详情点击事件
+    * @param {Object} e Event对象
+    */
+    onLookDetail(e) {
+      let dataset = e.currentTarget.dataset || {}
+      let eventResult
+
+      // 响应on事件
+      let onLookDetail = this.onLookDetail
+      if (onLookDetail) {
+        eventResult = onLookDetail.call(this.$parent, dataset, e)
+      }
+
+      // 触发用户事件
+      this.$emit('onLookDetail', dataset, (status) => {
+        eventResult = status
+      })
+
+      if (eventResult !== false) {
+        wepy.navigateTo({ url: 'banquet-hall-detail?id=' + dataset.hallid })
+      }
+    },
+    playVideo(e) {
+      let currentTarget = e.currentTarget
+      let id = currentTarget.id
+      let tempVideoContext = this.$parent.$parent.globalData.tempVideoContext
+      for (let key in tempVideoContext) {
+        if (key !== id) {
+          tempVideoContext[key].pause()
+          tempVideoContext[key].stop()
+        }
+      }
+    }
+  }
+  onLoad() {
+    this.seekVideo()
+  }
+}
+</script>

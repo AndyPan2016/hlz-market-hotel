@@ -1,0 +1,326 @@
+<template>
+  <view class="page-one" :class="{animation:current==7}">
+    <view class="img page1-t-l top"></view>
+    <view class="img page1-t-r top"></view>
+    <view class="img page1-t-1"></view>
+    <text class="text info">{{ pageData.pageOneInfo.weddingTime ? pageData.pageOneInfo.weddingTime :'2019年12月12日12时08分'}}\n{{ pageData.pageOneInfo.hotelAddress ? pageData.pageOneInfo.hotelAddress :'威斯丁酒店'}}</text>
+    <view class="img page1-b-1 bottom"></view>
+    <view class="img page1-b-2 bottom"></view>
+    <view class="img page1-b-3 bottom"></view>
+    <view class="img page1-b-4 bottom"></view>
+    <view class="img page1-b-5 bottom"></view>
+    <view class="map-box">
+      <map id="map" class="map" longitude="{{pageData.pageSevenInfo.longitude || '106.49773'}}" latitude="{{pageData.pageSevenInfo.latitude || '29.56964'}}" markers="{{pageData.pageSevenInfo.marker}}" scale="14" show-location @tap="toMap"></map>
+    </view>
+    <!-- <view class="call-me" wx:if="{{bottomType==='msg' && showMap}}" @tap="goHotal">{{hotelType === 'HOTEL' ? '参观酒店' : '参观商家'}}</view> -->
+    <view class="call-me" wx:if="{{bottomType==='msg' && showMap}}" @tap="goHotal">参观商家</view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class SevenPagesComponent extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    current: {
+      type: Number,
+      default: 0
+    },
+    domain: {
+      type: String,
+      default:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/'
+    },
+    pageData: {
+      type: Object,
+      default: {}
+    },
+    bottomType: {
+      type: String
+    },
+    showMap: {
+      type: Boolean,
+      default: true
+    },
+    hotelType: {
+      type: Boolean
+    }
+  }
+  methods = {
+    toMap() {
+      if (this.bottomType !== 'create') {
+        wx.openLocation({
+          latitude: parseFloat(this.pageData.pageSevenInfo.latitude),
+          longitude: parseFloat(this.pageData.pageSevenInfo.longitude),
+          scale: 18
+        })
+      }
+    },
+    /**
+     * 跳转到商家页面
+     * */
+    goHotal() {
+      // let hotalId =
+      //   wx.getStorageSync('hotelId') ||
+      //   wx.getStorageSync('Invitation' + STATUS.HOTEL_ID) ||
+      //   ''
+      wx.navigateTo({
+        url: '/subpackages/MarketHotel/pages/index?id=' + this.hotelId
+      })
+    }
+  }
+  watch = {
+    current(newValue, oldValue) {}
+  }
+}
+</script>
+<style lang="less" scoped>
+/**
+ * @description: 关键帧动画
+ * @param {@name,@content} 
+ * @return: 
+ */
+.keyframes (@name,@content) {
+  @-webkit-keyframes @name {
+    @content();
+  }
+  @keyframes @name {
+    @content();
+  }
+}
+
+/******设置动画效果********/
+.keyframes(
+  t_l_img,
+  {from {left: -100rpx;opacity: 0} to {left: 0rpx;opacity: 1}}
+);
+.keyframes(
+  t_r_img,
+  {from {right: -140rpx;opacity: 0} to {right: -14rpx;opacity: 1}}
+);
+
+.keyframes(middle_text, {from {opacity: 0} to {opacity: 1}});
+
+.keyframes(
+  b_l_r_img,
+  {from {transform: rotate(-45deg) ;opacity: 0;transform-origin: left bottom} to
+    {transform: rotate(0deg) ;opacity: 1;transform-origin: left bottom}}
+);
+.keyframes(
+  b_l1_r_img,
+  {from {transform: rotate(-20deg) ;opacity: 0;} to {transform: rotate(0deg)
+    ;opacity: 1;}}
+);
+.keyframes(
+  b_r_r_img,
+  {from {transform: rotate(20deg) ;opacity: 0;} to {transform: rotate(0deg)
+    ;opacity: 1;}}
+);
+.keyframes(
+  b_r1_r_img,
+  {from {transform: rotate(10deg) ;opacity: 0;} to {transform: rotate(0deg)
+    ;opacity: 1;}}
+);
+.keyframes(
+  b_r2_r_img,
+  {from {transform: rotate(45deg) ;opacity: 0;transform-origin: right bottom} to
+    {transform: rotate(0deg) ;opacity: 1;transform-origin: right bottom}}
+);
+
+/***文字***/
+.keyframes(
+  top_text,
+  {from {transform: translateY(-20rpx) ;opacity: 0} to {transform:
+    translateY(0rpx) ;opacity: 1}}
+);
+.keyframes(
+  bottom_text,
+  {from {transform: translateY(20rpx) ;opacity: 0} to {transform:
+    translateY(0rpx) ;opacity: 1}}
+);
+
+/****执行动画*******/
+.animation {
+  .page1-t-l {
+    animation: t_l_img 3s forwards;
+  }
+  .page1-t-r {
+    animation: t_r_img 3s forwards;
+  }
+  .page1-t-1 {
+    animation: top_text 3s forwards;
+  }
+  .page1-b-1 {
+    animation: b_l_r_img 3s 2s forwards;
+  }
+  .page1-b-2 {
+    animation: b_l1_r_img 3s 1s forwards;
+  }
+  .page1-b-3 {
+    animation: b_r_r_img 3s 1s forwards;
+  }
+  .page1-b-4 {
+    animation: b_r1_r_img 3s 1s forwards;
+  }
+  .page1-b-5 {
+    animation: b_r2_r_img 3s 2s forwards;
+  }
+  .info {
+    animation: bottom_text 3s forwards;
+  }
+  .map-box {
+    animation: bottom_text 3s forwards;
+  }
+}
+
+/*****基本布局*************/
+.page-one {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .img {
+    position: absolute;
+    z-index: 10;
+  }
+  .text {
+    position: absolute;
+    font-family: 'hy';
+  }
+  .bottom {
+    bottom: 0;
+  }
+  .page1-t-l {
+    width: 247rpx;
+    height: 424rpx;
+    display: block;
+    top: 90rpx;
+    left: 0;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page1_7.png')
+      no-repeat;
+    background-size: 247rpx 424rpx;
+  }
+  .page1-t-r {
+    width: 270rpx;
+    height: 365rpx;
+    display: block;
+    top: 98rpx;
+    right: -40rpx;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page1_6.png')
+      no-repeat;
+    background-size: 270rpx 365rpx;
+  }
+  .page1-b-1 {
+    width: 362rpx;
+    height: 399rpx;
+    display: block;
+    left: -40rpx;
+    bottom: 86rpx;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page1_1.png')
+      no-repeat;
+    background-size: 362rpx 399rpx;
+  }
+  .page1-b-2 {
+    width: 154rpx;
+    height: 308rpx;
+    display: block;
+    left: 292rpx;
+    bottom: 50rpx;
+    z-index: 10;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page1_2.png')
+      no-repeat;
+    background-size: 154rpx 308rpx;
+  }
+  .page1-b-3 {
+    width: 111rpx;
+    height: 291rpx;
+    display: block;
+    right: 212rpx;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page1_3.png')
+      no-repeat;
+    background-size: 111rpx 291rpx;
+  }
+  .page1-b-4 {
+    width: 96rpx;
+    height: 212rpx;
+    display: block;
+    right: 128rpx;
+    bottom: 52rpx;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page1_4.png')
+      no-repeat;
+    background-size: 96rpx 212rpx;
+  }
+  .page1-b-5 {
+    width: 219rpx;
+    height: 179rpx;
+    display: block;
+    right: 0;
+    bottom: 262rpx;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page1_5.png')
+      no-repeat;
+    background-size: 219rpx 179rpx;
+  }
+  .page1-t-1 {
+    width: 348rpx;
+    height: 66rpx;
+    display: block;
+    top: 40rpx;
+    left: 50%;
+    margin-left: -174rpx;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page7_1.png')
+      no-repeat;
+    background-size: 348rpx 66rpx;
+  }
+  .info {
+    text-align: center;
+    font-family: 'hy';
+    font-size: 30rpx;
+    color: #333;
+    width: 100%;
+    text-align: center;
+    top: 662rpx;
+    opacity: 0;
+  }
+  .map-box {
+    width: 570rpx;
+    height: 500rpx;
+    display: block;
+    top: 134rpx;
+    left: 50%;
+    margin-left: -285rpx;
+    box-sizing: border-box;
+    border: 10rpx solid #ff8c8a;
+    border-radius: 10rpx;
+    position: absolute;
+    background: #fff;
+    opacity: 0;
+    .map {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .call-me {
+    width: 300rpx;
+    height: 70rpx;
+    border-radius: 4rpx;
+    background: #ff4c2f;
+    text-align: center;
+    line-height: 70rpx;
+    color: #ffffff;
+    font-size: 32rpx;
+    position: absolute;
+    top: 73vh;
+    left: 50%;
+    margin-left: -150rpx;
+    z-index: 801;
+  }
+}
+</style>

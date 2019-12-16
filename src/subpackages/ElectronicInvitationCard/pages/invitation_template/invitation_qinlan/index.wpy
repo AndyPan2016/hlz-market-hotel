@@ -1,0 +1,1002 @@
+<style lang="less">
+// @import './components/blue.less';
+@import '../../../../../assets/less/_variables.less';
+
+@keyframes anim-text1 {
+  0% {
+    opacity: 0.1;
+    transform: translateY(100rpx);
+  }
+  90% {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes anim-photo {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes anim-weding {
+  0% {
+    opacity: 0.1;
+    transform: translateY(100rpx);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes anim-music {
+  0% {
+    transform: rotate(-1deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+@keyframes anim-map {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+page,
+html,
+body {
+  // font-family: @font-family-ecard-blue;
+  width: 100%;
+  height: 100%;
+}
+.page-blue {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  .frame {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .frameHidden {
+    display: none;
+  }
+  .panel1,
+  .panel2,
+  .panel3,
+  .panel4,
+  .panel5,
+  .panel6,
+  .panel7 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .panel1,
+  .panel3 {
+    .panel-top {
+      position: relative;
+      width: 100%;
+      height: 0;
+      flex: 55;
+      .panel-top-photo {
+        width: 100%;
+        height: 100%;
+        -webkit-mask-box-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask01_top.png') 0 0 0 0 stretch round;
+        -webkit-mask-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask01_top.png');
+        -webkit-mask-size: 100% auto;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: top center;
+        opacity: 0;
+        animation: anim-photo 2s ease 1s normal forwards;
+      }
+    }
+    .panel-bottom {
+      position: relative;
+      width: 100%;
+      height: 0;
+      flex: 45;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+    }
+  }
+  .panel4,
+  .panel7 {
+    .panel-top {
+      position: relative;
+      width: 100%;
+      height: 0;
+      flex: 81;
+      .panel-top-photo {
+        width: 100%;
+        height: 100%;
+        -webkit-mask-box-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask05_top.png') 0 0 0 0 stretch round;
+        -webkit-mask-size: 100% auto;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: top center;
+        opacity: 0;
+        animation: anim-photo 2s ease 1s normal forwards;
+      }
+    }
+    .panel-bottom {
+      position: relative;
+      width: 100%;
+      height: 0;
+      flex: 19;
+    }
+  }
+  .icon-happy-marriage {
+    width: 472rpx;
+    height: 57rpx;
+    background-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/happy_marriage.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: anim-weding 2s ease 0s normal forwards;
+  }
+  .icon-my-sweetest-love {
+    width: 472rpx;
+    height: 40rpx;
+    background-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/my_sweetest_love.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: anim-weding 2s ease 0s normal forwards;
+  }
+  .panel1 {
+    .panel-bottom {
+      .panel-bottom-names {
+        color: #ae783f;
+        font-size: 50rpx;
+        text-align: center;
+        width: 100%;
+        animation: anim-text1 2s ease 0s normal forwards;
+      }
+      .panel-bottom-time,
+      .panel-bottom-address {
+        color: #333333;
+        font-size: 26rpx;
+        font-weight: 400;
+        text-align: center;
+        line-height: 40rpx;
+        width: 100%;
+        padding: 0 20rpx;
+        box-sizing: border-box;
+        margin-top: 20rpx;
+        animation: anim-text1 2s ease 0s normal forwards;
+      }
+    }
+    .panel-weding {
+      position: absolute;
+      left: 0;
+      top: calc(50% - 20rpx);
+      width: 100%;
+      height: 140rpx;
+      background-clip: content-box;
+      background-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/weding.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      animation: anim-weding 2s ease 0s normal forwards;
+    }
+  }
+  .panel2 {
+    .panel-top,
+    .panel-bottom {
+      position: relative;
+      width: 100%;
+      height: 0;
+      flex: 1;
+    }
+    .panel-photo {
+      width: 100%;
+      height: 100%;
+      -webkit-mask-size: 100% auto;
+      -webkit-mask-repeat: no-repeat;
+      opacity: 0;
+      animation: anim-photo 2s ease 0s normal forwards;
+    }
+    .panel-photo-top {
+      -webkit-mask-position: top center;
+      -webkit-mask-box-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask02_top.png') 0 0 0 0 stretch round;
+      animation-delay: 1s;
+    }
+    .panel-photo-bottom {
+      -webkit-mask-position: bottom center;
+      -webkit-mask-box-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask02_bottom.png') 0 0 0 0 stretch round;
+      animation-delay: 1.5s;
+    }
+    .panel-middle {
+      position: relative;
+      width: 100%;
+      padding: 10rpx 0;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .panel3 {
+    .panel-bottom {
+      .icon-happy-marriage {
+        margin: 30rpx auto;
+      }
+      .panel-bottom-text {
+        width: 100%;
+        height: 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #333;
+        font-size: 26rpx;
+        font-weight: 400;
+        text-align: center;
+        line-height: 50rpx;
+        animation: anim-text1 2s ease 0s normal forwards;
+      }
+    }
+  }
+  .panel4 {
+    .panel-bottom {
+      .icon-happy-marriage {
+        margin: 30rpx auto 0 auto;
+      }
+    }
+  }
+  .panel5 {
+    .panel-top,
+    .panel-middle,
+    .panel-bottom {
+      position: relative;
+      width: 100%;
+      height: 0;
+      flex: 1;
+      .panel-photo {
+        width: 100%;
+        height: 100%;
+        -webkit-mask-size: 100% auto;
+        -webkit-mask-repeat: no-repeat;
+        opacity: 0;
+        animation: anim-photo 2s ease 0s normal forwards;
+      }
+    }
+    .panel-top {
+      .panel-photo {
+        -webkit-mask-box-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask03_top.png') 0 0 0 0 stretch round;
+        -webkit-mask-position: top center;
+        animation-delay: 1s;
+      }
+    }
+    .panel-middle {
+      padding: 10rpx 0;
+      box-sizing: border-box;
+      .panel-photo {
+        -webkit-mask-box-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask03_middle.png') 0 0 0 0 stretch round;
+        -webkit-mask-position: center;
+        animation-delay: 1.5s;
+      }
+    }
+    .panel-bottom {
+      .panel-photo {
+        -webkit-mask-box-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask03_bottom.png') 0 0 0 0 stretch round;
+        -webkit-mask-position: bottom center;
+        animation-delay: 2s;
+      }
+    }
+  }
+  .panel6 {
+    .panel-top,
+    .panel-bottom {
+      position: relative;
+      width: 100%;
+      height: 0;
+      flex: 1;
+    }
+    .panel-middle {
+      position: relative;
+      width: 100%;
+      padding: 5rpx 0;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .panel-top {
+      display: flex;
+      flex-direction: row;
+      .panel-top-left,
+      .panel-top-right {
+        position: relative;
+        width: 0;
+        height: 100%;
+        flex: 1;
+        box-sizing: border-box;
+        padding: 0 5rpx 0 0;
+      }
+      .panel-top-left {
+        padding: 0 5rpx 0 0;
+      }
+      .panel-top-right {
+        padding: 0 0 0 5rpx;
+      }
+      .panel-top-photo-left,
+      .panel-top-photo-right {
+        width: 100%;
+        height: 100%;
+        -webkit-mask-size: 100% auto;
+        -webkit-mask-repeat: no-repeat;
+        opacity: 0;
+        animation: anim-photo 2s ease 0s normal forwards;
+      }
+      .panel-top-photo-left {
+        -webkit-mask-box-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask04_top_left.png') 0 0 0 0 stretch round;
+        -webkit-mask-position: top right;
+        animation-delay: 1s;
+      }
+      .panel-top-photo-right {
+        -webkit-mask-box-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask04_top_right.png') 0 0 0 0 stretch round;
+        -webkit-mask-position: top left;
+        animation-delay: 1.5s;
+      }
+    }
+    .panel-bottom {
+      width: 100%;
+      height: 0;
+      flex: 1;
+      .panel-bottom-photo {
+        width: 100%;
+        height: 100%;
+        -webkit-mask-box-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/mask04_bottom.png') 0 0 0 0 stretch round;
+        -webkit-mask-size: 100% auto;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: bottom center;
+        opacity: 0;
+        animation: anim-photo 2s ease 2s normal forwards;
+      }
+    }
+  }
+  .panel7 {
+    .panel-location-wrapper {
+      position: fixed;
+      z-index: 100;
+      bottom: 300rpx;
+      left: 86rpx;
+      right: 86rpx;
+      // top: 658rpx;
+      // width: 100%;
+      height: 370rpx;
+      padding: 0 29rpx;
+      box-sizing: border-box;
+      .panel-location {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: white;
+        padding: 20rpx;
+        box-sizing: border-box;
+        border-radius: 4rpx;
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        animation: anim-map 1s ease 1.5s normal forwards;
+        .panel-location-map {
+          width: 100%;
+          height: 213rpx;
+          // opacity: 0;
+          // animation: anim-map 1s ease 2s normal forwards;
+        }
+        .panel-location-nav {
+          width: 105rpx;
+          height: 98rpx;
+          background: rgba(0, 0, 0, 0.4);
+          border-bottom-left-radius: 4rpx;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-size: 36rpx;
+          position: absolute;
+          right: 20rpx;
+        }
+        .panel-location-text {
+          width: 100%;
+          height: 0;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          .panel-location-text-time,
+          .panel-location-text-address {
+            text-align: center;
+            line-height: 40rpx;
+            color: #333;
+            font-size: 22rpx;
+            padding: 0 50rpx;
+            box-sizing: border-box;
+          }
+        }
+      }
+    }
+  }
+  .music {
+    position: absolute;
+    right: 28rpx;
+    top: 28rpx;
+    width: 64rpx;
+    height: 64rpx;
+    background-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/icon_music_mute.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+  }
+  .music-run {
+    background-image: url('@{resourcePath}ElectronicInvitationCard/assets/blue/images/icon_music.png');
+    animation: anim-music 10s linear 0s infinite normal forwards;
+  }
+}
+page {
+  width: 100%;
+  height: 100%;
+}
+.page-temp {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  .loadFinish {
+    opacity: 1;
+  }
+  .temp-container {
+    width: 100%;
+    height: calc(100% - 128rpx);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-loading {
+    position: fixed;
+    left: 0;
+    top: 64rpx;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    z-index: 999999;
+    text-align: center;
+    display: none;
+    .loading {
+      width: 500rpx;
+      height: 12rpx;
+      border-radius: 6rpx;
+      background: #eee;
+      position: relative;
+      margin: 0 auto;
+      overflow: hidden;
+      position: absolute;
+      bottom: 200rpx;
+      left: 50%;
+      transform: translateX(-50%);
+      .bar {
+        height: 12rpx;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 6rpx;
+        background: #ff4c2f;
+      }
+    }
+  }
+  .showLoading {
+    display: block;
+  }
+}
+</style>
+<template>
+  <view class="page-temp" @touchstart='touchStart' @touchend='touchEnd'>
+    <navigationBar :title="title"></navigationBar>
+    <!-- 页面加载动画 -->
+    <pageLoading :pageScal="scalMiddle" :tempDatas.sync="tpm" :prcess.sync="barProgress" wx:if="{{showLoading}}" :onComplete="onLoadingComplete" />
+    <view class="temp-container {{ loadFinish ? 'loadFinish' : '' }}">
+      <blue-card :onPageCardShow="onPageCardShowFn" :editMode.sync="editMode" :musicState.sync="playing" :invitationId.sync="invitationId" :basicInfo.sync="basicInfo" :pageInfos.sync="pageInfos" :bottomType.sync="bottomType" :hotelType.sync="hotelType"></blue-card>
+    </view>
+    <!-- 底部工具栏 -->
+    <bottom :coverImage.sync="coverImage" :hotelId.sync="hotelId" :bottomType.sync="bottomType" :themetype.sync="themetype" :giftData.sync="giftData" :templateId.sync="templateId" :templateType.sync="templateType" :invitationId.sync="invitationId" :musicId.sync="musicId" wx:if="{{(isPreview !== 'false' && isPreview !== false && (bottomType !== 'msg' ? (true) : (pageNo !== 6)))}}"></bottom>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import { Tips, PATCH } from '@/utils'
+import { STATUS } from '@/configs'
+import { IndexService } from '../../../services'
+import navigationBar from '../../../components/navigation-bar/index'
+import pageLoading from '../../../components/page-loading/index'
+import bottom from '../../../components/bottom/index'
+import BlueCard from './components/blue-card'
+export default class TempPage extends wepy.page {
+  // 配置
+  config = {
+    navigationStyle: 'custom',
+    backgroundTextStyle: 'light',
+    navigationBarTextStyle: 'white',
+    disableScroll: true
+  }
+  components = {
+    navigationBar: navigationBar,
+    bottom: bottom,
+    'blue-card': BlueCard,
+    pageLoading
+  }
+  data = {
+    templateName: 'blue', // 模板名称
+    title: '电子请柬', // 标题
+    invitationId: '', // 请柬ID
+    editMode: true, // 是否编辑模式
+    // 封面图
+    coverImage: 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/blue/images/photo01.png',
+    tempInfo: {
+      // 模板信息
+      musicFileId: 134,
+      backgroundMusic:
+        'http://market.test.ihunlizhe.com/media/2019/06/21/201906211533537335516.mp3',
+      templateId: 4,
+      templateName: '沁蓝花语',
+      templateType: 'QINLAN'
+    },
+    basicInfo: {
+      // 基础信息
+      brideName: '新郎',
+      bridegroomName: '新娘',
+      weddingTime: '2019-06-18 18:18:18',
+      supportGift: 'no',
+      shareStatus: 'no',
+      hotelId: 0,
+      hotelName: '酒店名称',
+      hotelAddress: '酒店地址',
+      hallAddress: '宴会厅地址',
+      coordinate: '112.48699,37.94036',
+      coverImage: '',
+      backgroundMusic:
+        'http://market.test.ihunlizhe.com/media/2019/06/21/201906211533537335516.mp3'
+    },
+    pageInfos: [
+      // 所有页信息
+    ],
+    player: {
+      play: false, // 播放状态
+      src:
+        'http://market.test.ihunlizhe.com/media/2019/06/21/201906211533537335516.mp3',
+      ctx: null
+    },
+    scalMiddle: 'middles',
+    showLoading: true, // 是否显示加载进度
+    loadFinish: false, // 是否加载完成
+    barWidth: 0, // 加载进度
+    barProgress: 0,
+    barLoaded: false,
+    imageCountArr: [], // 待加载图片总数
+    imageLoadCountArr: [], // 已加载图片数
+    bottomType: '',
+    giftData: {},
+    musicId: '',
+    musicState: false,
+    templateId: '',
+    templateType: 'qinlan',
+    isPreview: false,
+    hotelId: '',
+    hotelType: 'HOTEL',
+    tpm: '',
+    loc: {
+      x: 0,
+      y: 0
+    },
+    callback: null,
+    playing: false,
+    isLastPage: false,
+    pageNo: 0,
+    themetype: ''
+  }
+  events = {
+    musicSwich: $event => {
+      // 音乐播放状态切换
+      this.musicSwich()
+    },
+    saveTemplate: (param, $event) => {
+      // 保存页面信息
+      this.saveTemplate(param)
+    },
+    onImageLoadedCountChanged: (p, $event) => {
+      if (!this.showLoading) {
+        return
+      }
+      this.imageCountArr[p.pageNo] = p.total
+      this.imageLoadCountArr[p.pageNo] = p.count
+      let total = 0
+      for (let i = 0; i < this.imageCountArr.length; i++) {
+        total += this.imageCountArr[i] || 0
+      }
+      let count = 0
+      for (let i = 0; i < this.imageLoadCountArr.length; i++) {
+        count += this.imageLoadCountArr[i] || 0
+      }
+      // console.info(this.barWidth)
+      if (this.barWidth < 100) {
+        this.barWidth = (count / total) * 100
+        // 去掉加载进度显示
+        // let barProgress = this.barWidth >= 100.0 ? 100 : this.barWidth
+        // if (barProgress > this.barProgress) {
+        //   this.barProgress = barProgress
+        // }
+        this.loadFinish = false
+        this.showLoading = true
+        this.$apply()
+      } else {
+        this.loadFinish = true
+        this.showLoading = false
+        this.$apply()
+        this.onLoadingComplete()
+      }
+    },
+    goHotel: $event => {
+      this.goHotal()
+    },
+    toMap: $event => {
+      this.toMap()
+    },
+    toInfo: $event => {
+      this.toInfo()
+    },
+    onPageIndexChanged: (isLastPage, $event) => {
+      this.isLastPage = isLastPage
+      this.$apply()
+    }
+  }
+  methods = {
+    touchStart(e) {
+      if (!this.barLoaded) return false
+      if (e.changedTouches[0]) {
+        this.loc.y = e.changedTouches[0].clientY
+      }
+    },
+    touchEnd(e) {
+      if (!this.barLoaded) return false
+      let dataset = e.target.dataset
+      if (dataset.type === 'disabled') {
+        return false
+      }
+      let y = e.changedTouches[0].clientY
+      let direct = 0
+      if (Math.abs(this.loc.y - y) > 30) {
+        if (this.loc.y - y > 0) {
+          direct = 1
+        } else {
+          direct = -1
+        }
+      }
+      this.$broadcast('onPageIndexChanged', { direct })
+    }
+  }
+  onPageCardShowFn(pageNo) {
+    this.pageNo = pageNo
+    this.$apply()
+  }
+  onLoadingComplete(e) {
+    if (this.barLoaded) {
+      return
+    }
+    this.onPageCardShowFn(0)
+    this.barLoaded = true
+    // console.info('onLoadingComplete:' + this.invitationId)
+    if (this.invitationId) {
+      // 已创建的请柬
+      // 获取请柬基础信息
+      this.getTempBasicInfo()
+      // 获取请柬所有页信息
+      this.getTempPageInfos()
+    } else {
+      // 新请柬
+      this.getTpmList()
+    }
+    this.$apply()
+  }
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    this.invitationId = options.invitationid || ''
+    this.bottomType = options.bottomType
+    this.isPreview = options.isPreview || ''
+    this.hotelId = options.hotelId
+    this.themetype = options.themetype
+    this.templateId = options.tpl_id || ''
+    this.hotelType =
+      options.hotelType || wx.getStorageSync('Invitation' + STATUS.HOTEL_TYPE)
+    let tpm = options.tpmdata || ''
+    if (tpm) {
+      this.tpm = JSON.parse(tpm)
+    }
+    this.editMode = this.bottomType === 'setting'
+    this.$apply()
+    // 注册音乐设置事件
+    this.$parent.onMusicSetListener = m => {
+      // console.info(m)
+      if (this.musicId !== m.musicId) {
+        this.player.src = m.musicSrc
+        this.musicId = m.musicId
+        this.$apply()
+        // this.destroyMusic()
+        // this.initPlayer()
+      }
+    }
+  }
+  onUnload() {
+    // 删除音乐设置事件
+    delete this.$parent.onMusicSetListener
+    // 销毁音乐播放
+    this.destroyMusic()
+  }
+  onShow() {
+    // 向组件广播生命周期改变事件
+    this.$broadcast('onPageShow')
+    // 获取设置的地址
+    let address = wx.getStorageSync('ADDRESS') || ''
+    if (address) {
+      this.giftData['province'] = address[0]
+      this.giftData['city'] = address[1]
+      this.giftData['district'] = address[2]
+    }
+    this.$apply()
+    wx.removeStorageSync('ADDRESS')
+    // 播放音乐
+    this.musicResume()
+    this.$apply()
+  }
+  onHide() {
+    // 向组件广播生命周期改变事件
+    this.$broadcast('onPageHide')
+    // 移除设置的地址
+    wx.removeStorageSync('ADDRESS')
+    // 暂停音乐
+    this.musicPause()
+    this.$apply()
+  }
+  toMap() {
+    let basicInfo = this.basicInfo
+    if (this.bottomType !== 'create') {
+      wx.openLocation({
+        latitude: parseFloat(basicInfo.latitude),
+        longitude: parseFloat(basicInfo.longitude),
+        scale: 18
+      })
+    }
+  }
+  goHotal() {
+    wx.navigateTo({
+      url: '/subpackages/MarketHotel/pages/index?id=' + this.hotelId
+    })
+  }
+  toInfo() {
+    // 跳转到信息页面
+    wx.navigateTo({
+      url: '../info?invitationid=' + this.basicInfo.invitationId
+    })
+  }
+  /**
+   * 电子请柬模板列表
+   */
+  getTpmList() {
+    IndexService.invitationTemplateQuery({}).then(res => {
+      if (res.data.success) {
+        for (let item of res.data.invitationTemplateInfos) {
+          if (
+            typeof item.templateType === 'string' &&
+            item.templateType.toLowerCase() === 'qinlan'
+          ) {
+            this.player.src = item.backgroundMusic
+            this.templateId = item.templateId
+            // console.log(this.templateId)
+            this.initPlayer()
+            this.$apply()
+          }
+        }
+      }
+    })
+  }
+  /**
+   * 获取请柬基础信息
+   */
+  getTempBasicInfo() {
+    let parmes = {}
+    parmes['invitationId'] = this.invitationId
+    return IndexService.invitationBasicInfoQuery({
+      data: parmes
+    })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          // 保存基础信息
+          this.basicInfo = data
+          // 时间
+          this.basicInfo.weddingTime = data.weddingTime.substring(
+            0,
+            data.weddingTime.lastIndexOf(':')
+          )
+          // 地址
+          // this.basicInfo.hotelAddress =
+          //   data.hotelAddress + '\n' + data.hotelName + data.hallAddress
+          // this.basicInfo.hotelAddressName =
+          //   data.hotelName + '(' + data.hallAddress + ')'
+          this.basicInfo.hotelAddress = data.hotelAddress
+          this.basicInfo.hotelAddressName = data.hotelName
+          if (data.coverImage) {
+            this.coverImage = data.coverImage
+          }
+          // 地图
+          let mapPoint = data.coordinate.split(',')
+          this.basicInfo.longitude = parseFloat(mapPoint[0] || '0')
+          this.basicInfo.latitude = parseFloat(mapPoint[1] || '0')
+          this.basicInfo.marker = []
+          this.basicInfo.marker.push({
+            id: 0,
+            iconPath:
+              'https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/local.png',
+            longitude: mapPoint[0],
+            latitude: mapPoint[1],
+            width: 50,
+            height: 50
+          })
+          // ======
+          this.giftData.bridegroomName = data.bridegroomName
+          this.giftData.brideName = data.brideName
+          this.musicId = data.musicFileId
+          // 酒店信息
+          this.hotelId = data.hotelId
+
+          // 音乐
+          this.player.src = data.backgroundMusic
+          this.initPlayer()
+
+          this.$apply()
+          return res.data
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+  /**
+   * 获取请柬所有页信息
+   */
+  getTempPageInfos() {
+    let parmes = {}
+    parmes['invitationId'] = this.invitationId
+    IndexService.invitationPagesQuery({
+      data: parmes
+    })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          // 所有页面信息
+          this.pageInfos = data.invitationPages
+          this.$apply()
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+  /**
+   * 编辑请柬信息保存
+   */
+  saveTemplate(parme) {
+    let parmes = Object.assign({}, parme)
+    IndexService.invitationContentSave({
+      data: parmes
+    })
+      .then(res => {
+        // console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+  /**
+   * 音乐控制开关
+   */
+  musicSwich() {
+    if (this.player.canplay) {
+      if (this.player.play) {
+        this.player.play = false
+        this.player.ctx.pause()
+        this.playing = false
+      } else {
+        this.player.play = true
+        this.player.ctx.play()
+        this.playing = true
+      }
+    } else {
+      Tips.error('音乐加载中')
+    }
+    this.$apply()
+  }
+  musicResume() {
+    // console.info('musicResume')
+    // console.info('musicResume:' + this.player.canplay)
+    if (this.musicState) {
+      if (this.player.canplay) {
+        this.player.ctx.src = this.player.src
+        this.player.ctx.play()
+        this.player.play = true
+        this.playing = true
+      } else {
+        this.initPlayer()
+      }
+    }
+  }
+  musicPause() {
+    // console.info('musicPause')
+    // console.info('musicPause:' + this.player.canplay)
+    if (this.player.canplay) {
+      this.musicState = this.player.play
+      this.player.play = false
+      this.player.ctx.pause()
+      this.playing = false
+    }
+  }
+  /**
+   * 初始化播放器
+   */
+  initPlayer() {
+    // console.info('initPlayer')
+    this.destroyMusic()
+    this.player.ctx = wx.createInnerAudioContext()
+    this.player.canplay = false
+    // console.log(this.player.ctx)
+    // 播放器可以播放的时候触发
+    this.callback = () => {
+      // console.log('可以播放')
+      this.player.ctx.play()
+      this.player.play = true
+      this.player.canplay = true
+      this.player.ctx.loop = true
+      this.playing = true
+      this.musicState = true
+      this.$apply()
+    }
+    this.player.ctx.onCanplay(this.callback)
+    this.player.ctx.src = this.player.src
+  }
+  /**
+   * 销毁音乐播放
+   */
+  destroyMusic() {
+    // console.info('destroyMusic')
+    if (this.player.ctx) {
+      if (this.callback) {
+        this.player.ctx.offCanplay(this.callback)
+      }
+      this.player.ctx.stop()
+      this.player.ctx.destroy()
+      this.player.play = false
+      this.player.canplay = false
+      this.playing = false
+      // console.log(this.player)
+      this.$apply()
+    }
+  }
+}
+</script>

@@ -1,0 +1,243 @@
+<!--
+  酒店地图页
+  @Author: AndyPan
+  @CreateDate: 2019年4月28日18:37:04
+  @LastUpdateDate: 2019年4月26日15:11:53
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+.page-foot-mark-main {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  .tab-content-slot {
+    padding: 20rpx 26rpx;
+  }
+
+  .block-list-custom {
+    .block-list-item {
+      .list-item-wrap .logo-thumb {
+        width: 72rpx;
+        height: 72rpx;
+        margin-top: 12rpx;
+      }
+      .list-item-child {
+        .logo-thumb {
+          border: none;
+        }
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-foot-mark-main">
+    <tab type="fixed" :isFull="boolTrue" :items="tabList" :isHeadShadow="boolFalse" :onSwitch="tabSwitchFn" :onScrollLower="onScrollLowerFn" :onScrollUpper="onScrollUpperFn">
+      <view slot="tab-content-slot" class="tab-content-slot">
+        <block-list :dataset.sync="footmarkData" nullTips="您还没有足迹~" :class.sync="switchTabClass" :onItemTap="onItemTapFn" :onChildItemTap="onChildItemTapFn"></block-list>
+      </view>
+    </tab>
+  </view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import TabComponent from '@/components/tab-component/index'
+import BlockListComponent from '../components/block-list-component/index'
+import { Tips, Utils, PATCH } from '@/utils'
+import { LANG, STATUS } from '@/configs'
+import { FootmarkService } from '../services'
+
+export default class FootMarkPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '足迹'
+  }
+
+  // 组件
+  components = {
+    // 选项卡
+    tab: TabComponent,
+    'block-list': BlockListComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    // 选项卡列表
+    tabList: [
+      { key: 'memberHotelTrackList', title: '商家' },
+      { key: 'activityMemberTrack', title: '活动' }
+    ],
+    // 数据集合
+    footmarkData: 'loading',
+    switchTabClass: '',
+    // 当前选项卡
+    currentStatusItem: null,
+    // userNo
+    userNo: null,
+    // 页码
+    pageNo: 1
+  }
+
+  resetDataItem(dataItem) {
+    let key = this.currentStatusItem.key
+    // 活动
+    if (key === 'activityMemberTrack') {
+      let gameType = LANG.activeGameType[dataItem.gameType] || {}
+      let activeStatus = LANG.activeStatus[dataItem.activityStatus] || {}
+      dataItem['title'] = dataItem.startTime
+      dataItem['logo'] = dataItem.logo
+      dataItem['name'] = (dataItem.hotelName || dataItem.merchantName)
+      let weddingPeopleMan
+      let weddingPeopleWoman
+      if (dataItem.activityClass === 'marry') {
+        let parseName = dataItem.linkMan.split('&')
+        weddingPeopleMan = parseName[0]
+        weddingPeopleWoman = parseName[1]
+      }
+      dataItem['child'] = [
+        {
+          childLogoIcon: gameType.icon,
+          activityName: dataItem.activityName,
+          childName: dataItem.linkMan,
+          activityClass: dataItem.activityClass,
+          activityClassText: (LANG.couponType[dataItem.activityClass] || {}).text,
+          // childRemark: gameType.text + '活动',
+          childRemark: '结束时间：' + (dataItem.endTime || ''),
+          status: activeStatus.key,
+          statusText: activeStatus.text,
+          weddingPeopleMan,
+          weddingPeopleWoman,
+          // 接口名：ActivityMemberTrack
+          // 响应参数：activityMemberTrackInfo
+          // lastActivityId  变更为  activityGameId
+          // (2019年6月10日15:11:47)
+          // lastActivityId: dataItem.lastActivityId
+          activityGameId: dataItem.activityGameId,
+          activityId: dataItem.activityId
+        }
+      ]
+    } else if (key === 'memberHotelTrackList') {
+      // 店铺
+      dataItem['title'] = dataItem.browseTime
+      dataItem['logo'] = dataItem.logo
+      dataItem['name'] = dataItem.hotelName
+      // dataItem['remark'] = '重庆 | 五星级酒店'
+      if (dataItem.starText && dataItem.star !== 'nothing') {
+        dataItem['remark'] = dataItem.starText + '酒店'
+      }
+    }
+
+    return dataItem
+  }
+
+  loadData() {
+    wx.showNavigationBarLoading()
+    let pageNo = this.pageNo
+    let key = this.currentStatusItem.key
+    let serviceFn = FootmarkService[key]
+    if (serviceFn) {
+      serviceFn({
+        data: {
+          start: pageNo,
+          userNo: this.userNo || wepy.getStorageSync(STATUS.USER_NO)
+        }
+      })
+        .then(res => {
+          wx.hideNavigationBarLoading()
+          wx.stopPullDownRefresh()
+          let dataRows = res.data.rows
+          if (dataRows) {
+            if (pageNo === 1) {
+              Utils.forEach(dataRows, dataItem => {
+                this.resetDataItem(dataItem)
+              })
+              this.footmarkData = dataRows
+            } else {
+              Utils.forEach(dataRows, dataItem => {
+                this.resetDataItem(dataItem)
+                this.footmarkData.push(dataItem)
+              })
+            }
+            this.$apply()
+          }
+        })
+        .catch(err => {
+          Tips.error(err.message)
+        })
+    }
+  }
+
+  /**
+   * 内容滚动到底部事件
+   */
+  onScrollLowerFn() {
+    this.pageNo++
+    this.loadData()
+  }
+  /**
+   * 内容滚动到顶部事件
+   */
+  onScrollUpperFn() {
+    this.pageNo = 1
+    this.loadData()
+  }
+  /**
+   * 选项卡切换事件
+   */
+  tabSwitchFn(item, idx, e) {
+    this.pageNo = 1
+    this.currentStatusItem = item
+    this.loadData()
+  }
+
+  onItemTapFn(dataset, e) {
+    // let merchantType = dataset.item.merchantType
+    // if (merchantType !== 'wedding') {
+    //   // wepy.navigateTo({ url: 'hotel-introduce?hotelId=' + dataset.item.hotelId })
+    //   wx.reLaunch({ url: 'index?id=' + dataset.item.hotelId })
+    // }
+
+    wx.reLaunch({ url: 'index?id=' + (dataset.item.hotelId || dataset.item.merchantId) })
+  }
+
+  onChildItemTapFn(dataset, e) {
+    let datasetItem = dataset.item
+    // let activityGameId = datasetItem.activityGameId
+    let activityId = datasetItem.activityId
+
+    if (activityId) {
+      wx.reLaunch({ url: '/subpackages/MarketActivityShake/pages/activity-transfer?activityId=' + activityId })
+    }
+
+    // if (activityGameId) {
+    //   wepy.navigateTo({
+    //     url:
+    //       '/subpackages/MarketActivityShake/pages/game-result?activityId=' +
+    //       activityGameId +
+    //       '-_-' +
+    //       activityId
+    //   })
+    // }
+  }
+
+  onLoad() {
+    PATCH.createPatch.call(this)
+  }
+
+  onShow() {
+    this.userNo = wepy.getStorageSync(STATUS.USER_NO)
+    this.pageNo = 1
+    this.loadData()
+  }
+}
+</script>  

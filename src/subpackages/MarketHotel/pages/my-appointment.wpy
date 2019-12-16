@@ -1,0 +1,96 @@
+<!--
+  预约单页
+  @Author: AndyPan
+  @CreateDate: 2019年4月28日18:35:24
+  @LastUpdateDate: 2019年4月28日18:36:35
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+.page-appointment-main {
+  position: absolute;
+  top: 0rpx;
+  bottom: 0rpx;
+  left: 0rpx;
+  right: 0rpx;
+  overflow: hidden;
+  overflow-y: auto;
+  width: auto;
+
+  .page-appointment-wrap {
+    padding: 20rpx 26rpx;
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <scroll-view class="page-appointment-main" scroll-y bindscrolltolower="onScrollLower">
+    <view class="page-appointment-wrap">
+      <block-list :dataset.sync="appointmentData" nullTips="您还没有预约单~"></block-list>
+    </view>
+  </scroll-view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import BlockListComponent from '../components/block-list-component/index'
+import { Utils, Tips, PATCH } from '@/utils'
+import { STATUS, LANG } from '@/configs'
+import { AppointmentService } from '../services'
+
+export default class AppointmentPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '预约单'
+  }
+
+  // 组件
+  components = {
+    'block-list': BlockListComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    appointmentData: 'loading'
+  }
+
+  loadData() {
+    PATCH.createPatch.call(this)
+    let that = this
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    AppointmentService.myReserveList({
+      data: { userNo: userNo }
+    })
+      .then(res => {
+        let hotelBanquetReserveList = res.data.hotelBanquetReserveList || []
+        Utils.forEach(hotelBanquetReserveList, (dataItem, key) => {
+          dataItem['logo'] = dataItem.hotelLogo
+          dataItem['type'] = (
+            LANG.appointmentStatus[dataItem.reservationStatus] || {}
+          ).type
+          dataItem['name'] = dataItem.hotelName
+          dataItem['remark'] = '提交时间：' + dataItem.submissionTime
+        })
+        that.appointmentData = hotelBanquetReserveList
+        that.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  methods = {
+    onScrollLower(e) {
+      // this.loadData()
+    }
+  }
+
+  onLoad() {
+    this.loadData()
+  }
+}
+</script>  

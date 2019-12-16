@@ -1,0 +1,995 @@
+<!--
+  首页
+  @Author: AndyPan
+  @CreateDate: 2019年4月23日13:55:25
+  @LastUpdateDate: 2019年4月23日13:55:29
+  @Remarks: 首页页面
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+@import '../../../assets/less/_variables.less';
+
+page{
+  // background: #000;
+}
+.page-index-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0rpx;
+  bottom: calc(0rpx + constant(safe-area-inset-bottom));
+  bottom: calc(0rpx + env(safe-area-inset-bottom));
+  background: #000;
+  @zIndex: 100;
+  &.white {
+    background: #ccc;
+    font-size: 24rpx;
+    text-align: center;
+    color: #000;
+    padding-top: 300rpx;
+  }
+
+  .mini-video-swiper {
+    width: 100%;
+    height: 100%;
+
+    .mini-video-item{
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 2;
+    }
+    .video-mask{
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 30%;
+      bottom: 0;
+      z-index: 10;
+      .vertical(rgba(255, 255, 255, 0), rgba(0, 0, 0, .2))
+    }
+    
+    .video-swiper-item{
+      position: relative;
+      .video-content{
+        position: absolute;
+        color: #FFF;
+        font-size: 32rpx;
+        left: 24rpx;
+        right: 162rpx;
+        bottom: 62rpx;
+        z-index: @zIndex;
+        .video-merchantname {
+          font-size: 30rpx;
+          margin-bottom: 30rpx;
+          font-weight: bold;
+          .text-overflow();
+        }
+        .video-intro{
+          font-size: 24rpx;
+          height: 60rpx;
+          line-height: 30rpx;
+          overflow: hidden;
+          // .text-overflow();
+        }
+      }
+      .icon-video-heart{
+        width: 70rpx;
+        padding-top: 66rpx;
+        font-size: 30rpx;
+        background: url('@{resourcePath}MiniVideo/assets/images/icon-video-heart.png') 0 0 no-repeat;
+        background-size: 100% 66rpx;
+        color: #FFF;
+        position: absolute;
+        right: 26rpx;
+        bottom: 588rpx;
+        z-index: @zIndex;
+        text-align: center;
+        &.active {
+          background: url('@{resourcePath}MiniVideo/assets/images/icon-video-heart-active.png') 0 0 no-repeat;
+          background-size: 100% 66rpx;
+        }
+      }
+      .icon-video-share{
+        width: 70rpx;
+        padding: 0;
+        padding-top: 62rpx;
+        font-size: 30rpx;
+        background: url('@{resourcePath}MiniVideo/assets/images/icon-video-share.png') 0 0 no-repeat;
+        background-size: 100% 62rpx;
+        color: #FFF;
+        position: absolute;
+        right: 26rpx;
+        bottom: 438rpx;
+        z-index: @zIndex;
+        button {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+        }
+      }
+      .video-product{
+        height: 60rpx;
+        position: absolute;
+        z-index: 10;
+        left: 24rpx;
+        right: 24rpx;
+        // bottom: 240rpx;
+        bottom: 170rpx;
+        z-index: 200;
+        
+        .product-name{
+          padding: 18rpx 15rpx;
+          padding-left: 61rpx;
+          background: rgba(255, 255, 255, .5);
+          border-radius: 5rpx;
+          .text-overflow();
+          font-size: 24rpx;
+          color: #FF4C2F;
+          display: inline-block;
+          max-width: 70%;
+          min-height: 34rpx;
+          &::before {
+            content: '';
+            display: inline-block;
+            width: 33rpx;
+            height: 33rpx;
+            position: absolute;
+            top: 16rpx;
+            left: 15rpx;
+            background: url('@{resourcePath}MiniVideo/assets/images/icon-video-car.png') 0 0 no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+        .product-cont{
+          float: left;
+        }
+        .product-thumb-intro{
+          width: 480rpx;
+          min-height: 215rpx;
+          padding: 30rpx;
+          // padding-top: 20px;
+          background: #FFF;
+          border-radius: 5rpx;
+          position: absolute;
+          top: -70rpx;
+          left: 0;
+          .intro-head{
+            height: 26rpx;
+            line-height: 26rpx;
+            color: #888;
+            text-align: left;
+            font-size: 26rpx;
+          }
+          .head-close{
+            width: 46rpx;
+            height: 46rpx;
+            display: inline-block;
+            // float: right;
+            // margin-top: 5rpx;
+            background: url('@{resourcePath}MiniVideo/assets/images/intro-head-close.png') center center no-repeat;
+            background-size: 15rpx 15rpx;
+            position: absolute;
+            top: 20rpx;
+            right: 20rpx;
+          }
+          .product-thumb{
+            width: 175rpx;
+            height: 175rpx;
+            float: left;
+            margin-top: 17rpx;
+          }
+          .product-intro-name{
+            width: 270rpx;
+            height: 80rpx;
+            line-height: 40rpx;
+            font-size: 30rpx;
+            color: #000;
+            text-align: left;
+            float: left;
+            margin-left: 30rpx;
+            margin-top: 17rpx;
+            overflow: hidden;
+            word-wrap: break-word;
+          }
+          .product-btn-detail{
+            display: inline-block;
+            padding: 12rpx 26rpx;
+            border-radius: 2rpx;
+            background: #FF4C2F;
+            font-size: 24rpx;
+            color: #FFF;
+            position: absolute;
+            bottom: 30rpx;
+            right: 30rpx;
+          }
+        }
+      }
+    }
+  }
+  .fabulous-heart {
+    @size: 500rpx;
+    position: absolute;
+    width: @size;
+    height: @size;
+    top: 50%;
+    left: 50%;
+    margin-top: -(@size / 2);
+    margin-left: -(@size / 2);
+    z-index: -100;
+    background: url('@{resourcePath}MiniVideo/assets/images/icon-video-heart-active.png') 0 0 no-repeat;
+    background-size: 100% 100%;
+    opacity: 0.8;
+    transform: scale(0.1, 0.1);
+
+    &.show{
+      z-index: @zIndex;
+    }
+
+    &.animation {
+      .keyframes(heart-animation, {
+        0%{
+          transform: scale(0.1, 0.1);
+          opacity: 0.8;
+        }
+        100%{
+          transform: scale(1, 1);
+          opacity: 0;
+        }
+      });
+      animation: heart-animation 1s ease 0s forwards;
+    }
+  }
+  .icon-video-return{
+    width: 120rpx;
+    padding-top: 120rpx;
+    font-size: 26rpx;
+    background: url('@{resourcePath}MiniVideo/assets/images/icon-video-return.png') 0 0 no-repeat;
+    background-size: 100% 120rpx;
+    color: #FFF;
+    position: absolute;
+    right: 18rpx;
+    bottom: 92rpx;
+    z-index: @zIndex;
+  }
+  .slide-hands-wrap{
+    width: 288rpx;
+    height: 70%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -144rpx;
+    z-index: 10;
+    
+    // 移动动画
+    .animation-move(@name: fn-animation, @y: 0rpx){
+      @keyframes @name {
+        from {
+          transform: translateY(0rpx);
+        }
+        to {
+          transform: translateY(@y);
+        }
+      }
+    }
+    @arrow-time: 0.8s;
+    @animation-arrow: animation-arrow;
+    .animation-move(@animation-arrow, -400rpx);
+    //动画样式设置
+    .animation-class-arrow() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-arrow);
+      //设置动画时间(1秒)
+      .animation-duration(@arrow-time);
+      //动画延时播放
+      .animation-delay(0s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+    .slide-hands{
+      width: 198rpx;
+      height: 134rpx;
+      background: url('@{resourcePath}MiniVideo/assets/images/slider-hands.png') 0 0 no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
+      bottom: 50rpx;
+      left: 50%;
+      // margin-left: -99rpx;
+      .animation-class-arrow();
+    }
+    .text {
+      font-size: 36rpx;
+      text-align: center;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      color: #FFF;
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="{{'page-index-main'}}">
+    <!-- <swiper class="mini-video-swiper" vertical
+      current="{{current}}"
+      easing-function="easeOutCubic"
+      bindchange="swiperChange">
+      <repeat for="{{tempVideoList}}" key="index" index="index" item="videoItem">
+        <swiper-item class="video-swiper-item">
+          <video class="mini-video-item"
+            src="{{videoItem.address}}"
+            autoplay="{{current === index && videoItem.videoStatus === 'VALID' ? boolTrue : boolFalse}}"
+            controls="{{boolFalse}}"
+            loop="{{boolTrue}}"
+            id="{{'j-mini-video-' + videoItem.index}}"
+            data-id="{{videoItem.videoNo}}"
+            data-idx="{{index}}"
+            @tap="videoTap" />
+          <view class="video-mask" data-id="{{videoItem.videoNo}}" @tap="videoTap"></view> -->
+          <!-- 视频商品 -->
+          <!-- <view class="video-product" wx:if="{{videoItem.skuId && videoItem.productPreviewItem}}">
+            <view class="product-name" data-id="{{videoItem.videoNo}}" @tap="openProductPreview">{{videoItem.productName}}</view>
+            <view class="product-thumb-intro" wx:if="{{videoItem.productPreview}}">
+              <view class="intro-head">视频中同款商品<text class="head-close" data-id="{{videoItem.videoNo}}" @tap="closePreview"></text></view>
+              <view class="product-cont" data-skuid="{{videoItem.skuId}}"
+                  data-source="{{videoItem.source}}"
+                  @tap="goProductIntro">
+                <image class="product-thumb" src="{{videoItem.productCover}}" />
+                <view class="product-intro-name">{{videoItem.productName}}</view>
+                <text class="product-btn-detail">查看详情</text>
+              </view>
+            </view>
+          </view> -->
+          <!-- 视频内容 -->
+          <!-- <view class="video-content" wx:if="{{videoItem.productPreviewItem}}">
+            <view class="video-intro">{{videoItem.intro}}</view>
+          </view> -->
+          <!-- 视频操作按钮 -->
+          <!-- <view class="{{'icon-video-heart' + (videoItem.fabulous ? ' active' : '')}}"
+            wx:if="{{videoItem.productPreviewItem}}"
+            data-id="{{videoItem.videoNo}}"
+            @tap="btnFabulous">{{videoItem.likesNumber}}</view>
+          <view class="icon-video-share"
+            wx:if="{{videoItem.productPreviewItem}}">分享<button open-type="share"></button></view>
+        </swiper-item>
+      </repeat>
+    </swiper> -->
+    <!-- <view class="slide-hands-wrap">
+      <view class="slide-hands"></view>
+      <view class="text">向上滑动切换作品</view>
+    </view>
+    <view class="icon-video-return" @tap="returnActivity" wx:if="{{activityId}}">返回活动</view>
+    <view class="{{ 'fabulous-heart' + (heartShow ? ' show' : '') + (heartAnimation ? ' animation' : '') }}"></view>
+    <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" :onCloseAuthorize="onCloseAuthorizeFn" /> -->
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { Tips, Utils } from '@/utils'
+import { STATUS } from '@/configs'
+import { VideoService } from '../services'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+
+export default class IndexPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '小视频',
+    navigationStyle: 'custom',
+    backgroundTextStyle: 'light',
+    navigationBarTextStyle: 'white',
+    disableScroll: true
+  }
+
+  // data
+  data = {
+    isTrue: false,
+    activityId: null,
+    userNo: null,
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    current: 1,
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    // 接口返回数据
+    videoList: [
+      // { src: 'https://video.ihunlizhe.com/sv/288e5cc-16dd887a31e/288e5cc-16dd887a31e.mp4', id: 0 },
+      // { src: 'https://video.ihunlizhe.com/sv/288e5cc-16dd887a31e/288e5cc-16dd887a31e.mp4', id: 1 },
+      // { src: 'https://video.ihunlizhe.com/sv/288e5cc-16dd887a31e/288e5cc-16dd887a31e.mp4', id: 2 }
+    ],
+    // 当前渲染页面数据
+    tempVideoList: [],
+    // 所有数据缓存
+    tempVideoListCache: [],
+    pageIndex: 1,
+    totalPage: 10,
+    pageSize: 3,
+    doubleClickTimeShip: 0,
+    doubleClickThread: null,
+    heartShow: false,
+    heartAnimation: false,
+    vcMapping: {},
+    renderChange: true,
+    fabulousDataStatus: {},
+    W: 10000,
+    isGuide: true,
+    productPreviewItemThread: null,
+    productPreviewThread: null,
+    // 滑动方向(down.向下 up.向上)
+    slideDirection: null
+  }
+
+  // 组件
+  components = {
+    'user-authorize': UserAuthorizeComponent
+  }
+
+  /**
+   * 新用户授权完成
+   */
+  onAuthorizeAllFn(data) {
+    let userInfo = data.userInfo
+    wepy.setStorageSync(STATUS.USER_INFO, userInfo)
+    wepy.setStorageSync(STATUS.USER_NO, data.userNo)
+
+    this.userNo = data.userNo
+    // 认证完成后加载数据
+    this.firstLoad()
+  }
+
+  /**
+   * 授权被用户关闭，返回上一页面
+   */
+  onCloseAuthorizeFn() {
+    wx.redirectTo({
+      url: '/subpackages/MarketHotel/pages/index'
+    })
+  }
+
+  // 方法
+  methods = {
+    /**
+     * swiper改变事件
+     */
+    swiperChange (e) {
+      let current = this.current
+      this.pauseCurrentVideo()
+      if (this.renderChange) {
+        let that = this
+        setTimeout(() => {
+          that.current = e.detail.current
+          if (that.current > current) {
+            // 向下滑
+            this.slideDirection = 'down'
+            if (that.current === that.tempVideoList.length - 1) {
+              // 最后一项时，加载下一页数据
+              that.slideDown()
+            } else {
+              // 否则，播放当前项
+              that.playCurrentVideo()
+              that.toPlayCount()
+            }
+          } else {
+            // 向上滑
+            this.slideDirection = 'up'
+            if (that.current === 0) {
+              // 重新渲染数据
+              that.slideUp()
+            } else {
+              // 否则，播放当前项
+              that.playCurrentVideo()
+              that.toPlayCount()
+            }
+          }
+        }, 200)
+      } else {
+        this.renderChange = true
+        this.playCurrentVideo()
+      }
+    },
+    /**
+     * Video点击事件
+     */
+    videoTap (e) {
+      let dataset = e.currentTarget.dataset
+      let dataId = dataset.id
+      // let dataIdx = dataset.idx
+      let that = this
+      if (this.doubleClickTimeShip > 0) {
+        // 清空上一次的
+        clearTimeout(this.doubleClickThread)
+      }
+      this.doubleClickThread = setTimeout(() => {
+        if (that.doubleClickTimeShip >= 2) {
+          that.doubleClickTimeShip = 0
+          clearTimeout(that.doubleClickThread)
+          that.videoDoubleTap(e, dataId)
+        } else {
+          that.doubleClickTimeShip = 0
+        }
+      }, 300)
+      this.doubleClickTimeShip++
+    },
+    /**
+     * 点赞
+     */
+    btnFabulous (e) {
+      let dataset = e.currentTarget.dataset
+      let dataId = dataset.id
+      this.videoDoubleTap(e, dataId)
+    },
+    /**
+     * 返回活动暖场页
+     */
+    returnActivity (e) {
+      wx.reLaunch({
+        url: '/subpackages/MarketActivityShake/pages/activity-transfer?activityId=' + this.activityId
+      })
+    },
+    /**
+     * 打开商品预览
+     */
+    openProductPreview (e) {
+      let dataset = e.target.dataset
+      let dataId = dataset.id
+      Utils.forEach(this.tempVideoList, item => {
+        if (item.videoNo === dataId) {
+          item.productPreview = true
+          this.$apply()
+          // return 'break'
+        }
+      })
+    },
+    /**
+     * 关闭预览
+     */
+    closePreview (e) {
+      let dataset = e.target.dataset
+      let id = dataset.id
+      let tempVideoList = this.tempVideoList
+      Utils.forEach(tempVideoList, item => {
+        if (item.videoNo === id) {
+          item.productPreview = false
+        }
+      })
+    },
+    /**
+     * 去商品详情
+     */
+    goProductIntro (e) {
+      let dataset = e.currentTarget.dataset
+      let skuId = dataset.skuid
+      let source = dataset.source
+      if (skuId) {
+        wx.navigateTo({
+          url: 'product-detail?skuId=' + skuId + '&source=' + source
+        })
+      }
+    }
+  }
+
+  pauseCurrentVideo () {
+    let current = this.vcMapping[this.current]
+    wx.createVideoContext('j-mini-video-' + current).pause()
+    this.$apply()
+  }
+
+  playCurrentVideo () {
+    let current = this.vcMapping[this.current]
+    let videoItem = this.tempVideoList[this.current]
+    if (videoItem.videoStatus === 'INVALID') {
+      Tips.error('该视频已失效')
+      let slideDirection = this.slideDirection
+      let that = this
+      setTimeout(() => {
+        let setCurrent
+        if (slideDirection === 'down') {
+          setCurrent = that.current + 1
+        } else {
+          let tempVideoList = this.tempVideoList
+          let tempVideoListCache = this.tempVideoListCache
+          let tempVideoItem0 = tempVideoList[0]
+          let tvi0ID = tempVideoItem0.id
+          let tempVideoCacheItem0 = tempVideoListCache[0]
+          if (tvi0ID === tempVideoCacheItem0.id) {
+            // 如果是第一条，则向下滑
+            setCurrent = that.current + 1
+          } else {
+            setCurrent = that.current - 1
+          }
+        }
+        that.methods.swiperChange.call(that, { detail: { current: setCurrent } })
+      }, 1800)
+    } else {
+      wx.createVideoContext('j-mini-video-' + current).play()
+    }
+    this.$apply()
+  }
+
+  seekVideo (callBack) {
+    let tempVideoList = this.tempVideoList
+    Utils.asyncEach(tempVideoList, (item, idx) => {
+      wx.createVideoContext('j-mini-video-' + idx).seek(1)
+    }, () => {
+      if (callBack) {
+        callBack()
+      }
+    })
+  }
+
+  renderSeekVideoAndPlay () {
+    let that = this
+    setTimeout(() => {
+      that.seekVideo(() => {
+        that.playCurrentVideo()
+      })
+    }, 100)
+  }
+
+  spliceTempVideoList(begin, end) {
+    let pageSize = this.pageSize
+    begin = begin || 0
+    end = end || this.tempVideoList.length - pageSize
+    this.tempVideoList.splice(begin, end)
+  }
+
+  /**
+   * Video双击事件
+   */
+  videoDoubleTap (e, videoNo) {
+    let tempVideoList = this.tempVideoList
+    let tempVideoItem
+    Utils.forEach(tempVideoList, (item) => {
+      if (item.videoNo === videoNo) {
+        tempVideoItem = item
+        return 'break'
+      }
+    })
+    if (!this.fabulousDataStatus[videoNo]) {
+      this.fabulousDataStatus[videoNo] = true
+      if (!tempVideoItem.fabulous) {
+        // 未点赞的
+        // 已赞标记
+        tempVideoItem.fabulous = true
+        // 点赞数值
+        tempVideoItem.likesNum += 1
+        tempVideoItem.likesNumber = tempVideoItem.likesNum >= this.W ? ((tempVideoItem.likesNum / this.W) + 'W') : tempVideoItem.likesNum
+        this.heartShow = true
+        this.$apply()
+        let that = this
+        setTimeout(() => {
+          that.heartAnimation = true
+          that.$apply()
+        }, 0)
+        setTimeout(() => {
+          that.heartAnimation = false
+          that.heartShow = false
+          that.$apply()
+        }, 1000)
+        this.videoLikes(videoNo, 'VALID')
+      } else {
+        // 已点赞的，取消点赞
+        // 已赞标记
+        tempVideoItem.fabulous = false
+        // 点赞数值
+        tempVideoItem.likesNum -= 1
+        tempVideoItem.likesNumber = tempVideoItem.likesNum >= this.W ? ((tempVideoItem.likesNum / this.W) + 'W') : tempVideoItem.likesNum
+        this.$apply()
+        this.videoLikes(videoNo, 'INVALID')
+      }
+    }
+  }
+
+  videoLikes (videoNo, status) {
+    VideoService.videoLikes({
+      data: {
+        videoNo: videoNo,
+        userNo: this.userNo,
+        status: status || 'VALID'
+      },
+      isLoading: false
+    }).then(res => {
+      this.fabulousDataStatus[videoNo] = undefined
+    }).catch(err => {
+      Tips.error(err.message)
+    })
+  }
+
+  /**
+   * 加载视频列表
+   */
+  loadVideoList (callBack) {
+    let params = { userNo: this.userNo }
+    if (this.pageIndex === 1 && this.videoNo) {
+      params.videoNo = this.videoNo
+    }
+    VideoService.videoList({ data: params }).then(res => {
+      let data = res.data || {}
+      let videoList = data.apiCommerceVideoInfos || []
+      let videoLen = videoList.length
+      if (videoList && videoLen) {
+        let len = this.tempVideoListCache.length
+        let tempList = []
+        // let tempVideoList = []
+        let itemIdx
+        Utils.forEach(videoList, (item, idx) => {
+          // if (item.videoStatus === 'VALID') {
+          itemIdx = len + (parseInt(idx) + 1)
+          let likesNum = item.likesNum || 0
+          item.index = itemIdx
+          item.likesNumber = likesNum >= this.W ? ((likesNum / this.W) + 'W') : likesNum
+          item.fabulous = item.status === 'VALID'
+
+          tempList.push(item)
+          // tempVideoList.push(item)
+          this.tempVideoListCache.push(item)
+          // }
+        })
+        // videoLen = tempList.length
+        // if (videoLen) {
+        let pageSize = this.pageSize
+        let pageIndex = this.pageIndex
+        if (videoLen < pageSize && pageIndex === 1) {
+          for (let i = videoLen - 1; i < pageSize; i++) {
+            // tempList.push(tempVideoList[videoLen - i])
+            tempList.push(videoList[videoLen - i])
+          }
+        }
+        this.renderLoadVideoData(tempList, callBack)
+        // } else {
+        //   this.loadVideoList(callBack)
+        // }
+      }
+    }).catch(err => {
+      Tips.error(err.message)
+    })
+    // Tips.loading()
+    // isLoading: false
+    // let that = this
+    // let len = this.tempVideoListCache.length
+    // setTimeout(() => {
+    //   // Tips.loaded()
+    //   let tempList = []
+    //   let tempItem
+    //   let itemIdx
+    //   Utils.forEach(that.videoList, (item, idx) => {
+    //     itemIdx = len + (parseInt(idx) + 1)
+    //     tempItem = {
+    //       id: itemIdx,
+    //       index: itemIdx,
+    //       src: item.src,
+    //       title: '视频' + itemIdx
+    //     }
+    //     tempList.push(tempItem)
+    //     that.tempVideoListCache.push(tempItem)
+    //   })
+    //   that.renderLoadVideoData(tempList)
+    // }, 200)
+  }
+
+  renderVCMapping () {
+    let tempVideoList = this.tempVideoList
+    Utils.forEach(tempVideoList, (item, idx) => {
+      this.vcMapping[idx] = item.index
+    })
+  }
+
+  renderLoadVideoData (videoList, callBack) {
+    let pageSize = this.pageSize
+    let pageIndex = this.pageIndex
+    videoList = videoList || this.videoList
+    if (pageIndex < 2) {
+      // 大于1小于3页数据，直接添加
+      Utils.forEach(videoList, (item, idx) => {
+        this.tempVideoList.push(item)
+        this.vcMapping[idx] = item.index
+      })
+      if (callBack) {
+        callBack()
+      }
+      this.$apply()
+      this.renderSeekVideoAndPlay()
+    } else {
+      // 大于等于3页数据，只显示两页的数据(及，当前页和前一页)
+      // 删除前三条数据
+      this.spliceTempVideoList()
+      // 新增当前页数据
+      Utils.forEach(videoList, item => {
+        this.tempVideoList.push(item)
+      })
+      this.current = pageSize - 1
+      this.$apply()
+      this.renderVCMapping()
+      this.renderSeekVideoAndPlay()
+    }
+    this.toPlayCount()
+    this.pageIndex++
+  }
+
+  slideDown () {
+    let tempVideoList = this.tempVideoList
+    let tempVideoListCache = this.tempVideoListCache
+    let videoLastItem = tempVideoList[tempVideoList.length - 1]
+    let videoLastId = videoLastItem.id
+    let videoCacheLastItem = tempVideoListCache[tempVideoListCache.length - 1]
+    let pageSize = this.pageSize
+    if (tempVideoListCache.length && videoLastId !== videoCacheLastItem.id) {
+      // 如果缓存有数据，并且最后一项不相等，从缓存果缓存有数据，并且最后一项不相等，从缓存取
+      // this.pauseCurrentVideo()
+      // 删除前三条数据
+      this.spliceTempVideoList()
+      // 从缓存中取下一页数据
+      Utils.forEach(tempVideoListCache, (item, idx) => {
+        if (item.id === videoLastId) {
+          idx = parseInt(idx)
+          this.tempVideoList.push(tempVideoListCache[idx - 1])
+          this.tempVideoList.push(tempVideoListCache[idx])
+          this.renderChange = false
+          this.current = pageSize - 1
+          return 'break'
+        }
+      })
+      this.$apply()
+      this.renderVCMapping()
+      this.renderSeekVideoAndPlay()
+      this.toPlayCount()
+    } else {
+      // 加载数据
+      this.loadVideoList()
+    }
+  }
+
+  slideUp () {
+    // 从缓存添加新数据
+    let tempVideoList = this.tempVideoList
+    let tempVideoListCache = this.tempVideoListCache
+    let tempVideoItem0 = tempVideoList[0]
+    let tvi0ID = tempVideoItem0.id
+    let tempVideoCacheItem0 = tempVideoListCache[0]
+    let pageSize = this.pageSize
+    if (tvi0ID === tempVideoCacheItem0.id) {
+      // 当前显示的数据为第一条
+      this.playCurrentVideo()
+      this.toPlayCount()
+    } else {
+      let tempListLength = this.tempVideoList.length
+      // 删除后三条数据
+      this.spliceTempVideoList(tempListLength - pageSize, tempListLength)
+      // 在缓存中添加前三条
+      Utils.forEach(tempVideoListCache, (item, idx) => {
+        if (item.id === tvi0ID) {
+          idx = parseInt(idx)
+          let cacheItem
+          for (let i = 1; i <= pageSize; i++) {
+            cacheItem = tempVideoListCache[idx - i]
+            this.tempVideoList.unshift(cacheItem)
+          }
+          this.renderChange = false
+          this.current = pageSize
+          return 'break'
+        }
+      })
+      this.$apply()
+      this.renderVCMapping()
+      this.renderSeekVideoAndPlay()
+      this.toPlayCount()
+    }
+  }
+
+  toPlayCount () {
+    clearTimeout(this.productPreviewItemThread)
+    clearTimeout(this.productPreviewThread)
+    let tempVideoList = this.tempVideoList
+    let current = this.current
+    let that = this
+    // 首次加载，第current条数据记录播放次数
+    Utils.forEach(tempVideoList, (item, idx) => {
+      item.productPreviewItem = false
+      if (parseInt(idx) === current) {
+        // item.playCount = item.playCount || 0
+        // item.playCount += 1
+        // if (item.playCount === 2) {
+        //   this.productPreviewThread = setTimeout(() => {
+        //     item.productPreview = true
+        //     that.$apply()
+        //   }, 3000)
+        // }
+        this.productPreviewThread = setTimeout(() => {
+          item.productPreview = true
+          that.$apply()
+        }, 15000)
+        this.productPreviewItemThread = setTimeout(() => {
+          item.productPreviewItem = true
+          that.$apply()
+        }, 120)
+        this.videoPlayback(item)
+      }
+    })
+  }
+
+  /**
+   * 记录播放记录
+   */
+  videoPlayback (thisVideoItem) {
+    VideoService.videoPlayback({
+      data: {
+        videoNo: thisVideoItem.videoNo
+      },
+      isLoading: false
+    })
+  }
+
+  /**
+   * 分享转发
+   */
+  onShareAppMessage(res) {
+    let tempVideoList = this.tempVideoList
+    let thisVideo
+    Utils.forEach(tempVideoList, (item, idx) => {
+      if (parseInt(idx) === this.current) {
+        thisVideo = item
+      }
+    })
+    return {
+      success: res => {
+        Tips.success('分享成功')
+      },
+      title: thisVideo.intro,
+      path: '/subpackages/MiniVideo/pages/index2?videoNo=' + thisVideo.videoNo,
+      imageUrl: thisVideo.cover
+    }
+  }
+
+  firstLoad() {
+    this.loadVideoList(() => {
+      this.isGuide = wx.getStorageSync('ISVIDEOGUIDE_' + this.userNo)
+      if (!this.isGuide) {
+        let that = this
+        setTimeout(() => {
+          that.isGuide = true
+          that.$apply()
+          wx.setStorageSync('ISVIDEOGUIDE_' + this.userNo, true)
+        }, 3000)
+      }
+    })
+  }
+
+  // 加载完成
+  onLoad(options) {
+    // this.isTrue = Utils.isExceedDate()
+    // this.$apply()
+    // // if (!this.isTrue) {
+    // //   return
+    // // }
+    // // this.activityId = options.activityId || wx.getStorageSync(STATUS.ACTIVITY_ID)
+    // this.activityId = options.activityId
+    // this.videoNo = options.videoNo
+    // this.userNo = wx.getStorageSync(STATUS.USER_NO)
+    // if (this.userNo) {
+    //   this.firstLoad()
+    // }
+  }
+
+  onShow() {
+    if (!this.userNo) {
+      this.$invoke('user-authorize', 'authorizeActivation')
+    }
+  }
+}
+</script>

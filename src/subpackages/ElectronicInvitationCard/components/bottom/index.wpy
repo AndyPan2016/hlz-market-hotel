@@ -1,0 +1,1357 @@
+<!--
+  电子请柬-顶部导航
+  @Author: zongxunjiang
+  @CreateDate: 2019年6月11日13:55:25
+  @LastUpdateDate: 2019年6月11日13:55:29
+  @Remarks: 顶部导航
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@base64-plane: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAADYUlEQVRYR8WXT4wURRTGv6+7d3qARdHIDQJE1njw5IJKggdI8IAXjGEJgggLsrBwBGL0bAiJR40HIBAlmCgXbwLhBNmEC4l3Y4wxHEw4z3RPd32memqGndn+NzvLWreZeV31q/d+r6qH+J+GpFcigxM0Og3iGVebI471tvHMPMHDANa69Z+uCoikME5xENA5AO8t3bxuv1CQlrTVS8ycyJMENhZln+DpFQeR5EUJ9pHZ7vcD8KvKL59TKwbi5Jul0RyIqYLFYwAtAC8v+v2fMPA2jw0Sx5o2njlL8BMAa0p2HwH6FeDMYIxuh4F/ZFkgVr5Oihl15Xu3KvUAIpEXKX0NYP3ieOtHI+DVkUCcfGecfK/VALAhkcAZQl8BeGf4GetHk/yjEsTJ9wGpeQAfAvBqAnQhxAOEeR/klznPZX7Y7wtBJL2anXzSGQDbR1i8F5pB+EDLUA/yu0e3wsD/NBfEyifPzKN78pXJV8bWlvhRGOBxnOp3ANmuhwfBzxsBr/VBnHyHnHxL6jhiNjKI5gR/ixLzM2BP1PzR8yMDiVJdknSRQF35KjNhIeJEs4KulwT3/chA2on5t+z4HSEbNhMHmhO825ammOoJgMni55/7kYF0ndAvALaNsOhwaB9CUiNO9QjAzrL5CJ5qBOxnLOsaSRviVFaaj5cB04fI+rWTXgb5RdU88vl6k/yzFzfQvu1U5yl9AyCsmsj93nJi3rWfWx3t8aj7NS66AT+K2neHPFnbq0o1AGHPHdeqm6o3MehHLogr1UuuVEWtNwCRlSQxd+qWdtiPQpDejgpKZSFsd9zrxcWJTgm6Wp2JbsSwH5UgNiDrKuon946xBKItveFadV1NkL/DwNsyHFt56fVLlZgLHrz7ExN82Jska1WjBQjTNSFsPn4MA//YskCKFok66RWQl+pD2Ft28PzIbd9RJmx1tNe16iivBbl+1HKkMBuJWQCwaxR4ALl+jAmiGUA3Fv1JqsGkH8LA/ywvsJashVmJ9BbsPUW8WYPC+jHbCGjhl4yxQFxHTcap+R7g0SqYvPNjbFmHF40THRf0XUmpCv0Yy5G83UelpSr2Y8VBXKnWxan5FuDxxbAETzQC3iwq39iOFE08XCrjc9sa8q9VB7ELZqUKdFNCuxl4u8tk/g+jOJHNlN1FfAAAAABJRU5ErkJggg==';
+
+@base64-ico1: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAmCAYAAABDClKtAAAE6UlEQVRYR82YaahWVRSGH5vNogkjEEKa1QYr8d4Ko5GiQVERrGiAMoo0Q82ieYRopHnO1Kx+5FBZ0FykVlZSYYNIOPwoEbLSsnnguawd556+850BurT+fHzn7LPWu9fwrrV3L5rLicBUYAiwdUbNRuAD4GbghSbqezX5CJgC3FLy7V8B+ta6NpqA2h34HNgceBq4CdiQMbwtcCkwFvgNGAB8WQdYE1AXR2gEti/wZwuDmwBLA5Beve2/BmXYNKSXTmlj7KnwluFzI5WliadeBo4F7gQuamNJ70wCXgKOr4wIyIM6GLgcGAr0Bt4LxV+E0l2BlfHdUcAbbYwdkXk/Gbg7cuy40HkA8AewALgR+CTpyoKyxOcAW+QMXQ9cFc82Cw+tAXxeJtOAs2LR98CvQN8WH/0MDAde8V0CtROwDPB3YYBw4UDgGeC7MusF7zcFLgtq2CbWWJFPAg8DW4aXOoFvgL39TaAeAsYBXweQpiCKsEuuUoNRsGqz+rePZ7sADwDnC0pGNncs49NiFw0d0/gz7T4R9NIhKFvBCcBbwJGATFxHzDMJdQfg2yDK3+soiDTS/jBgvqB+APoAI4DnaigTiJU6EjAESQzN3MiVOkyu/XmGVlC2CJNwTCR1FVxW1P3AVrH4F2AdsGMkr48tlPOA6VUUAqPD/jpBSQPu1gSU5FaXKDknKsdli4GrgdeCg+yHRwPXBte5xvWPlujcLdJoH2C2oCxDE3074EfgQuCxAiX9gjoMt23kzACTXy44PWQbMj208VWBzjOA+yKF1gOdiRIGA48DsqyJLpHNb6Ek9b3lwH6AYSsSOcimvEeMOc5eeTEyFlpq4G5ySZbR3Z1EKaAlgC0nL7Ybdz0euLdCrlwA3BPeNTR50c6BwIvAqLTJfO87BFgUPcneJ/smca2eEfyhwDsVQLnODmF7sSiydCOR/hRe6qYvDyopsVHmQeliK6oJKDdnOPOgHJ1tRYWgRG74Tm4TPvvjXoBhMTnLpCx8HwIHAc8GJXVFJnnKF1aLk2S7RHdgcwypkuhu0kTfEyga9E4KwhbHRzFRfOwfE/DdoATdOaENJfQHPovQzgDOBlq1FFuP3GS5mzc241VtKMGikcAdb7p6XyJPK8seuKIkJk4TThWK5Oms9Xob8nT9IyU63awUNCiRp3OM7cGStGdVEVnaUjd5lVZtxmfmVBmbJ3vanw2s11N2dhtq3YZsrlwR39kNkhgCE/eGyL0qm3RNasgbs6PLm4Bzd93RxYSWUHcG1gZRykt1RBzaP1wi/b8MeacCs2LI+6f3PQicG03TZMuOq4Zm/2BlTxxWU12RiK1yvWpBGeIk6veZ47AFMa7VweHtGEdkbxP69GBxlTh73R4nGVm/TGTrK+NI5XFekSBnRgHYeq6JifNfBwcXS2Rmf/6I5Ts/8HlSbEUJuEzkMjelOMKYa1Z6XgTqkPe8L/K9zxHGoa0DkADfB+4CPBX7f2LmtsXmLekWicPeq/HyEuCOIFrHFQn6sPjvYfQ6wJbTJU2O7RrSYNkdQWpJTqXHlLk0+74JqDToOXlaNUXSoxcc6Sro05g+W/Fa9irIibPsgq3bxpp4yqOVJWyOefz20szZPonzu1dFNmObtVRQ56jVKKc0XuV60XV6tUeuF5NHpJB0ESs5JpFc00Vsq8NHac7/DcSxJnHYA4wGAAAAAElFTkSuQmCC';
+@base64-ico2: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAmCAYAAABH/4KQAAADo0lEQVRYR83YaehlcxzH8dfYxjYyY0mRaBDZ12dDHnhkyRIyeaA0NTQYy5S97PKA7EUST0hCyFJMSVmzS3aR7QkZ6zAMfabfqV+nc5t77//ca751+t97/uf+zvt8z3f5fH+zTM82xX44EAdgf+yIzfANnsNteLdBmjUhthokMDn2wPqt+/2NHBuX8/l8Ba7O9z7gcsODcUjllS6QX/EW3qiOj/EPdsbpWIaNcBGunwncNmWx05DPtf3SAnkTH2H1Wt7UEXgaX2OnceGOxT2Yh3+LJ15seWRtIIM4F+D3rDUO3Bm4vYTEw7gEeT2926hwx+Cx8nrOxF29E1ULjgK3VYmb/F1SvDdJtpGy9dqSRU8gHpykJWNXD+u5DfAdtsa+daGcAGFq3mf4Yli4g/A6PsCeEwCql0zX+BIrhoU7AcnMB7BwXYNL+bgDdyJZ2pelu+xWem56bdNzUz+H9lwfcOm3e1cgEQH5nvNdNjG4PHk8EYDGG/FQu/GvKnH8NprjR7zTl+fStANRHwnqtqXxRw4FIr02IuB9/NW6sEmIVcMmRPNaH8UjlS4L0JYdIN9XnghEgD4dovFnqQZu6CLcwLU50vQ/L16oPRK4cW1suG/xTOWVxMbP41IM+N3YcH2Xki6+dQJucxxf4nc9fIjE9OzSIUaOub48d3JRNVE4tf2Bu3E2Vo6arX3AnYr7i1iNJH8cqXeH4RREZMQmVoQH5ci2+ARzsLhDrAbwqdI1pg53Lm7Eg8VLXQ9xKa76PzwXqMRbjocGuHcvvJdBux1zEXqHljkywflqkeZ9NP6wJBszuR1XZpEuvrTDFPavarhFiBSP2q3t+dIBLuhBMmWavxw3Y+kAz2UOvhcvN3DX4OJy8QtF9aZnHoXtqkVmmq27l2af7Dwcr7QAc6+8rRTiJYHLRcvLIHtiyZbmN5vgPuR8bKZwWeOGslMQlZLPKSUrSymJV7fHa1gQuPzzaJyHmzpcnUko0mbXnuCi6ZKxZw3Yq4mjTsIPgVuBLTAXPw2IgytxWU9wzS2y85TNm32wYal/yeCMnlE7a9pXxF6eJpV5zckOyxB9K27BOYMqbN/nA5fdn0joPEkUapcle5JFeRXZ4JuKBe46XIhncWTZL6tvHuiXEOWwS6MYpkEXuAwjEY07FMBs3EVaZypKYCZJUlYSxOdPA6q5R1PnssXwZAHM//4suqq5LuUkRTr1aWpWd4h4J+Uk0/18/FbqTYbpZNDU7T+e+ORXoEZeCgAAAABJRU5ErkJggg==';
+@base64-ico3: 'data:image/png;base64,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';
+
+@base64-ico4: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAZCAYAAAAiwE4nAAAC90lEQVRIS62WW4hOURTHfyvXXAuRF4pcHkwpUW4PEpHMUCJMEoahlNsDyQuihNGQ24PLA4qhFIqJpOT24AFPpohElOQyGdLSX/tM+ztzzjdnyqqZvrP2Wuu/1trrso0ccvfeOjKzb3kyWXx3HwA0m1lz1rnFTHcfAuwA5gFSFH0CLgG7zex9DsgoYCswF+gfZF4DF4B9ZvYl0WsFdPcFwFmgR05E34FqM7uacnI1cBjomqP3Aagys8f/MqZ/7j4ZuFNGKbH1C1iYgLr7BqCuQMoV4XgzazJ37wy8AEYWUJSIQKuAocCxxOkCuo1mNlOAlUBJmgoo/wS6dQAsMVkhwKPA2gIg/0NkiwBvALPLWFP0b4HFUQWmxd8ADbonYGoZW/UCvALMzxE6DehP93sL2AUsi1L5GzgIKEtqiQdAPaAizKI6Ae4NPZQlUA0cB3oBimIToF4cE4QfBeM7Q/TPQs/qO4tWCnA4MD1HQK3yMnW2HqgAPoc2khMJySlV8IQcew1JHyqCLhlCP4CWFH8boKzI+PVUwYk3GuieYatF4y4B1L1oyqRpKXAuYn4EFgHqXbWGRuGJkHKJCfB8xhX9AaaY2cN4tO0HNqcQa4GakEKNrwPAWA0noAkYB9wH9gBy7jLwDtAESkiytWZ2UowYUL9VbQJJ6CkwI3zIuM6VCd3hE2BiiHJNcKAPoEIaHNnYaGaHku/0ttD3KWB5pKDi0MbQRpC36rNG4FVoE20E8Z8Dw4Ceke52M1P0rVQCKK67dwr3prtK0zVA039VOFCFakqNyJDVOtOqK6E2gAFUFXsx7MVY4SugtMWkDPRL8erMLG6X/AiTE3fXftNYm5XhfTmWBsU6M1Oa21BmhBGolrHSOK0g6BlgRR6YbJQFDOlVEWiOTmoHVFewxMzUc7nULmAA7QvcDn2XZUyp10tAy7ksFQIMoHpUabaqB2O6CVQWASuU0tiyuw8E7oWe1NFdYE7ek7DDRZOl4O6DAG0MvVePmJkGfGH6C/d23jr1hsDpAAAAAElFTkSuQmCC';
+
+@base64-ico5: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAYCAYAAAD6S912AAAB00lEQVRIS62VPUhWYRiGr7uGhCJqy6Eka4rQsqXoZ+hnCgMHKYRcVGqpQUIDt6AgCJocIouWIBoKsi0dlOaCMJwqHBWHAq2h6JYn3hOHr3O+88X3veN5n/d6/u7nOaLOsX0UGAdOAFuBBeAxMCXpV9FTlfFsXwfuA5sKbGaBC5K+194VAm2fAd4ApQ6BR5KGGwW+BY7XKwfwG9gv6Uve7p8IbG8DvpWkWutjRNJUFXAv8Lkiuux6QtKdKmBrIwxvthutYaekpboRJuBpYKaiy6HFkYa6nKCt02HmNU3KDeAkELX9ADxJGvzvSekBuoGnwHZgl6QF2+eBgM1L+lGZsu09wDPgGPBO0hHb/cCApD7bY8BdYBW4IulFaVNsH0jNaE9Gs5LO2r6ZgF22Y9wepnsD1yRNZtC/k2J7J/Ae6Mh5XAf2AQcTcMj2K6A3ZxPQWBSv41seGGleLJiQReAWsDuBBwtsloEuSSt/gLZPAXMNjluZ2QNJVzPgcyAK38yJ3dgu25uBr0lnzQDjbV8AO4FPzZLS+4kAhlQ+tgh4O4BtKeUtLYBeypoyCtyr2C5V/mLlncvr8BBwGTicxB1Cj7OjxtEa8BOIrob+olzTwMv4tW4Az72nwkNT+skAAAAASUVORK5CYII=';
+
+@base64-radio: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACZklEQVRIS7VVT2sTQRSfv9nNjuxONghBqFUPlYIVBQ/VD6AfQREPCn4HwUPBin4GL/WgX8JeheJFWtFbQSKKVIVNZjfJkszs7MiUJCRtt0mMWdjD7u/N+733fm/eg+CUp9lsLhtjbiKEbhtjbhhjLlpzhFAdAPBRa70NIfwQhuH3IjewCIjj+BkA4CHGuIYxLmGMASHk0DzLMqC1tq/UWv8CAGwFQbB5kq9jBHEch8aYXUppzfM857QMB1iapj2l1EGe59fCMIxHz4wRtFqt1SzL9hhjDqV0Gt9DG6UU6HQ6EmO85vv+/gAYEvQj/xkEgTuT5yPGQgiZ5/nZarWaWGhIIIT45nne8qyRHw3GZpKmaZ1zfmlIYAUlhDyZtuaTMrSaSClfViqVTWhbESH03vf985MOzoInSfIjy7JbsNFo3CuVSm8YY7OpOoGt3W5LKeUDKIR47TjOI9edS9tjdN1uF/R6vS1boi+MsSvzilsg9q4tUZtzziAsvNSzlH5oa4wBQoi2JWhxzs8sjEAI8dnzvLWFlWjhIkdRdNdxnLcLaFOltb4PoyhaIoTs+L6/9E9qFhyyF01KuX7YOnEcbxBCnv7PUaGUes45fzE67Oqe512YV+z+sNvnnF8em6aNRiOAEP7hnJfmKZUQQnHOKxDCzhiB/UiSZEVrbW92adZM+gtHlcvlVdd1vx5bOIMfURT5GONPlNJz02rSX5l2WV0dRF5IMACazeYGQugxQqhGCKEnLf0sy5Qx5nee56+soFMt/VEj28IAgHWM8R0AwPU8z1csjhCyO3cPAPCOUrrDGDso0u0vMhE3sp/QQMwAAAAASUVORK5CYII=';
+@base64-radio-checked: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACHElEQVRIS7WWzWsTYRCHnxFSaC+GWi960B6sq5C23sSLf0JTCqUg2KSIJ0VzFKWtKOLJ4qVqo2Tbix4U0w9BEEFP4kFNCWhQQc9FIa2XklhHdrfZfG02m37kuPPO73lnJjPzCj4/NYzDtOkAKlFEwyD9znHNoJJHNE1B5iWX+9lIRrwMtnCICYSY3wVcm2JS5LoXqA6gkZ4oIimQcCDxMiWPalyyX9OVflUAjRgxhFRrwjWnlbhkc2bpqwvYEfGSqv4bLEViAzaL+an1tDSKVfMU5IRVEwcQMUyE0W2lptZZmZVsLibO7fmxLfHRMVhagN+/qmUKdIv2Hr0MMrVlwMAgxM/ByBCsr9dWPCEaMd4gnN4S4OQpuHELzgzDykq9hPJWtNewuvBQy4AjPfDgEZwfg+/fGrhrxgJonbW9HY4dh48fvB33dcGTp3DtCrx/53s3b4At8Axu34TXr6oFLPjcY5gzYbGqaT1BjVN04CAkU3B/uiwkAveS8OUz3L3TPKuqy/5F7uyEmRS8fAEPZ+DqOHTth8TF5uJ2g9lFbvI37eiA6SRsbEBbCOJn4W8xGABNBGu0UAguXHKi+LMWUBywGm3XR0XFsMuA7A1+Pb+TukpB+t1h50RhLZo9z3cEUDuu3TG+mwunDLFXptl6unQV1ZjvynQhztKfDLwjlFmKTAZa+pU12Nx0UfvZgoYR6bPtqsvgPlvSfs+W/4Qp0pXvto4DAAAAAElFTkSuQmCC';
+@base64-add: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAcElEQVRIS+2UwQ2AMAhF/dM4AB3AbVzJncAO4DBoGntt+GnSG5wfIbzwwUZWrbW4uzYcQBGRm2kFAzUmB4SmUlEqGhqAqh6hnx/YAVw9yae7P0wfzOxlwFlm/YDlitjVM8mhqVSUisbPLnTTgdkr+gDRVrYhOXbc9wAAAABJRU5ErkJggg==';
+@base64-rde: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAADCAYAAACJZs+gAAAAHElEQVQoU2M8c+bMfwYaAkaaW3D27Nk0GnqAAQBmIAmX/ElG1gAAAABJRU5ErkJggg==';
+
+.template-bottom {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 700;
+  height: 100rpx;
+  // height: calc(50rpx + constant(safe-area-inset-bottom));
+  // height: calc(50rpx + env(safe-area-inset-bottom));
+
+  .bs {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .b1 {
+    background: #ff4c2f;
+    font-size: 30rpx;
+    color: #fff;
+    text-align: center;
+    line-height: 100rpx;
+  }
+  .b2 {
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+
+    .lt {
+      display: flex;
+      flex: 1;
+      // padding-bottom: calc(constant(safe-area-inset-bottom));
+      // padding-bottom: calc(env(safe-area-inset-bottom));
+      .vs {
+        width: 33%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .text {
+          font-size: 20rpx;
+          color: #222;
+          padding-top: 6rpx;
+        }
+      }
+      .v1 {
+        .ico {
+          height: 38rpx;
+          width: 38rpx;
+          background: url('@{base64-ico1}') 0 0 no-repeat;
+          background-size: cover;
+        }
+      }
+      .v2 {
+        .ico {
+          height: 38rpx;
+          width: 40rpx;
+          background: url('@{base64-ico2}') 0 0 no-repeat;
+          background-size: cover;
+        }
+      }
+      .v3 {
+        .ico {
+          height: 38rpx;
+          width: 48rpx;
+          background: url('@{base64-ico3}') 0 0 no-repeat;
+          background-size: cover;
+        }
+      }
+    }
+    .rt {
+      height: 100%;
+      width: 300rpx;
+      background: #ff4c2f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .ico {
+        height: 34rpx;
+        width: 34rpx;
+        background: url('@{base64-plane}') 0 0 no-repeat;
+        background-size: cover;
+      }
+      .text {
+        font-size: 32rpx;
+        color: #fff;
+        padding: 0 14rpx;
+      }
+    }
+  }
+  .b3 {
+    display: flex;
+    flex-direction: row;
+    padding: 0 26rpx;
+    width: calc(100% - 52rpx);
+    .input {
+      display: flex;
+      flex: 1;
+      font-size: 24rpx;
+      height: 60rpx;
+      padding: 0 30rpx;
+      border-radius: 26rpx;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      &.btn-blessing {
+        position: relative;
+        color: #fff;
+        line-height: 60rpx;
+      }
+    }
+    .btns {
+      height: 60rpx;
+      width: 170rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #eb402f;
+      border-radius: 26rpx;
+      .text {
+        font-size: 24rpx;
+        color: #fff;
+        padding-left: 10rpx;
+      }
+    }
+    .btn1 {
+      margin-left: 20rpx;
+      .ico {
+        width: 28rpx;
+        height: 26rpx;
+        background: url('@{base64-ico4}') 0 0 no-repeat;
+        background-size: cover;
+      }
+    }
+    .btn2 {
+      margin-left: 20rpx;
+      position: relative;
+      .ico {
+        width: 20rpx;
+        height: 24rpx;
+        background: url('@{base64-ico5}') 0 0 no-repeat;
+        background-size: cover;
+      }
+    }
+
+    .list {
+      position: absolute;
+      left: 26rpx;
+      height: 300rpx;
+      width: calc(100% - 52rpx);
+      bottom: 20rpx;
+      overflow: hidden;
+      transform: translateY(-100rpx);
+      -webkit-mask-image: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 1) 50%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      padding-top: 20rpx;
+      .in {
+        // height: 150rpx;
+        // overflow: hidden;
+        // transition: all 0.5s;
+        &.transition {
+          transition: all 0.5s;
+        }
+        .cell {
+          height: 60rpx;
+          margin-bottom: 20rpx;
+          position: relative;
+          &.ishide {
+            .message {
+              background: none;
+              background-image: -webkit-linear-gradient(
+                top,
+                rgba(255, 36, 0, 0.4),
+                rgba(255, 36, 0, 1)
+              );
+            }
+          }
+          .photo {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 60rpx;
+            width: 60rpx;
+            border-radius: 100%;
+            border: 1rpx solid #fff;
+            z-index: 100;
+            box-sizing: border-box;
+            overflow: hidden;
+            image {
+              height: 100%;
+              width: 100%;
+            }
+          }
+          .message {
+            font-size: 24rpx;
+            color: #fff;
+            display: inline-block;
+            height: 60rpx;
+            line-height: 60rpx;
+            padding: 0 30rpx 0 80rpx;
+            background: rgba(255, 36, 0, 0.7);
+            border-radius: 60rpx;
+            position: relative;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+
+  .placeholder {
+    color: #fff;
+  }
+  .placeholder2 {
+    color: #888;
+  }
+
+  .pupop {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    // height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 900;
+    display: none;
+    .popup-mask {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+    &.show-pp1 {
+      display: block;
+    }
+    &.show-pp2 {
+      display: block;
+    }
+    .pp1 {
+      position: absolute;
+      left: 0;
+      bottom: 16rpx;
+      width: 100%;
+      height: 362rpx;
+      background: #fff;
+      .v1 {
+        padding-top: 40rpx;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .a {
+          height: 0;
+          width: 50rpx;
+          border-bottom: 2rpx solid #ff4c2f;
+        }
+        .b {
+          width: 142rpx;
+          font-size: 36rpx;
+          color: #ff4c2f;
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+      .v2 {
+        font-size: 26rpx;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 40rpx;
+        margin-top: 20rpx;
+        height: 96rpx;
+        border: 0.5rpx solid #eeeeee;
+        border-radius: 8rpx;
+        .xbox-title {
+          color: #222;
+          font-weight: bold;
+        }
+        .input {
+          color: #222;
+          width: 400rpx;
+          padding: 0 10rpx;
+        }
+      }
+      .btn {
+        width: 212rpx;
+        height: 80rpx;
+        position: absolute;
+        left: 50%;
+        margin-left: -106rpx;
+        bottom: 40rpx;
+        background: #ff4c2f;
+        border-radius: 8rpx;
+        line-height: 80rpx;
+        text-align: center;
+        font-size: 30rpx;
+        color: #fff;
+      }
+    }
+
+    .pp2 {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 624rpx;
+      background: #fff;
+
+      .v1 {
+        padding-top: 40rpx;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .a {
+          height: 0;
+          width: 50rpx;
+          border-bottom: 2rpx solid #ff4c2f;
+        }
+        .b {
+          padding: 0 60rpx;
+          font-size: 36rpx;
+          color: #ff4c2f;
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+      .v2 {
+        padding: 0 28rpx;
+        display: flex;
+        align-items: center;
+        margin-top: 50rpx;
+        .name {
+          font-size: 26rpx;
+          color: #222;
+          margin-right: 16rpx;
+          font-weight: bold;
+        }
+        .input {
+          font-size: 26rpx;
+          height: 96rpx;
+          width: 476rpx;
+          border-radius: 8rpx;
+          border: 2rpx solid #eee;
+          padding: 0 30rpx;
+        }
+      }
+      .v3 {
+        padding: 0 28rpx;
+        display: flex;
+        align-items: center;
+        margin-top: 50rpx;
+        .part {
+          font-size: 26rpx;
+          color: #222;
+          margin-right: 55rpx;
+          font-weight: bold;
+        }
+        .radio {
+          font-size: 26rpx;
+          color: #222;
+          display: flex;
+          margin-right: 30rpx;
+          align-items: center;
+          .ico {
+            height: 24rpx;
+            width: 24rpx;
+            background: url('@{base64-radio}') 0 0 no-repeat;
+            background-size: cover;
+          }
+          .text {
+            padding-left: 20rpx;
+          }
+        }
+        .selected {
+          .ico {
+            background: url('@{base64-radio-checked}') 0 0 no-repeat;
+            background-size: cover;
+          }
+        }
+      }
+      .v4 {
+        padding: 0 28rpx;
+        margin-top: 60rpx;
+        display: flex;
+        .num {
+          font-size: 26rpx;
+          color: #222;
+          margin-right: 55rpx;
+          font-weight: bold;
+        }
+        .act {
+          display: flex;
+          .rde {
+            height: 40rpx;
+            width: 40rpx;
+            position: relative;
+            background: #eee;
+            .in {
+              position: absolute;
+              top: 19rpx;
+              left: 8rpx;
+              width: 24rpx;
+              height: 2rpx;
+              background: url('@{base64-rde}') 0 0 no-repeat;
+              background-size: cover;
+            }
+          }
+          .n {
+            font-size: 30rpx;
+            color: #222;
+            width: 120rpx;
+            text-align: center;
+            font-weight: bold;
+          }
+          .add {
+            height: 40rpx;
+            width: 40rpx;
+            position: relative;
+            background: #eee;
+            .in {
+              position: absolute;
+              top: 8rpx;
+              left: 8rpx;
+              width: 24rpx;
+              height: 24rpx;
+              background: url('@{base64-add}') 0 0 no-repeat;
+              background-size: cover;
+            }
+          }
+        }
+      }
+      .btn {
+        width: 212rpx;
+        height: 80rpx;
+        position: absolute;
+        left: 50%;
+        margin-left: -106rpx;
+        bottom: 40rpx;
+        background: #ff4c2f;
+        border-radius: 8rpx;
+        line-height: 80rpx;
+        text-align: center;
+        font-size: 30rpx;
+        color: #fff;
+      }
+    }
+  }
+
+  .customized-popup-control {
+    &.popup-body-cont-slot {
+      .popup-tip-text {
+        margin: 0 40rpx;
+        .tip-text-message {
+          color: #333333;
+          font-size: 30rpx;
+          line-height: 50rpx;
+        }
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="template-bottom">
+    <view wx:if="{{bottomType == 'create' || bottomType == ''}}"
+          class="bs b1"
+          @tap="linkToInfo">开始制作</view>
+    <view wx:if="{{bottomType == 'setting'}}"
+          class="bs b2">
+      <view class="lt">
+        <view class="v1 vs"
+              @tap="linkToInfo">
+          <view class="ico"></view>
+          <view class="text">设置</view>
+        </view>
+        <view class="v2 vs"
+              @tap="linkToMusicList">
+          <view class="ico"></view>
+          <view class="text">选择音乐</view>
+        </view>
+        <view class="v3 vs"
+              @tap="preview">
+          <view class="ico"></view>
+          <view class="text">预览</view>
+        </view>
+      </view>
+      <view class="rt"
+            @tap="linkToShare">
+        <view class="ico"></view>
+        <view class="text">发送</view>
+      </view>
+    </view>
+    <view wx:if="{{bottomType == 'msg'}}"
+          class="bs b3">
+      <!--弹幕-->
+      <view class="list"
+            style="{{(msgList.length > 4 ? '' : 'padding-top: 100rpx;') + (autoMsgWidth === true || autoMsgWidth === 'true' ? 'width: auto;' : '')}}">
+        <!-- <view class="in" style="{{'transform:translateY(' + (scollY * -80) + 'rpx)'}}">
+          <view class="cell" wx:for="{{msgList}}" item-key="key">
+            <view class="photo">
+              <image src="{{item.headImg}}"></image>
+            </view>
+            <view class="message">{{item.wishContent}}</view>
+          </view>
+        </view> -->
+        <view class="{{'in ' + transition}}"
+              style="{{'transform:translateY(' + (scollY * -80) + 'rpx);'}}">
+          <view class="cell"
+                wx:for="{{msgList}}"
+                item-key="key"
+                wx:key="key">
+            <view class="photo">
+              <image src="{{item.headImg}}" />
+            </view>
+            <view class="message">{{item.wishContent}}</view>
+          </view>
+          <view class="cell"
+                wx:for="{{msgList}}"
+                item-key="key"
+                wx:key="key"
+                wx:if="{{msgList.length > 4}}">
+            <view class="photo">
+              <image src="{{item.headImg}}" />
+            </view>
+            <view class="message">{{item.wishContent}}</view>
+          </view>
+        </view>
+      </view>
+      <!--弹幕-->
+      <!-- <input class="input" placeholder="请留下您的祝福..." placeholder-class="placeholder" @tap="toSendBlessing" /> -->
+      <view class="input btn-blessing"
+            @tap="toSendBlessing">请留下您的祝福...</view>
+      <view class="btns btn1"
+            @tap="getGift"
+            wx:if="{{supportGift === 'yes' && privilege}}">
+        <view class="ico"></view>
+        <view class="text">领取礼物</view>
+      </view>
+      <view class="btns btn2"
+            @tap="attendanceFeedback">
+        <view class="ico"></view>
+        <view class="text">出席反馈</view>
+      </view>
+    </view>
+
+    <view class="pupop + {{popupStatus}}">
+      <view class="popup-mask"
+            @tap="closePopup"></view>
+      <view class="pp1"
+            wx:if="{{popupStatus === 'show-pp1'}}"
+            style="bottom: {{keyboardHeight}}rpx;">
+        <view class="v1">
+          <view class="a"></view>
+          <view class="b">送祝福</view>
+          <view class="a"></view>
+        </view>
+        <view class="v2">
+          <view class="xbox-title">祝福:</view>
+          <input class="input"
+                 placeholder="请留下您的祝福，最多15个字"
+                 value="{{blessingString}}"
+                 bindinput="blessingInput"
+                 bindfocus="focusFn"
+                 bindblur="blurFn"
+                 placeholder-class="placeholder2"
+                 focus="true"
+                 maxlength="15"
+                 adjust-position="{{adjustPosition}}" />
+        </view>
+        <view class="btn"
+              @tap="sendBlessing">送祝福</view>
+      </view>
+
+      <view class="pp2"
+            wx:if="{{popupStatus === 'show-pp2'}}">
+        <view class="v1">
+          <view class="a"></view>
+          <view class="b">诚邀您出席</view>
+          <view class="a"></view>
+        </view>
+        <view class="v2">
+          <view class="name">您的名字:</view>
+          <input class="input"
+                 placeholder="请输入你的名字"
+                 value="{{attendValue}}"
+                 bindinput="attendInput"
+                 placeholder-class="placeholder2"
+                 focus="true" />
+        </view>
+        <view class="v3">
+          <view class="part">是否赴宴:</view>
+          <view class="radio"
+                wx:for="{{attendStatus}}"
+                wx:for-index="idx"
+                wx:key="key"
+                data-info="{{idx}}"
+                wx:for-item="item"
+                :class="{ selected: radioIndex==idx}"
+                @tap="radioCheck">
+            <view class="ico"></view>
+            <view class="text">{{item.text}}</view>
+          </view>
+        </view>
+        <view class="v4"
+              wx:if="{{showRde}}">
+          <view class="num">赴宴人数:</view>
+          <view class="act">
+            <view class="rde"
+                  @tap="rde">
+              <view class="in"></view>
+            </view>
+            <view class="n">{{partNumber}}</view>
+            <view class="add"
+                  @tap="add">
+              <view class="in"></view>
+            </view>
+          </view>
+        </view>
+        <view class="btn"
+              @tap="submitAttendStatus">确定</view>
+      </view>
+    </view>
+    <user-authorize :onAuthorizeAll="onAuthorizeAllFn"
+                    :onAuthorize="onAuthorizeFn"
+                    :authorizeType.sync="authorizeType"
+                    :onCloseAuthorize="onCloseAuthorizeFn" />
+
+    <customized-popup customClass="customized-popup-control"
+                      buttonText="宴会前一天接收提醒" />
+    <CLayer :showLayer.sync="showLayer"
+            :onCloseLayer="closeLayer"
+            :giftDatas.sync="giftData"
+            :onSubmitLayer="submitGift" />
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { STATUS, LANG } from '@/configs'
+import { IndexService, InvitationService } from '../../services'
+import { CommonsService } from '@/services'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import CustomizedPopupComponent from '@/components/customized-popup-component/index'
+import CLayer from '../layer/index'
+import { Tips, Utils } from '@/utils'
+import { invitationService } from '../../services/invitation.service'
+export default class bottomComponent extends wepy.component {
+  props = {
+    title: String,
+    themetype: {
+      type: String
+    },
+    bottomType: {
+      type: String,
+      default: ''
+    },
+    invitationId: String,
+    musicId: '',
+    templateId: String,
+    templateType: {
+      type: String,
+      default: ''
+    },
+    giftData: {},
+    autoMsgWidth: Boolean | String,
+    hotelId: String | Number,
+    // 封面图
+    coverImage: String
+  }
+
+  components = {
+    'user-authorize': UserAuthorizeComponent,
+    // 自定义弹出框
+    'customized-popup': CustomizedPopupComponent,
+    CLayer
+  }
+
+  // data
+  data = {
+    // 展示蒙层
+    showLayer: false,
+    // 键盘弹起时，是否自动上推页面
+    adjustPosition: false,
+    // 键盘高度
+    keyboardHeight: 0,
+    // 祝福语
+    blessingString: '',
+    // 用户编号
+    userNo: null,
+    // 手机号
+    phoneNumber: '',
+    // 授权类型
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    // 动画是否播放
+    isPlay: true,
+    // 动画移动坐标参照
+    anIndex: 0,
+    // 弹幕移动条数
+    scollY: 0,
+    ishide: false,
+    msgList: [],
+    attendStatus: LANG.attendStatus,
+    radioIndex: 0,
+    partNumber: 1,
+    // 弹出框状态
+    popupStatus: null,
+    popupStatusTemp: '',
+    // 出席名字
+    attendValue: '',
+    transition: 'transition',
+    // 是否显示选择出席人数
+    showRde: true,
+    // 当前授权是否为授权手机号码
+    isAuthorizePhone: false,
+    // 伴手礼弹窗认证
+    isAuthorizeGift: false,
+    subGiftData: null,
+    // 是否支持伴手礼
+    supportGift: 'no',
+    privilege: true
+  }
+
+  methods = {
+    // 跳转到 请帖信息
+    linkToInfo() {
+      // console.log(this.themetype)
+      if (!this.templateId) {
+        wx.redirectTo({
+          url:
+            '/subpackages/ElectronicInvitationCard/pages/info?invitationid=' +
+            this.invitationId +
+            '&templateType=' +
+            this.templateType +
+            '&themetype=' +
+            this.themetype
+        })
+      } else {
+        wx.redirectTo({
+          url:
+            '/subpackages/ElectronicInvitationCard/pages/info?templateid=' +
+            this.templateId +
+            '&invitationid=' +
+            this.invitationId +
+            '&templateType=' +
+            this.templateType +
+            '&themetype=' +
+            this.themetype
+        })
+      }
+    },
+    // 跳转到音乐列表选择页面
+    linkToMusicList() {
+      wx.navigateTo({
+        url:
+          '/subpackages/ElectronicInvitationCard/pages/music-list?invitationid=' +
+          this.invitationId +
+          '&musicId=' +
+          this.musicId +
+          '&templateType=' +
+          this.templateType +
+          '&hotelId=' +
+          this.hotelId
+      })
+    },
+    // 跳转到分享页面
+    linkToShare() {
+      wx.navigateTo({
+        url:
+          '/subpackages/ElectronicInvitationCard/pages/share?invitationid=' +
+          this.invitationId +
+          '&templateType=' +
+          this.templateType +
+          '&coverImage=' + this.coverImage
+      })
+    },
+    // 赴宴人数减少
+    rde() {
+      this.partNumber--
+      if (this.partNumber < 1) {
+        this.partNumber = 1
+      }
+    },
+    // 赴宴人数增加
+    add() {
+      this.partNumber++
+    },
+    // 状态选择 赴宴 待定 有事
+    radioCheck(e) {
+      this.radioIndex = e.currentTarget.dataset.info
+      this.showRde = this.radioIndex === 0
+    },
+    /**
+     * 预览模板
+     */
+    preview() {
+      let previewUrl = '/subpackages/ElectronicInvitationCard/pages/invitation_template/invitation_' +
+        this.templateType.toLowerCase() +
+        '/index?bottomType=msg&invitationid=' +
+        this.invitationId +
+        '&isPreview=false' +
+        '&tpmdata=' +
+        JSON.stringify({
+          templateType: this.templateType.toUpperCase()
+        })
+      // console.info(previewUrl)
+      // wx.setStorageSync(STATUS.TEMPPREV, previewUrl)
+      wx.navigateTo({ url: previewUrl })
+    },
+    /**
+     * 关闭弹出框
+     */
+    closePopup() {
+      this.popupStatus = null
+      this.$apply()
+      if (
+        this.$parent.showMapFn &&
+        typeof this.$parent.showMapFn === 'function'
+      ) {
+        this.$parent.showMapFn()
+      }
+    },
+    /**
+     * 去发送祝福
+     */
+    toSendBlessing(e) {
+      // 打开送祝福框前，先判断是否授权
+      let userNo = wx.getStorageSync(STATUS.USER_NO)
+      if (
+        this.$parent.hideMapFn &&
+        typeof this.$parent.hideMapFn === 'function'
+      ) {
+        this.$parent.hideMapFn()
+      }
+      if (userNo) {
+        this.userNo = userNo
+        this.popupStatus = 'show-pp1'
+        this.$apply()
+      } else {
+        this.popupStatusTemp = 'show-pp1'
+        this.$invoke('user-authorize', 'authorizeActivation')
+      }
+    },
+    // 送祝福发送
+    sendBlessing() {
+      let wishContent = this.blessingString
+      let userNo = this.userNo
+      let invitationId = this.invitationId
+
+      if (wishContent) {
+        InvitationService.invitationWishCollect({
+          data: {
+            invitationId,
+            userNo,
+            wishContent
+          }
+        })
+          .then(res => {
+            Tips.msg('发送成功')
+            // 隐藏并清空
+            this.popupStatus = null
+            this.blessingString = ''
+            this.$apply()
+            if (
+              this.$parent.showMapFn &&
+              typeof this.$parent.showMapFn === 'function'
+            ) {
+              this.$parent.showMapFn()
+            }
+            // 刷新祝福列表
+            this.getList()
+          })
+          .catch(err => {
+            Tips.error(err.message)
+          })
+      } else {
+        Tips.error('请输入你要送上的祝福语吧')
+      }
+    },
+    /**
+     * 祝福输入框输入
+     */
+    blessingInput(e) {
+      this.blessingString = e.detail.value
+      this.$apply()
+    },
+    /**
+     * 送祝福输入框聚焦时触发
+     */
+    focusFn(e) {
+      this.keyboardHeight = e.detail.height * 2 + 32
+      this.$apply()
+    },
+    /**
+     * 送祝福输入框失去焦点
+     */
+    blurFn() {
+      this.keyboardHeight = 16
+      this.$apply()
+    },
+    /**
+     * 出席反馈
+     */
+    attendanceFeedback(e) {
+      // 打开送祝福框前，先判断是否授权
+      let userNo = wx.getStorageSync(STATUS.USER_NO)
+      if (
+        this.$parent.hideMapFn &&
+        typeof this.$parent.hideMapFn === 'function'
+      ) {
+        this.$parent.hideMapFn()
+      }
+      if (userNo) {
+        this.userNo = userNo
+        this.popupStatus = 'show-pp2'
+        this.$apply()
+        this.invitationAttendanceQuery()
+      } else {
+        this.popupStatusTemp = 'show-pp2'
+        this.$invoke('user-authorize', 'authorizeActivation')
+      }
+    },
+    /**
+     * 出席名字输入框输入
+     */
+    attendInput(e) {
+      this.attendValue = e.detail.value
+      this.$apply()
+    },
+    /**
+     * 提交出席信息
+     */
+    submitAttendStatus() {
+      let invitationId = this.invitationId
+      let userNo = this.userNo
+      let attendUserName = this.attendValue
+      let attendNum = this.partNumber
+      let attendStatus = (this.attendStatus[this.radioIndex] || {}).key
+      let params = {
+        invitationId,
+        userNo,
+        attendUserName,
+        attendStatus
+      }
+      if (this.radioIndex === 0 || this.radioIndex === '0') {
+        params['attendNum'] = attendNum
+      }
+      if (attendUserName) {
+        invitationService
+          .invitationAttendanceCollect({ data: params })
+          .then(res => {
+            if (this.radioIndex === 0 || this.radioIndex === '0') {
+              this.$invoke('customized-popup', 'open', {
+                title: '提示',
+                message: '提交成功',
+                onSure: () => {
+                  let phoneNumber = wx.getStorageSync(STATUS.PHONE_NUMBER)
+                  if (phoneNumber) {
+                    this.phoneNumber = phoneNumber
+                    this.invitationNoticeOpen()
+                  } else {
+                    this.isAuthorizePhone = true
+                    this.authorizeType = [
+                      'WXLogin',
+                      'AccountInfo',
+                      'UserInfo',
+                      'PhoneNumber'
+                    ]
+                    this.$apply()
+                    this.$invoke('user-authorize', 'authorizeActivation')
+                  }
+                }
+              })
+            } else {
+              Tips.msg('提交成功')
+              // 隐藏并清空
+              this.closeAttend()
+            }
+          })
+          .catch(err => {
+            Tips.error(err.message)
+          })
+      } else {
+        Tips.error('请输入你的名字')
+      }
+    },
+    /**
+     * 领取礼物
+     */
+    getGift() {
+      // 打开送祝福框前，先判断是否授权
+      if (!this.userNo) {
+        this.isAuthorizeGift = true
+        this.$invoke('user-authorize', 'authorizeActivation')
+        this.$apply()
+      } else {
+        this.showLayer = true
+        this.$apply()
+        // let that = this
+        // setTimeout(() => {
+        //   that.giftData = {
+        //     address: 1232
+        //   }
+        //   that.$apply()
+        // }, 1000)
+      }
+      if (
+        this.$parent.hideMapFn &&
+        typeof this.$parent.hideMapFn === 'function'
+      ) {
+        this.$parent.hideMapFn()
+      }
+    }
+  }
+
+  /**
+   * 增加酒店足迹
+   */
+  hotelTrackAdd() {
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (this.hotelId && userNo) {
+      CommonsService.hotelTrackAdd({
+        data: { hotelId: this.hotelId, userNo }
+      }).then(res => {})
+    }
+  }
+
+  /**
+   * 关闭出席弹出框
+   */
+  closeAttend() {
+    // 隐藏并清空
+    this.popupStatus = null
+    this.attendValue = ''
+    this.radioIndex = 0
+    this.partNumber = 1
+    this.$apply()
+    if (
+      this.$parent.showMapFn &&
+      typeof this.$parent.showMapFn === 'function'
+    ) {
+      this.$parent.showMapFn()
+    }
+  }
+
+  /**
+   * 宾客消息通知
+   */
+  invitationNoticeOpen() {
+    if (this.phoneNumber) {
+      invitationService
+        .invitationNoticeOpen({
+          data: {
+            invitationId: this.invitationId,
+            userNo: this.userNo,
+            mobileNo: this.phoneNumber
+          }
+        })
+        .then(res => {
+          Tips.msg('订阅消息成功')
+          this.closeAttend()
+        })
+        .catch(err => {
+          Tips.error(err.message)
+        })
+    }
+  }
+
+  onAuthorizeAllFn(data) {
+    if (this.isAuthorizePhone) {
+      // 还原授权配置
+      this.isAuthorizePhone = false
+      this.authorizeType = ['WXLogin', 'AccountInfo', 'UserInfo']
+      let phoneNumber = data.phoneNumber
+      wx.setStorageSync(STATUS.PHONE_NUMBER, phoneNumber)
+      this.phoneNumber = phoneNumber
+      this.invitationNoticeOpen()
+    } else {
+      let userNo = data.userNo
+      wx.setStorageSync(STATUS.USER_NO, userNo)
+      this.userNo = userNo
+      this.invitationAttendanceQuery()
+      this.popupStatus = this.popupStatusTemp
+    }
+    if (this.isAuthorizeGift) {
+      this.showLayer = true
+      this.$apply()
+    }
+    this.$apply()
+    if (this.buttomType === 'msg') {
+      let that = this
+      setTimeout(() => {
+        that.hotelTrackAdd()
+      }, 100)
+    }
+  }
+
+  /**
+   * 授权被用户关闭
+   */
+  onCloseAuthorizeFn() {
+    if (this.isAuthorizePhone) {
+      Tips.msg('您已取消了授权，系统将无法为你提供提醒服务~')
+    }
+  }
+
+  /**
+   * @description: 弹幕滚动动画
+   * @param {minLen:最小滚动长度，maxLen:最大滚动长度}
+   * @return:
+   */
+  isFull(minLen, maxLen) {
+    let that = this
+
+    that.scollY += 1
+    if (that.scollY > that.msgList.length) {
+      that.transition = ''
+      that.scollY = 0
+      setTimeout(() => {
+        that.transition = 'transition'
+        that.$apply()
+      }, 500)
+    }
+    that.$apply()
+  }
+
+  /**
+   * @description: 获取祝福列表
+   * @param {type}
+   * @return:
+   */
+  getList() {
+    let parmes = {}
+    parmes['invitationId'] = this.invitationId
+    IndexService.invitationWishListQuery({ data: parmes })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          this.msgList = data.invitationWishInfos || []
+          this.$apply()
+        }
+      })
+      .catch(err => {
+        Tips.error(err)
+      })
+  }
+
+  /**
+   * 宾客反馈查询
+   */
+  invitationAttendanceQuery() {
+    invitationService
+      .invitationAttendanceQuery({
+        data: {
+          invitationId: this.invitationId,
+          userNo: this.userNo
+        }
+      })
+      .then(res => {
+        let data = res.data
+        if (data.apiInvitationAttendInfo) {
+          let apiInvitationAttendInfo = data.apiInvitationAttendInfo || {}
+          // 出席名字
+          this.attendValue =
+            apiInvitationAttendInfo.attendUserName ||
+            this.giftData.realName ||
+            (this.subGiftData || {}).realName
+          // 出席人数
+          this.partNumber = apiInvitationAttendInfo.attendNum || 1
+          let attendStatus = this.attendStatus
+          Utils.forEach(attendStatus, (statusItem, idx) => {
+            if (statusItem.key === apiInvitationAttendInfo.attendStatus) {
+              this.radioIndex = idx
+              return 'break'
+            }
+          })
+          this.showRde = this.radioIndex === 0 || this.radioIndex === '0'
+          this.$apply()
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 礼物弹层
+   */
+  closeLayer(e) {
+    if (
+      this.$parent.showMapFn &&
+      typeof this.$parent.showMapFn === 'function'
+    ) {
+      this.$parent.showMapFn()
+    }
+    this.showLayer = false
+    this.$apply()
+  }
+  /**
+   * 领礼物数据提交
+   */
+  submitGift(e) {
+    this.subGiftData = e
+    for (let item in this.subGiftData) {
+      if (
+        item !== 'companyName' &&
+        item !== 'companyOrderNo' &&
+        item !== 'orderTime'
+      ) {
+        if (!this.subGiftData[item]) {
+          Tips.error('信息不完整')
+          return false
+        } else if (item === 'mobileNo') {
+          if (!/^1[345678]\d{9}$/.test(this.subGiftData[item])) {
+            Tips.error('手机格式不正确')
+            return false
+          }
+        }
+      }
+    }
+    this.getGiftInfo()
+  }
+  /**
+   * 宾客伴手礼地址收集
+   */
+  getGiftInfo(parmes) {
+    let parme = Object.assign({}, this.subGiftData, parmes)
+    parme.userNo = this.userNo
+    parme.invitationId = this.invitationId
+    if (!parme.mobileNo) {
+      return false
+    }
+    InvitationService.invitationGiftConsigneeCollect({ data: parme })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          Tips.msg('数据提交成功')
+          this.closeLayer()
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 电子请柬基本信息
+   */
+  invitationBasicInfoQuery() {
+    IndexService.invitationBasicInfoQuery({
+      data: {
+        invitationId: this.invitationId
+      }
+    }).then(res => {
+      this.supportGift = res.data.supportGift
+      this.$apply()
+    })
+  }
+
+  /**
+   * 伴手礼记录
+   */
+  invitationGiftConsigneeQuery() {
+    IndexService.invitationGiftConsigneeQuery({
+      data: {
+        invitationId: this.invitationId,
+        userNo: this.userNo
+      }
+    }).then(res => {
+      let invitationGiftInfo = res.data.invitationGiftInfo
+      for (let key in invitationGiftInfo) {
+        this.giftData[key] = invitationGiftInfo[key]
+      }
+      // console.info(this.giftData)
+      this.$apply()
+    })
+  }
+
+  /**
+   * 权限判断
+   */
+  checkPrivilege(parme) {
+    let parmes = Object.assign({}, parme)
+    InvitationService.modulePrivilegeCheck({ data: parmes })
+      .then(res => {
+        let result = res.data
+        if (result.success) {
+          this.privilege = true
+        } else {
+          this.privilege = false
+        }
+        this.$apply()
+      })
+      .catch(() => {
+        // console.info(err)
+        this.privilege = false
+        this.$apply()
+      })
+  }
+
+  // 加载完成
+  onLoad(options) {
+    this.userNo = wx.getStorageSync(STATUS.USER_NO)
+    this.hotelId = this.hotelId || wx.getStorageSync('Invitation' + STATUS.HOTEL_ID)
+    if (this.bottomType === 'msg') {
+      this.getList()
+      this.invitationBasicInfoQuery()
+      this.invitationGiftConsigneeQuery()
+      this.hotelTrackAdd()
+      let that = this
+      setInterval(() => {
+        if (that.msgList.length > 4) {
+          that.isFull(2, 20)
+        }
+      }, 2000)
+    }
+    this.checkPrivilege({
+      hotelId: this.hotelId,
+      moduleTypeEnum: 'INVITATION_GIFT'
+    })
+  }
+}
+</script>

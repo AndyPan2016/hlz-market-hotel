@@ -1,0 +1,515 @@
+<style lang="less">
+@base64-lt: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAN0lEQVRIS2P876P/n4EGgHFoG8y45SIjtUIFJShGDYYnt9GgGA0KcB4bzSDwomY0KEaDArPeAQClslOCDfeKpQAAAABJRU5ErkJggg==';
+@base64-rt: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAOklEQVRIS2P876P/n4EGgHHoGUytUPjPwMDI4KP/D2Ye46jBo0HBMJoq4NlgNChGgwKzTBxNFThTBQC7CTZ94PZoigAAAABJRU5ErkJggg==';
+@base64-lb: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAPElEQVRIS2P876P/nwEKGLdcZISxKaUZRw2GB+toUIwGBUZ+Gs0g8CAZDYrRoMCsb1BSBaXVEbL+oWcwAOurU4LCjTrbAAAAAElFTkSuQmCC';
+@base64-rb: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAPUlEQVRIS2NkoBL4z8DAyOCj/w9mHCOVzGUYNRgekqNBMRoUmNlqNFWMpophmSr+++j/p1YtgmwO45AzGAC7CTZ9dLR3VQAAAABJRU5ErkJggg==';
+
+.container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  .content {
+    display: flex;
+    flex: 1;
+    .my-image {
+      position: absolute;
+    }
+    .my-canvas {
+      position: absolute;
+      left: 100%;
+      top: 100%;
+      // left: 0;
+      // top: 0;
+      z-index: -1;
+    }
+    .box {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      .vs {
+        position: absolute;
+        height: 22rpx;
+        width: 22rpx;
+      }
+      .lt {
+        background: url('@{base64-lt}') 0 0 no-repeat;
+        background-size: cover;
+        left: 0;
+        top: 0;
+      }
+      .rt {
+        background: url('@{base64-rt}') 0 0 no-repeat;
+        background-size: cover;
+        left: calc(100% - 22rpx);
+        top: 0;
+      }
+      .lb {
+        background: url('@{base64-lb}') 0 0 no-repeat;
+        background-size: cover;
+        left: 0;
+        top: calc(100% - 22rpx);
+      }
+      .rb {
+        background: url('@{base64-rb}') 0 0 no-repeat;
+        background-size: cover;
+        left: calc(100% - 22rpx);
+        top: calc(100% - 22rpx);
+      }
+    }
+
+    .effect {
+      position: absolute;
+      background: rgba(34, 34, 34, 0.5);
+    }
+    .eff1 {
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
+    .eff2 {
+      left: 0;
+      width: 100%;
+    }
+    .eff3 {
+      left: 0;
+    }
+    .eff4 {
+      right: 0;
+    }
+  }
+  .bottom {
+    width: 100%;
+    height: 100rpx;
+    background: #fff;
+    display: flex;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+    .btns {
+      width: 50%;
+      height: 100rpx;
+      line-height: 100rpx;
+      text-align: center;
+      font-size: 32rpx;
+      color: #222;
+    }
+    .btn1 {
+      width: calc(50% - 2rpx);
+      border-right: 2rpx solid #eee;
+    }
+  }
+}
+</style>
+<template>
+  <view class="container" @touchstart="start" @touchmove="move" @touchend="end">
+    <navigationBar :title="title"></navigationBar>
+    <view class="content">
+      <image class="my-image" style="width:{{img_w}}px; height:{{img_h}}px; left:{{img_x}}px; top:{{img_y}}px;  margin-left:{{-img_w/2}}px; margin-top: {{-img_h/2}}px" src="{{img_src}}"></image>
+      <!-- <canvas class="my-canvas" canvas-id='my-canvas' style='width:{{img_w}}px; height:{{img_h}}px'></canvas> -->
+      <canvas class="my-canvas" canvas-id='my-canvas' style='width:{{canvasW}}px; height:{{canvasH}}px'></canvas>
+      <view class="box" style="width:{{screenshot_w}}px; height:{{screenshot_h}}px; margin-left:{{-screenshot_w/2}}px; margin-top: {{-screenshot_h/2}}px">
+        <view class="vs lt"></view>
+        <view class="vs rt"></view>
+        <view class="vs lb"></view>
+        <view class="vs rb"></view>
+      </view>
+      <view class="effect eff1" style="height:{{(h-screenshot_h)/2}}px"></view>
+      <view class="effect eff2" style="height:{{(h-screenshot_h)/2}}px; top:{{h - (h-screenshot_h)/2}}px"></view>
+      <view class="effect eff3" style="height:{{screenshot_w}}px; width:{{(w-screenshot_w)/2}}px; top:{{(h-screenshot_h)/2}}px"></view>
+      <view class="effect eff4" style="height:{{screenshot_w}}px; width:{{(w-screenshot_w)/2}}px; top:{{(h-screenshot_h)/2}}px"></view>
+    </view>
+    <view class="bottom">
+      <view class="btns btn1" @tap="chooseImg">选择图片</view>
+      <view class="btns btn2" @tap="saveImg">保存图片</view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { API_HOST, UPLOAD_FILE_CONFIGS, STATUS } from '@/configs'
+import { HexMD5, Tips, PATCH } from '@/utils'
+import navigationBar from '../components/navigation-bar/index'
+
+export default class Test extends wepy.page {
+  // 配置
+  config = {
+    navigationStyle: 'custom',
+    backgroundTextStyle: 'light',
+    navigationBarTextStyle: 'white',
+    disableScroll: true
+  }
+  components = {
+    navigationBar: navigationBar
+  }
+
+  data = {
+    title: '图片截取',
+    // 屏幕高宽
+    w: 0,
+    h: 0,
+    // 图片高宽
+    img_w: 0,
+    img_h: 0,
+    // 图片原始高度
+    _img_w: 0,
+    _img_h: 0,
+    // 图片坐标
+    img_x: 0,
+    img_y: 0,
+    // 图片地址
+    img_src: '',
+    img_id: 0,
+    box_index: 0,
+    // 图片是否加载完成
+    is_load: false,
+    // 点击坐标
+    x: null,
+    y: null,
+    // 屏幕截取的宽度
+    screenshot_w: 320,
+    screenshot_h: 320,
+    // 距离，设置放大倍数
+    distance: 0,
+    // 放大倍数
+    scale: 1,
+    // 最大放大倍数
+    scale_max: 2,
+    templateType: '',
+    hotelId: '',
+    invitationId: '',
+    canvasW: 0,
+    canvasH: 0
+  }
+
+  methods = {
+    // 保存图片
+    saveImg() {
+      Tips.loading()
+      let _this = this
+      const ctx = wx.createCanvasContext('my-canvas')
+      ctx.drawImage(this.img_src, 0, 0, this.canvasW, this.canvasH)
+      ctx.draw()
+      let wRatio = (this.img_w / this.canvasW)
+      let hRatio = (this.img_h / this.canvasH)
+      // console.info(wRatio + ',' + hRatio)
+      let _x =
+        (this.img_w) / 2 - this.screenshot_w / 2 - (this.img_x - (this.w) / 2)
+      let _y =
+        (this.img_h) / 2 - this.screenshot_h / 2 - (this.img_y - (this.h) / 2)
+      // console.info(_x + ',' + _y)
+      setTimeout(function() {
+        // 图片截取
+        wx.canvasToTempFilePath({
+          // x: _x + (_x * wRatio),
+          // y: _y + (_y * hRatio),
+          // width: _this.screenshot_w + (_this.canvasW * wRatio),
+          // height: _this.screenshot_h + (_this.canvasH * hRatio),
+          // destWidth: _this.screenshot_w + (_this.canvasW * wRatio),
+          // destHeight: _this.screenshot_h + (_this.canvasH * hRatio),
+          x: _x / wRatio,
+          y: _y / hRatio,
+          width: _this.screenshot_w / wRatio,
+          height: _this.screenshot_h / hRatio,
+          destWidth: _this.screenshot_w / wRatio,
+          destHeight: _this.screenshot_h / hRatio,
+          canvasId: 'my-canvas',
+          success: function(res) {
+            // _this.img_src = res.tempFilePath
+            // _this.$apply()
+            // 上传图片
+            _this.upLoadFile(res.tempFilePath)
+          }
+        })
+      }, 500)
+    },
+    // 保存图片
+    saveImg1() {
+      Tips.loading()
+      let _this = this
+      const ctx = wx.createCanvasContext('my-canvas')
+      ctx.drawImage(this.img_src, 0, 0, this.img_w, this.img_h)
+      ctx.draw()
+      let _x =
+        (this.img_w) / 2 - this.screenshot_w / 2 - (this.img_x - (this.w) / 2)
+      let _y =
+        (this.img_h) / 2 - this.screenshot_h / 2 - (this.img_y - (this.h) / 2)
+      setTimeout(function() {
+        // 图片截取
+        wx.canvasToTempFilePath({
+          x: _x,
+          y: _y,
+          width: _this.screenshot_w,
+          height: _this.screenshot_h,
+          destWidth: _this.screenshot_w,
+          destHeight: _this.screenshot_h,
+          canvasId: 'my-canvas',
+          success: function(res) {
+            // 上传图片
+            _this.upLoadFile(res.tempFilePath)
+          }
+        })
+      }, 500)
+    },
+    chooseImg() {
+      let _this = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original'],
+        sourceType: ['album', 'camera'],
+        success(res) {
+          _this.img_src = res.tempFilePaths[0]
+          _this.init()
+        }
+      })
+    },
+    start(e) {
+      // 单点
+      if (e.touches.length === 1) {
+        this.state = true
+        this.x = e.touches[0].clientX - this.img_x
+        this.y = e.touches[0].clientY - this.img_y
+      } else if (e.touches.length === 2) {
+        let _x = e.touches[1].clientX - e.touches[0].clientX
+        let _y = e.touches[1].clientX - e.touches[0].clientY
+        this.distance = Math.sqrt(_x * _x + _y * _y)
+      }
+    },
+
+    move(e) {
+      // 判断图片是否加载完成
+      if (this.is_load) {
+        // 单点
+        if (e.touches.length === 1) {
+          /**
+           * 拖动分3种情况
+           * 1、当高度和截屏高度一致，只能x轴拖动
+           * 2、当宽度和截屏宽度一致，只能y轴拖动
+           * 3、高宽都大于截屏高宽
+           */
+          if (this.img_h === this.screenshot_h) {
+            this.img_x = e.touches[0].clientX - this.x
+          } else if (this.img_w === this.screenshot_w) {
+            this.img_y = e.touches[0].clientY - this.y
+          } else if (
+            this.img_h > this.screenshot_h &&
+            this.img_w > this.screenshot_w
+          ) {
+            this.img_x = e.touches[0].clientX - this.x
+            this.img_y = e.touches[0].clientY - this.y
+          }
+          // 拖动坐标区域判断
+          if (
+            this.img_x >
+            this.w / 2 + this.img_w / 2 - this.screenshot_w / 2
+          ) {
+            this.img_x = this.w / 2 + this.img_w / 2 - this.screenshot_w / 2
+          }
+          if (
+            this.img_x <
+            this.w / 2 - this.img_w / 2 + this.screenshot_w / 2
+          ) {
+            this.img_x = this.w / 2 - this.img_w / 2 + this.screenshot_w / 2
+          }
+          if (
+            this.img_y >
+            this.h / 2 + this.img_h / 2 - this.screenshot_h / 2
+          ) {
+            this.img_y = this.h / 2 + this.img_h / 2 - this.screenshot_h / 2
+          }
+          if (
+            this.img_y <
+            this.h / 2 - this.img_h / 2 + this.screenshot_h / 2
+          ) {
+            this.img_y = this.h / 2 - this.img_h / 2 + this.screenshot_h / 2
+          }
+
+          // 两点拖动放大
+        } else if (e.touches.length === 2) {
+          // 获取x,y坐标
+          let _x = e.touches[1].clientX - e.touches[0].clientX
+          let _y = e.touches[1].clientX - e.touches[0].clientY
+          let _distance = Math.sqrt(_x * _x + _y * _y)
+          let _diff = _distance - this.distance
+          this.distance = _distance
+          let _scale = this.scale + 0.005 * _diff
+          // 判断缩放倍数
+          if (_scale > this.scale_max) {
+            _scale = this.scale_max
+          } else if (_scale < 1) {
+            _scale = 1
+          }
+          // 放大倍数scale乘以图片初始高宽
+          this.img_h = this._img_h * _scale
+          this.img_w = this._img_w * _scale
+          this.scale = _scale
+        }
+      }
+    },
+    end() {}
+  }
+
+  getPixelRatio (context) {
+    let backingStore = context.backingStorePixelRatio ||
+      context.webkitBackingStorePixelRatio ||
+      context.mozBackingStorePixelRatio ||
+      context.msBackingStorePixelRatio ||
+      context.oBackingStorePixelRatio ||
+      context.backingStorePixelRatio || 1
+    let devicePixelRatio = (wx.getSystemInfoSync(STATUS.PHONESYSTEM) || {}).pixelRatio
+
+    return (devicePixelRatio || 1) / backingStore
+  }
+
+  init() {
+    let _this = this
+    // 获取屏幕高宽
+    this.w = wx.getSystemInfoSync().windowWidth
+    this.h = wx.getSystemInfoSync().windowHeight
+    // 获取图片的高宽
+    wx.getImageInfo({
+      src: _this.img_src,
+      success(res) {
+        _this.img_w = res.width
+        _this.img_h = res.height
+        // _this.canvasW = res.width
+        // _this.canvasH = res.height
+        let defaultW = 1000
+        _this.canvasW = defaultW
+        _this.canvasH = (res.height * defaultW) / res.width
+        // console.log(_this.canvasW + '/' + _this.canvasH)
+        // 判断图片类型
+        if (_this.img_w > _this.img_h) {
+          _this.img_w = (_this.img_w * _this.screenshot_h) / _this.img_h
+          _this.img_h = _this.screenshot_h
+          if (_this.img_w < _this.screenshot_w) {
+            _this.img_h = (_this.img_h * _this.screenshot_w) / _this.img_w
+            _this.img_w = _this.screenshot_w
+          } else if (_this.img_h < _this.screenshot_h) {
+            _this.img_w = (_this.img_w * _this.screenshot_h) / _this.img_h
+            _this.img_h = _this.screenshot_h
+          }
+        } else if (_this.img_w < _this.img_h) {
+          _this.img_h = (_this.img_h * _this.screenshot_w) / _this.img_w
+          _this.img_w = _this.screenshot_w
+          if (_this.img_w < _this.screenshot_w) {
+            _this.img_h = (_this.img_h * _this.screenshot_w) / _this.img_w
+            _this.img_w = _this.screenshot_w
+          } else if (_this.img_h < _this.screenshot_h) {
+            _this.img_w = (_this.img_w * _this.screenshot_h) / _this.img_h
+            _this.img_h = _this.screenshot_h
+          }
+        } else {
+          _this.img_w = _this.screenshot_w
+          _this.img_h = _this.screenshot_h
+        }
+        // console.info(_this.img_w + ',' + _this.img_h)
+        // console.info(res.width + ',' + res.height)
+
+        // 保存一个图片高度初始值
+        _this._img_w = _this.img_w
+        _this._img_h = _this.img_h
+        // 设置图片的坐标
+        _this.img_x = _this.w / 2
+        _this.img_y = _this.h / 2
+        _this.is_load = true
+        _this.$apply()
+      }
+    })
+  }
+
+  screenShot() {
+    // 获取canvas上下文
+    // _this.ctx = wx.createCanvasContext('my-canvas')
+    // _this.ctx.drawImage(_this.img_src, _this.img_x, _this.img_y ,_this.img_w, _this.img_h)
+    // _this.ctx.draw()
+  }
+
+  upLoadFile(src) {
+    let that = this
+    // tempFilePath可以作为img标签的src属性显示图片
+    // const tempFilePaths = res.tempFilePaths
+    // that.imgList.box1.v2_b = res.tempFilePaths
+    that.$apply()
+    // console.log(res.tempFilePaths)
+    let thisDate = new Date()
+    let dataTime = thisDate.getTime()
+    let timestamp =
+      thisDate.getFullYear() +
+      '-' +
+      (thisDate.getMonth() + 1) +
+      '-' +
+      thisDate.getDate() +
+      ' ' +
+      thisDate.getHours() +
+      ':' +
+      thisDate.getMinutes() +
+      ':' +
+      thisDate.getSeconds()
+
+    let fileName = 'upload-file-' + dataTime + '.png'
+    let signKeyword =
+      'accessKey=' +
+      UPLOAD_FILE_CONFIGS.accessKey +
+      '&fileName=' +
+      fileName +
+      '&timestamp=' +
+      timestamp +
+      UPLOAD_FILE_CONFIGS.secretKey
+
+    let sign = HexMD5(signKeyword)
+    wx.uploadFile({
+      url: API_HOST + 'ofile/upload.html',
+      filePath: src,
+      name: 'upload-template-image',
+      header: {
+        'Content-Type': 'multipart/form-data'
+      },
+      formData: {
+        accessKey: UPLOAD_FILE_CONFIGS.accessKey,
+        fileName,
+        timestamp,
+        sign
+      },
+      success(res) {
+        let data = res.data || {}
+        if (typeof data === 'string') {
+          data = JSON.parse(data)
+        }
+        // console.info(data)
+        if (data.success) {
+          // let previewUrl = ((data.rows || [])[0] || {}).accessUrl
+          wx.setStorage({ key: 'screenShotImg', data: data.rows[0].accessUrl })
+          wx.navigateBack({ delta: 1 })
+        } else {
+          Tips.msg(data.message)
+        }
+      },
+      fail(err) {
+        // console.info(err)
+        Tips.error(err.message)
+      }
+    })
+  }
+
+  onLoad(option) {
+    PATCH.createPatch.call(this)
+    this.img_src = option.url
+    if (option.rate) {
+      // 宽高比例设置
+      this.screenshot_h = parseFloat(option.rate) * this.screenshot_w
+    }
+    this.$apply()
+    this.init()
+  }
+
+  onShow() {}
+}
+</script>

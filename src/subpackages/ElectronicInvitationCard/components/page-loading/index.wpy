@@ -1,0 +1,144 @@
+<template>
+  <view>
+    <view
+      class="template-page middle"
+      :class="{pageScal}"
+      wx:if="{{prcess<100}}"
+    >
+      <view class="content">
+        <image
+          class="ui-img"
+          src="{{templates[tempDatas.templateType]}}"
+        />
+      </view>
+      <view class="line-box">
+        <view class="line">
+          <view
+            class="ui-line"
+            style="{{'width:'+prcess+'%'}}"
+          ></view>
+        </view>
+        <text class="number">{{prcess}}%</text>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class pageLoadingComponent extends wepy.component {
+  props = {
+    tempDatas: {},
+    pageScal: {
+      type: String,
+      default: '111'
+    },
+    onComplete: {
+      type: Function
+    }
+  }
+  onLoad() {
+    if (this.tempDatas) {
+      let f = () => {
+        if (this.prcess >= 100) {
+          return
+        }
+        this.prcess += 1
+        this.timer = setTimeout(f, 10)
+        this.$apply()
+      }
+      this.timer = setTimeout(f, 100)
+      this.$apply()
+    }
+  }
+  onUnload() {
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
+  }
+  watch = {
+    prcess(newValue, oldValue) {
+      if (newValue === 100) {
+        setTimeout(() => {
+          let result = {
+            complete: true
+          }
+          if (this.onComplete) {
+            // console.log('触发完成事件')
+            this.onComplete.call(this.$parent, result)
+          }
+          this.$emit('onComplete', result)
+        }, 100)
+      }
+    }
+  }
+  data = {
+    templates: {
+      FLOWERY:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/template_flowery.png',
+      QINLAN:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/template_qinlan.jpeg',
+      SIMPLESONG:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/template_simplesong.png',
+      WITHYOU:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/template_withyou.png',
+      BABY:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/template_withyou.png',
+      LONGEVITY:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/template_longevity.png'
+    },
+    prcess: 0,
+    timer: null
+  }
+}
+</script>
+<style lang="less" scoped>
+@import '../../../../assets/less/mixin.less';
+.template-page {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  z-index: 999999;
+  overflow: hidden;
+  .content {
+    width: 526rpx;
+    height: 841rpx;
+    border-radius: 28rpx;
+    overflow: hidden;
+    margin: 60rpx auto;
+    box-shadow: 0 0 20rpx rgba(0, 0, 0, 0.1);
+    margin-top: 188rpx;
+    .ui-img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .line-box {
+    width: 500rpx;
+    margin: 0 auto;
+    overflow: hidden;
+    .line {
+      position: relative;
+      height: 10rpx;
+      border-radius: 10rpx;
+      background: #eeeeee;
+      margin-bottom: 25rpx;
+      .ui-line {
+        height: 100%;
+        width: 20%;
+        background: #ff4c2f;
+        border-radius: 10rpx;
+      }
+    }
+  }
+  .number {
+    text-align: center;
+    font-size: 24rpx;
+    color: #ff4c2f;
+    width: 100%;
+    display: block;
+  }
+}
+</style>

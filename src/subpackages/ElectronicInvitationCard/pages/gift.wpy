@@ -1,0 +1,612 @@
+<!--
+  电子请柬-伴手礼
+  @Author: zongxunjiang
+  @CreateDate: 2019年6月4日13:55:25
+  @LastUpdateDate: 2019年6月4日13:55:29
+  @Remarks: 电子请柬-伴手礼
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@base64-selected: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjZBQkI5NzAwODc0MzExRTlCQzNDRUUzQkUwRDM5ODg5IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjZBQkI5NzAxODc0MzExRTlCQzNDRUUzQkUwRDM5ODg5Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NkFCQjk2RkU4NzQzMTFFOUJDM0NFRTNCRTBEMzk4ODkiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NkFCQjk2RkY4NzQzMTFFOUJDM0NFRTNCRTBEMzk4ODkiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz54bSQAAAAA70lEQVR42mL8//8/w0ACJoYBBqMOGHXAqANGHUBLB7gD8aGBcoAuEK8E4q0EVYLqAipjGSB+DMTziVHPSOXKiAuI9wHxVyD2BOJfhDSwUNFyZiBeDsTc0Pj/RZQuIoIpD4iliFDXC8SvgFiFlCgjRtEmIL4HxAp41GQC8VcgNic1zRCjiB3qCFDCUsci7wPEv4E4hJxES6xCNiBeAcQvgFgXSRzE/gDEFeTmGlIUM0Oz1lsgNkHKbtMoybakagBl26lA/BGIrwLxXmjokO0AcsoBRiBug2Y1RyD+SEneZRxtFY86YNQBow4Y8Q4ACDAA9YHHYNBH5h0AAAAASUVORK5CYII=';
+
+.page-gift {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #f2f2f2;
+  .tabs {
+    height: 80rpx;
+    line-height: 80rpx;
+    display: flex;
+    flex: 0 0 auto;
+    position: relative;
+    margin-bottom: 10rpx;
+    background: #fff;
+    .tab {
+      width: 50%;
+      height: 100%;
+      text-align: center;
+      font-size: 26rpx;
+      color: #222;
+    }
+    .tab_selected {
+      color: #ff4c2f;
+      font-weight: bold;
+    }
+    .line {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 10rpx;
+      width: 50%;
+      .in {
+        height: 6rpx;
+        width: 70rpx;
+        background: #ff4c2f;
+        margin: 0 auto;
+      }
+    }
+    .move_0 {
+      animation: left_0 0.5s ease-out forwards;
+    }
+    .move_50 {
+      animation: left_50 0.5s ease-out forwards;
+    }
+  }
+  .move_50 {
+    animation: left_50 0.5s ease-out forwards;
+  }
+  .no-data {
+    padding-top: 50rpx;
+    font-size: 32rpx;
+    color: #cccccc;
+    text-align: center;
+  }
+}
+
+@keyframes left_0 {
+  from {
+    left: 50%;
+  }
+  to {
+    left: 0%;
+  }
+}
+@keyframes left_50 {
+  from {
+    left: 0%;
+  }
+  to {
+    left: 50%;
+  }
+}
+
+.swiper {
+  width: 100%;
+  display: flex;
+  flex: 1 0 auto;
+  height: 50%;
+  .item {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .item-one {
+    position: relative;
+    display: flex;
+    .list {
+      display: flex;
+      flex: 1 0 auto;
+      height: 50%;
+      .cell {
+        height: 170rpx;
+        position: relative;
+        padding: 0 4% 0 12%;
+        background: #fff;
+        margin-bottom: 10rpx;
+        .ico {
+          height: 32rpx;
+          width: 32rpx;
+          border-radius: 100%;
+          position: absolute;
+          left: 4%;
+          top: 50%;
+          margin-top: -16rpx;
+          border: 2rpx solid #eee;
+          .selected {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: url('@{base64-selected}') 0 0 no-repeat;
+            background-size: cover;
+          }
+        }
+        .v1 {
+          font-size: 28rpx;
+          color: #222;
+          padding-top: 28rpx;
+          display: flex;
+          .name {
+            margin-right: 62rpx;
+          }
+        }
+        .v2 {
+          font-size: 24rpx;
+          color: #888;
+          padding-top: 18rpx;
+          line-height: 100%;
+        }
+      }
+      .selected .ico {
+        border: 2rpx solid #ff2e28;
+        background: #ff2e28;
+      }
+    }
+    .option {
+      position: relative;
+      width: 100%;
+      height: 100rpx;
+      background: #fff;
+      flex: 0 0 auto;
+      border-top: 2rpx solid #eeeeee;
+      .total {
+        display: flex;
+        height: 100rpx;
+        align-items: center;
+        padding-left: 30rpx;
+        .v1 {
+          color: #222;
+          font-size: 32rpx;
+        }
+        .v2 {
+          color: #ff2e28;
+          font-size: 40rpx;
+          padding-left: 14rpx;
+        }
+        .v3 {
+          color: #ff2e28;
+          font-size: 24rpx;
+          margin-top: 10rpx;
+          margin-left: 2rpx;
+        }
+      }
+      .send-gift-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100rpx;
+        line-height: 100rpx;
+        width: 40%;
+        background: #ff4c2f;
+        font-size: 32rpx;
+        color: #fff;
+        text-align: center;
+      }
+    }
+  }
+
+  .item-two {
+    position: relative;
+    display: flex;
+    .list {
+      display: flex;
+      flex: 1 0 auto;
+      height: 50%;
+      .cell {
+        position: relative;
+        padding: 0 30rpx;
+        background: #fff;
+        margin-bottom: 10rpx;
+        .v1 {
+          font-size: 28rpx;
+          color: #222;
+          padding-top: 32rpx;
+          display: flex;
+          font-weight: bold;
+          .name {
+            margin-right: 62rpx;
+          }
+        }
+        .v2 {
+          font-size: 24rpx;
+          color: #888;
+          padding-top: 24rpx;
+          line-height: 100%;
+          border-bottom: 2rpx solid #eeeeee;
+          padding-bottom: 24rpx;
+          height: 56rpx;
+          overflow: hidden;
+        }
+        .v3 {
+          font-size: 24rpx;
+          color: #888;
+          display: flex;
+          justify-content: space-between;
+          padding-top: 24rpx;
+          padding-bottom: 24rpx;
+          .lt {
+            display: flex;
+            flex: 1 0 auto;
+            .name {
+              color: #555;
+            }
+            .num {
+              color: #222;
+            }
+          }
+          .rt {
+            flex: 0 0 auto;
+            color: #222;
+          }
+        }
+      }
+    }
+    .option {
+      position: relative;
+      width: 100%;
+      height: 100rpx;
+      background: #fff;
+      flex: 0 0 auto;
+      border-top: 2rpx solid #eeeeee;
+      .total {
+        display: flex;
+        height: 100rpx;
+        align-items: center;
+        justify-content: center;
+        .v1 {
+          color: #222;
+          font-size: 32rpx;
+        }
+        .v2 {
+          color: #ff2e28;
+          font-size: 40rpx;
+          padding-left: 14rpx;
+        }
+        .v3 {
+          color: #ff2e28;
+          font-size: 24rpx;
+          margin-top: 10rpx;
+          margin-left: 2rpx;
+        }
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-gift">
+    <navigationBar :title="title"></navigationBar>
+    <view class="tabs">
+      <view class="tab" wx:for="{{tabs}}" wx:for-item="item" wx:key="key" wx:for-index="index" :class="{tab_selected:current==index}" data-item="{{index}}" @tap="tabTap">{{item.name}}</view>
+      <view class="line" :class="{move_0:(current==0 && first == true),move_50:current==1}">
+        <view class="in"></view>
+      </view>
+    </view>
+    <swiper class="swiper" duration="500" current="{{current}}" @change="swiperChange">
+      <swiper-item class="item item-one">
+        <scroll-view class="list" scroll-y="true" style="{{'transform: translateY('+ MoveY +'rpx)'}}" data-status="UNDELIVERED" bindtouchstart="start_fn" bindtouchmove="move_fn" bindtouchend="end_fn">
+          <view wx:if="{{noSendData && noSendData.length}}">
+            <view class="cell" wx:for="{{noSendData}}" wx:key="index" :class="{selected:item.checked}" data-index="{{index}}" @tap="check">
+              <view>
+                <view class="ico">
+                  <view class="selected"></view>
+                </view>
+                <view class="v1">
+                  <view class="name">{{item.realName}}</view>
+                  <view class="phone">{{item.mobileNo}}</view>
+                </view>
+                <view class="v2">地址：{{item.province + item.city + item.district + item.address}}</view>
+              </view>
+            </view>
+          </view>
+          <view class="no-data" wx:else>暂无相关记录~</view>
+        </scroll-view>
+        <view class="option">
+          <view class="total">
+            <view class="v1">已选:</view>
+            <view class="v2">{{nosendTotal}}</view>
+            <view class="v3">份</view>
+          </view>
+          <view class="send-gift-btn" @tap="sendGift">发送伴手礼</view>
+        </view>
+      </swiper-item>
+      <swiper-item class="item item-two">
+        <scroll-view class="list" scroll-y="true" style="{{'transform: translateY('+ MoveY +'rpx)'}}" data-status="DELIVERED" bindtouchstart="start_fn" bindtouchmove="move_fn" bindtouchend="end_fn">
+          <view wx:if="{{sendData && sendData.length}}">
+            <view class="cell" wx:for="{{sendData}}" wx:key="key" wx:for-index="index" wx:for-item="item" :class="{selected:item.checked}">
+              <view class="v1">
+                <view class="name">{{item.realName}}</view>
+                <view class="phone">{{item.mobileNo}}</view>
+              </view>
+              <view class="v2">地址：{{item.province + item.city + item.district + item.address}}</view>
+              <view class="v3">
+                <view class="lt">快递:<view class="name">{{item.companyName || '备货中'}}</view>
+                  <view class="num" wx:if="{{item.companyOrderNo}}">({{item.companyOrderNo}})</view>
+                </view>
+                <view class="rt">{{item.orderTime}}</view>
+              </view>
+            </view>
+          </view>
+          <view class="no-data" wx:else>暂无相关记录~</view>
+        </scroll-view>
+        <view class="option">
+          <view class="total">
+            <view class="v1">合计:</view>
+            <view class="v2">{{sendpages}}</view>
+            <view class="v3">份</view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { timesFormate } from '@/utils/times.js'
+import navigationBar from '../components/navigation-bar/index'
+import { InvitationService } from '../services'
+import { Tips, PATCH, Utils } from '@/utils'
+import { STATUS } from '@/configs'
+export default class GiftPages extends wepy.page {
+  // 配置
+  config = {
+    navigationStyle: 'custom',
+    backgroundTextStyle: 'light',
+    navigationBarTextStyle: 'white',
+    disableScroll: true
+  }
+
+  components = {
+    navigationBar: navigationBar
+  }
+
+  // data
+  data = {
+    title: '伴手礼',
+    // 数据
+    sendData: [],
+    noSendData: [],
+    tabs: [{ id: 0, name: '未发送' }, { id: 1, name: '已发送' }],
+    // 当前页
+    nosendTotal: 0,
+    sendTotal: 0,
+    current: 0,
+    first: false,
+    // 请柬ID
+    invitationId: '',
+    // 已发送
+    sendStart: 1,
+    // 未发送
+    noSendStart: 1,
+    // 分页大小
+    limit: 10,
+    nosendpages: '',
+    sendpages: '',
+    // 缓存选中的gift信息
+    giftCache: {
+      user: [],
+      listId: [],
+      total: ''
+    },
+    touchStartY: '',
+    touchEndY: '',
+    touchMoveY: '',
+    MoveY: ''
+  }
+
+  methods = {
+    // tab点击事件
+    tabTap(e) {
+      this.current = e.currentTarget.dataset.item
+    },
+
+    // 左右滑动事件
+    swiperChange(e) {
+      this.current = e.detail.current
+      if (this.first === false) {
+        this.first = true
+      }
+    },
+    // ico点击切换事件
+    check(e) {
+      let index = e.currentTarget.dataset.index
+      this.noSendData[index].checked = !this.noSendData[index].checked
+      // if (this.noSendData[index].checked) {
+      //   this.nosendTotal++
+      //   this.giftCache.listId[index] = this.noSendData[index].id
+      //   this.giftCache.user[index] = this.noSendData[index].realName
+      // } else {
+      //   this.giftCache.listId[index] = ''
+      //   this.giftCache.user[index] = ''
+      //   this.nosendTotal--
+      // }
+      let tempData = []
+      let tempUser = []
+      for (let i = 0, len = this.noSendData.length; i < len; i++) {
+        let item = this.noSendData[i]
+        if (item.checked) {
+          tempData.push(item.id)
+          tempUser.push(item.realName)
+        }
+      }
+      this.giftCache.listId = tempData
+      this.giftCache.user = tempUser
+      this.nosendTotal = tempData.length
+      this.$apply()
+    },
+    /**
+     * 发送伴手礼
+     */
+    sendGift() {
+      this.giftCache.total = this.nosendTotal
+      this.giftCache.invitationId = this.invitationId
+      this.giftCache.listId = this.giftCache.listId.filter(val => val)
+      this.giftCache.user = this.giftCache.user.filter(val => val)
+      if (this.giftCache.total < 1) {
+        Tips.error('请先选择要发送的宾客')
+        return
+      }
+      if (this.giftCache.user.length > 4) {
+        this.giftCache.user = this.giftCache.user.slice(0, 4)
+      }
+      wx.setStorageSync('GIFT_DATA', this.giftCache)
+      // wx.navigateTo({
+      //   url: '/subpackages/OnlineRetailers/pages/index?gift_data=' + JSON.stringify(this.giftCache.listId)
+      // })
+      console.info(this.giftCache.listId)
+      let hotelAdminNo = wx.getStorageSync(STATUS.HOTEL_ADMIN_NO)
+      Utils.openNewProcedures('pages/index?gift_data=' + JSON.stringify(this.giftCache.listId) + '&hotelAdminNo=' + hotelAdminNo)
+    },
+    start_fn(e) {
+      this.touchStartY = e.changedTouches[0].pageY
+    },
+    end_fn(e) {
+      let _this = this
+      let giftStatus = e.currentTarget.dataset.status
+      this.touchEndY = e.changedTouches[0].pageY
+      this.MoveY = 0
+      if (this.touchEndY - this.touchStartY > 100) {
+        _this.updataGift(giftStatus)
+      } else if (this.touchStartY - this.touchEndY > 100) {
+        _this.loadMoreGift(giftStatus)
+      }
+      this.$apply()
+    },
+    move_fn(e) {
+      this.touchMoveY = e.changedTouches[0].pageY
+      this.MoveY = this.touchMoveY - this.touchStartY
+      this.$apply()
+    }
+  }
+  /**
+   * 加载更多数据
+   */
+  loadMoreGift(giftStatus) {
+    let parmes = {}
+    if (giftStatus === 'UNDELIVERED') {
+      if (this.nosendpages > (this.noSendStart - 1) * this.limit) {
+        parmes = {
+          apiGiftStatusEnum: giftStatus,
+          start: this.noSendStart
+        }
+        this.getGiftList(parmes)
+      }
+    } else {
+      if (this.sendpages > (this.sendStart - 1) * this.limit) {
+        parmes = {
+          apiGiftStatusEnum: giftStatus,
+          start: this.sendStart
+        }
+        this.getGiftList(parmes)
+      }
+    }
+  }
+  /**
+   * 上啦刷新
+   */
+  updataGift(giftStatus) {
+    if (giftStatus === 'UNDELIVERED') {
+      this.noSendStart = 1
+    } else {
+      this.sendStart = 1
+    }
+    let parmes = {
+      apiGiftStatusEnum: giftStatus,
+      start: 1
+    }
+    this.getGiftList(parmes)
+    this.$apply()
+  }
+  /**
+   * 伴手礼列表查询
+   */
+  getGiftList(parmes) {
+    let parme = Object.assign({}, parmes)
+    parme['invitationId'] = this.invitationId
+    parme['limit'] = this.limit
+    InvitationService.invitationGiftConsigneePageListQuery({ data: parme })
+      .then(res => {
+        let data = res.data
+        if (data.success) {
+          if (parme['apiGiftStatusEnum'] === 'UNDELIVERED') {
+            let list = data.rows || []
+            for (let item of list) {
+              item.mobileNo = timesFormate.phoneFormate(item.mobileNo) // 手机号掩码
+              item.checked = true
+            }
+            if (this.noSendStart > 1) {
+              for (let item of list) {
+                this.noSendData.push(item)
+              }
+              this.nosendTotal = this.nosendTotal + list.length
+            } else {
+              this.noSendData = list
+              this.nosendTotal = this.noSendData.length
+            }
+            this.nosendpages = data.totalRows
+            this.noSendStart++
+            this.initGiftCache()
+            this.$apply()
+          } else {
+            let list = data.rows
+            for (let item of list) {
+              item.mobileNo = timesFormate.phoneFormate(item.mobileNo) // 手机号掩码
+              item.checked = true
+            }
+            if (this.sendStart > 1) {
+              for (let item of list) {
+                this.sendData.push(item)
+              }
+            } else {
+              this.sendData = list
+            }
+            this.sendTotal = this.sendData.length
+            this.sendStart++
+            this.sendpages = data.totalRows
+            this.$apply()
+          }
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err)
+      })
+  }
+  /**
+   * 初始化gift缓存数据
+   */
+  initGiftCache() {
+    this.noSendData.forEach((item, index) => {
+      this.giftCache.listId[index] = item.id
+      this.giftCache.user[index] = item.realName
+    })
+    this.$apply()
+  }
+  // 加载完成
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    this.invitationId = options.invitationId
+    this.getGiftList({
+      apiGiftStatusEnum: 'UNDELIVERED',
+      start: this.noSendStart
+    })
+    this.getGiftList({
+      apiGiftStatusEnum: 'DELIVERED',
+      start: this.sendStart
+    })
+  }
+}
+</script>

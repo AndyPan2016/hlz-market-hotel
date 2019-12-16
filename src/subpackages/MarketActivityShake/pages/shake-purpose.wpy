@@ -1,0 +1,1225 @@
+<!--
+  摇一摇游戏
+  @Author: AndyPan
+  @CreateDate: 2019年4月2日17:26:16
+  @LastUpdateDate: 2019年4月2日17:26:19
+  @Remarks: 摇一摇页面
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../assets/less/_animation.less';
+// @import '../assets/less/mixin.less';
+
+//定义动画名称
+@animation-name-gold1: animation-active-gold1;
+.animation-frame-gold1(@name: name-animation) {
+  @keyframes @name {
+    from {
+      .opacity(0.2);
+      top: 60rpx;
+      left: -40rpx;
+    }
+    to {
+      .opacity(1);
+      top: 30rpx;
+      left: -80rpx;
+    }
+  }
+  @-webkit-keyframes @name {
+    from {
+      .opacity(0.2);
+      top: 60rpx;
+      left: -40rpx;
+    }
+    to {
+      .opacity(1);
+      top: 30rpx;
+      left: -80rpx;
+    }
+  }
+}
+//创建一个名称为'animation-active-gold'的动画
+.animation-frame-gold1(@animation-name-gold1);
+//动画样式设置
+.animation-gold1 {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@animation-name-gold1);
+  //设置动画时间(1秒)
+  .animation-duration(0.8s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(linear);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(alternate);
+}
+
+//定义动画名称
+@animation-name-gold2: animation-active-gold2;
+.animation-frame-gold2(@name: name-animation) {
+  @keyframes @name {
+    from {
+      .opacity(0.8);
+      bottom: 300rpx;
+      left: 56rpx;
+    }
+    to {
+      .opacity(1);
+      bottom: 350rpx;
+      left: 56rpx;
+    }
+  }
+  @-webkit-keyframes @name {
+    from {
+      .opacity(0.8);
+      bottom: 300rpx;
+      left: 56rpx;
+    }
+    to {
+      .opacity(1);
+      bottom: 350rpx;
+      left: 56rpx;
+    }
+  }
+}
+//创建一个名称为'animation-active-gold'的动画
+.animation-frame-gold2(@animation-name-gold2);
+//动画样式设置
+.animation-gold2 {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@animation-name-gold2);
+  //设置动画时间(1秒)
+  .animation-duration(0.6s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(linear);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(alternate);
+}
+
+//定义动画名称
+@animation-name-gold3: animation-active-gold3;
+.animation-frame-gold3(@name: name-animation) {
+  @keyframes @name {
+    from {
+      .opacity(0.5);
+      bottom: 180rpx;
+      left: 426rpx;
+    }
+    to {
+      .opacity(1);
+      bottom: 240rpx;
+      left: 400rpx;
+    }
+  }
+  @-webkit-keyframes @name {
+    from {
+      .opacity(0.5);
+      bottom: 180rpx;
+      left: 426rpx;
+    }
+    to {
+      .opacity(1);
+      bottom: 240rpx;
+      left: 400rpx;
+    }
+  }
+}
+//创建一个名称为'animation-active-gold'的动画
+.animation-frame-gold3(@animation-name-gold3);
+//动画样式设置
+.animation-gold3 {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@animation-name-gold3);
+  //设置动画时间(1秒)
+  .animation-duration(0.6s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(linear);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(alternate);
+}
+
+//定义动画名称
+@animation-name-gold4: animation-active-gold4;
+.animation-frame-gold4(@name: name-animation) {
+  @keyframes @name {
+    from {
+      .opacity(0.8);
+      bottom: 360rpx;
+      right: 150rpx;
+    }
+    to {
+      .opacity(1);
+      bottom: 410rpx;
+      right: 100rpx;
+    }
+  }
+  @-webkit-keyframes @name {
+    from {
+      .opacity(0.8);
+      bottom: 360rpx;
+      right: 150rpx;
+    }
+    to {
+      .opacity(1);
+      bottom: 410rpx;
+      right: 100rpx;
+    }
+  }
+}
+//创建一个名称为'animation-active-gold'的动画
+.animation-frame-gold4(@animation-name-gold4);
+//动画样式设置
+.animation-gold4 {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@animation-name-gold4);
+  //设置动画时间(1秒)
+  .animation-duration(0.6s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(linear);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(alternate);
+}
+
+//定义动画名称
+@animation-name-gold5: animation-active-gold5;
+.animation-frame-gold5(@name: name-animation) {
+  @keyframes @name {
+    from {
+      .opacity(0.3);
+      bottom: 60rpx;
+      right: -40rpx;
+    }
+    to {
+      .opacity(1);
+      bottom: 0rpx;
+      right: 0rpx;
+    }
+  }
+  @-webkit-keyframes @name {
+    from {
+      .opacity(0.3);
+      bottom: 60rpx;
+      right: -40rpx;
+    }
+    to {
+      .opacity(1);
+      bottom: 0rpx;
+      right: 0rpx;
+    }
+  }
+}
+//创建一个名称为'animation-active-gold5'的动画
+.animation-frame-gold5(@animation-name-gold5);
+//动画样式设置
+.animation-gold5 {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@animation-name-gold5);
+  //设置动画时间(1秒)
+  .animation-duration(0.8s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(linear);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(alternate);
+}
+
+.page-shake-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: #400614;
+  display: none;
+
+  &.show {
+    display: block;
+  }
+
+  .shake-bg-wrap {
+    position: absolute;
+    top: -10rpx;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    .shake-bg {
+      width: 100%;
+      height: auto;
+      display: initial;
+    }
+  }
+  .shake-red-packet-wrap {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1082rpx;
+    top: 50%;
+    margin-top: -541rpx;
+
+    .shake-wedding-bg {
+      width: 380rpx;
+      height: 393rpx;
+      display: block;
+      margin: 0 auto;
+    }
+    .shake-gold-bg {
+      width: 390rpx;
+      height: 318rpx;
+      display: block;
+      margin: 0 auto;
+      margin-top: 95rpx;
+    }
+
+    .red-packet-title {
+      width: 695rpx;
+      height: 161rpx;
+      position: relative;
+      margin: 0 auto;
+      margin-top: -82rpx;
+      z-index: 2;
+
+      .wedding-people-bg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .wedding-people-text {
+        position: absolute;
+        top: 46rpx;
+        font-size: 30rpx;
+        color: #e7e5c3;
+        display: inline-block;
+        text-align: center;
+        left: 34rpx;
+        right: 34rpx;
+        text-align: center;
+      }
+    }
+
+    .red-packet-shake {
+      height: 560rpx;
+      margin-top: 40rpx;
+      position: relative;
+
+      .shake-title {
+        width: 182rpx;
+        height: 49rpx;
+        position: absolute;
+        left: 50%;
+        margin-left: -91rpx;
+        top: 50rpx;
+        z-index: 20;
+      }
+      .red-packet-bottom-bg-wrap {
+        position: absolute;
+        top: 30rpx;
+        left: 30rpx;
+        right: 30rpx;
+        bottom: 0rpx;
+        z-index: 10;
+        .vertical(#d51d39, #8b0121);
+        .border-radius(20rpx);
+
+        .packet-shake-tip {
+          position: absolute;
+          bottom: 40rpx;
+          text-align: center;
+          width: 100%;
+          left: 0;
+          z-index: 50;
+          font-size: 24rpx;
+          color: #fff;
+        }
+      }
+      .red-packet-bottom-bg {
+        width: 100%;
+        height: 100%;
+        .border-radius(16rpx);
+      }
+      .icon-ligth {
+        width: 430rpx;
+        height: 360rpx;
+        position: absolute;
+        bottom: 200rpx;
+        left: 50%;
+        margin-left: -218rpx;
+        z-index: 11;
+      }
+      .get-red-packets-bg {
+        width: 554rpx;
+        height: 448rpx;
+        position: absolute;
+        bottom: 5rpx;
+        left: 50%;
+        margin-left: -272rpx;
+        z-index: 12;
+      }
+      .shake-red-packet-bg-wrap {
+        position: absolute;
+        top: 0rpx;
+        left: 0rpx;
+        right: 0rpx;
+        bottom: 0rpx;
+        z-index: 13;
+      }
+      .red-packet-1 {
+        position: absolute;
+        top: 12rpx;
+        left: 12rpx;
+        right: 12rpx;
+        overflow: hidden;
+        .red-packet-image-wrap {
+          border: 2rpx solid #ff405e;
+          border-bottom: 0;
+        }
+        .icon-circle {
+          width: 40rpx;
+          height: 40rpx;
+          border: 2rpx solid #ff405e;
+          .border-radius(55%);
+          position: absolute;
+          top: -20rpx;
+          .vertical(#d71f39, #d11d38);
+
+          &.left {
+            left: -22rpx;
+          }
+          &.right {
+            right: -25rpx;
+          }
+        }
+        image {
+          width: 100%;
+          height: 342rpx;
+        }
+      }
+      .red-packet-2 {
+        position: absolute;
+        bottom: 12rpx;
+        left: 12rpx;
+        right: 12rpx;
+        overflow: hidden;
+        .red-packet-image-wrap {
+          border: 2rpx solid #ff405e;
+          border-top: 0;
+          position: relative;
+          .clearfix();
+        }
+        .icon-circle {
+          width: 40rpx;
+          height: 40rpx;
+          border: 2rpx solid #ff405e;
+          .border-radius(55%);
+          position: absolute;
+          bottom: -20rpx;
+          .vertical(#840120, #840120);
+          z-index: 5;
+
+          &.left {
+            left: -22rpx;
+          }
+          &.right {
+            right: -25rpx;
+          }
+        }
+        image {
+          width: 100%;
+          height: 196rpx;
+          float: left;
+        }
+      }
+      .red-packet-3 {
+        position: absolute;
+        bottom: 12rpx;
+        left: 12rpx;
+        right: 12rpx;
+        z-index: 14;
+        overflow: hidden;
+        .clearfix();
+        .red-packet-image-wrap {
+          border: 2rpx solid #ff405e;
+          border-top: 0;
+          position: relative;
+          .clearfix();
+        }
+        .icon-circle {
+          width: 40rpx;
+          height: 40rpx;
+          border: 2rpx solid #ff405e;
+          .border-radius(55%);
+          position: absolute;
+          bottom: -20rpx;
+          .vertical(#840120, #840120);
+          z-index: 5;
+
+          &.left {
+            left: -22rpx;
+          }
+          &.right {
+            right: -25rpx;
+          }
+        }
+        image {
+          width: 100%;
+          height: 236rpx;
+          float: left;
+        }
+      }
+    }
+    .shake-red-packet-bg {
+      width: 100%;
+      height: 100%;
+    }
+    .icon-gold {
+      .transition(all 0.2s ease);
+      position: absolute;
+      z-index: 20;
+
+      &.gold-item-1 {
+        width: 128rpx;
+        height: 96rpx;
+        top: 60rpx;
+        left: -40rpx;
+      }
+      &.gold-item-2 {
+        width: 60rpx;
+        height: 54rpx;
+        // top: 234rpx;
+        bottom: 300rpx;
+        left: 56rpx;
+      }
+      &.gold-item-3 {
+        width: 94rpx;
+        height: 89rpx;
+        // top: 346rpx;
+        bottom: 180rpx;
+        left: 426rpx;
+      }
+      &.gold-item-4 {
+        width: 43rpx;
+        height: 61rpx;
+        // top: 180rpx;
+        bottom: 360rpx;
+        right: 134rpx;
+      }
+      &.gold-item-5 {
+        width: 130rpx;
+        height: 93rpx;
+        bottom: 60rpx;
+        right: -40rpx;
+      }
+    }
+
+    .packet-line {
+      position: absolute;
+      z-index: 13;
+      border-left: 2rpx solid #ff405e;
+      border-right: 2rpx solid #ff405e;
+      top: 40rpx;
+      bottom: 40rpx;
+      left: 12rpx;
+      right: 12rpx;
+    }
+  }
+  .red-packet-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    .transition(background 0.3s ease);
+    .red-packet-mask {
+      width: 100%;
+      height: 100%;
+      .transition(background 0.3s ease);
+      background: rgba(0, 0, 0, 0);
+    }
+    &.red-packet-open {
+      z-index: 100;
+      .red-packet-mask {
+        background: rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    .red-packet-main {
+      position: absolute;
+      width: 728rpx;
+      height: 1140rpx;
+      top: 50%;
+      left: 50%;
+      margin-left: -364rpx;
+      margin-top: -570rpx;
+      // 样式设置为动画初始值
+      .opacity(0);
+      .scale3d(0.3, 0.3, 0.3);
+      &.red-packet-main-open {
+        .opacity(1);
+        .scale3d(1, 1, 1);
+      }
+
+      .bg-red-packet {
+        width: 100%;
+        height: 100%;
+        .border-radius(40rpx);
+      }
+      .icon-open {
+        position: absolute;
+        width: 240rpx;
+        height: 240rpx;
+        left: 50%;
+        margin-left: -120rpx;
+        top: 570rpx;
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view>
+    <view class="{{ 'page-shake-wrap' + (pageStatus ? ' show' : '')}}">
+      <view class="shake-bg-wrap">
+        <!-- <image class="shake-bg" src="../assets/images/bg/bg-shake-purpose.png" lazy-load="true" /> -->
+        <image class="shake-bg" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-shake-purpose.png' : ''}}" lazy-load="true" />
+      </view>
+      <view class="shake-red-packet-wrap">
+        <image class="shake-gold-bg" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-gold-purpose.png' : ''}}" />
+        <view class="red-packet-title">
+          <image class="wedding-people-bg" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-purpose-packet.png' : ''}}" lazy-load="true" />
+          <text class="wedding-people-text purpose">恭喜发财，大吉大利！</text>
+        </view>
+        <view class="red-packet-shake" @tap.stop="navToResult">
+          <!-- <view class="red-packet-shake"> -->
+          <view class="red-packet-bottom-bg-wrap">
+            <image class="icon-ligth animation-flashing" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/icon/icon-ligth.png' : '' }}" />
+            <image class="get-red-packets-bg animation-tada" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-get-red-packets.png' : ''}}" />
+            <image class="shake-title" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/icon/icon-shake.png' : ''}}" />
+            <view class="shake-red-packet-bg-wrap">
+              <view class="red-packet-1">
+                <view class="icon-circle left"></view>
+                <view class="icon-circle right"></view>
+                <view class="red-packet-image-wrap">
+                  <image src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/red-packet-1.png' : ''}}" />
+                </view>
+              </view>
+              <view class="red-packet-2">
+                <view class="icon-circle left"></view>
+                <view class="icon-circle right"></view>
+                <view class="red-packet-image-wrap">
+                  <image src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/red-packet-2.png' : ''}}" />
+                </view>
+              </view>
+            </view>
+            <view class="red-packet-3">
+              <view class="icon-circle left"></view>
+              <view class="icon-circle right"></view>
+              <view class="red-packet-image-wrap">
+                <image src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/red-packet-3.png' : ''}}" />
+              </view>
+            </view>
+            <view class="packet-line"></view>
+            <view class="packet-shake-tip">摇不动？尝试手指点一点</view>
+          </view>
+
+          <image class="icon-gold gold-item-1 animation-gold1" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/icon/icon-gold-1.png' : ''}}" />
+          <image class="icon-gold gold-item-2 animation-gold2" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/icon/icon-gold-2.png' : ''}}" />
+          <image class="icon-gold gold-item-3 animation-gold3" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/icon/icon-gold-3.png' : ''}}" />
+          <image class="icon-gold gold-item-4 animation-gold4" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/icon/icon-gold-4.png' : ''}}" />
+          <image class="icon-gold gold-item-5 animation-gold5" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/icon/icon-gold-5.png' : ''}}" />
+        </view>
+      </view>
+      <view class="{{ 'red-packet-wrap ' + animationRedPacketWrap }}">
+        <view class="red-packet-mask" @tap="closeRedPacket"></view>
+        <!-- <view class="red-packet-mask"></view> -->
+        <view class="{{ 'red-packet-main ' + animationRedPacketMain }}">
+          <image class="bg-red-packet" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-red-packet-purpose.png' : ''}}" />
+          <image @tap="openRedPacket" class="{{ 'icon-open ' + animationOpen}}" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/icon/icon-open.png' : ''}}" />
+        </view>
+      </view>
+      <energy-accumulation :energyValue.sync="energy" :onEnergyFull="onEnergyFullFn" :isStartEnergy.sync="isStartEnergy" :message.sync="energyMessage" :onTap="onEnergyTap" />
+    </view>
+    <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" :onCloseAuthorize="onCloseAuthorizeFn" />
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { STATUS, RESOURCE_PATCH } from '../configs'
+import { WXShake, Tips, UserAuthorize, DataPipe, PATCH } from '@/utils'
+import { RedpacketService } from '../services'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import EnergyAccumulationComponent from '../components/energy-accumulation-component/index'
+
+export default class ShakeWeddingPages extends wepy.page {
+  config = {
+    // navigationBarTitleText: '摇一摇领红包'
+    navigationBarTitleText: '游戏'
+  }
+  components = {
+    // 用户认证授权组件
+    'user-authorize': UserAuthorizeComponent,
+    'energy-accumulation': EnergyAccumulationComponent
+  }
+
+  data = {
+    resourcePath: RESOURCE_PATCH,
+    // 初始状态，暂时不显示页面，确认使用哪种皮肤后再显示具体页面
+    pageStatus: false,
+    // 场景类型
+    sceneType: null,
+    weddingPeople: {
+      man: '',
+      woman: ''
+    },
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    // 开红包按钮动画class
+    animationOpen: 'animation-pulse',
+    // 红包容器动画
+    animationRedPacketWrap: '',
+    animationRedPacketMain: '',
+    // 活动ID（从扫一扫的二维码中获取，没有就为空）
+    activityId: '',
+    hotelId: '',
+    // 活动游戏ID
+    activityGameId: '',
+    // 用户No，用户注册后的编号（从缓存中获取，没有就表示未注册[是否注册，后端接口返回状态进行判断]）
+    userNo: null,
+    // 是否显示关系
+    isShowRelation: null,
+    // 是否可以参与活动
+    isStayActive: null,
+    // 是否微信认证
+    isWechatAuth: null,
+    // 是否已领取红包
+    isReceivedRedPack: null,
+    // 是否已经点击过'开'红包
+    isTapOpenRedPack: false,
+    // 主办方
+    sponsor: '',
+    // 摇一摇配置
+    shakeThreshold: 150,
+    // 摇多少次能量填充满
+    shakeCount: 30,
+    // 根据次数计算每次增加能量数(总数为100)
+    shakeEnergy: 10,
+    // 当前能量
+    energy: 0,
+    // 是否显示能量池
+    isShowEnergy: true,
+    // 是否启动能量值动画，首次摇一摇后启动
+    isStartEnergy: false,
+    // 避免摇一摇多次累加线程
+    shakeThread: null,
+    // 递减能量值线程
+    countDownThread: null,
+    isShake: false,
+    // 能量提示
+    energyMessage: '手速越快，能量积累越多！',
+    // 是否是从暖场页跳转过来的，如果是，当resultPage = 11时，返回暖场页提示’没有进行中的活动‘
+    isResultSelf: '',
+    paramsResultPage: '',
+    gameType: ''
+  }
+
+  computed = {}
+
+  methods = {
+    /**
+     * 开红包
+     */
+    openRedPacket(e) {
+      // if (!this.isTapOpenRedPack) {
+      // this.isTapOpenRedPack = true
+      // 设置翻转动画(Y轴)
+      this.animationOpen = 'animation-flip-y'
+      this.$apply()
+      setTimeout(() => {
+        this.animationOpen = 'animation-pulse'
+        this.$apply()
+        // 设置已经摇过红包
+        wepy.reLaunch({ url: 'game-result?activityId=' + this.activityGameId + '-_-' + this.activityId })
+        let that = this
+        this.$parent.openRedPackCallback = function() {
+          that.isReceivedRedPack = true
+        }
+      }, 900)
+      // }
+    },
+    /**
+     * 点击背景遮罩关闭红包
+     */
+    closeRedPacket(e) {
+      // 关闭红包
+      // this.animationRedPacketWrap = ''
+      // this.animationRedPacketMain = ''
+      // WXShake.setShakeVibrateLong()
+    },
+    navToResult(e) {
+      if (this.isReceivedRedPack) {
+        // 已经打开过红包, 则直接到结果页
+        wepy.reLaunch({ url: 'game-result?activityId=' + this.activityGameId + '-_-' + this.activityId })
+      } else {
+        if (this.isShowEnergy) {
+          this.shakeFun()
+        } else {
+          this.shakeFun1()
+        }
+      }
+    }
+  }
+
+  onEnergyTap() {
+    this.methods.navToResult.call(this)
+  }
+
+  /**
+   * 能量涨满触发
+   */
+  onEnergyFullFn() {
+    // 打开红包容器
+    this.animationRedPacketWrap = 'red-packet-open'
+    this.$apply()
+    // 容器显示完成后，设置红包出现动画
+    setTimeout(() => {
+      this.animationRedPacketMain = 'animation-zoomin-down'
+      this.$apply()
+      // 动画结束后，让红包为显示效果
+      setTimeout(() => {
+        this.animationRedPacketMain = 'red-packet-main-open'
+        this.isShake = false
+        WXShake.setShakeUNVibrateLong()
+        this.$apply()
+      }, 1000)
+    }, 300)
+    wx.vibrateLong()
+  }
+
+  /**
+   * 所有授权完成
+   */
+  onAuthorizeAllFn(data) {
+    let isShowRelation = wepy.getStorageSync(STATUS.IS_BIND_RELATION)
+    if (isShowRelation) {
+      wepy.redirectTo({
+        url:
+          'relationship?sceneType=' +
+          this.sceneType +
+          '-_-' +
+          this.activityId +
+          '&isResultSelf=' +
+          this.isResultSelf
+      })
+    } else {
+      wepy.redirectTo({
+        url:
+          'shake-purpose?id=' +
+          this.activityId +
+          '&isResultSelf=' +
+          this.isResultSelf
+      })
+    }
+  }
+
+  /**
+   * 关闭授权
+   */
+  onCloseAuthorizeFn() {}
+
+  shakeFun() {
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (!userNo) {
+      // 未授权继续授权
+      this.$invoke('user-authorize', 'authorizeActivation')
+      return false
+    }
+
+    if (!this.isShake) {
+      this.isShake = true
+      if (!this.isStartEnergy) {
+        this.isStartEnergy = true
+        this.$invoke('energy-accumulation', 'startEnergy')
+      }
+      // 清空，并重新启动递减
+      clearInterval(this.countDownThread)
+      let that = this
+      if (!this.shakeThread) {
+        this.shakeThread = setTimeout(() => {
+          // 每次能量累加
+          if (this.energy < 100) {
+            that.energy += that.shakeEnergy
+            if (that.energy > 20 && that.energy <= 50) {
+              that.energyMessage = '红包不来，手将不停！'
+            } else if (that.energy > 50 && that.energy <= 80) {
+              that.energyMessage = '小手动起来，红包马上来！'
+            } else if (that.energy > 80 && that.energy < 100) {
+              that.energyMessage = '加油！加油！离成功只差一步！'
+            }
+            that.$apply()
+          } else {
+            that.onEnergyFullFn.apply(that)
+          }
+          clearTimeout(that.shakeThread)
+          that.shakeThread = null
+          // 重新启动递减能量值
+          // that.countDownShakeEnergyFn()
+          this.isShake = false
+        }, 780)
+      }
+
+      // 是否振动
+      // return true
+    }
+  }
+
+  shakeFun1() {
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (!userNo) {
+      // 未授权继续授权
+      this.$invoke('user-authorize', 'authorizeActivation')
+      return false
+    }
+    if (!this.isShake) {
+      this.isShake = true
+      this.onEnergyFullFn.apply(this)
+
+      // return true
+    }
+  }
+
+  /**
+   * 获取活动信息
+   */
+  getActivityInfo() {
+    let that = this
+    // let userNo = (wepy.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo
+    let userSpecialInfo = wepy.getStorageSync(STATUS.USER_SPECIAL_INFO)
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (userSpecialInfo && !userNo) {
+      userNo = (userSpecialInfo || {}).userNo
+      wepy.setStorageSync(STATUS.USER_NO, userNo)
+    }
+
+    let params = {}
+    if (this.activityId) {
+      params['activityId'] = this.activityId
+    }
+    if (userNo) {
+      params['userNo'] = userNo
+    }
+    // 获取活动信息
+    RedpacketService.activityInfo({
+      data: params
+    })
+      .then(res => {
+        if (res.success) {
+          // 数据进行管道处理
+          DataPipe.basePipe(res)
+          let activityInfo = res.activityInfo || {}
+          // sceneType  改变为  activityClass （2019年6月10日15:20:00）
+          // let sceneType = activityInfo.sceneType
+          let sceneType = activityInfo.activityClass
+          this.sceneType = sceneType
+          this.activityId = res.activityId
+
+          this.hotelId = res.activityMemberId
+          // this.activityGameId = activityInfo.activityGameId
+          // 游戏类型(COUNT_NUM.数钱)
+          let gameType = this.gameType || activityInfo.gameType
+          // if (sceneType === 'marry') {
+          //   // 婚宴 直接跳转到婚宴皮肤页
+          //   wepy.redirectTo({
+          //     url:
+          //       'shake-wedding?id=' +
+          //       this.activityId +
+          //       '&isResultSelf=' +
+          //       this.isResultSelf
+          //   })
+          //   return false
+          // }
+          let activityLinkman = activityInfo.activityLinkman
+          // 婚宴显示新人名字，否则显示默认的'主办方'
+          this.sponsor = sceneType === 'marry' ? activityLinkman : ''
+          // 保存活动ID
+          wepy.setStorageSync(STATUS.ACTIVITY_ID, activityInfo.activityGameId)
+          wepy.setStorageSync(
+            STATUS.ACTIVITY_ID + 'Relationship',
+            res.activityId
+          )
+          let resultPage = parseInt(this.paramsResultPage || res.resultPage)
+          // 是否显示关系
+          that.isShowRelation = resultPage === 3
+          wepy.setStorageSync(STATUS.IS_BIND_RELATION, res.isShowRelation)
+          // 是否可以参与活动
+          that.isStayActive = resultPage === 0
+          // 是否微信认证
+          that.isWechatAuth = resultPage === 1
+          // 是否领取过红包
+          that.isReceivedRedPack = resultPage === 5
+          // 活动信息
+          let linkMan = activityInfo.linkMan
+          if (linkMan) {
+            that.weddingPeople.man = linkMan.bridegroomName || '-'
+            that.weddingPeople.woman = linkMan.brideName || '-'
+          }
+          // 直接跳个人中心页面
+          if (resultPage === 7) {
+            // wepy.redirectTo({ url: 'balance' })
+            wepy.redirectTo({ url: '/subpackages/MarketHotel/pages/my-wallet' })
+            return false
+          } else if (resultPage === 9) {
+            // 无活动，跳转中间页
+            wepy.redirectTo({
+              url: 'no-activity?business=' + res.activityMemberId
+            })
+            return false
+          } else if (resultPage === 11) {
+            // 跳转暖场页
+            wepy.reLaunch({
+              url:
+                'activity-transfer?activityId=' +
+                res.activityId +
+                '&isResultSelf=' +
+                this.isResultSelf
+            })
+            return false
+          }
+          // 已参加过活动
+          if (that.isReceivedRedPack) {
+            if (gameType === 'ANSWER_GAME') {
+              wx.reLaunch({
+                url: 'answer/ranking-list?activityId=' + this.activityId + '&activityGameId=' + this.activityGameId
+              })
+            } else if (gameType === 'COUNT_NUM') {
+              wx.reLaunch({ url: 'counting-money/ranking-list?activityId=' + this.activityId + '&activityGameId=' + this.activityGameId + '&hotelId=' + this.hotelId })
+            } else {
+              wepy.reLaunch({ url: 'game-result?activityId=' + this.activityGameId + '-_-' + this.activityId })
+            }
+            return false
+          }
+          // 微信授权初始化
+          that.wechatAuth(() => {
+            if (gameType === 'ANSWER_GAME') {
+              wx.reLaunch({
+                url: 'answer/index?activityId=' + this.activityId + '&activityGameId=' + this.activityGameId
+              })
+            } else if (gameType === 'COUNT_NUM') {
+              wx.reLaunch({ url: 'counting-money/index?activityId=' + this.activityId + '&activityGameId=' + this.activityGameId + '&hotelId=' + this.hotelId })
+            } else {
+              if (sceneType === 'marry') {
+                // 婚宴 直接跳转到婚宴皮肤页
+                wepy.redirectTo({
+                  url:
+                    'shake-wedding?id=' +
+                    this.activityId +
+                    '&activityGameId=' + this.activityGameId +
+                    '&resultPage=' + resultPage +
+                    '&isResultSelf=' +
+                    this.isResultSelf
+                })
+                return false
+              }
+              // 显示页面
+              that.pageStatus = true
+              that.$apply()
+              // 活动初始化
+              that.activityInit()
+            }
+          })
+          // 显示页面
+          // that.pageStatus = true
+          // that.$apply()
+          // 微信授权初始化
+          // that.wechatAuth()
+          // 活动初始化
+          // that.activityInit()
+        }
+      })
+      .catch(error => {
+        Tips.error(error.message)
+      })
+  }
+
+  /**
+   * 微信授权
+   */
+  wechatAuth(callBack) {
+    let that = this
+    let isWechatAuth = that.isWechatAuth
+    // let userNo = wepy.getStorageSync(STATUS.USER_NO) || ((wepy.getStorageSync(STATUS.USER_SPECIAL_INFO) || {}).userNo)
+    let userSpecialInfo = wepy.getStorageSync(STATUS.USER_SPECIAL_INFO)
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (userSpecialInfo && !userNo) {
+      userNo = (userSpecialInfo || {}).userNo
+      wepy.setStorageSync(STATUS.USER_NO, userNo)
+    }
+    if (isWechatAuth && !userNo) {
+      that.$parent.globalData.activityId = that.activityId
+      UserAuthorize.login()
+        .then(res => {
+          if (that.isShowRelation) {
+            wepy.redirectTo({
+              url:
+                'relationship?sceneType=' +
+                this.sceneType +
+                '-_-' +
+                that.activityId +
+                '&isResultSelf=' +
+                this.isResultSelf
+            })
+          } else {
+            that.getActivityInfo()
+          }
+        })
+        .catch(() => {
+          that.$apply()
+          // wepy.redirectTo({ url: 'authorize' })
+          this.$invoke('user-authorize', 'authorizeActivation')
+        })
+    } else {
+      if (that.isShowRelation) {
+        that.$parent.globalData.activityId = that.activityId
+        wepy.redirectTo({
+          url:
+            'relationship?sceneType=' +
+            this.sceneType +
+            '-_-' +
+            that.activityId +
+            '&isResultSelf=' +
+            this.isResultSelf
+        })
+      } else {
+        if (callBack) {
+          callBack()
+        }
+      }
+    }
+  }
+  /**
+   * 活动初始化(摇一摇)
+   */
+  activityInit() {
+    let that = this
+    let isStayActive = this.isStayActive
+    if (isStayActive) {
+      if (this.isShowEnergy) {
+        // 计算摇一摇每次增加能量值
+        that.countShakeEnergy()
+        // that.countDownShakeEnergyFn()
+        WXShake.setShakeVibrateLong()
+        WXShake.shake({
+          shakeThreshold: that.shakeThreshold,
+          shakeFun: () => {
+            return that.shakeFun.apply(that)
+          }
+        })
+      } else {
+        // 添加摇一摇
+        WXShake.shake(() => {
+          return that.shakeFun1.apply(that)
+        })
+      }
+    } else {
+      // Tips.error('对不起，你不可参加活动');
+    }
+  }
+
+  /**
+   * 计算摇一摇每次增加能量值
+   */
+  countShakeEnergy() {
+    this.shakeEnergy = 100 / this.shakeCount
+    this.$apply()
+  }
+
+  /**
+   * 停下时递减能量值
+   */
+  countDownShakeEnergyFn() {
+    let that = this
+    this.countDownThread = setInterval(() => {
+      let energy = that.energy
+      if (energy < 0) {
+        clearInterval(that.countDownThread)
+        that.countDownThread = null
+        energy = 0
+      } else if (energy >= 100) {
+        clearInterval(that.countDownThread)
+        that.countDownThread = null
+      } else {
+        energy -= that.shakeEnergy / 3
+      }
+      that.energy = energy
+      that.$apply()
+    }, 3000)
+  }
+
+  /**
+   * 红包游戏配置
+   */
+  getConfigs(callBack) {
+    RedpacketService.gameRedPackConfig()
+      .then(res => {
+        let shakeThreshold = res.frequencyNum
+        let shakeCount = res.shakeNum
+        if (shakeThreshold && shakeCount) {
+          this.shakeThreshold = shakeThreshold
+          this.shakeCount = shakeCount
+        } else {
+          this.isShowEnergy = false
+        }
+        this.$apply()
+        if (callBack) {
+          callBack.call(this)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  events = {}
+
+  onHide() {
+    WXShake.setShakeUNVibrateLong()
+  }
+
+  onShow() {
+    WXShake.setShakeVibrateLong()
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    // 获取二维码参数并直接设置（后台进行参数解析）
+    if (options.scene || options.id) {
+      this.activityId = options.scene || options.id
+    } else {
+      // this.activityId = wepy.getStorageSync(STATUS.ACTIVITY_ID)
+    }
+    this.activityGameId = options.activityGameId
+    this.isResultSelf = options.isResultSelf || ''
+    this.paramsResultPage = options.resultPage
+    this.gameType = options.gameType
+    this.UID = options.UID
+    // 活动页设置屏幕长亮
+    wx.setKeepScreenOn({
+      keepScreenOn: true,
+      complete: () => {}
+    })
+    // 获取配置
+    this.getConfigs(this.getActivityInfo)
+  }
+}
+</script>

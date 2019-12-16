@@ -1,0 +1,188 @@
+<!--
+  个人中心页
+  @Author: AndyPan
+  @CreateDate: 2019年4月28日11:30:15
+  @LastUpdateDate: 2019年4月28日11:32:18
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+// .page-personal-center-main {
+// }
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-personal-center-main">
+    <!-- 个人中心头部 -->
+    <personal-center-head :dataset.sync="personalInfo"></personal-center-head>
+    <!-- 导航列表 -->
+    <view class="ui-nav-list">
+      <view class="nav-list-wrap">
+        <view class="nav-list-item" @tap="myWallet">
+          <view class="list-item-text icon-item icon-wallet">钱包</view>
+          <view class="list-item-value">{{balance}}元</view>
+        </view>
+        <!-- <view class="nav-list-item">
+          <view class="list-item-text icon-item icon-coupon">优惠券</view>
+          <view class="list-item-value"></view>
+        </view> -->
+      </view>
+      <view class="nav-list-wrap">
+        <view class="nav-list-item" @tap="couponList">
+          <view class="list-item-text icon-item icon-coupon">优惠券</view>
+          <view class="list-item-value"></view>
+        </view>
+      </view>
+      <view class="nav-list-wrap">
+        <view class="nav-list-item" @tap="mallOrder">
+          <view class="list-item-text icon-item icon-mall">商城订单</view>
+          <view class="list-item-value"></view>
+        </view>
+      </view>
+      <view class="nav-list-wrap">
+        <view class="nav-list-item" @tap="appointmentList">
+          <view class="list-item-text icon-item icon-appointment">预约单</view>
+          <view class="list-item-value"></view>
+        </view>
+      </view>
+      <view class="nav-list-wrap">
+        <view class="nav-list-item" @tap="footmarkList">
+          <view class="list-item-text icon-item icon-footmark">足迹</view>
+          <view class="list-item-value"></view>
+        </view>
+      </view>
+    </view>
+    <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" :onCloseAuthorize="onCloseAuthorizeFn" />
+  </view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import PersonalCenterHeadComponent from '../components/personal-center-head-component/index'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import { STATUS } from '@/configs'
+import { Tips, PATCH, Utils } from '@/utils'
+import { WalletService } from '../services'
+
+export default class PersonalCenterPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '个人中心'
+  }
+
+  // 组件
+  components = {
+    // 个人中心头部
+    'personal-center-head': PersonalCenterHeadComponent,
+    'user-authorize': UserAuthorizeComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    balance: 0,
+    // 用户信息
+    personalInfo: null,
+    userNo: ''
+  }
+
+  onAuthorizeAllFn(data) {
+    let userInfo = data.userInfo
+    wepy.setStorageSync(STATUS.USER_INFO, userInfo)
+    wepy.setStorageSync(STATUS.USER_NO, data.userNo)
+
+    this.personalInfo = {
+      thumb: userInfo.avatarUrl,
+      name: userInfo.nickName,
+      id: data.userNo
+    }
+    this.userNo = data.userNo
+    this.$apply()
+    // 认证完成后获取用户信息
+    this.memberInfo()
+  }
+
+  /**
+   * 授权被用户关闭，返回上一页面
+   */
+  onCloseAuthorizeFn() {
+    wx.navigateBack({ delta: 1 })
+  }
+
+  memberInfo() {
+    WalletService.memberInfo({
+      data: { userNo: this.personalInfo.id }
+    })
+      .then(res => {
+        let memberInfo = res.data.memberInfo
+        this.balance = memberInfo.balance
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  methods = {
+    // 钱包
+    myWallet(e) {
+      if (this.userNo) {
+        wepy.navigateTo({ url: 'my-wallet' })
+      }
+    },
+    // 优惠券
+    couponList(e) {
+      if (this.userNo) {
+        wepy.navigateTo({ url: 'my-coupon' })
+      }
+    },
+    // 预约单
+    appointmentList(e) {
+      if (this.userNo) {
+        wepy.navigateTo({ url: 'my-appointment' })
+      }
+    },
+    // 足迹
+    footmarkList(e) {
+      if (this.userNo) {
+        wepy.navigateTo({ url: 'my-footmark' })
+      }
+    },
+    // 商城订单
+    mallOrder() {
+      if (this.userNo) {
+        // wx.navigateTo({
+        //   url: '../../../subpackages/OnlineRetailers/pages/my-order'
+        // })
+        let hotelAdminNo = wx.getStorageSync(STATUS.HOTEL_ADMIN_NO)
+        Utils.openNewProcedures('pages/my-order?hotelAdminNo=' + hotelAdminNo)
+      }
+    }
+  }
+
+  onLoad() {
+    PATCH.createPatch.call(this)
+    this.userNo = wepy.getStorageSync(STATUS.USER_NO)
+  }
+
+  onShow() {
+    let userInfo = wepy.getStorageSync(STATUS.USER_INFO)
+    let userNo = this.userNo
+    if (userInfo && userNo) {
+      this.personalInfo = {
+        thumb: userInfo.avatarUrl,
+        name: userInfo.nickName,
+        id: userNo
+      }
+      // 获取用户信息
+      this.memberInfo()
+    } else {
+      this.$invoke('user-authorize', 'authorizeActivation')
+    }
+  }
+}
+</script>

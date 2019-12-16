@@ -1,0 +1,187 @@
+<!--
+  我的优惠券页
+  @Author: AndyPan
+  @CreateDate: 2019年4月28日16:06:09
+  @LastUpdateDate: 2019年4月28日16:08:17
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+.page-my-coupon-main {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-my-coupon-main">
+    <tab type="fixed" :isFull="boolTrue" :items="tabList" :isHeadShadow="boolFalse" :onSwitch="tabSwitchFn" :onScrollLower="onScrollLowerFn">
+      <view slot="tab-content-slot">
+        <pull-down :onPullDownRefresh="refreshPage">
+          <view slot="pull-down-content">
+            <coupon :dataset.sync="couponList"></coupon>
+          </view>
+        </pull-down>
+      </view>
+    </tab>
+    <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :onCloseAuthorize="onCloseAuthorizeFn" />
+  </view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import TabComponent from '@/components/tab-component/index'
+import CouponComponent from '../components/coupon-component/index'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import PullDownComponent from '@/components/pull-down-component/index'
+import { Tips, Utils, PATCH } from '@/utils'
+import { LANG, STATUS } from '@/configs'
+import { CouponService } from '../services'
+
+export default class MyCouponPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '优惠券'
+  }
+
+  // 组件
+  components = {
+    // 下拉刷新
+    'pull-down': PullDownComponent,
+    // 选项卡
+    tab: TabComponent,
+    // 卡券组件
+    coupon: CouponComponent,
+    'user-authorize': UserAuthorizeComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    // 选项卡列表
+    tabList: LANG.couponStatus,
+    // 卡券数据
+    couponList: [],
+    // 当前状态
+    currentStatusItem: null,
+    // userNo
+    userNo: null,
+    // 页码
+    pageNo: 1
+  }
+
+  onAuthorizeAllFn(data) {
+    let userInfo = data.userInfo
+    wepy.setStorageSync(STATUS.USER_INFO, userInfo)
+    wepy.setStorageSync(STATUS.USER_NO, data.userNo)
+    this.userNo = data.userNo
+    this.$invoke('tab', 'renderView')
+  }
+
+  /**
+   * 授权被用户关闭，返回上一页面
+   */
+  onCloseAuthorizeFn() {
+    wx.navigateBack({ delta: 1 })
+  }
+
+  loadData() {
+    if (!this.userNo) {
+      this.$invoke('user-authorize', 'authorizeActivation')
+      return false
+    }
+    wx.showNavigationBarLoading()
+    let pageNo = this.pageNo
+    CouponService.myHotelTicketList({
+      data: {
+        status: this.currentStatusItem.key,
+        userNo: this.userNo,
+        start: pageNo
+      }
+    })
+      .then(res => {
+        wx.hideNavigationBarLoading()
+        wx.stopPullDownRefresh()
+        let dataRows = res.data.rows
+        if (dataRows) {
+          if (pageNo === 1) {
+            Utils.forEach(dataRows, dataItem => {
+              let status = LANG.couponButtonType[dataItem.status] || {}
+              dataItem['status'] = status.status
+              dataItem['btnText'] = status.text
+              dataItem['typeStatus'] = dataItem.type
+              dataItem['type'] =
+                (LANG.couponConsumeType[dataItem.type] || {}).text || ''
+              // dataItem['activityClass'] = LANG.couponType[dataItem.ticketType].text || ''
+              dataItem['overdueTime'] = (dataItem.overdueTime || '').split(
+                ' '
+              )[0]
+            })
+            this.couponList = dataRows
+          } else {
+            Utils.forEach(dataRows, dataItem => {
+              let status = LANG.couponButtonType[dataItem.status] || {}
+              dataItem['status'] = status.status
+              dataItem['btnText'] = status.text
+              dataItem['typeStatus'] = dataItem.type
+              dataItem['type'] =
+                (LANG.couponConsumeType[dataItem.type] || {}).text || ''
+              // dataItem['activityClass'] = LANG.couponType[dataItem.ticketType].text || ''
+              dataItem['overdueTime'] = (dataItem.overdueTime || '').split(
+                ' '
+              )[0]
+              this.couponList.push(dataItem)
+            })
+          }
+          this.$apply()
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 选项卡切换事件
+   */
+  tabSwitchFn(item, idx, e) {
+    this.pageNo = 1
+    this.currentStatusItem = item
+    // this.$apply()
+    this.loadData()
+  }
+
+  /**
+   * 内容滚动到底部事件
+   */
+  onScrollLowerFn() {
+    this.pageNo++
+    this.loadData()
+  }
+
+  // onScrollUpperFn() {
+  //   this.pageNo = 1
+  //   this.loadData()
+  // }
+
+  onLoad() {
+    PATCH.createPatch.call(this)
+    this.userNo = wepy.getStorageSync(STATUS.USER_NO)
+  }
+
+  /**
+   * 下拉刷新
+   */
+  refreshPage() {
+    this.pageNo = 1
+    this.loadData()
+  }
+}
+</script>  

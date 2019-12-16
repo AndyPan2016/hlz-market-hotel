@@ -1,0 +1,68 @@
+<!--
+  请柬第3屏
+  @Author: AndyPan
+  @CreateDate: 2019年7月25日16:35:29
+  @LastUpdateDate: 2019年7月25日16:35:33
+  @Remarks: 
+-->
+
+<style lang="less"></style>
+
+<template>
+  <view class="page-screen page-four default" :class="{animation:current==3}">
+    <view class="screen-elem-bgblock bgblock-first"></view>
+    <view class="screen-elem-bgblock bgblock-second"></view>
+    <view class="screen-elem-photo photo-first">
+      <!-- <image class="photo-thumb" src="{{pageData.imageInfo[3][0] ? pageData.imageInfo[3][0]['imagePath'] : (doMain + 'default-photo-5.png?v1')}}" @load="imageLoad" wx:if="{{doMain}}" /> -->
+      <image class="photo-thumb" src="{{pageData.imageInfo[3][0] ? pageData.imageInfo[3][0]['imagePath'] : (doMain + 'default-photo-5.png?v1')}}" @load="imageLoad" wx:if="{{doMain && photoThumb}}" />
+      <image class="photo-thumb" @load="imageLoad" wx:elif="{{doMain}}" />
+      <view class="upload-img" @tap="uploadImg" data-index="1" data-rate="0.57" wx:if="{{bottomType === 'setting'}}"></view>
+    </view>
+    <view class="screen-elem-photo photo-second">
+      <!-- <image class="photo-thumb" src="{{pageData.imageInfo[3][1] ? pageData.imageInfo[3][1]['imagePath'] : (doMain + 'default-photo-6.png?v1')}}" @load="imageLoad" wx:if="{{doMain}}" /> -->
+      <image class="photo-thumb" src="{{pageData.imageInfo[3][1] ? pageData.imageInfo[3][1]['imagePath'] : (doMain + 'default-photo-6.png?v1')}}" @load="imageLoad" wx:if="{{doMain && photoThumb}}" />
+      <image class="photo-thumb" @load="imageLoad" wx:elif="{{doMain}}" />
+      <view class="upload-img" @tap="uploadImg" data-index="2" data-rate="0.57" wx:if="{{bottomType === 'setting'}}"></view>
+    </view>
+    
+    <view class="elem-flag"></view>
+    <view class="elem-modifier-bbsugar"></view>
+    <view class="elem-modifier-angelscome"></view>
+    <view class="elem-modifier-start1"></view>
+    <view class="elem-modifier-start2"></view>
+    <view class="elem-modifier-start3"></view>
+    <view class="elem-partytime"></view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class FourPagesComponent extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    photoThumb: Boolean,
+    current: { type: Number, default: 0 },
+    doMain: String,
+    pageData: { type: Object, default: {} },
+    bottomType: String,
+    onUploadImg: Function,
+    onImageLoad: Function
+  }
+  methods = {
+    uploadImg(e) {
+      if (this.onUploadImg) {
+        this.onUploadImg.call(this.$parent, e)
+      }
+      this.$emit('onUploadImg', e)
+    },
+    imageLoad(e) {
+      let onImageLoad = this.onImageLoad
+      if (onImageLoad) {
+        onImageLoad.call(this.$parent, e)
+      }
+      this.$emit('onImageLoad', e)
+    }
+  }
+}
+</script>

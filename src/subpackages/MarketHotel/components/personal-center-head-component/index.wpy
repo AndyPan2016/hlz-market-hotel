@@ -1,0 +1,70 @@
+<!--
+  个人中心头部组件-视图模板
+  @Author: AndyPan
+  @version: 1.0.0
+  @CreateDate: 2019年4月28日11:21:04
+  @LastUpdateDate: 2019年4月28日11:21:42
+  @Remarks: 备注
+-->
+
+<!-- 组件样式 -->
+<style lang="less">
+@import '../../../../assets/less/mixin.less';
+
+.personal-center-head-component {
+  height: 290rpx;
+  position: relative;
+  .background-head {
+    width: 100%;
+    height: 220rpx;
+  }
+  .personal-thumb {
+    position: absolute;
+    left: 86rpx;
+    top: 100rpx;
+    width: 164rpx;
+    height: 164rpx;
+    .border-radius(50%);
+    border: 8rpx solid #fff;
+    .box-shadow(0 0 6px rgba(51, 51, 51, 0.3));
+  }
+  .personal-name {
+    display: inline-block;
+    position: absolute;
+    // top: 100rpx;
+    // left: 376rpx;
+    top: 130rpx;
+    left: 333rpx;
+    right: 30rpx;
+    .text-overflow();
+    font-size: 30rpx;
+    color: #fff;
+  }
+  .personal-id {
+    display: inline-block;
+    position: absolute;
+    top: 160rpx;
+    left: 376rpx;
+    right: 30rpx;
+    .text-overflow();
+    font-size: 30rpx;
+    color: #fff;
+  }
+}
+</style>
+
+<!-- 组件视图 -->
+<template>
+  <view class="{{ 'personal-center-head-component' + (' ' + class) }}">
+    <image class="background-head" src="{{resourcePath ? resourcePath + 'assets/images/personal-center-head.png' : '' }}" />
+    <image class="personal-thumb" src="{{dataset.thumb}}" />
+    <text class="personal-name">{{dataset.name}}</text>
+    <!-- <text class="personal-id">ID：{{dataset.id}}</text> -->
+  </view>
+</template>
+
+<!-- 组件业务逻辑 -->
+<script>
+import PersonalCenterHeadComponent from './view'
+export default PersonalCenterHeadComponent
+</script>

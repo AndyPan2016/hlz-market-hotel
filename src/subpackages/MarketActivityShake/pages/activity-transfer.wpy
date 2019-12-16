@@ -1,0 +1,1840 @@
+<!--
+  活动中转页面
+  @Author: AndyPan
+  @CreateDate: 2019年6月19日14:34:43
+  @LastUpdateDate: 2019年6月19日14:34:47
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../assets/less/mixin.less';
+@import '../assets/less/_variables.less';
+.page-activity-transfer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: @color-FAFAFA;
+  // padding-bottom: 100rpx;
+
+  .page-activity-default {
+    width: 100%;
+    height: 423rpx;
+    background: url('@{resourcePath}MarketActivityShake/assets/images/background/activity-transfer-default.png')
+      0 0 no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+
+    .tip-text-en {
+      display: inline-block;
+      width: 100%;
+      font-size: 30rpx;
+      color: #fff;
+      text-align: center;
+      margin-top: 150rpx;
+      .text-item {
+        display: inline-block;
+        margin: 0 17rpx;
+      }
+    }
+    .tip-text-ch {
+      display: inline-block;
+      width: 100%;
+      font-size: 30rpx;
+      color: #fff;
+      text-align: center;
+      margin-top: 22rpx;
+    }
+  }
+  .page-activity-video{
+    width: 100%;
+    height: 423rpx;
+    position: relative;
+  }
+  .page-video{
+    width: 100%;
+    height: 423rpx;
+    position: relative;
+  }
+  .wedding-name {
+    text-align: center;
+    margin-top: 86rpx;
+    display: none;
+
+    .wedding-name-cont {
+      display: inline-block;
+      height: 54rpx;
+      .wedding-name-man,
+      .wedding-name-woman {
+        display: inline-block;
+        height: 54rpx;
+        line-height: 54rpx;
+        font-size: 30rpx;
+        color: @color-333333;
+        float: left;
+      }
+      .icon-heart {
+        display: inline-block;
+        width: 60rpx;
+        height: 54rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-heart.png')
+          0 0 no-repeat;
+        background-size: 100% 100%;
+        margin: 0 20rpx;
+        float: left;
+      }
+    }
+  }
+  .activity-tip {
+    margin-top: 40rpx;
+    text-align: center;
+    font-size: 30rpx;
+    color: @color-666666;
+  }
+  .part-activities {
+    text-align: center;
+    .part-activities-btn {
+      display: inline-block;
+      // width: 270rpx;
+      padding: 0 82rpx;
+      height: 70rpx;
+      .border-radius(36rpx);
+      background: @brand-primary;
+      line-height: 70rpx;
+      font-size: 24rpx;
+      color: @color-ffffff;
+      text-align: center;
+      margin: 30rpx auto;
+      position: relative;
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 6rpx;
+        height: 10rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-arrow-small.png')
+          0 0 no-repeat;
+        background-size: 100% 100%;
+        position: absolute;
+        right: 70rpx;
+        top: 50%;
+        margin-top: -5rpx;
+      }
+    }
+  }
+  .buttom-btn {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100rpx;
+    background: @brand-primary;
+    text-align: center;
+    line-height: 100rpx;
+    color: @color-ffffff;
+    font-size: 30rpx;
+  }
+  .buttom-btn-wrap {
+    position: fixed;
+    left: 15rpx;
+    right: 15rpx;
+    bottom: 30rpx;
+    height: 96rpx;
+    text-align: center;
+    color: @color-ffffff;
+    font-size: 30rpx;
+    .btn-goto-hotel {
+      position: relative;
+      width: 50%;
+      float: left;
+      height: 100%;
+    }
+    .btn-goto-coupon{
+      position: relative;
+      width: 50%;
+      float: left;
+      height: 100%;
+    }
+    .btn-part-activities {
+      position: absolute;
+      top: 0;
+      right: -1rpx;
+      width: 50%;
+      height: 100rpx;
+      line-height: 100rpx;
+      background: @brand-primary;
+    }
+    .btn-goto{
+      margin: 0 10rpx;
+      height: 100%;
+      line-height: 96rpx;
+      .vertical(#FF985C, #FD4445);
+      border-radius: 48rpx;
+    }
+  }
+
+  .fabulous-wrap {
+    // margin-top: 38rpx;
+    height: 188rpx;
+    width: 150rpx;
+    text-align: center;
+    position: relative;
+    float: right;
+    // display: none;
+    .fabulous-btn {
+      width: 100rpx;
+      height: 100rpx;
+      .border-radius(50%);
+      // .box-shadow(0 5rpx 20px @brand-primary);
+      top: 20rpx;
+      left: 50%;
+      margin-left: -50rpx;
+      position: absolute;
+      z-index: 2;
+      // background: @color-ffffff;
+
+      &.active {
+        // background: @color-FF2E28;
+        // &::after {
+        //   background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-fabuloused.png')
+        //     0 0 no-repeat;
+        //   background-size: 100% 100%;
+        // }
+      }
+
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 46rpx;
+        height: 46rpx;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -25rpx;
+        margin-left: -23rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-fabulous.png')
+          0 0 no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+
+    .fabulous-heart {
+      width: 184rpx;
+      height: 114rpx;
+      margin: 0 auto;
+      position: relative;
+      display: none;
+      margin-left:-17rpx;
+
+      &.show {
+        display: block;
+      }
+
+      &.active {
+        .icon-heart-a {
+          width: 30rpx;
+          height: 30rpx;
+          left: 0rpx;
+          bottom: 0rpx;
+          .opacity(0.8);
+        }
+        .icon-heart-b {
+          width: 44rpx;
+          height: 42rpx;
+          left: 12rpx;
+          bottom: 28rpx;
+          .opacity(0.8);
+        }
+        .icon-heart-c {
+          width: 20rpx;
+          height: 18rpx;
+          left: 38rpx;
+          top: 4rpx;
+          .opacity(0.8);
+        }
+        .icon-heart-d {
+          width: 26rpx;
+          height: 24rpx;
+          left: 58rpx;
+          top: 8rpx;
+          .opacity(0.8);
+        }
+        .icon-heart-e {
+          width: 12rpx;
+          height: 12rpx;
+          right: 70rpx;
+          top: 0rpx;
+          .opacity(0.8);
+        }
+        .icon-heart-f {
+          width: 48rpx;
+          height: 46rpx;
+          right: 14rpx;
+          top: 16rpx;
+          .opacity(0.8);
+        }
+        .icon-heart-g {
+          width: 22rpx;
+          height: 20rpx;
+          right: 0rpx;
+          top: 70rpx;
+          .opacity(0.8);
+        }
+      }
+      &.hide {
+        .icon-heart-a {
+          width: 30rpx;
+          height: 30rpx;
+          left: 0rpx;
+          bottom: 0rpx;
+          .transition(all 0.1s ease);
+          .opacity(0);
+        }
+        .icon-heart-b {
+          width: 44rpx;
+          height: 42rpx;
+          left: 12rpx;
+          bottom: 28rpx;
+          .transition(all 0.1s ease);
+          .opacity(0);
+        }
+        .icon-heart-c {
+          width: 20rpx;
+          height: 18rpx;
+          left: 38rpx;
+          top: 4rpx;
+          .transition(all 0.1s ease);
+          .opacity(0);
+        }
+        .icon-heart-d {
+          width: 26rpx;
+          height: 24rpx;
+          left: 58rpx;
+          top: 8rpx;
+          .transition(all 0.1s ease);
+          .opacity(0);
+        }
+        .icon-heart-e {
+          width: 12rpx;
+          height: 12rpx;
+          right: 70rpx;
+          top: 0rpx;
+          .transition(all 0.1s ease);
+          .opacity(0);
+        }
+        .icon-heart-f {
+          width: 48rpx;
+          height: 46rpx;
+          right: 14rpx;
+          top: 16rpx;
+          .transition(all 0.1s ease);
+          .opacity(0);
+        }
+        .icon-heart-g {
+          width: 22rpx;
+          height: 20rpx;
+          right: 0rpx;
+          top: 70rpx;
+          .transition(all 0.1s ease);
+          .opacity(0);
+        }
+      }
+
+      @transitionSet: all 0.5s ease;
+      .icon-heart-a {
+        display: inline-block;
+        width: 15rpx;
+        height: 15rpx;
+        position: absolute;
+        left: 80rpx;
+        bottom: 0rpx;
+        .transition(@transitionSet);
+        background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-heart-a.png')
+          0 0 no-repeat;
+        background-size: 100% 100%;
+        .opacity(0);
+      }
+      .icon-heart-b {
+        display: inline-block;
+        width: 22rpx;
+        height: 21rpx;
+        position: absolute;
+        left: 80rpx;
+        bottom: 0rpx;
+        .transition(@transitionSet);
+        background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-heart-b.png')
+          0 0 no-repeat;
+        background-size: 100% 100%;
+        .opacity(0);
+      }
+      .icon-heart-c {
+        display: inline-block;
+        width: 10rpx;
+        height: 9rpx;
+        position: absolute;
+        left: 32rpx;
+        top: 105rpx;
+        .transition(@transitionSet);
+        background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-heart-c.png')
+          0 0 no-repeat;
+        background-size: 100% 100%;
+        .opacity(0);
+      }
+      .icon-heart-d {
+        display: inline-block;
+        width: 13rpx;
+        height: 12rpx;
+        position: absolute;
+        left: 90rpx;
+        top: 102rpx;
+        .transition(@transitionSet);
+        background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-heart-d.png')
+          0 0 no-repeat;
+        background-size: 100% 100%;
+        .opacity(0);
+      }
+      .icon-heart-e {
+        display: inline-block;
+        width: 6rpx;
+        height: 6rpx;
+        position: absolute;
+        right: 70rpx;
+        top: 108rpx;
+        .transition(@transitionSet);
+        background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-heart-e.png')
+          0 0 no-repeat;
+        background-size: 100% 100%;
+        .opacity(0);
+      }
+      .icon-heart-f {
+        display: inline-block;
+        width: 24rpx;
+        height: 23rpx;
+        position: absolute;
+        right: 48rpx;
+        top: 81rpx;
+        .transition(@transitionSet);
+        background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-heart-f.png')
+          0 0 no-repeat;
+        background-size: 100% 100%;
+        .opacity(0);
+      }
+      .icon-heart-g {
+        display: inline-block;
+        width: 11rpx;
+        height: 10rpx;
+        position: absolute;
+        right: 51rpx;
+        top: 104rpx;
+        .transition(@transitionSet);
+        background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-heart-g.png')
+          0 0 no-repeat;
+        background-size: 100% 100%;
+        .opacity(0);
+      }
+    }
+    .fabulous-number-wrap {
+      position: absolute;
+      bottom: 50rpx;
+      left: 0;
+      text-align: center;
+      width: 100%;
+      .number {
+        display: inline-block;
+        height: 30rpx;
+        line-height: 30rpx;
+        font-size: 20rpx;
+        color: @color-ffffff;
+        padding: 0 18rpx;
+        background: @color-FF2E28;
+        .border-radius(16rpx);
+      }
+    }
+  }
+
+  .customized-popup-control {
+    &.popup-body-cont-slot {
+      .popup-tip-text {
+        margin: 0 40rpx;
+        .tip-text-message {
+          color: @color-333333;
+          font-size: 30rpx;
+          line-height: 50rpx;
+        }
+        .tip-text-remark {
+          color: @color-999999;
+          font-size: 24rpx;
+          line-height: 24rpx;
+          margin-top: 30rpx;
+          margin-bottom: 80rpx;
+        }
+      }
+    }
+  }
+  .customized-popup-transfer{
+    .popup-main.popup{
+      vertical-align: initial;
+      margin-top: 470rpx
+    }
+  }
+
+  .activity-head{
+    height: 260rpx;
+    background: #fff;
+    position: relative;
+    .head-cont{
+      // display: inline-block;
+      width: 530rpx;
+      margin-left: 30rpx;
+      text-align: left;
+      font-size: 24rpx;
+      margin-top: 22rpx;
+      float: left;
+      .activity-title{
+        overflow: hidden;
+        // height: 24rpx;
+        // line-height: 24rpx;
+        height: 54rpx;
+        line-height: 54rpx;
+        font-size: 30rpx;
+        // color: #000;
+        font-weight: bold;
+        .wedding-name-man,
+        .wedding-name-woman {
+          display: inline-block;
+          // height: 54rpx;
+          // line-height: 54rpx;
+          // font-size: 30rpx;
+          color: @color-333333;
+          float: left;
+        }
+        .icon-heart {
+          display: inline-block;
+          width: 60rpx;
+          height: 54rpx;
+          background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-heart.png')
+            0 0 no-repeat;
+          background-size: 100% 100%;
+          margin: 0 20rpx;
+          float: left;
+        }
+      }
+      .activity-type{
+        height: 40rpx;
+        color: #666;
+        text-align: left;
+        margin: 5rpx auto;
+        position: relative;
+        &.type-plus{
+          .activity-man{
+            left: 100rpx;
+          }
+        }
+        .activity-type-text{
+          color: #FF4C2F;
+          font-size: 20rpx;
+          padding: 0rpx 6rpx;
+          border: 2rpx solid #FF4C2F;
+          border-radius: 20rpx;
+        }
+        .activity-man{
+          display: inline-block;
+          height: 36rpx;
+          line-height: 40rpx;
+          // margin-left: 20rpx;
+          font-size: 26rpx;
+          position: absolute;
+          top: -2rpx;
+          left: 75rpx;
+          right: 0;
+          overflow: hidden;
+        }
+      }
+      .activity-date{
+        overflow: hidden;
+        height: 26rpx;
+        line-height: 26rpx;
+        color: #666;
+        margin-top: 15rpx;
+        font-size: 26rpx;
+      }
+    }
+    .activity-tab-wrap{
+      height: 100rpx;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      .box-model();
+      .tab-item-wrap{
+        .box-flex(1);
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        .tab-item{
+          display: inline-block;
+          padding: 0 33rpx;
+          height: 100rpx;
+          line-height: 100rpx;
+          font-size: 30rpx;
+          color: #666;
+          position: relative;
+          &::before {
+            content: '';
+            display: inline-block;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 5rpx;
+          }
+        }
+
+        &.active{
+          .tab-item {
+            color: #FF4C2F;
+            font-weight: bold;
+            &::before {
+              background: #FF4C2F;
+            }
+          }
+        }
+      }
+    }
+  }
+  .activity-game-list{
+    // position: absolute;
+    // top: 620rpx;
+    // left: 0;
+    // right: 0;
+    // bottom: 0;
+    // overflow-y: auto;
+    &.no-video{
+      // top: 750rpx;
+    }
+    .list-wrap{
+      margin: 20rpx 25rpx;
+      padding-bottom: 160rpx;
+      .game-list-group{
+        .game-list-group-name{
+          margin: 30rpx auto;
+          color: #666666;
+          font-size: 30rpx;
+          font-weight: bold;
+        }
+      }
+      .game-list-item{
+        // height: 236rpx;
+        background: #FFF;
+        margin: 10rpx auto;
+        .list-item-wrap{
+          margin: 0 30rpx;
+          position: relative;
+          font-weight: bold;
+
+          &.RED_PACK, &.SHAKE {
+            .game-item-info{
+              .icon-game{
+                background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-game-package.png') center center no-repeat;
+                background-size: 100% 100%;
+              }
+            }
+          }
+          &.COUNT_NUM{
+            .game-item-info{
+              .icon-game{
+                background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-game-money.png') center center no-repeat;
+                background-size: 100% 100%;
+              }
+            }
+          }
+          &.ANSWER_GAME {
+            .game-item-info{
+              .icon-game{
+                background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-game-answer.png') center center no-repeat;
+                background-size: 100% 100%;
+                // &::before {
+                //   content: '答';
+                //   color: #FFF;
+                //   font-size: 24rpx;
+                // }
+              }
+            }
+          }
+          .game-item-info{
+            height: 136rpx;
+            position: relative;
+            .icon-game{
+              float: left;
+              width: 76rpx;
+              height: 76rpx;
+              margin-top: 30rpx;
+              background: #ff2e28;
+              border-radius: 50%;
+
+              &.game-money{
+                background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-game-money.png') center center no-repeat;
+                background-size: 100% 100%;
+              }
+              &.game-package{
+                background: url('@{resourcePath}MarketActivityShake/assets/images/icon/icon-game-package.png') center center no-repeat;
+                background-size: 100% 100%;
+              }
+            }
+            .game-name{
+              height: 40rpx;
+              line-height: 40rpx;
+              text-align: left;
+              position: absolute;
+              top: 50rpx;
+              left: 96rpx;
+              right: 170rpx;
+              font-size: 28rpx;
+              color: #333;
+              .text-overflow();
+            }
+            .game-status{
+              float: right;
+              height: 40rpx;
+              width: 120rpx;
+              line-height: 40rpx;
+              text-align: center;
+              font-size: 24rpx;
+              color: #666666;
+              border-radius: 20rpx;
+              margin-top: 50rpx;
+              &.enable {
+                .vertical(#FF985C, #FD4445);
+                color: #FFF;
+              }
+            }
+            .btn-game-handle{
+              float: right;
+              margin-top: 50rpx;
+              height: 40rpx;
+              padding: 0 24rpx;
+              line-height: 40rpx;
+              border: 2rpx solid #FF4C2F;
+              color: #FF4C2F;
+              font-size: 24rpx;
+              border-radius: 20rpx;
+              margin-left: 20rpx;
+            }
+          }
+          .game-item-handle{
+            // height: 98rpx;
+            border-top: 2rpx solid #E3E3E3;
+            text-align: center;
+            .btn-game-handle{
+              display: inline-block;
+              height: 68rpx;
+              padding: 0 24rpx;
+              line-height: 68rpx;
+              border: 2rpx solid #FF4C2F;
+              color: #FF4C2F;
+              font-size: 24rpx;
+              border-radius: 34rpx;
+              margin-top: 30rpx;
+              margin-bottom: 30rpx;
+              &.part-game{
+                border: none;
+                .vertical(#FF985C, #FD4445);
+                color: #FFF;
+                padding: 0 36rpx;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .video-swiper-all{
+    height: 423rpx;
+    width: 100%;
+    position: relative;
+  }
+  .switch-wrap{
+    height: 40rpx;
+    position: absolute;
+    bottom: 25rpx;
+    // left: 25rpx;
+    z-index: 999;
+    left: 50%;
+    margin-left: -100rpx;
+    .switch-item{
+      display: inline-block;
+      padding: 0 26rpx;
+      height: 40rpx;
+      line-height: 40rpx;
+      font-size: 24rpx;
+      color: #333;
+      background: rgba(255, 255, 255, .5);
+      margin-right: 10rpx;
+      border-radius: 20rpx;
+      &.video {
+        padding-left: 36rpx;
+        &::before {
+          content: '';
+          display: inline-block;
+          width: 14rpx;
+          height: 40rpx;
+          position: absolute;
+          top: 0;
+          left: 16rpx;
+          background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAgCAYAAAABtRhCAAAA2UlEQVRIS93X0Q0CIQyA4d5KsJkucFvcJuoU5YEHtzgHkFCjkYczhLTQ8uAt8OX4E1oW59wFAM6IeIcJ3+K9JwB45py3lNIaY3xYugUsxp5zXkMIGwAkC/gX/BhE9D7eEyLetNEqWBAiumr3bYJfWLUvB1TtKwFV+orB0b7dYG/fUVDcVwtk91UFOX1NwFZfS7DadwZ46PuX4GHkWf5h9dI3AVtjTRXkDG4tkL2ajILi4dwN9q4fYpDTqbV4SUB2p1FQ3Kkb7O0kBkc7SUCVThxQtVMTnP1cewFnNTnsGzeHfQAAAABJRU5ErkJggg==') 0 17rpx no-repeat;
+          background-size: 14rpx 16rpx;
+        }
+      }
+      &.active {
+        background: #FF2E28;
+        color: #FFF;
+        &.video {
+          &::before {
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAgCAYAAAABtRhCAAAA0ElEQVRIS73X2w3CMBBE0ZmWoQG6oBOgE7qAAkDayAJ/BNnY+3IKyJFylYxDEbkAOJK8Y8FFEREALwBnACeSz0y3gtV4FLTgJN8Z8C9YjfJ4DyRv0WgPrM41uu8ILHBo3xkwtK8GDOlrAV19PaCprxdU940Cp/tGg8O+WWC3bybY7LsC3Pf9zlP0N7p1v88gLAB3k5cJNj/6WWB31qLB4XBHgdNHEy+oHmcPaDp+WMBhp38vtQac7uQF1Z08oKmTBXR10oAhnWbA0E4jcOnv2gaTgsyrfTYZ5wAAAABJRU5ErkJggg==') 0 17rpx no-repeat;
+            background-size: 14rpx 16rpx;
+          }
+        }
+      }
+    }
+  }
+  
+  .no-activity-game{
+    width: 350rpx;
+    height: 300rpx;
+    background: url('@{resourcePath}MarketActivityShake/assets/images/background/no-activity-game.png') top center no-repeat;
+    background-size: 341rpx 235rpx;
+    margin: 0 auto;
+    margin-top: 40rpx;
+    position: relative;
+    padding-bottom: 160rpx;
+    .null-tip{
+      position: absolute;
+      top: 250rpx;
+      left: 0;
+      text-align: center;
+      font-size: 30rpx;
+      color: #666;
+      .goto{
+        color: #FF2E28;
+      }
+    }
+  }
+
+  .activity-wish-list{
+    padding-bottom: 150rpx;
+    margin-top: 20rpx;
+    .wish-item{
+      background: #FFF;
+      position: relative;
+      &:last-child{
+        .wish-content{
+          border: none;
+        }
+      }
+      .thumb{
+        width: 88rpx;
+        height: 88rpx;
+        border-radius: 100%;
+        position: absolute;
+        top: 16rpx;
+        left: 30rpx;
+      }
+      .wish-content{
+        margin-left: 138rpx;
+        border-bottom: 2rpx solid #e3e3e3;
+        padding: 26rpx 0;
+        .wish-title{
+          height: 30rpx;
+          margin-right: 25rpx;
+          position: relative;
+          .user-name{
+            position: absolute;
+            top: 0;
+            right: 224rpx;
+            left: 0;
+            height: 30rpx;
+            line-height: 30rpx;
+            font-size: 30rpx;
+            color: #333;
+            text-align: left;
+            .text-overflow();
+          }
+          .date {
+            float: right;
+            font-size: 22rpx;
+            height: 30rpx;
+            line-height: 30rpx;
+            color: #999;
+          }
+        }
+        .wish-txt{
+          margin-right: 25rpx;
+          font-size: 24rpx;
+          line-height: 24rpx;
+          color: #999;
+          margin-top: 16rpx;
+          word-wrap: break-word;
+          .delete {
+            color: #FF2E28;
+            padding: 0 15rpx;
+          }
+        }
+      }
+    }
+  }
+  .send-wish-wrap{
+    height: 96rpx;
+    position: fixed;
+    bottom: 35rpx;
+    left: 30rpx;
+    right: 30rpx;
+    .wish-inp-wrap{
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 284rpx;
+      bottom: 0;
+      background: #FFF;
+      border: 2rpx solid #eee;
+      border-radius: 48rpx;
+      overflow: hidden;
+      input{
+        height: 100%;
+        background: transparent;
+        border: none;
+        margin-left: 40rpx;
+      }
+    }
+    .btn-send-wish{
+      height: 96rpx;
+      width: 264rpx;
+      text-align: center;
+      line-height: 96rpx;
+      border-radius: 48rpx;
+      .vertical(#FF985C, #FD4445);
+      font-size: 30rpx;
+      color: #fff;
+      float: right;
+    }
+  }
+  .popup-foot {
+    height: 100rpx;
+    border: none;
+    .popup-button-slot {
+      width: 100%;
+      position: relative;
+      .button-cancel {
+        float: left;
+        width: 50%;
+        height: 100rpx;
+        line-height: 100rpx;
+        text-align: center;
+        color: #ff4c2f;
+      }
+      .button-sure {
+        position: absolute;
+        left: 50%;
+        right: 0;
+        height: 100rpx;
+        top: 0;
+        line-height: 100rpx;
+        text-align: center;
+        color: #fff;
+        background: #ff4c2f;
+      }
+    }
+  }
+  .popup-cont-slot {
+    margin-bottom: 80rpx;
+    text-align: center;
+
+    .delete-remark {
+      margin-top: 40rpx;
+      font-size: 24rpx;
+      .red {
+        color: #ff4c2f;
+      }
+    }
+  }
+  .game-switch{
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    z-index: -1;
+    &.active{
+      height: auto;
+      overflow: initial;
+      z-index: inherit;
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <!-- <view class="page-activity-transfer"> -->
+  <scroll-view class="page-activity-transfer" scroll-y bindscrolltolower="scrollLower" bindscrolltoupper="scrollUpper">
+    <view class="video-swiper-all" wx:if="{{activeVideo && (swiperDataSet && swiperDataSet.length)}}">
+      <!-- <video class="page-activity-video" id="j-activity-video" wx:if="{{videoSwiperStatus === 'video'}}"
+        src="{{activeVideo}}"
+        autoplay="true"
+        controls>
+      </video>
+      <swiper-banner class="swiper-goods-detail" width="100%" height="423rpx" wx:if="{{videoSwiperStatus === 'swiper'}}"
+        :dataset.sync="swiperDataSet" />
+      <view class="switch-wrap" @tap="switchVideoSwiper">
+        <view class="{{ 'switch-item video ' + (videoSwiperStatus === 'video' ? 'active' : '') }}" data-type="video">视频</view>
+        <view class="{{ 'switch-item ' + (videoSwiperStatus === 'swiper' ? 'active' : '')}}" data-type="swiper">图片</view>
+      </view> -->
+      <swiper-banner class="swiper-goods-detail" width="100%" height="423rpx" wx:if="{{videoSwiperStatus === 'swiper'}}"
+        :dataset.sync="swiperDataSet" />
+    </view>
+    <!-- <view class="page-video" wx:elif="{{activeVideo}}">
+      <video class="page-activity-video" src="{{activeVideo}}"
+        id="j-activity-video"
+        autoplay="true"
+        controls>
+      </video>
+    </view> -->
+    <swiper-banner class="swiper-goods-detail" width="100%" height="423rpx"
+      wx:elif="{{swiperDataSet && swiperDataSet.length}}"
+      :dataset.sync="swiperDataSet" />
+    <view class="page-activity-default" wx:else>
+      <view class="tip-text-en">
+        <text class="text-item">W</text>
+        <text class="text-item">E</text>
+        <text class="text-item">L</text>
+        <text class="text-item">C</text>
+        <text class="text-item">O</text>
+        <text class="text-item">M</text>
+        <text class="text-item">E</text>
+      </view>
+      <view class="tip-text-ch">欢 迎 您 的 到 来</view>
+    </view>
+    <view class="wedding-name">
+      <view class="wedding-name-cont" wx:if="{{activityClass !== 'baobao' && activityClass !== 'birthday' && weddingPeopleWoman !== '-'}}">
+        <text class="wedding-name-man">{{weddingPeopleMan}}</text>
+        <i class="icon-heart"></i>
+        <text class="wedding-name-woman">{{weddingPeopleWoman}}</text>
+      </view>
+      <view class="wedding-name-cont" wx:else>
+        <text class="wedding-name-man">{{activityLinkman || weddingPeopleMan}}</text>
+      </view>
+    </view>
+    <view class="activity-head">
+      <view class="head-cont">
+        <view class="activity-title">{{activityInfo.activityName}}</view>
+        <view class="activity-type {{activityClassText.length === 3 ? 'type-plus' : ''}}">
+          <text class="activity-type-text">{{activityClassText}}</text>
+          <text class="activity-man" wx:if="{{activityClass === 'marry' || activityClass === 'wedding'}}">新郎：{{weddingPeopleMan}} 新娘：{{weddingPeopleWoman}}</text>
+          <text class="activity-man" wx:if="{{activityClass === 'baobao'}}">宝宝：{{activityLinkman || weddingPeopleMan}}</text>
+          <text class="activity-man" wx:if="{{activityClass === 'birthday'}}">寿星：{{activityLinkman || weddingPeopleMan}}</text>
+          <text class="activity-man" wx:if="{{activityClass === 'themeCustom'}}">主题：{{activityLinkman || weddingPeopleMan}}</text>
+        </view>
+        <view class="activity-date">结束时间：{{activityEndTime || ''}}</view>
+      </view>
+      <view class="fabulous-wrap">
+        <view class="fabulous-btn {{activeFabulous}}" @tap="fabulousFn"></view>
+        <view class="fabulous-heart {{activeHeart}}">
+          <i class="icon-heart-a"></i>
+          <i class="icon-heart-b"></i>
+          <i class="icon-heart-c"></i>
+          <i class="icon-heart-d"></i>
+          <i class="icon-heart-e"></i>
+          <i class="icon-heart-f"></i>
+          <i class="icon-heart-g"></i>
+        </view>
+        <view class="fabulous-number-wrap">
+          <text class="number">{{fabulousNumber}}</text>
+        </view>
+      </view>
+      <view class="activity-tab-wrap" @tap="tabSwitch">
+        <view class="tab-item-wrap {{(tabKeys === 'game' ? ' active' : '')}}" data-key="game">
+          <view class="tab-item" data-key="game">游戏</view>
+        </view>
+        <view class="tab-item-wrap {{(tabKeys === 'wish' ? ' active' : '')}}" data-key="wish">
+          <view class="tab-item" data-key="wish">祝福墙</view>
+        </view>
+      </view>
+    </view>
+    <view class="game-switch {{tabKeys === 'game' ? ' active' : ''}}">
+      <view class="activity-game-list">
+        <view class="list-wrap" wx:if="{{gameInfoList && gameInfoList.length}}">
+          <!-- 进行中的游戏 -->
+          <view class="game-list-group" wx:if="{{gameInfoListEnable && gameInfoListEnable.length}}">
+            <view class="game-list-group-name">进行中的游戏</view>
+            <repeat for="{{gameInfoListEnable}}" key="index" index="index" item="item">
+              <view class="game-list-item">
+                <view class="list-item-wrap {{item.gameType}}">
+                  <view class="game-item-info">
+                    <i class="icon-game"></i>
+                    <view class="game-name">{{item.activityGameName}}</view>
+                    <text class="btn-game-handle" @tap="gameResult" data-item="{{item}}">游戏结果</text>
+                  </view>
+                  <view class="game-item-handle">
+                    <!-- <text class="btn-game-handle part-game" @tap="toPlayGame" data-item="{{item}}">参与游戏{{item.surplusNo > 1 ? ' (' + item.surplusNo + ')' : ''}}</text> -->
+                    <text class="btn-game-handle part-game" @tap="toPlayGame" data-item="{{item}}" wx:if="{{item.surplusNo}}">参与游戏{{item.surplusNo > 1 ? ' (' + item.surplusNo + ')' : ''}}</text>
+                  </view>
+                </view>
+              </view>
+            </repeat>
+          </view>
+          <!-- 已结束的游戏 -->
+          <view class="game-list-group" wx:if="{{gameInfoListDisable && gameInfoListDisable.length}}">
+            <view class="game-list-group-name">已结束的游戏</view>
+            <repeat for="{{gameInfoListDisable}}" key="index" index="index" item="item">
+              <view class="game-list-item">
+                <view class="list-item-wrap {{item.gameType}}">
+                  <view class="game-item-info">
+                    <i class="icon-game"></i>
+                    <view class="game-name">{{item.activityGameName}}</view>
+                    <text class="btn-game-handle" @tap="gameResult" data-item="{{item}}">游戏结果</text>
+                  </view>
+                </view>
+              </view>
+            </repeat>
+          </view>
+        </view>
+        <view class="no-activity-game" @tap="goToHotel" wx:else>
+          <view class="null-tip">暂无互动游戏,去<text class="goto">参观商家</text></view>
+        </view>
+      </view>
+      <view class="buttom-btn-wrap">
+        <view class="btn-goto-hotel" @tap="goToHotel">
+          <view class="btn-goto">参观商家</view>
+        </view>
+        <view class="btn-goto-coupon" @tap="goToCoupon">
+          <view class="btn-goto">商家礼包</view>
+        </view>
+      </view>
+    </view>
+    <view class="game-switch {{tabKeys === 'wish' ? ' active' : ''}}">
+      <view class="activity-wish-list" @tap="deleteMyWish">
+        <repeat for="{{wishDataList}}" key="index" index="index" item="item">
+          <view class="wish-item">
+            <image class="thumb" src="{{item.profilePhoto}}" />
+            <view class="wish-content">
+              <view class="wish-title">
+                <view class="user-name">{{item.userName}}</view>
+                <view class="date">{{item.pubDate}}</view>
+              </view>
+              <div class="wish-txt">{{item.content}}<text class="delete" data-id="{{item.id}}" wx:if="{{item.userNo == userNo}}">删除</text></div>
+            </view>
+          </view>
+        </repeat>
+        <view class="no-activity-game" wx:if="{{!wishDataList || !wishDataList.length}}">
+          <view class="null-tip">在下方留下你的祝福吧</view>
+        </view>
+      </view>
+      <view class="send-wish-wrap">
+        <view class="wish-inp-wrap">
+          <input type="text" maxlength="50" placeholder="我也要送祝福..." data-name="wishContent" value="{{wishContent}}" bindinput="wishValueChange" />
+        </view>
+        <view class="btn-send-wish" @tap="sendWish">发送</view>
+      </view>
+    </view>
+    <customized-popup customClass="customized-popup-control" customMainClass="customized-popup-transfer" :buttonText.sync="customizedBtnText" />
+    <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" :onCloseAuthorize="onCloseAuthorizeFn" />
+    <popup-tip :buttons="tipButtons" title="提示" titleTextAlign="center" :onSure="deleteSure">
+      <view class="popup-cont-slot" slot="popup-body-cont">
+        <view>确定删除？</view>
+        <!-- <view wx:if="{{shareStatus === 'yes'}}" class="delete-remark">
+          <text class="red">电子请柬已发送，</text>删除后，将无法查看请柬内容
+        </view> -->
+      </view>
+      <view class="popup-button-slot" slot="popup-button-slot">
+        <view class="button-cancel">取消</view>
+        <view class="button-sure" data-key="sure">确定</view>
+      </view>
+    </popup-tip>
+  </scroll-view>
+</template>
+
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { Tips, PATCH, Utils } from '@/utils'
+import { STATUS, LANG } from '@/configs'
+import { NoActivityService, RedpacketService } from '../services'
+import { CommonsService } from '@/services'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import SwiperComponent from '@/components/swiper-component/index'
+import CustomizedPopupComponent from '@/components/customized-popup-component/index'
+import PopupComponent from '@/components/popup-component/index'
+
+export default class ReceiveListPages extends wepy.page {
+  config = {
+    navigationBarTitleText: '喜事宝'
+  }
+
+  components = {
+    // 用户认证授权组件
+    'user-authorize': UserAuthorizeComponent,
+    // 图片切换组件
+    'swiper-banner': SwiperComponent,
+    // 自定义弹出框
+    'customized-popup': CustomizedPopupComponent,
+    'popup-tip': PopupComponent
+  }
+
+  data = {
+    // 提示按钮
+    tipButtons: null,
+    customizedBtnText: '查看优惠券 >',
+    // 授权类型
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo', 'PhoneNumber'],
+    // 顶部图片集合
+    swiperDataSet: [],
+    // 新郎
+    weddingPeopleMan: '-',
+    // 新娘
+    weddingPeopleWoman: '-',
+    // 进入酒店、商铺按钮de提示文本
+    buttomBtnText: '酒店',
+    // 酒店ID
+    hotelId: '',
+    // 活动ID
+    activityId: '',
+    userNo: '',
+    // 活动状态（INIT.未开始 DOING.进行中 FINISH.结束）
+    activityStatus: '',
+    // 是否已经点赞(active)
+    activeFabulous: '',
+    // 点赞效果(active)
+    activeHeart: '',
+    // 点赞数
+    fabulousNumber: 0,
+    // 是否是从当前页跳转回来
+    isResultSelf: '',
+    // 宴会类型
+    activityClass: 'birthday',
+    // activityClassText
+    activityClassText: '',
+    // 除婚宴外的其他宴会主人名称
+    activityLinkman: '',
+    // 活动模式类型(gather.宴会 scattered.零餐)
+    activityPatternType: '',
+    // 视频地址
+    activeVideo: '',
+    // 活动游戏列表(除未开始外的所有)
+    gameInfoList: [],
+    // 进行中的游戏
+    gameInfoListEnable: [],
+    // 已结束的游戏
+    gameInfoListDisable: [],
+    gameListThree: null,
+    activityEndTime: '',
+    resultPage: '',
+    tempDataset: '',
+    activityInfo: null,
+    videoSwiperStatus: 'swiper',
+    newGamePlayItem: null,
+    tabKeys: 'game',
+    wishContent: null,
+    wishDataList: null,
+    wishListPager: 20,
+    wishPage: 1,
+    wishTotalPages: 1,
+    delWishId: null,
+    refreshCommentStatus: true
+  }
+
+  methods = {
+    /**
+     * 切换图片或视频
+     */
+    switchVideoSwiper(e) {
+      let switchType = e.target.dataset.type
+      this.videoSwiperStatus = switchType
+      this.$apply()
+    },
+    /**
+     * 参与活动
+     */
+    // partActivity() {
+    //   this.partActivity()
+    // },
+    /**
+     * 参观酒店
+     */
+    goToHotel() {
+      clearTimeout(this.gameListThree)
+      this.gameListThree = null
+      if (this.hotelId) {
+        wx.navigateTo({
+          url: '../../MarketHotel/pages/index?id=' + this.hotelId
+        })
+      }
+    },
+    /**
+     * 领取礼包卡券
+     */
+    goToCoupon() {
+      clearTimeout(this.gameListThree)
+      this.gameListThree = null
+      wx.navigateTo({
+        // url: 'coupon-center?hotelIndex=true&hotelId=' + this.hotelId
+        url: 'coupon-center?hotelId=' + this.hotelId + '&activityId=' + this.activityId + '&isAddUnion=true'
+      })
+    },
+    /**
+     * 点赞
+     */
+    fabulousFn() {
+      if (!this.activeFabulous) {
+        let that = this
+        this.activityPraise('yes', () => {
+          this.praiseAnimation.call(that)
+        })
+      } else {
+        Tips.msg('您已经点过赞了哦~')
+      }
+    },
+    /**
+     * 游戏结果
+     */
+    gameResult(e) {
+      clearTimeout(this.gameListThree)
+      this.gameListThree = null
+      let dataset = e.currentTarget.dataset.item
+      if (dataset) {
+        if (dataset.gameType === 'RED_PACK' || dataset.gameType === 'SHAKE') {
+          let surplusNo = dataset.surplusNo
+          // 红包结果页
+          wx.navigateTo({
+            url: './game-result?activityId=' + dataset.activityGameId + '-_-' + dataset.activityId + (surplusNo === 1 ? '&resultStatus=0' : '')
+          })
+        } else if (dataset.gameType === 'COUNT_NUM') {
+          // 数钱结果页
+          wx.navigateTo({
+            url: './counting-money/ranking-list?activityId=' + dataset.activityId + '&activityGameId=' + dataset.activityGameId
+          })
+        } else if (dataset.gameType === 'ANSWER_GAME') {
+          // 答题结果页
+          wx.navigateTo({
+            url: './answer/ranking-list?activityId=' + dataset.activityId + '&activityGameId=' + dataset.activityGameId
+          })
+        }
+      }
+    },
+    /**
+     * 参与游戏
+     */
+    toPlayGame(e) {
+      clearTimeout(this.gameListThree)
+      this.gameListThree = null
+      let dataset = e.currentTarget.dataset.item
+      if (dataset) {
+        this.playGameFn(dataset)
+      }
+    },
+    tabSwitch(e) {
+      let dataset = e.target.dataset
+      if (dataset.key) {
+        this.tabKeys = dataset.key
+        this.$apply()
+      }
+    },
+    wishValueChange(e) {
+      this.wishContent = e.detail.value
+    },
+    sendWish() {
+      // console.info(this.wishContent)
+      this.commentPublish()
+    },
+    deleteMyWish(e) {
+      let dataset = e.target.dataset || {}
+      let dataId = dataset.id
+      if (dataId) {
+        this.delWishId = dataId
+        this.$invoke('popup-tip', 'open')
+      }
+    },
+    scrollLower() {
+      if (this.tabKeys === 'wish') {
+        this.refreshCommentStatus = false
+        if (this.wishTotalPages >= this.wishPage) {
+          this.commentList()
+        }
+      }
+    },
+    scrollUpper () {
+      if (this.tabKeys === 'wish') {
+        this.refreshCommentStatus = true
+      }
+    }
+  }
+
+  deleteSure() {
+    if (this.delWishId) {
+      CommonsService.commentDelete({
+        data: {
+          userNo: this.userNo,
+          commentId: this.delWishId
+        }
+      }).then(res => {
+        this.wishPage = 1
+        this.commentList()
+      }).catch(err => {
+        Tips.error(err.message)
+      })
+    }
+  }
+
+  playGameFn(dataset) {
+    let gameType = dataset.gameType
+    NoActivityService.playGameRedirectPage({
+      data: {
+        activityGameId: dataset.activityGameId,
+        userNo: this.userNo
+      }
+    }).then(res => {
+      let resultPage = res.resultPage
+      this.resultPage = resultPage
+      if (resultPage === 0) {
+        // 去游戏
+        this.partActivityHand(dataset)
+      } else if (resultPage === 5) {
+        // 去结果页
+        if (gameType === 'RED_PACK' || gameType === 'SHAKE') {
+          // 红包结果页
+          wx.navigateTo({
+            url: './game-result?activityId=' + dataset.activityGameId + '-_-' + dataset.activityId
+          })
+        } else if (gameType === 'COUNT_NUM') {
+          // 数钱结果页
+          wx.navigateTo({
+            url: './counting-money/ranking-list?activityId=' + dataset.activityId + '&activityGameId=' + dataset.activityGameId
+          })
+        } else if (gameType === 'ANSWER_GAME') {
+          // 答题结果页
+          wx.navigateTo({
+            url: './answer/ranking-list?activityId=' + dataset.activityId + '&activityGameId=' + dataset.activityGameId
+          })
+        }
+      } else if (resultPage === 11) {
+        // 刷新状态
+        clearTimeout(this.gameListThree)
+        this.activityGameListInfo()
+      } else if (resultPage === 7) {
+        // 跳个人中心页面
+        wx.redirectTo({ url: '/subpackages/MarketHotel/pages/my-wallet' })
+      } else if (resultPage === 9) {
+        // 无活动，跳转中间页
+        wx.redirectTo({
+          url: 'no-activity?business=' + this.hotelId
+        })
+      }
+    }).catch(err => {
+      Tips.error(err)
+    })
+  }
+
+  partActivityHand(dataset) {
+    if (this.activityPatternType === 'scattered') {
+      let phoneNumber = wx.getStorageSync(STATUS.PHONE_NUMBER)
+      if (phoneNumber) {
+        this.toActivity(dataset)
+      } else {
+        this.tempDataset = dataset
+        this.$invoke('user-authorize', 'authorizeActivation', {activityId: this.activityId})
+      }
+    } else {
+      this.toActivity(dataset)
+    }
+  }
+
+  /**
+   * 增加酒店足迹
+   */
+  hotelTrackAdd() {
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (this.hotelId && userNo) {
+      CommonsService.hotelTrackAdd({
+        data: { hotelId: this.hotelId, userNo }
+      }).then(res => {})
+    } else {
+      setTimeout(() => {
+        this.hotelTrackAdd()
+      }, 500)
+    }
+  }
+
+  toActivity(dataset) {
+    wx.reLaunch({
+      url: 'shake-purpose?id=' + this.activityId +
+        '&activityGameId=' + dataset.activityGameId +
+        '&resultPage=' + this.resultPage +
+        '&gameType=' + dataset.gameType
+    })
+  }
+
+  /**
+   * 所有授权完成
+   */
+  onAuthorizeAllFn(data) {
+    this.toActivity(this.tempDataset || {})
+  }
+
+  /**
+   * 关闭授权
+   */
+  onCloseAuthorizeFn() {}
+
+  /**
+   * 点赞的动画效果
+   */
+  praiseAnimation() {
+    this.activeFabulous = 'active'
+    this.activeHeart = 'show'
+    this.$apply()
+    let that = this
+    setTimeout(() => {
+      that.activeHeart = 'show active'
+      that.$apply()
+      setTimeout(() => {
+        that.activeHeart = 'show hide'
+        that.$apply()
+        setTimeout(() => {
+          that.activeHeart = ''
+          that.$apply()
+        }, 200)
+      }, 800)
+    }, 100)
+  }
+  /**
+   * 点赞
+   */
+  activityPraise(isPraise, callBack) {
+    let params = {
+      userNo: this.userNo,
+      activityId: this.activityId
+    }
+    if (isPraise !== null && isPraise !== undefined) {
+      params['praise'] = isPraise
+    }
+    NoActivityService.activityPraise({
+      data: params
+    })
+      .then(res => {
+        let isOneself = res.isOneself
+        if (isOneself === 'no') {
+          if (callBack) {
+            callBack(res)
+          } else {
+            this.activeFabulous = 'active'
+          }
+        } else {
+          this.activeFabulous = ''
+        }
+        this.fabulousNumber = res.totalPraise
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 获取酒店信息
+   */
+  getHotelInfo() {
+    NoActivityService.hotelInfo({
+      data: {
+        hotelId: this.hotelId
+      }
+    })
+      .then(res => {
+        let apiHotelInfo = res.apiHotelInfo || {}
+        this.hotelId = apiHotelInfo.id
+        this.buttomBtnText =
+          apiHotelInfo.type === 'HOTEL' ? '酒店' : '商户'
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.messag)
+      })
+  }
+
+  /**
+   * 游戏列表
+   */
+  activityGameListInfo() {
+    NoActivityService.activityGameListInfo({
+      data: {
+        userNo: this.userNo,
+        activityId: this.activityId
+      },
+      isLoading: false
+    }).then(res => {
+      this.gameInfoList = res.gameInfoList || []
+      if (this.gameInfoList && this.gameInfoList.length) {
+        let firstGameItem = this.gameInfoList[0]
+        let tipStorageKey = firstGameItem.activityId + '-' + firstGameItem.activityGameId
+        let storageNewGameTip = wx.getStorageSync(tipStorageKey)
+        if (firstGameItem.activityGameStatus === 'ENABLE' && !storageNewGameTip) {
+          this.newGamePlayItem = firstGameItem
+          if (firstGameItem.surplusNo) {
+            let that = this
+            setTimeout(function() {
+              that.openNewGameTip()
+              wx.setStorageSync(tipStorageKey, true)
+            }, 980)
+          }
+        }
+      }
+      let pauseCount = 0
+      // 进行中的游戏
+      this.gameInfoListEnable = []
+      // 已结束的游戏
+      this.gameInfoListDisable = []
+      Utils.forEach(this.gameInfoList, (item) => {
+        let transferStatus = LANG.activeStatus[item.activityGameStatus] || {}
+        item.gameStatusText = transferStatus.text
+        item.gameStatus = transferStatus.key
+        let gameStatus = transferStatus.key
+        // 进行中的游戏
+        if (gameStatus === 'enable') {
+          this.gameInfoListEnable.push(item)
+        } else if (gameStatus === 'disable') {
+          // 已结束的游戏
+          this.gameInfoListDisable.push(item)
+        } else if (gameStatus === 'pause') {
+          pauseCount++
+        }
+      })
+      if (pauseCount >= this.gameInfoList.length) {
+        // 如果全是未开始的游戏，清空列表，显示空提示
+        this.gameInfoList = []
+      }
+      this.$apply()
+    })
+
+    let that = this
+    // 定时5秒刷新一次游戏列表
+    this.gameListThree = setTimeout(() => {
+      that.activityGameListInfo()
+      that.refreshComment()
+    }, 10000)
+  }
+
+  /**
+   * 获取活动信息
+   */
+  getActivityInfo(callBack) {
+    RedpacketService.activityInfo({
+      data: {
+        userNo: this.userNo,
+        activityId: this.activityId
+      }
+    }).then(res => {
+      let activityInfo = res.activityInfo || {}
+      this.activityStatus = activityInfo.status
+      this.activityPatternType = activityInfo.activityPatternType
+      if (!this.activityId) {
+        this.activityId = res.activityId
+      }
+      // // 业务类型
+      // let businessType = activityInfo.businessType
+      // if (businessType === 'union') {
+      //   // 如果为联盟类型的活动，保存联盟ID
+      //   let businessId = activityInfo.businessId
+      //   wx.setStorageSync(STATUS.UNIONIDS + this.activityId, businessId)
+      // }
+      // let UID = wx.getStorageSync(STATUS.UID)
+      // if (UID) {
+      //   wx.setStorageSync(STATUS.UNIONIDS + this.activityId, UID)
+      //   wx.setStorageSync(STATUS.UID, '')
+      // }
+      this.activityPraise()
+      // 获取游戏列表
+      this.activityGameListInfo()
+      // 获取评论
+      this.commentList()
+      if (callBack) {
+        callBack.call(this)
+      } else {
+        this.activityInfo = activityInfo
+        this.activeVideo = ((activityInfo.videoList || [])[0] || {}).picture
+        this.swiperDataSet = activityInfo.pictureList || []
+        this.activityClass = activityInfo.activityClass
+        this.activityClassText = (LANG.couponType[activityInfo.activityClass] || {}).text
+        if (
+          activityInfo.activityClass === 'baobao' ||
+          activityInfo.activityClass === 'birthday'
+        ) {
+          // let parseName = JSON.parse(activityInfo.activityLinkman) || {}
+          // this.activityLinkman = parseName[activityInfo.activityClass] || '-'
+          this.activityLinkman = activityInfo.activityLinkman || '-'
+        } else {
+          let parseName = activityInfo.activityLinkman.split('&')
+          this.weddingPeopleMan = parseName[0]
+          this.weddingPeopleWoman = parseName[1]
+        }
+        this.activityEndTime = activityInfo.endTime
+        this.hotelId = res.activityMemberId
+        this.getHotelInfo()
+      }
+      if (this.isResultSelf) {
+        this.customizedBtnText = '查看优惠券 >'
+        this.$apply()
+        this.$invoke('customized-popup', 'open', {
+          title: '提示',
+          message: '等待主持人开始游戏',
+          remark: '主办方为您准备了许多优惠活动，快去看看吧~',
+          onSure: () => {
+            wx.navigateTo({
+              // url: 'coupon-center?hotelId=' + this.hotelId
+              url: 'coupon-center?hotelId=' + this.hotelId + '&activityId=' + this.activityId + '&isAddUnion=true'
+            })
+          }
+        })
+      }
+      this.$apply()
+    })
+  }
+
+  openNewGameTip() {
+    this.customizedBtnText = '立即开始 (5s)'
+    this.$apply()
+    let that = this
+    let time = 5
+    let runThread = () => {
+      setTimeout(() => {
+        if (time > 0) {
+          time--
+          that.customizedBtnText = '立即开始 (' + time + 's)'
+          that.$apply()
+          runThread()
+        } else {
+          that.$invoke('customized-popup', 'close')
+        }
+      }, 1000)
+    }
+    runThread()
+    this.$invoke('customized-popup', 'open', {
+      title: '提示',
+      message: '有新的游戏开始了！',
+      onSure: () => {
+        this.methods.toPlayGame.call(this, {currentTarget: {dataset: {item: this.newGamePlayItem}}})
+      }
+    })
+    wx.vibrateLong()
+  }
+
+  /**
+   * 发布评论
+   */
+  commentPublish() {
+    if (!this.wishContent) {
+      Tips.error('请输入要发送的祝福语')
+      return
+    }
+    let userInfo = wx.getStorageSync(STATUS.USER_INFO)
+    CommonsService.commentPublish({
+      data: {
+        busiType: 'activity',
+        busiKey: this.activityId,
+        userNo: this.userNo,
+        content: this.wishContent,
+        userName: userInfo.nickName,
+        profilePhoto: userInfo.avatarUrl
+      }
+    }).then(res => {
+      if (res.data.success) {
+        this.wishContent = null
+        this.wishPage = 1
+        this.$apply()
+        this.commentList()
+      }
+    }).catch(err => {
+      Tips.error(err.message)
+    })
+  }
+
+  refreshComment() {
+    if (this.refreshCommentStatus) {
+      this.wishPage = 1
+      this.$apply()
+      this.commentList()
+    }
+  }
+
+  /**
+   * 评论列表
+   */
+  commentList() {
+    CommonsService.commentList({
+      data: {
+        busiType: 'activity',
+        busiKey: this.activityId,
+        actionUserNo: this.userNo,
+        start: this.wishPage,
+        limit: this.wishListPager
+      },
+      isLoading: false
+    }).then(res => {
+      let data = res.data || {}
+      this.wishTotalPages = data.totalPages
+      if (this.wishPage === 1) {
+        this.wishDataList = data.rows
+      } else {
+        if (this.wishTotalPages < this.wishPage) {
+          Utils.forEach(data.rows, (item) => {
+            this.wishDataList.push(item)
+          })
+          this.wishPage = this.wishPage + 1
+        }
+      }
+      this.$apply()
+    }).catch(err => {
+      Tips.error(err.message)
+    })
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    options = options || {}
+    this.hotelId = options.hotelId
+    this.activityId = options.activityId
+    this.isResultSelf = options.isResultSelf || ''
+
+    let userSpecialInfo = wepy.getStorageSync(STATUS.USER_SPECIAL_INFO)
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (userSpecialInfo && !userNo) {
+      userNo = (userSpecialInfo || {}).userNo
+      wepy.setStorageSync(STATUS.USER_NO, userNo)
+    }
+    if (userNo) {
+      this.userNo = userNo
+      // this.getActivityInfo()
+      // this.hotelTrackAdd()
+      // if (this.activityId) {
+      //   this.activityPraise()
+      // }
+    }
+    // this.openNewGameTip()
+  }
+
+  onShow() {
+    // let videoContext = wx.createVideoContext('j-activity-video')
+    // videoContext.pause()
+    // videoContext.stop()
+
+    if (this.userNo) {
+      this.getActivityInfo()
+      this.hotelTrackAdd()
+      if (this.activityId) {
+        this.activityPraise()
+      }
+    }
+  }
+
+  onHide() {
+    clearTimeout(this.gameListThree)
+    this.gameListThree = null
+  }
+}
+</script>

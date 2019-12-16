@@ -1,0 +1,343 @@
+<!--
+ * @Author: Andypan
+ * @since: 2019年10月23日16:52:31
+ * @lastTime: 2019年10月23日16:52:36
+ -->
+
+<style lang="less">
+@import '../../assets/less/mixin.less';
+@import '../../assets/less/_variables.less';
+
+/**
+ * 旋转动画(关键帧)
+ * @remark 无
+ */
+.fn-rotate(){
+    from { .rotate(0); }
+    to { .rotate(360deg); }
+}
+.fn-rotate-play(){
+    0% {
+      transform: scale3d(1, 1, 1) rotate(0);
+    }
+    40% {
+      transform: scale3d(0.95, 0.95, 1) rotate(0deg);
+    }
+    60% {
+      transform: scale3d(0.9, 0.9, 1) rotate(216deg);
+    }
+    80% {
+      transform: scale3d(1.05, 1.05, 1) rotate(360deg);
+    }
+    100% {
+      transform: scale3d(1, 1, 1) rotate(360deg);
+    }
+}
+/**
+ * 旋转动画(关键帧)
+ * @name 动画名称
+ * @remark 无
+ */
+.animation-frame-rotate(@name: fn-animation){
+    @keyframes @name
+    {
+        .fn-rotate();
+    }
+}
+.animation-frame-rotate-play(@name: fn-animation){
+    @keyframes @name
+    {
+        .fn-rotate-play();
+    }
+}
+/**
+ * 橡皮筋动画(关键帧)
+ * @remark 无
+ */
+.fn-rubber-band() {
+    0% {
+      transform: scale3d(1, 1, 1);
+    }
+    // 20% {
+    //   transform: scale3d(0.9, 0.9, 1);
+    // }
+    40% {
+      transform: scale3d(0.95, 0.95, 1);
+    }
+    60% {
+      transform: scale3d(0.9, 0.9, 1);
+    }
+    80% {
+      transform: scale3d(1.05, 1.05, 1);
+    }
+    100% {
+      transform: scale3d(1, 1, 1);
+    }
+}
+/**
+ * 橡皮筋动画(关键帧)
+ * @name 动画名称
+ * @remark 无
+ */
+.animation-frame-rubber-band(@name: animation-name) {    
+    @keyframes @name
+    {
+        .fn-rubber-band();
+    }
+}
+
+.video-guid{
+  .full-tip{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1000;
+    background: rgba(0, 0, 0, 0);
+    &.show {
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.7);
+      .tip-wrap {
+        .scale-all();
+        .opacity(1);
+      }
+    }
+    &.hide {
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.7);
+    }
+    .tip-wrap{
+      width: 500rpx;
+      height: 564rpx;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -250rpx;
+      margin-top: -362rpx;
+      background: url('@{resourcePath}MiniVideo/assets/images/video-popup-tip.png') 0 0 no-repeat;
+      background-size: 100% 100%;
+      .transition(all .5s ease);
+      .opacity(0.2);
+      .scale-all(0.2);
+      .tip-btn-close{
+        position: absolute;
+        top: -68rpx;
+        right: 20rpx;
+        width: 68rpx;
+        height: 68rpx;
+        background: url('@{resourcePath}MiniVideo/assets/images/video-tip-close.png') 0 0 no-repeat;
+        background-size: 100% 100%;
+      }
+      .tip-btn-see{
+        position: absolute;
+        left: 50%;
+        bottom: -70rpx;
+        width: 340rpx;
+        height: 80rpx;
+        margin-left: -170rpx;
+        background: @brand-primary;
+        border-radius: 40rpx;
+        font-size: 40rpx;
+        line-height: 80rpx;
+        text-align: center;
+        color: @color-ffffff;
+      }
+    }
+  }
+  .guid-btn{
+    width: 138rpx;
+    height: 138rpx;
+    background: url('@{resourcePath}MiniVideo/assets/images/video-btn.png') 0 0 no-repeat;
+    background-size: 100% 100%;
+    position: fixed;
+    right: 44rpx;
+    bottom: 180rpx;
+    z-index: 100;
+    .video-group{
+      width: 22rpx;
+      height: 20rpx;
+      background: url('@{resourcePath}MiniVideo/assets/images/video-group.png') 0 0 no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
+      top: 39rpx;
+      left: 44rpx;
+      
+      &.second{
+        left: 70rpx;
+      }
+    }
+    .video-sp{
+      background: url('@{resourcePath}MiniVideo/assets/images/video-sp.png') 0 0 no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
+      top: 50rpx;
+      left: 30rpx;
+      width: 70rpx;
+      height: 55rpx;
+      z-index: 2;
+    }
+
+    
+    //定义动画名称
+    @animation-name-rotate: animation-active-rotate;
+    //创建一个名称为'animation-active-rotate'的旋转动画
+    .animation-frame-rotate(@animation-name-rotate);
+    //动画样式设置
+    .animation-rotate{
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-name-rotate);
+        //设置动画时间(1秒)
+        .animation-duration(2s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(linear);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(infinite);
+    }
+    
+    //定义动画名称
+    @animation-name-rubber: animation-active-rubber-bands;
+    //创建一个名称为'animation-active-rubber-band'的橡皮筋动画
+    .animation-frame-rubber-band(@animation-name-rubber);
+    //动画样式设置
+    .animation-rubber-band{
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-name-rubber);
+        //设置动画时间(1秒)
+        .animation-duration(1s);
+        //设置动画速度曲线(以低速开始)
+        .animation-timing-function(ease-in);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(infinite);
+        //动画延时开始
+        .animation-delay(1s);
+        //动画是否轮流反向播放(轮流反向播放)
+        //.animation-direction(alternate);
+    }
+    .video-play{
+      background: url('@{resourcePath}MiniVideo/assets/images/video-play.png') 0 0 no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
+      top: 66rpx;
+      left: 61rpx;
+      width: 15rpx;
+      height: 17rpx;
+      z-index: 3;
+    }
+    //定义动画名称
+    @animation-name-rotate-play: animation-active-rotate-play;
+    //创建一个名称为'animation-active-rotate'的旋转动画
+    .animation-frame-rotate-play(@animation-name-rotate-play);
+    //动画样式设置
+    .animation-play{
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-name-rotate-play);
+        //设置动画时间(1秒)
+        .animation-duration(1.2s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(linear);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(infinite);
+    }
+    .text{
+      text-align: center;
+      color: #F5597F;
+      font-size: 24rpx;
+      position: absolute;
+      bottom: -10rpx;
+      left: 0;
+      width: 100%;
+    }
+  }
+}
+</style>
+
+<template>
+  <view class="video-guid">
+    <!-- <view class="{{'full-tip' + (fullTip ? ' show' : '') + (' ' + fullTipHide)}}">
+      <view class="tip-wrap">
+        <view class="tip-btn-close" @tap="closeFullTip"></view>
+        <view class="tip-btn-see" @tap="seeMiniVideo">去看看</view>
+      </view>
+    </view>
+    <view class="guid-btn" @tap="seeMiniVideo">
+      <view class="video-group animation-rotate"></view>
+      <view class="video-group second animation-rotate"></view>
+      <view class="video-sp animation-rubber-band"></view>
+      <view class="video-play animation-play"></view>
+      <view class="text">礼美助手</view>
+    </view> -->
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import { STATUS } from '@/configs'
+// import { Utils } from '@/utils'
+
+export default class VideoGuideComponent extends wepy.component {
+  props = {
+    activityId: {
+      type: String | Number
+    }
+  }
+
+  data = {
+    fullTip: false,
+    fullTipHide: '',
+    isTrue: false
+  }
+
+  methods = {
+    timingTip () {
+      this.timingTipSet()
+    },
+    closeFullTip() {
+      this.fullTipHide = 'hide'
+      this.fullTip = false
+      this.$apply()
+      let that = this
+      setTimeout(() => {
+        that.fullTipHide = ''
+        that.$apply()
+      }, 300)
+    },
+    seeMiniVideo() {
+      wepy.navigateTo({
+        url: '/subpackages/MiniVideo/pages/index2?activityId=' + this.activityId
+      })
+    }
+  }
+
+  timingTipSet () {
+    let activityId = this.activityId
+    if (activityId) {
+      let tipStatus = wx.getStorageSync(STATUS.VIDEOTIPSTATUS + activityId)
+      if (!tipStatus) {
+        let that = this
+        setTimeout(() => {
+          that.fullTip = true
+          that.$apply()
+          wx.setStorageSync(STATUS.VIDEOTIPSTATUS + that.activityId, true)
+        }, 2000)
+      }
+    }
+  }
+
+  watch = {
+    activityId (newValue) {
+      this.activityId = newValue
+      this.$apply()
+      this.timingTipSet()
+    }
+  }
+
+  onLoad () {
+    // this.timingTipSet()
+    // // 限制
+    // this.isTrue = Utils.isExceedDate()
+    // this.$apply()
+  }
+
+  onShow() {}
+}
+</script>

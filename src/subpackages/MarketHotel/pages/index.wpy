@@ -1,0 +1,814 @@
+<!--
+  首页
+  @Author: AndyPan
+  @CreateDate: 2019年4月23日13:55:25
+  @LastUpdateDate: 2019年4月23日13:55:29
+  @Remarks: 首页页面
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+
+.page-index-main {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-bottom: 100rpx;
+  padding-bottom: calc(100rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(100rpx + env(safe-area-inset-bottom));
+
+  .content-block-more {
+    height: 80rpx;
+    line-height: 80rpx;
+    background: @color-FF2E28;
+    color: #fff;
+    font-size: 30rpx;
+    text-align: center;
+    .border-radius(20rpx);
+  }
+
+  .index-main-cont {
+    margin: 0 25rpx;
+    margin-top: -44rpx;
+    position: relative;
+    z-index: 2;
+
+    .hotel-main {
+      background: @color-ffffff;
+      padding: 0 24rpx;
+      padding-bottom: 24rpx;
+      .border-radius(4rpx);
+      position: relative;
+
+      .hotel-logo-wrap {
+        // height: 74rpx;
+        height: 200rpx;
+        width: 134rpx;
+        text-align: center;
+        // float: left;
+
+        image {
+          width: 124rpx;
+          height: 124rpx;
+          border: 4rpx solid @color-ffffff;
+          .box-shadow(0 0 10px rgba(124, 124, 124, 0.5));
+          .border-radius(50%);
+          margin-top: 40rpx;
+          // margin-top: -62rpx;
+        }
+      }
+      .hotel-name {
+        display: block;
+        // margin: 25rpx auto;
+        text-align: left;
+        color: @color-333333;
+        font-size: 36rpx;
+        line-height: 40rpx;
+        height: 50rpx;
+        position: absolute;
+        top: 60rpx;
+        left: 190rpx;
+        right: 35rpx;
+        .text-overflow();
+        .clearfix();
+        &.no-level {
+          top: 100rpx;
+        }
+        .hotel-name-text {
+          float: left;
+          max-width: 100%;
+          .text {
+            display: block;
+            .text-overflow();
+            padding-right: 106rpx;
+          }
+        }
+        .hotel-star {
+          float: left;
+          margin-left: -100rpx;
+          margin-top: 8rpx;
+          font-size: 20rpx;
+          color: @brand-primary;
+          height: 30rpx;
+          line-height: 30rpx;
+          width: 80rpx;
+          text-align: center;
+          border: 2rpx solid @brand-primary;
+          border-radius: 14rpx;
+        }
+      }
+      .hotel-level {
+        display: block;
+        // margin: 15rpx auto;
+        text-align: left;
+        color: @color-666666;
+        font-size: 24rpx;
+        line-height: 24rpx;
+        position: absolute;
+        top: 120rpx;
+        left: 190rpx;
+        right: 160rpx;
+        .text-overflow();
+      }
+      .hotel-address {
+        // border-top: 1px solid @color-e3e3e3;
+        // position: relative;
+        // margin-top: 30rpx;
+        // margin-bottom: 30rpx;
+        // padding: 35rpx 0;
+        // text-align: right;
+        position: absolute;
+        height: 155rpx;
+        width: 126rpx;
+        top: 50rpx;
+        right: 35rpx;
+
+        .address-text {
+          display: block;
+          margin-right: 160rpx;
+          font-size: 30rpx;
+          line-height: 40rpx;
+          color: @color-030303;
+          text-align: left;
+          .text-overflow();
+        }
+        .address-icon {
+          display: inline-block;
+          width: 126rpx;
+          height: 32rpx;
+          line-height: 32rpx;
+          font-size: 30rpx;
+          color: @color-030303;
+          position: absolute;
+          right: 0;
+          top: 50%;
+          margin-top: -16rpx;
+          text-align: left;
+
+          &:before {
+            content: '';
+            float: left;
+            width: 22rpx;
+            height: 32rpx;
+            margin-right: 12rpx;
+            background: url('@{base64-icon-position}') 0 0 no-repeat;
+            background-size: 100% 100%;
+          }
+          &:after {
+            content: '';
+            float: right;
+            width: 17rpx;
+            height: 27rpx;
+            margin-top: 5rpx;
+            background: url('@{base64-icon-mapright}') 0 0 no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+      }
+    }
+    .content-block {
+      width: auto;
+      padding: 0 15rpx;
+      margin-top: 20rpx;
+      .content-main-slot {
+        padding-top: 20rpx;
+        padding-bottom: 40rpx;
+
+        .image-thumb {
+          // width: 100%;
+          // max-height: 300rpx;
+        }
+        .holte-remark {
+          color: #666666;
+          font-size: 24rpx;
+          line-height: 40rpx;
+          display: inline-block;
+          width: 100%;
+          margin-bottom: 40rpx;
+          margin-top: 15rpx;
+          text-align: left;
+        }
+      }
+    }
+
+    .bill-fare-item {
+      height: 110rpx;
+      border-top: 1px dashed @color-e3e3e3;
+      position: relative;
+      &:first-child {
+        border: none;
+        margin-top: -20rpx;
+      }
+
+      .bill-fare-name {
+        display: block;
+        margin-right: 200rpx;
+        .text-overflow();
+        text-align: left;
+        font-size: 30rpx;
+        line-height: 110rpx;
+        color: @color-030303;
+      }
+      .bill-fare-price {
+        font-size: 30rpx;
+        line-height: 110rpx;
+        color: @color-030303;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <pull-down :onPullDownRefresh="refreshPage">
+    <view slot="pull-down-content" class="page-index-main" id="j-pull-down-scroller">
+      <!-- 顶部swiper banner -->
+      <swiper-banner :dataset.sync="swiperDataSet" width="100%" height="384rpx"></swiper-banner>
+      <view class="index-main-cont">
+        <!-- 酒店主体信息 -->
+        <view class="hotel-main">
+          <view @tap="toMap">
+            <view class="hotel-logo-wrap">
+              <image src="{{hotelInfo.logo}}" />
+            </view>
+            <view class="hotel-name">
+              <view class="hotel-name-text">
+                <text class="text">{{hotelInfo.name}}</text>
+              </view>
+              <text class="hotel-star" wx:if="{{hotelInfo.star}}">{{hotelInfo.starText}}</text>
+            </view>
+            <text class="hotel-level">{{hotelInfo.address}}</text>
+            <view class="hotel-address">
+              <text class="address-icon">导航</text>
+            </view>
+          </view>
+          <!-- 文字图标集合 -->
+          <icon-text :dataset.sync="iconSyncDataSet" :onIconItemTap="onIconItemTapFn" :itemCount.sync="iconDataSetLength"></icon-text>
+        </view>
+
+        <!-- 婚礼作品 -->
+        <content-block-wedding-opus class="content-block" title="婚礼作品" :moreText.sync="weddingOpusMoreText" wx:if="{{weddingOpusDataSet && weddingOpusDataSet.length}}" :onMoreTextTap="onMoreTextTapFnWO">
+          <view slot="content-main-slot" class="content-main-slot">
+            <wedding-opus-component :dataset.sync="weddingOpusDataSet" />
+            <view class="content-block-more" wx:if="{{weddingAll > maxNumber}}" @tap="onMoreTextTapFnWO">查看更多</view>
+          </view>
+        </content-block-wedding-opus>
+
+        <!-- 宴会厅 -->
+        <content-block-banquet-hall class="content-block" title="宴会厅" :moreText.sync="banquetHallMoreText" wx:if="{{banquetHallDataSet && banquetHallDataSet.length}}" :onMoreTextTap="onMoreTextTapFnBH">
+          <view slot="content-main-slot" class="content-main-slot">
+            <image-text-banquet-hall :dataset.sync="banquetHallDataSet" :maxNumber="maxNumber"></image-text-banquet-hall>
+            <view class="content-block-more" wx:if="{{banquetHallAll > maxNumber}}" @tap="onMoreTextTapFnBH">查看更多</view>
+          </view>
+        </content-block-banquet-hall>
+
+        <!-- 宴会菜单 -->
+        <content-block-bill-fare class="content-block" title="宴会菜单" :moreText.sync="mealListMoreText" wx:if="{{setMealInfoList && setMealInfoList.length}}" :onMoreTextTap="onMoreTextTapFnBF">
+          <view slot="content-main-slot" class="content-main-slot">
+            <repeat for="{{setMealInfoList}}" key="index" index="index" item="item">
+              <view class="bill-fare-item" @tap="toHallFare" data-idx="{{index}}">
+                <text class="bill-fare-name">{{item.setMealName}}</text>
+                <text class="bill-fare-price">￥ {{item.setMealPrice}}元/桌</text>
+              </view>
+            </repeat>
+          </view>
+        </content-block-bill-fare>
+
+        <!-- 酒店介绍 -->
+        <content-block-hotel-introduce class="content-block" :title.sync="posTitle" wx:if="{{hotelInfo && (hotelInfo.cover || hotelInfo.intro)}}" :onMoreTextTap="onMoreTextTapFnD">
+          <view slot="content-main-slot" class="content-main-slot" @tap="hotelIntro">
+            <view class="image-thumb-wrap" wx:if="{{hotelInfo.cover}}">
+              <image class="image-thumb" src="{{hotelInfo.cover}}" />
+            </view>
+            <view class="holte-remark">{{hotelInfo.intro}}</view>
+          </view>
+        </content-block-hotel-introduce>
+      </view>
+      <!-- 底部Footer -->
+      <footer />
+      <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" :onCloseAuthorize="onCloseAuthorizeFn" />
+    </view>
+  </pull-down>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import IconTextComponent from '../components/icon-text-component/index'
+import ImageTextComponent from '../components/image-text-component/index'
+import ContentBlockComponent from '../components/content-block-component/index'
+import WeddingOpusComponent from '../components/wedding-opus-component/index'
+import FooterComponent from '@/components/footer-component/index'
+import SwiperComponent from '@/components/swiper-component/index'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import PullDownComponent from '@/components/pull-down-component/index'
+import { IndexService, WeddingOpusService } from '../services'
+import { DataPipe, Tips, Utils, PATCH } from '@/utils'
+import { LANG, STATUS } from '@/configs'
+
+export default class IndexPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '首页'
+  }
+
+  // 组件
+  components = {
+    // 下拉刷新
+    'pull-down': PullDownComponent,
+    // 用户认证授权组件
+    'user-authorize': UserAuthorizeComponent,
+    // 底部
+    footer: FooterComponent,
+    // 图片切换组件
+    'swiper-banner': SwiperComponent,
+    // 文本图标组件
+    'icon-text': IconTextComponent,
+    // 内容块组件
+    // 婚礼作品
+    'content-block-wedding-opus': ContentBlockComponent,
+    // 宴会厅
+    'content-block-banquet-hall': ContentBlockComponent,
+    // 宴会菜单
+    'content-block-bill-fare': ContentBlockComponent,
+    // 酒店介绍
+    'content-block-hotel-introduce': ContentBlockComponent,
+    // 宴会厅图文介绍
+    'image-text-banquet-hall': ImageTextComponent,
+    // 婚礼作品
+    'wedding-opus-component': WeddingOpusComponent
+  }
+
+  // data
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    // 酒店ID（从二维码获取，当前测试使用固定值）
+    hotelId: null,
+    // 传入电子请柬用
+    hotelType: '',
+    // swiper数据
+    swiperDataSet: null,
+    // 酒店信息
+    hotelInfo: null,
+    // 酒店广告图信息
+    hotelAdvertisingListInfos: null,
+    // 酒店套餐列表
+    setMealInfoList: null,
+    // 图标数据
+    iconDataSet: [
+      { key: 'icon-card', class: 'icon-card', text: '福利专区', data: {} },
+      {
+        key: 'icon-invitation',
+        class: 'icon-invitation',
+        text: '我的请柬',
+        data: {}
+      },
+      { key: 'icon-mall', class: 'icon-mall', text: '礼品商城' },
+      { key: 'icon-phone', class: 'icon-phone', text: '联系我们' }
+    ],
+    iconSyncDataSet: [],
+    iconDataSetLength: 3,
+    maxNumber: 3,
+    // 宴会厅更多
+    banquetHallMoreText: null,
+    mealListMoreText: null,
+    banquetHallAll: null,
+    // 宴会厅数据
+    banquetHallDataSet: null,
+    // 是否添加酒店浏览足迹
+    isAddHotelTrack: true,
+    // 婚礼作品数据
+    weddingOpusDataSet: [],
+    weddingOpusMoreText: '',
+    weddingAll: 0,
+    // 酒店、商户介绍标题
+    posTitle: ''
+  }
+
+  /**
+   * 所有授权完成
+   */
+  onAuthorizeAllFn(data) {
+    if (!this.hotelId) {
+      this.isAddHotelTrack = false
+    }
+    setTimeout(() => {
+      this.hotelTrackAdd()
+      this.refreshPage()
+    }, 1000)
+  }
+
+  /**
+   * 关闭授权
+   */
+  onCloseAuthorizeFn() {
+    // 酒店基本信息
+    this.hotelInfoFn(() => {
+      this.modulePrivilegeCheck()
+      // 获取婚礼作品
+      this.getCasePageList()
+      // 获取酒店宴会厅列表
+      this.hotelBanquetHallListInfo()
+      // 酒店套餐列表
+      this.hotelSetMealList()
+      // 酒店拓展信息
+      this.hotelAdvertisingListInfoFn()
+    })
+  }
+
+  /**
+   * 婚礼作品更多 点击事件
+   */
+  onMoreTextTapFnWO() {
+    wx.navigateTo({ url: 'wedding-opus-list?hotelId=' + this.hotelId })
+  }
+
+  /**
+   * 文字图标点击事件
+   */
+  onIconItemTapFn(dataset, e) {
+    let key = dataset.key
+    if (key === 'icon-phone') {
+      // 联系我们
+      let phone = (dataset.data || {}).phone
+      if (phone) {
+        wx.makePhoneCall({
+          phoneNumber: phone.toString()
+        })
+      } else {
+        Tips.error('暂未提供电话')
+      }
+    } else if (key === 'icon-card') {
+      // wepy.navigateTo({ url: 'my-coupon' })
+      wepy.navigateTo({
+        url:
+          '/subpackages/MarketActivityShake/pages/coupon-center?hotelId=' +
+          this.hotelId + '&hotelIndex=true'
+      })
+    } else if (key === 'icon-invitation') {
+      // Tips.msg('即将上线，敬请期待')
+      wx.navigateTo({
+        url:
+          '/subpackages/ElectronicInvitationCard/pages/index?hotelId=' +
+          this.hotelId +
+          '&hotelType=' +
+          this.hotelType
+      })
+    } else if (key === 'icon-mall') {
+      // wx.navigateTo({
+      //   url: '../../../subpackages/OnlineRetailers/pages/index'
+      // })
+      let hotelAdminNo = wx.getStorageSync(STATUS.HOTEL_ADMIN_NO)
+      Utils.openNewProcedures('pages/index?hotelAdminNo=' + hotelAdminNo)
+    }
+  }
+
+  /**
+   * 宴会厅查看全部点击事件
+   */
+  onMoreTextTapFnBH(e) {
+    wepy.navigateTo({ url: 'banquet-hall-list' })
+  }
+
+  /**
+   * 酒店详情点击事件
+   */
+  onMoreTextTapFnD(e) {
+    wepy.navigateTo({ url: 'hotel-introduce?hotelId=' + this.hotelInfo.id })
+  }
+
+  /**
+   * 宴会菜单查看全部点击事件
+   */
+  onMoreTextTapFnBF(e) {
+    wepy.navigateTo({ url: 'banquet-bill-fare?hotelId=' + this.hotelId })
+  }
+
+  seekVideo(dataset, id) {
+    let i = 0
+    let thisID
+    let videoContext
+    let seek = () => {
+      thisID = id + i
+      videoContext = wx.createVideoContext(thisID)
+      // this.tempVideoContext[thisID] = videoContext
+      videoContext.seek(3)
+      if (i < dataset.length - 1) {
+        i++
+        setTimeout(seek, 500)
+      }
+    }
+    seek()
+  }
+
+  // 方法
+  methods = {
+    /**
+     * 婚礼作品更多 点击事件
+     */
+    onMoreTextTapFnWO() {
+      // wx.navigateTo({ url: 'wedding-opus-list?hotelId=' + this.hotelId })
+      this.onMoreTextTapFnWO()
+    },
+    /**
+     * 宴会厅查看全部点击事件
+     */
+    onMoreTextTapFnBH(e) {
+      // wepy.navigateTo({ url: 'banquet-hall-list' })
+      this.onMoreTextTapFnBH()
+    },
+    // 打开地图
+    toMap(e) {
+      let hotelInfo = this.hotelInfo
+      let coordinate = hotelInfo.coordinate
+      if (coordinate) {
+        coordinate = coordinate.split(',')
+        wx.openLocation({
+          latitude: parseFloat(coordinate[1]),
+          longitude: parseFloat(coordinate[0]),
+          scale: 18
+        })
+      } else {
+        Tips.error('定位失败，无法打开地图')
+      }
+    },
+    /**
+     * 酒店详情
+     */
+    hotelIntro(e) {
+      wepy.navigateTo({ url: 'hotel-introduce?hotelId=' + this.hotelId + '&hotelType=' + this.hotelInfo.type })
+    },
+    toHallFare(e) {
+      let dataset = e.currentTarget.dataset
+      wepy.navigateTo({
+        url:
+          'banquet-bill-fare?hotelId=' +
+          this.hotelId +
+          '&switchIndex=' +
+          dataset.idx
+      })
+    }
+  }
+
+  /**
+   * 案例信息分页查询
+   */
+  getCasePageList() {
+    WeddingOpusService.casesPageListQuery({
+      data: {
+        hotelId: this.hotelId,
+        limit: this.maxNumber
+      }
+    })
+      .then(res => {
+        let data = res.data
+        this.weddingAll = data.totalRows
+        this.weddingOpusMoreText = '共' + data.totalRows + '个'
+        let rows = data.rows
+        Utils.forEach(rows, item => {
+          item.envText = (LANG.opusType[item.env] || {}).text
+          item.video = ((item.videoList || [])[0] || {}).picture
+        })
+        this.weddingOpusDataSet = rows
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err)
+      })
+  }
+
+  /**
+   * 酒店基本信息
+   */
+  hotelInfoFn(callBack) {
+    let params = {
+      userNo: wepy.getStorageSync(STATUS.USER_NO)
+    }
+    if (this.hotelId) {
+      params['hotelId'] = this.hotelId
+    }
+    IndexService.hotelInfo({ data: params })
+      .then(res => {
+        let hotelInfo = res.data.apiHotelInfo
+        if (!LANG.hotelStar[hotelInfo.star]) {
+          hotelInfo.star = ''
+        }
+        DataPipe.basePipe({ data: hotelInfo, ruleBoolean: LANG.hotelStar })
+        this.hotelInfo = hotelInfo
+        this.hotelId = hotelInfo.id
+        this.hotelType = hotelInfo.type
+        this.posTitle = hotelInfo.type === 'WEDDING' ? '商户介绍' : '酒店介绍'
+        wepy.setStorageSync(STATUS.HOTEL_ID, hotelInfo.id)
+        wepy.setStorageSync(STATUS.HOTEL_ADMIN_NO, res.data.hotelAdminNo)
+        this.iconDataSet[3]['data'] = {
+          phone: hotelInfo.telephone || hotelInfo.mobileNo
+        }
+        if (!this.isAddHotelTrack) {
+          this.isAddHotelTrack = true
+          this.hotelTrackAdd()
+        }
+        this.$apply()
+        if (callBack) {
+          callBack()
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 获取酒店宴会厅列表
+   */
+  hotelBanquetHallListInfo() {
+    IndexService.hotelBanquetHallListInfo({ data: { hotelId: this.hotelId } })
+      .then(res => {
+        if (res && res.data) {
+          let hotelBanquetHallListInfos =
+            res.data.hotelBanquetHallListInfos || []
+          let keyAssemble = {
+            tables: '桌数',
+            area: '面积',
+            storey: '楼层'
+          }
+          DataPipe.basePipe(
+            hotelBanquetHallListInfos,
+            (item, key, dataItem) => {
+              if (keyAssemble[key] && item) {
+                dataItem['label'] = dataItem['label'] || []
+                dataItem['label'].push(item)
+              }
+              dataItem.key = dataItem.code
+              dataItem.title = dataItem.hallName
+              dataItem.thumb = dataItem.coverPicture
+              dataItem.video = ((dataItem.videoLists || [])[0] || {}).picture
+            }
+          )
+          this.banquetHallDataSet = hotelBanquetHallListInfos
+          let len = hotelBanquetHallListInfos.length
+          // if (len > 3) {
+          this.banquetHallMoreText = '共' + len + '个'
+          // }
+          this.banquetHallAll = len
+          this.$apply()
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 酒店套餐列表
+   */
+  hotelSetMealList() {
+    IndexService.hotelSetMealList({ data: { hotelId: this.hotelId } })
+      .then(res => {
+        let setMealInfoList = res.data.setMealInfoList
+        // DataPipe.basePipe({data: setMealInfoList, ruleBoolean: LANG.hotelStar})
+        this.setMealInfoList = []
+        Utils.forEach(setMealInfoList, (item, idx) => {
+          this.setMealInfoList.push(item)
+          if (idx >= 4) {
+            return 'break'
+          }
+        })
+        // this.setMealInfoList = setMealInfoList
+        let len = setMealInfoList.length
+        // if (len > 3) {
+        this.mealListMoreText = '共' + len + '个'
+        // }
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 酒店广告图信息
+   */
+  hotelAdvertisingListInfoFn() {
+    IndexService.hotelAdvertisingListInfo({ data: { hotelId: this.hotelId } })
+      .then(res => {
+        let hotelAdvertisingListInfos = res.data.hotelAdvertisingListInfos
+        if (hotelAdvertisingListInfos) {
+          this.swiperDataSet = hotelAdvertisingListInfos
+          this.$apply()
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 增加酒店足迹
+   */
+  hotelTrackAdd() {
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (this.hotelId && userNo) {
+      IndexService.hotelTrackAdd({
+        data: { hotelId: this.hotelId, userNo }
+      }).then(res => {})
+    } else {
+      setTimeout(() => {
+        this.hotelTrackAdd()
+      }, 500)
+    }
+  }
+
+  /**
+   * 分享转发
+   */
+  onShareAppMessage(res) {
+    return {
+      title: this.hotelInfo.name,
+      path: '/subpackages/MarketHotel/pages/index?id=' + this.hotelId
+    }
+  }
+
+  // 加载完成
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    if (options.scene || options.id) {
+      this.hotelId = parseInt(options.scene || options.id)
+      wepy.setStorageSync(STATUS.HOTEL_ID, this.hotelId)
+    } else {
+      // this.hotelId = wepy.getStorageSync(STATUS.HOTEL_ID)
+    }
+    wx.showShareMenu({ withShareTicket: true })
+
+    let userInfo = wepy.getStorageSync(STATUS.USER_INFO)
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (userInfo && userNo) {
+      if (!this.hotelId) {
+        this.isAddHotelTrack = false
+      }
+      this.hotelTrackAdd()
+      this.refreshPage()
+    } else {
+      this.refreshPage()
+      // this.$invoke('user-authorize', 'authorizeActivation')
+    }
+  }
+
+  onShow() {
+    // this.$invoke('image-text-banquet-hall', 'stopVideo')
+  }
+
+  /**
+   * 检测是否有电商入口权限
+   */
+  modulePrivilegeCheck() {
+    IndexService.modulePrivilegeCheck({
+      data: {
+        hotelId: this.hotelId,
+        moduleTypeEnum: 'BUSINESS_SHOP'
+      }
+    })
+      .then(res => {
+        this.iconSyncDataSet = this.iconDataSet
+        this.iconDataSetLength = this.iconSyncDataSet.length
+        this.$apply()
+      })
+      .catch(() => {
+        this.iconSyncDataSet = []
+        Utils.forEach(this.iconDataSet, (item, idx) => {
+          if (idx !== '2' && idx !== 2) {
+            this.iconSyncDataSet.push(item)
+          }
+        })
+        this.iconDataSetLength = this.iconSyncDataSet.length
+        this.$apply()
+      })
+  }
+
+  /**
+   * 下拉刷新
+   */
+  refreshPage() {
+    // 酒店基本信息
+    this.hotelInfoFn(() => {
+      this.modulePrivilegeCheck()
+      // 获取婚礼作品
+      this.getCasePageList()
+      // 获取酒店宴会厅列表
+      this.hotelBanquetHallListInfo()
+      // 酒店套餐列表
+      this.hotelSetMealList()
+      // 酒店拓展信息
+      this.hotelAdvertisingListInfoFn()
+    })
+  }
+}
+</script>

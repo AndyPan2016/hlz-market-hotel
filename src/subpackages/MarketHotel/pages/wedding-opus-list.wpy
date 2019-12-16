@@ -1,0 +1,163 @@
+<!--
+  婚礼作品列表
+  @Author: AndyPan
+  @CreateDate: 2019年6月27日14:44:20
+  @LastUpdateDate: 2019年6月27日14:44:25
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+.page-wedding-opus-main {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0rpx;
+  right: 0rpx;
+  overflow: hidden;
+  .tab-content-slot {
+    margin: 26rpx;
+    background: #fff;
+    padding: 0 15rpx;
+    padding-top: 30rpx;
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-wedding-opus-main">
+    <tab type="fixed" :isFull="boolTrue" :items="tabList" :isHeadShadow="boolFalse" :onSwitch="tabSwitchFn" :onScrollLower="onScrollLowerFn" :onScrollUpper="onScrollUpperFn">
+      <view slot="tab-content-slot">
+        <pull-down :onPullDownRefresh="refreshPage">
+          <view slot="pull-down-content" class="tab-content-slot">
+            <wedding-opus-component :dataset.sync="weddingOpusDataSet" />
+          </view>
+        </pull-down>
+      </view>
+    </tab>
+  </view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import TabComponent from '@/components/tab-component/index'
+import WeddingOpusComponent from '../components/wedding-opus-component/index'
+import PullDownComponent from '@/components/pull-down-component/index'
+import { Tips, Utils, PATCH } from '@/utils'
+import { LANG } from '@/configs'
+import { WeddingOpusService } from '../services'
+
+export default class MyCouponPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '婚礼作品'
+  }
+
+  // 组件
+  components = {
+    // 下拉刷新
+    'pull-down': PullDownComponent,
+    // 选项卡
+    tab: TabComponent,
+    // 婚礼作品
+    'wedding-opus-component': WeddingOpusComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    // 选项卡列表
+    tabList: LANG.weddingOpusStatus,
+    // 当前Tab项
+    currentStatusItem: null,
+    // 酒店ID
+    hotelId: '',
+    // 列表数据
+    weddingOpusDataSet: [],
+    // 页码
+    pageNo: 1,
+    // 总页数
+    totalPages: 1
+  }
+
+  loadData() {
+    let pageNo = this.pageNo
+    let params = {
+      hotelId: this.hotelId,
+      start: pageNo
+    }
+    let type = this.currentStatusItem.key
+    if (type) {
+      params['caseType'] = type
+    }
+    WeddingOpusService.casesPageListQuery({
+      data: params
+    })
+      .then(res => {
+        let data = res.data
+        let dataRows = data.rows || []
+        this.totalPages = data.totalPages
+
+        if (pageNo === 1) {
+          Utils.forEach(dataRows, dataItem => {
+            dataItem.envText = (LANG.opusType[dataItem.env] || {}).text
+            dataItem.video = ((dataItem.videoList || [])[0] || {}).picture
+          })
+          this.weddingOpusDataSet = dataRows
+        } else {
+          Utils.forEach(dataRows, dataItem => {
+            dataItem.envText = (LANG.opusType[dataItem.env] || {}).text
+            dataItem.video = ((dataItem.videoList || [])[0] || {}).picture
+            this.weddingOpusDataSet.push(dataItem)
+          })
+        }
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err)
+      })
+  }
+
+  /**
+   * 选项卡切换事件
+   */
+  tabSwitchFn(item, idx, e) {
+    this.pageNo = 1
+    this.currentStatusItem = item
+    this.loadData()
+  }
+
+  /**
+   * 内容滚动到底部事件
+   */
+  onScrollLowerFn() {
+    if (this.pageNo < this.totalPages) {
+      this.pageNo++
+      this.loadData()
+    }
+  }
+
+  onScrollUpperFn() {
+    if (this.pageNo !== 1) {
+      this.pageNo = 1
+      this.loadData()
+    }
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+
+    this.hotelId = options.hotelId
+  }
+
+  /**
+   * 下拉刷新
+   */
+  refreshPage() {
+    this.pageNo = 1
+    this.loadData()
+  }
+}
+</script>  

@@ -1,0 +1,50 @@
+<template>
+  <view
+    class="msg-item"
+    wx:if="show"
+  >{{messages}}</view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class messageComponent extends wepy.component {
+  props = {
+    messages: {
+      type: String,
+      twoWay: true,
+      default: '弹幕'
+    }
+  }
+  data = {
+    show: true
+  }
+  watch = {
+    messages() {
+      this.msgHide()
+    }
+  }
+  msgHide() {
+    console.log('执行')
+    setTimeout(() => {
+      console.log('执行')
+      this.show = false
+      this.$apply()
+    }, 1000)
+  }
+}
+</script>
+<style lang="less" scoped>
+.msg-item {
+  width: 320rpx;
+  height: 60rpx;
+  background: #eb402f;
+  border-radius: 60rpx;
+  box-sizing: border-box;
+  padding-right: 20rpx;
+  font-size: 28rpx;
+  color: #fff;
+  opacity: 0.8;
+  line-height: 60rpx;
+  margin-bottom: 20rpx;
+  transition: all 0.5s;
+}
+</style>

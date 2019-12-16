@@ -1,0 +1,353 @@
+<!--
+  使用我的优惠券页
+  @Author: AndyPan
+  @CreateDate: 2019年7月22日10:35:55
+  @LastUpdateDate: 2019年4月28日16:08:17
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+.page-my-coupon-main {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  background: @color-FAFAFA;
+  
+  @remarkHeight: 490rpx;
+  @infoSpace: 25rpx;
+  .coupon-info{
+    position: absolute;
+    top: @infoSpace;
+    left: @infoSpace;
+    right: @infoSpace;
+    bottom: @infoSpace + @remarkHeight;
+    background: #FFF;
+    border: 1rpx solid @color-eeeeee;
+    border-radius: 10rpx;
+
+    .coupon-info-head{
+      height: 170rpx;
+      position: relative;
+
+      .info-head-line{
+        position: absolute;
+        display: inline-block;
+        height: 2rpx;
+        border-bottom: 1rpx dashed @color-eeeeee;
+        left: 32rpx;
+        right: 32rpx;
+        bottom: 10rpx;
+        &::before {
+            content: '';
+            position: absolute;
+            left: -48rpx;
+            top: -15rpx;
+            display: inline-block;
+            width: 30rpx;
+            height: 30rpx;
+            background: @color-FAFAFA;
+            border-radius: 50%;
+            border-right: 1rpx solid @color-eeeeee;
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            right: -48rpx;
+            top: -15rpx;
+            display: inline-block;
+            width: 30rpx;
+            height: 30rpx;
+            background: @color-FAFAFA;
+            border-radius: 50%;
+            border-left: 1rpx solid @color-eeeeee;
+        }
+      }
+
+      .head-hotel-info{
+        position: absolute;
+        top: 35rpx;
+        right: 314rpx;
+        left: 30rpx;
+        height: 84rpx;
+        border-right: 2rpx solid @color-eeeeee;
+        text-align: left;
+        .hotel-name{
+            display: inline-block;
+            width: 100%;
+            height: 28rpx;
+            line-height: 28rpx;
+            .text-overflow();
+            font-size: @color-333333;
+            font-size: 28rpx;
+            font-weight: bold;
+        }
+        .coupon-validity-date{
+            display: inline-block;
+            width: 100%;
+            height: 24rpx;
+            line-height: 24rpx;
+            color: @color-666666;
+            font-size: 24rpx;
+            margin-top: 15rpx;
+        }
+      }
+      .coupon-type{
+        float: right;
+        height: 84rpx;
+        margin-top: 35rpx;
+        margin-right: 30rpx;
+        width: 254rpx;
+        .coupon-type-label{
+          display: block;
+          width: 100%;
+          font-size: 24rpx;
+          color: @color-333333;
+          height: 24rpx;
+          line-height: 24rpx;
+          margin-left: 20rpx;
+        }
+        .coupon-type-cont{
+            display: block;
+            margin-left: 20rpx;
+            font-size: 48rpx;
+            line-height: 48rpx;
+            height: 48rpx;
+            color: @color-FF2E28;
+            text-align: left;
+            margin-top: 12rpx;
+            .text-overflow();
+            font-weight: bold;
+            font-family: 'Bahnschrift';
+            .cont-text{
+              float: left;
+              margin-right: 10rpx;
+            }
+            .count-company{
+              float: left;
+              font-size: 24rpx;
+              line-height: 24rpx;
+              margin-top: 18rpx;
+            }
+            .data-two-text{
+              float: left;
+              font-size: 20rpx;
+              margin-left: 10rpx;
+              font-weight: initial;
+              color: #333;
+              margin-top: 10rpx;
+            }
+        }
+        &.no-show-type{
+          .coupon-type-cont{
+            margin-left: 0rpx;
+            text-align: center;
+            .cont-text{
+              float: initial;
+              display: inline-block;
+              margin-right: 0rpx;
+              margin-top: 10rpx;
+              font-size: 24rpx;
+            }
+          }
+        }
+      }
+    }
+    .coupon-info-qrcode{
+        // height: 256rpx;
+        margin-top: 30rpx;
+        .qrcode-wrap{
+            margin: 0 auto;
+            width: 300rpx;
+            height: 290rpx;
+            text-align: center;
+            .qrcode-unuse{
+              display: inline-block;
+              width: 280rpx;
+              height: 280rpx;
+            }
+            .qrcode-used{
+              width: 100%;
+              height: 100%;
+              background: url('@{resourcePath}MarketHotel/assets/images/qrcode-used.png') 0 0 no-repeat;
+              background-size: 100% 100%;
+            }
+            .qrcode-overdue{
+              width: 100%;
+              height: 100%;
+              background: url('@{resourcePath}MarketHotel/assets/images/qrcode-overdue.png') 0 0 no-repeat;
+              background-size: 100% 100%;
+            }
+        }
+    }
+    .coupon-info-code, .coupon-info-remark{
+        margin: 30rpx;
+        margin-bottom: 15rpx;
+        .text-overflow();
+        font-size: 30rpx;
+        color: @color-666666;
+        text-align: center;
+    }
+    .coupon-info-remark{
+        margin-top: 15rpx;
+    }
+  }
+
+  .coupon-remark{
+    height: @remarkHeight;
+    background: #FFF;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    .remark-cont{
+        margin: 10rpx 55rpx;
+        .remark-cont-head{
+            height: 78rpx;
+            border-bottom: 1rpx solid @color-eeeeee;
+            line-height: 78rpx;
+            text-align: left;
+            font-size: 28rpx;
+            color: @color-333333;
+            font-weight: bold;
+        }
+        .remark-list{
+            margin-top: 25rpx;
+            font-size: 24rpx;
+            color: @color-666666;
+            text-align: left;
+            .list-item{
+                line-height: 28rpx;
+                margin-bottom: 10rpx;
+            }
+        }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-my-coupon-main">
+    <view class="coupon-info">
+      <view class="coupon-info-head">
+        <view class="head-hotel-info">
+          <text class="hotel-name">{{ticketInfo.hotelName}}</text>
+          <text class="coupon-validity-date">有效期至：{{ticketInfo.overdueTime}}</text>
+        </view>
+        <view class="coupon-type" wx:if="{{ticketInfo.isShowType === 'YES'}}">
+          <text class="coupon-type-label">{{ticketInfo.ticketTypeText}}</text>
+          <text class="coupon-type-cont">
+            <text class="count-company" wx:if="{{ticketInfo.unitPosition === 'before'}}">{{ticketInfo.unit}}</text>
+            <text class="cont-text">{{ticketInfo.dataOneText}}</text>
+            <text class="count-company" wx:if="{{ticketInfo.unitPosition === 'after'}}">{{ticketInfo.unit}}</text>
+            <text class="data-two-text" wx:if="{{ticketInfo.type === 'full_reduction'}}">{{ticketInfo.dataTwoText}}</text>
+          </text>
+        </view>
+        <view class="coupon-type no-show-type" wx:else>
+          <text class="coupon-type-cont">
+            <text class="cont-text">{{ticketInfo.dataOneText}}</text>
+          </text>
+        </view>
+        <i class="info-head-line"></i>
+      </view>
+      <view class="coupon-info-qrcode">
+        <view class="qrcode-wrap">
+          <view class="qrcode-used" wx:if="{{ticketInfo.status === 'ALREADY_USED'}}"></view>
+          <view class="qrcode-overdue" wx:if="{{ticketInfo.status === 'ALREADY_OVERDUE'}}"></view>
+          <canvas class="qrcode-unuse" canvas-id="myQrcode" wx:if="{{ticketInfo.status === 'NOT_USED'}}"></canvas>
+        </view>
+      </view>
+      <view class="coupon-info-code">{{ticketCode}}</view>
+      <view class="coupon-info-remark">{{ticketInfo.discountScopeText}}</view>
+    </view>
+    <view class="coupon-remark">
+      <view class="remark-cont">
+        <view class="remark-cont-head">使用须知：</view>
+        <view class="remark-list">
+          <view class="list-item" wx:if="{{ticketInfo.describes}}">1、{{ticketInfo.describes}}</view>
+          <view class="list-item">{{listIdx}}、本优惠券最终解释权归【{{ticketInfo.hotelName}}】所有</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import { Tips, PATCH } from '@/utils'
+import { STATUS } from '@/configs'
+import drawQrcode from '../utils/weapp-qrcode.js'
+import { CouponService } from '../services'
+
+export default class MyCouponPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '使用优惠券'
+  }
+
+  // 组件
+  components = {}
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    // ticketId
+    ticketId: '',
+    // ticketCode
+    ticketCode: '',
+    // 用户编号
+    userNo: '',
+    // ticket
+    ticketInfo: {},
+    // 使用须知序号
+    listIdx: 2
+  }
+
+  createQrCode() {
+    let ticketInfo = this.ticketInfo
+    setTimeout(() => {
+      drawQrcode({
+        width: 128,
+        height: 128,
+        canvasId: 'myQrcode',
+        text: ticketInfo.ticketCode
+      })
+    }, 780)
+  }
+
+  memberTicketQuery() {
+    CouponService.memberTicketQuery({
+      data: {
+        ticketCode: this.ticketCode.replace(/ /g, ''),
+        userNo: this.userNo
+      }
+    }).then(res => {
+      let hotelTicketDataInfo = res.data.hotelTicketDataInfo
+      hotelTicketDataInfo.overdueTime = hotelTicketDataInfo.overdueTime.split(' ')[0] || ''
+      this.ticketInfo = hotelTicketDataInfo
+      this.listIdx = hotelTicketDataInfo.describes ? 2 : 1
+      this.$apply()
+      if (hotelTicketDataInfo.status === 'NOT_USED') {
+        this.createQrCode()
+      }
+    }).catch(err => {
+      Tips.error(err)
+    })
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    this.userNo = wx.getStorageSync(STATUS.USER_NO)
+    this.ticketId = options.ticketId
+    this.ticketCode = options.ticketCode
+    this.$apply()
+    this.memberTicketQuery()
+  }
+}
+</script>  

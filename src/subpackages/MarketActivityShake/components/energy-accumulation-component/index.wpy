@@ -1,0 +1,777 @@
+<!--
+  能量聚集组件-视图模板
+  @Author: AndyPan
+  @version: 1.0.0
+  @CreateDate: 2019年5月24日09:37:01
+  @LastUpdateDate: 2019年5月24日09:40:18
+  @Remarks: 
+-->
+
+<!-- 组件样式 -->
+<style lang="less">
+@import '../../assets/less/mixin.less';
+
+@base64-bg-wave-after: 'data:image/png;base64,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';
+@base64-bg-wave-before: 'data:image/png;base64,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';
+@base64-bg-wave-before1: 'data:image/png;base64,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';
+@base64-bg-wave-after1: 'data:image/png;base64,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';
+
+//定义动画名称
+@animation-wave-before: animation-wave-before;
+.animation-frame-wave-before(@name) {
+  @keyframes @name {
+    from {
+      margin-left: -25%;
+    }
+    to {
+      margin-left: -156%;
+    }
+  }
+}
+//创建一个名称为'animation-wave'的动画
+.animation-frame-wave-before(@animation-wave-before);
+//动画样式设置
+.animation-wave-before {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@animation-wave-before);
+  //设置动画时间(1秒)
+  .animation-duration(1.5s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(linear);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(normal);
+}
+//定义动画名称
+@animation-wave-after: animation-wave-after;
+.animation-frame-wave-after(@name) {
+  @keyframes @name {
+    from {
+      margin-left: -75%;
+    }
+    to {
+      margin-left: -206%;
+    }
+  }
+}
+//创建一个名称为'animation-wave'的动画
+.animation-frame-wave-after(@animation-wave-after);
+//动画样式设置
+.animation-wave-after {
+  //通过动画名称将动画添加到样式中
+  .animation-name(@animation-wave-after);
+  //设置动画时间(1秒)
+  .animation-duration(1.8s);
+  //设置动画速度曲线(直线匀速)
+  .animation-timing-function(linear);
+  //动画的播放次数(重复播放)
+  .animation-iteration-count(infinite);
+  // 	规定是否应该轮流反向播放动画
+  .animation-direction(normal);
+}
+
+@wrapSize: 500rpx;
+.energy-accumulation-comp {
+  width: @wrapSize;
+  height: @wrapSize + 50;
+  .border-radius(20rpx);
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -(@wrapSize / 2);
+  margin-left: -(@wrapSize / 2);
+  z-index: 30;
+  overflow: hidden;
+  display: none;
+
+  &.show {
+    display: block;
+  }
+
+  .energy-pool {
+    width: 300rpx;
+    height: 300rpx;
+    border: 6rpx solid #fff;
+    background: rgba(255, 255, 255, 0.15);
+    position: absolute;
+    top: 100rpx;
+    left: 50%;
+    margin-left: -154rpx;
+    .border-radius(50%);
+
+    .energy-main {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      .border-radius(50%);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+
+      .canvas-wave {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        height: 0;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        overflow: hidden;
+        .transition(all 1s ease);
+
+        .wave-bg-after {
+          width: 300%;
+          height: 48rpx;
+          background: url('@{base64-bg-wave-after1}') 0 0 repeat-x;
+          background-size: auto 100%;
+          margin-left: -25%;
+          position: relative;
+        }
+        .wave-bg-before {
+          width: 300%;
+          height: 48rpx;
+          background: url('@{base64-bg-wave-before1}') 0 0 repeat-x;
+          background-size: auto 100%;
+          margin-left: -75%;
+          position: relative;
+        }
+        .wave-bg {
+          position: absolute;
+          top: 46rpx;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          .vertical(#ff625b, #ffb588);
+        }
+      }
+      .energy-number {
+        height: 144rpx;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        // margin-top: -56rpx;
+        margin-top: -90rpx;
+        text-align: center;
+        color: #fff;
+        width: 100%;
+        .number-text {
+          font-size: 100rpx;
+          // font-family: 'Bahnschrift';
+          font-weight: bold;
+          &::after {
+            display: inline-block;
+            content: '%';
+            font-size: 30rpx;
+            margin-right: -35rpx;
+            margin-left: 7rpx;
+          }
+        }
+      }
+      .energy-remark {
+        display: inline-block;
+        width: 120rpx;
+        height: 44rpx;
+        position: absolute;
+        bottom: 25rpx;
+        left: 50%;
+        margin-left: -60rpx;
+        border: 0.5rpx solid #fff;
+        .border-radius(22rpx);
+        text-align: center;
+        font-size: 28rpx;
+        line-height: 44rpx;
+        color: #fff;
+      }
+    }
+  }
+
+  .energy-point {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 11;
+
+    @pointDefault: 10rpx;
+    @pointBig: 15rpx;
+    @pointSmall: 8rpx;
+    .energy-point-item {
+      display: inline-block;
+      .border-radius(50%);
+      background: #fff;
+      // .box-shadow(0 0 10rpx rgba(255, 255, 255, 0.1));
+      position: absolute;
+      .opacity(0);
+
+      &.point-level-default {
+        width: @pointDefault;
+        height: @pointDefault;
+      }
+      &.point-level-big {
+        width: @pointBig;
+        height: @pointBig;
+      }
+      &.point-level-small {
+        width: @pointSmall;
+        height: @pointSmall;
+      }
+    }
+    .animation-0() {
+      .opacity(1);
+      .box-shadow(0 0 30rpx rgba(255, 255, 255, 1));
+    }
+    .animation-100() {
+      .opacity(0.2);
+      .box-shadow(0 0 10rpx rgba(255, 255, 255, 0.5));
+    }
+    @animation-time: 1s;
+    //定义动画名称
+    @animation-point-one: animation-point-one;
+    .animation-frame-point-one(@name) {
+      @keyframes @name {
+        0% {
+          .animation-0();
+          right: 0;
+          top: 60%;
+        }
+        100% {
+          .animation-100();
+          right: 50%;
+          top: 50%;
+          margin-right: -(@pointDefault / 2);
+          margin-top: -(@pointDefault / 2);
+        }
+      }
+    }
+    //创建一个动画
+    .animation-frame-point-one(@animation-point-one);
+    //动画样式设置
+    .animation-point-one() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-point-one);
+      //设置动画时间(1秒)
+      .animation-duration(1.2s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+
+    //定义动画名称
+    @animation-point-two: animation-point-two;
+    .animation-frame-point-two(@name) {
+      @keyframes @name {
+        0% {
+          .animation-0();
+          top: 0;
+          right: 10%;
+        }
+        100% {
+          .animation-100();
+          top: 50%;
+          right: 50%;
+          margin-top: -(@pointDefault / 2);
+          margin-right: -(@pointDefault / 2);
+        }
+      }
+    }
+    //创建一个动画
+    .animation-frame-point-two(@animation-point-two);
+    //动画样式设置
+    .animation-point-two() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-point-two);
+      //设置动画时间(1秒)
+      .animation-duration(1s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+
+    //定义动画名称
+    @animation-point-three: animation-point-three;
+    .animation-frame-point-three(@name) {
+      @keyframes @name {
+        0% {
+          .animation-0();
+          left: 0rpx;
+          bottom: 20%;
+        }
+        100% {
+          .animation-100();
+          left: 50%;
+          bottom: 50%;
+          margin-left: -(@pointDefault / 2);
+          margin-top: (@pointDefault / 2);
+        }
+      }
+    }
+    //创建一个动画
+    .animation-frame-point-three(@animation-point-three);
+    //动画样式设置
+    .animation-point-three() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-point-three);
+      //设置动画时间(1秒)
+      .animation-duration(1.5s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+
+    //定义动画名称
+    @animation-point-four: animation-point-four;
+    .animation-frame-point-four(@name) {
+      @keyframes @name {
+        0% {
+          .animation-0();
+          right: 30%;
+          bottom: 0;
+        }
+        100% {
+          .animation-100();
+          right: 50%;
+          bottom: 50%;
+          margin-right: -(@pointBig / 2);
+          margin-top: (@pointDefault / 2);
+        }
+      }
+    }
+    //创建一个动画
+    .animation-frame-point-four(@animation-point-four);
+    //动画样式设置
+    .animation-point-four() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-point-four);
+      //设置动画时间(1秒)
+      .animation-duration(1.8s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+
+    //定义动画名称
+    @animation-point-five: animation-point-five;
+    .animation-frame-point-five(@name) {
+      @keyframes @name {
+        0% {
+          .animation-0();
+          top: 0;
+          left: 20%;
+        }
+        100% {
+          .animation-100();
+          top: 50%;
+          left: 50%;
+          margin-top: -(@pointBig / 2);
+          margin-left: -(@pointBig / 2);
+        }
+      }
+    }
+    //创建一个动画
+    .animation-frame-point-five(@animation-point-five);
+    //动画样式设置
+    .animation-point-five() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-point-five);
+      //设置动画时间(1秒)
+      .animation-duration(2.4s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+
+    //定义动画名称
+    @animation-point-six: animation-point-six;
+    .animation-frame-point-six(@name) {
+      @keyframes @name {
+        0% {
+          .animation-0();
+          top: 10%;
+          left: 0;
+        }
+        100% {
+          .animation-100();
+          top: 50%;
+          left: 50%;
+          margin-top: -(@pointSmall / 2);
+          margin-left: -(@pointSmall / 2);
+        }
+      }
+    }
+    //创建一个动画
+    .animation-frame-point-six(@animation-point-six);
+    //动画样式设置
+    .animation-point-six() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-point-six);
+      //设置动画时间(1秒)
+      .animation-duration(0.8s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+
+    //定义动画名称
+    @animation-point-seven: animation-point-seven;
+    .animation-frame-point-seven(@name) {
+      @keyframes @name {
+        0% {
+          .animation-0();
+          left: 20%;
+          bottom: 0;
+        }
+        100% {
+          .animation-100();
+          left: 50%;
+          bottom: 50%;
+          margin-left: -(@pointSmall / 2);
+          margin-top: (@pointSmall / 2);
+        }
+      }
+    }
+    //创建一个动画
+    .animation-frame-point-seven(@animation-point-seven);
+    //动画样式设置
+    .animation-point-seven() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-point-seven);
+      //设置动画时间(1秒)
+      .animation-duration(0.6s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+
+    //定义动画名称
+    @animation-point-eight: animation-point-eight;
+    .animation-frame-point-eight(@name) {
+      @keyframes @name {
+        0% {
+          .animation-0();
+          top: 15%;
+          right: 0;
+        }
+        100% {
+          .animation-100();
+          top: 50%;
+          right: 50%;
+          margin-top: -(@pointSmall / 2);
+          margin-right: -(@pointSmall / 2);
+        }
+      }
+    }
+    //创建一个动画
+    .animation-frame-point-eight(@animation-point-eight);
+    //动画样式设置
+    .animation-point-eight() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-point-eight);
+      //设置动画时间(1秒)
+      .animation-duration(0.5s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+
+    &.energy-point-start {
+      .point-one {
+        right: 0;
+        bottom: 40%;
+        .animation-point-one();
+      }
+      .point-two {
+        top: 0;
+        right: 10%;
+        .animation-point-two();
+      }
+      .point-three {
+        left: 0rpx;
+        bottom: 20%;
+        .animation-point-three();
+      }
+      .point-four {
+        right: 30%;
+        bottom: 0;
+        .animation-point-four();
+      }
+      .point-five {
+        top: 0;
+        left: 20%;
+        .animation-point-five();
+      }
+      .point-six {
+        top: 10%;
+        left: 0;
+        .animation-point-six();
+      }
+      .point-seven {
+        left: 20%;
+        bottom: 0;
+        .animation-point-seven();
+      }
+      .point-eight {
+        top: 15%;
+        right: 0;
+        .animation-point-eight();
+      }
+    }
+  }
+
+  /**
+  * 信号波动画(关键帧)
+  * @name 动画名称
+  * @remark 无
+  */
+  .animation-frame-signal(@name: fn-animation) {
+    @keyframes @name {
+      from {
+        .scale-all(1);
+        .opacity(1);
+      }
+      to {
+        .scale-all(2);
+        .opacity(0);
+      }
+    }
+  }
+  @signal-time: 3s;
+  @animation-signal1: animation-signal1;
+  .animation-frame-signal(@animation-signal1);
+  //动画样式设置
+  .animation-class-signal1() {
+    //通过动画名称将动画添加到样式中
+    .animation-name(@animation-signal1);
+    //设置动画时间(1秒)
+    .animation-duration(@signal-time);
+    //动画延时播放
+    .animation-delay(0s);
+    //设置动画速度曲线(直线匀速)
+    .animation-timing-function(ease-out);
+    //动画的播放次数(重复播放)
+    .animation-iteration-count(infinite);
+    // 	规定是否应该轮流反向播放动画
+    .animation-direction(normal);
+  }
+  @animation-signal2: animation-signal2;
+  .animation-frame-signal(@animation-signal2);
+  //动画样式设置
+  .animation-class-signal2() {
+    //通过动画名称将动画添加到样式中
+    .animation-name(@animation-signal2);
+    //设置动画时间(1秒)
+    .animation-duration(@signal-time);
+    //动画延时播放
+    .animation-delay(0.4s);
+    //设置动画速度曲线(直线匀速)
+    .animation-timing-function(ease-out);
+    //动画的播放次数(重复播放)
+    .animation-iteration-count(infinite);
+    // 	规定是否应该轮流反向播放动画
+    .animation-direction(normal);
+  }
+  @animation-signal3: animation-signal3;
+  .animation-frame-signal(@animation-signal3);
+  //动画样式设置
+  .animation-class-signal3() {
+    //通过动画名称将动画添加到样式中
+    .animation-name(@animation-signal3);
+    //设置动画时间(1秒)
+    .animation-duration(@signal-time);
+    //动画延时播放
+    .animation-delay(0.8s);
+    //设置动画速度曲线(直线匀速)
+    .animation-timing-function(ease-out);
+    //动画的播放次数(重复播放)
+    .animation-iteration-count(infinite);
+    // 	规定是否应该轮流反向播放动画
+    .animation-direction(normal);
+  }
+
+  .energy-wave {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    .energy-wave-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      .border-radius(50%);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    &.energy-wave-start {
+      .energy-wave-one {
+        .animation-class-signal1();
+        z-index: 1;
+      }
+      .energy-wave-two {
+        .animation-class-signal2();
+        z-index: 2;
+      }
+      .energy-wave-three {
+        .animation-class-signal3();
+        z-index: 3;
+      }
+    }
+  }
+
+  .energy-tip {
+    display: inline-block;
+    position: absolute;
+    left: 30rpx;
+    right: 30rpx;
+    bottom: 60rpx;
+    font-size: 30rpx;
+    text-align: center;
+    color: #fff;
+  }
+}
+</style>
+
+<!-- 组件视图 -->
+<template>
+  <view class="energy-accumulation-comp {{isStartEnergy ? 'show' : ''}}" @tap="energyTap">
+    <!-- 能量池 -->
+    <view class="energy-pool">
+      <!-- 能量波 -->
+      <view class="energy-wave {{energyWaveStart}}">
+        <view class="energy-wave-item energy-wave-one"></view>
+        <view class="energy-wave-item energy-wave-two"></view>
+        <view class="energy-wave-item energy-wave-three"></view>
+      </view>
+      <!-- 能量 -->
+      <view class="energy-main">
+        <!-- 后波 -->
+        <view class="canvas-wave" style="height: {{(energyValue ? (energyValue + 11) : energyValue)}}%;">
+          <view class="wave-bg-after animation-wave-after"></view>
+        </view>
+        <!-- 前波 -->
+        <view class="canvas-wave" style="height: {{(energyValue ? (energyValue + 10) : energyValue)}}%;">
+          <view class="wave-bg-before animation-wave-before"></view>
+          <view class="wave-bg"></view>
+        </view>
+        <view class="energy-number">
+          <text class="number-text">{{energyValue}}</text>
+        </view>
+        <text class="energy-remark">能量值</text>
+      </view>
+    </view>
+    <!-- 能量聚集点 -->
+    <view class="energy-point {{energyPointStart}}">
+      <!-- 能量点 -->
+      <i class="energy-point-item point-level-default point-one"></i>
+      <i class="energy-point-item point-level-default point-two"></i>
+      <i class="energy-point-item point-level-default point-three"></i>
+      <i class="energy-point-item point-level-big point-four"></i>
+      <i class="energy-point-item point-level-big point-five"></i>
+      <i class="energy-point-item point-level-small point-six"></i>
+      <i class="energy-point-item point-level-small point-seven"></i>
+      <i class="energy-point-item point-level-small point-eight"></i>
+    </view>
+    <!-- 提示语 -->
+    <view class="energy-tip">{{message}}</view>
+  </view>
+</template>
+
+<!-- 组件业务逻辑 -->
+<script>
+import wepy from 'wepy'
+
+export default class EnergyAccumulationComponent extends wepy.component {
+  // 接收外部传入的参数
+  props = {
+    // 能量值
+    energyValue: { type: String | Number, default: 10 },
+    // 提示语
+    message: { type: String, default: '摇摇摇，红包不来，手将不停！' },
+    // 能量聚集满后的回调
+    onEnergyFull: Function,
+    isStartEnergy: { type: Boolean, default: false },
+    onTap: { type: Function }
+  }
+
+  components = {}
+  // 模板(绑定)数据
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    energyWaveOne: null,
+    energyWaveTwo: null,
+    energyWaveThree: null,
+    // 能量波启动
+    energyWaveStart: null,
+    // 能量点启动
+    energyPointStart: null
+  }
+
+  watch = {
+    energyValue(newData) {
+      if (newData > 100) {
+        this.energyValue = 100
+      } else {
+        this.energyValue = parseInt(newData)
+      }
+      this.$apply()
+
+      if (newData >= 100) {
+        let onEnergyFull = this.onEnergyFull
+        if (onEnergyFull) {
+          onEnergyFull.call(this.$parent)
+        }
+      }
+    }
+  }
+
+  methods = {
+    energyTap(e) {
+      let onTap = this.onTap
+      if (onTap) {
+        onTap.call(this.$parent)
+      }
+    }
+  }
+
+  startEnergy() {
+    this.energyWaveStart = 'energy-wave-start'
+    this.energyPointStart = 'energy-point-start'
+    this.$apply()
+  }
+
+  stopEnergy() {
+    this.energyWaveStart = null
+    this.energyPointStart = null
+    this.$apply()
+  }
+
+  onLoad() {}
+}
+</script>

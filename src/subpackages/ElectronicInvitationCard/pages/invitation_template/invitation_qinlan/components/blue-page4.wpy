@@ -1,0 +1,90 @@
+<style lang="less">
+page {
+  width: 100%;
+  height: 100%;
+}
+</style>
+<template>
+    <view class="page-blue">
+        <!-- page4 -->
+        <view class="frame">
+            <blue-layout flower="flower04">
+                <view slot="panel" class="panel4">
+                    <view class="panel-top">
+                        <image mode="aspectFill" class="panel-top-photo" src="{{ p4.contentInfos[0].fieldContent }}" @load="imageLoad" />
+                        <temp-image-uploader :rate.sync="src4Rate" :mySrc.sync="src4" :myShown.sync="editMode" @onImageUploaded.user="onImageUploaded" />
+                    </view>
+                    <view class="panel-bottom">
+                        <view class="icon-happy-marriage"></view>
+                    </view>
+                </view>
+            </blue-layout>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from 'wepy'
+import BlueLayout from './blue-layout'
+import TempImageUploader from './temp-image-uploader'
+const pageNo = 4 // 当前页码
+export default class BluePage4 extends wepy.component {
+  components = {
+    'blue-layout': BlueLayout,
+    'temp-image-uploader': TempImageUploader
+  }
+  props = {
+    editMode: { // 是否处于编辑模式
+      type: Boolean,
+      default: false
+    },
+    basicInfo: { // 请柬基本信息
+      type: Object,
+      default: {}
+    },
+    p4: { // 当前页信息
+      type: Object,
+      default: {
+        contentInfos: []
+      }
+    },
+    a4: {
+      type: Object,
+      default: { shown: false, hide: false }
+    }
+  }
+  watch = {
+    src4(n, o) {
+      this.p4.contentInfos[0] = {
+        fieldName: 4,
+        contentType: 'PICTURE',
+        fieldContent: n
+      }
+      this.$apply()
+    }
+  }
+  data = {
+    src4: '',
+    src4Rate: '1.39',
+    changedList: [],
+    imageCount: 1, // 图片总数
+    imageLoadedCount: 0 // 已加载图片数量
+  }
+  methods = {
+    onImageUploaded(e) {
+      this.prepareChangedList()
+      this.$emit('onPageDataChanged', pageNo, { contentInfos: this.changedList })
+    },
+    imageLoad() {
+      this.imageLoadedCount++
+      this.$emit('onImageLoadedCountChanged', { pageNo, count: this.imageLoadedCount, total: this.imageCount }) // 加载进度改变
+    }
+  }
+  prepareChangedList() {
+    this.changedList = []
+    if (this.src4) {
+      this.changedList.push({ fieldName: 4, contentType: 'PICTURE', fieldContent: this.src4 })
+    }
+    this.$apply()
+  }
+}
+</script>

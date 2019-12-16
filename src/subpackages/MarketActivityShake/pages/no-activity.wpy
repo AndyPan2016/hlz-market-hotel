@@ -1,0 +1,207 @@
+<!--
+  无活动页面
+  @Author: AndyPan
+  @CreateDate: 2019年6月3日15:59:10
+  @LastUpdateDate: 2019年6月3日15:59:13
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../assets/less/mixin.less';
+@import '../assets/less/_variables.less';
+.page-no-activity {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: @color-FAFAFA;
+
+  .activity-hotel {
+    margin-top: 30rpx;
+    .hotel-logo {
+      display: block;
+      width: 128rpx;
+      height: 128rpx;
+      .border-radius(50%);
+      margin: 0 auto;
+    }
+    .hotel-name {
+      font-size: 30rpx;
+      line-height: 30rpx;
+      text-align: center;
+      width: 85%;
+      margin: 20rpx auto;
+      .text-overflow();
+    }
+    .hall-name {
+      font-size: 24rpx;
+      line-height: 30rpx;
+      text-align: center;
+      width: 85%;
+      margin: 20rpx auto;
+      margin-bottom: 50rpx;
+      .text-overflow();
+      display: none;
+    }
+    .go-to-hotel {
+      width: 85%;
+      margin: 0 auto;
+      text-align: center;
+      .btn-to-hotel {
+        display: inline-block;
+        height: 50rpx;
+        line-height: 50rpx;
+        background: @brand-primary;
+        .border-radius(26rpx);
+        padding: 0 18rpx;
+        font-size: 24rpx;
+        color: #fff;
+      }
+    }
+  }
+  .no-activity-wrap {
+    width: 100%;
+    text-align: center;
+    margin-top: 88rpx;
+    .no-activity {
+      display: inline-block;
+      height: 336rpx;
+      width: 368rpx;
+      background: url('@{resourcePath}MarketActivityShake/assets/images/background/bg-no-activity.png')
+        0 0 no-repeat;
+      background-size: 100% 100%;
+    }
+    .no-activity-text {
+      display: inline-block;
+      width: 100%;
+      margin-top: 58rpx;
+      text-align: center;
+      font-size: 30rpx;
+      color: @color-666666;
+    }
+  }
+
+  .btm-handle {
+    position: absolute;
+    bottom: 146rpx;
+    left: 0;
+    right: 0;
+    padding: 0 10%;
+
+    .btns {
+      height: 96rpx;
+      background: @brand-primary;
+      color: #fff;
+      line-height: 96rpx;
+      text-align: center;
+      margin-bottom: 20rpx;
+      font-size: 30rpx;
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-no-activity">
+    <view class="activity-hotel">
+      <image src="{{hotelLogo}}" class="hotel-logo" />
+      <view class="hotel-name">{{hotelName}}</view>
+      <view class="hall-name">{{hallName}}</view>
+      <!-- <view class="go-to-hotel" wx:if="{{merchantType === 'HOTEL'}}">
+        <text class="btn-to-hotel" @tap="goHotelHome">查看酒店主页</text>
+      </view> -->
+    </view>
+    <view class="no-activity-wrap">
+      <view class="no-activity"></view>
+      <text class="no-activity-text">精彩活动，敬请期待</text>
+    </view>
+    <view class="btm-handle">
+      <!-- <view class="btns" @tap="goCouponCenter">领取优惠券 ></view>
+      <view class="btns" @tap="goPersonCenter">个人中心 ></view> -->
+      <view class="btns" @tap="goHotelHome">{{merchantType === 'HOTEL' ? '参观酒店' : '参观店铺'}}</view>
+    </view>
+  </view>
+</template>
+
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { Tips, PATCH } from '@/utils'
+import { NoActivityService } from '../services'
+
+export default class ReceiveListPages extends wepy.page {
+  config = {
+    navigationBarTitleText: '喜事宝'
+  }
+
+  data = {
+    // 酒店ID
+    hotelId: null,
+    hotelName: '',
+    hotelLogo: null,
+    hallName: '',
+    // 商户类型(HOTEL:酒店 WEDDING:婚庆)
+    merchantType: null
+  }
+
+  methods = {
+    /**
+     * 去酒店主页
+     */
+    goHotelHome() {
+      wepy.navigateTo({
+        url: '../../MarketHotel/pages/index?id=' + this.hotelId
+      })
+    },
+    /**
+     * 去领券中心
+     */
+    goCouponCenter() {
+      wepy.navigateTo({
+        url: 'coupon-center?hotelId=' + this.hotelId
+      })
+    },
+    /**
+     * 去个人中心
+     */
+    goPersonCenter() {
+      wepy.navigateTo({
+        url: '../../MarketHotel/pages/personal-center'
+      })
+    }
+  }
+
+  getHotelInfo() {
+    NoActivityService.hotelInfo({
+      data: {
+        hotelId: this.hotelId
+      }
+    })
+      .then(res => {
+        let apiHotelInfo = res.apiHotelInfo || {}
+        this.hotelId = apiHotelInfo.id
+        this.hotelName = apiHotelInfo.name
+        this.hotelLogo = apiHotelInfo.logo
+        this.merchantType = apiHotelInfo.type
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.messag)
+      })
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    options = options || {}
+    let business = (options.business || '').split('-_-')
+    this.hotelId = business[0]
+    this.hallName = business[1]
+    this.$apply()
+    this.getHotelInfo()
+  }
+}
+</script>

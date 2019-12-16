@@ -1,0 +1,1620 @@
+<!--
+  无活动页面
+  @Author: AndyPan
+  @CreateDate: 2019年6月3日15:59:10
+  @LastUpdateDate: 2019年6月3日15:59:13
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../../assets/less/mixin.less';
+
+.page-counting-money {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/bg-counting-money.png') 0 bottom no-repeat;
+  background-size: 100%;
+  background-color: #371B7F;
+  overflow: hidden;
+
+  .counting-money-head{
+    height: 110rpx;
+    position: relative;
+    z-index: 20rpx;
+    width: 100%;
+    .money-count{
+      height: 80rpx;
+      width: 260rpx;
+      padding-left: 40rpx;
+      position: relative;
+      float: right;
+      margin-top: 40rpx;
+      margin-right: 24rpx;
+      &::before{
+        content: '';
+        display: inline-block;
+        width: 80rpx;
+        height: 80rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/gold.png') 0 0 no-repeat;
+        background-size: 100%;
+        position: relative;
+        z-index: 1;
+      }
+      .my-counting-money{
+        display: inline-block;
+        width: 170rpx;
+        height: 54rpx;
+        padding-left: 50rpx;
+        line-height: 54rpx;
+        font-size: 36rpx;
+        color: #FFF;
+        .horizontal(#FC901A, #FF4200);
+        border-radius: 28rpx;
+        position: absolute;
+        top: 50%;
+        left: 80rpx;
+        margin-top: -27rpx;
+      }
+    }
+    .game-time{
+      position: absolute;
+      left: 24rpx;
+      right: 314rpx;
+      top: 22rpx;
+
+      .time-clock{
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        width: 90rpx;
+        height: 108rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/clock.png') 0 0 no-repeat;
+        background-size: 100%;
+        text-align: center;
+        line-height: 120rpx;
+        color: #FFE75F;
+        font-size: 36rpx;
+      }
+      .time-progress{
+        position: absolute;
+        height: 24rpx;
+        left: 70rpx;
+        right: 0;
+        top: 50%;
+        margin-top: -5rpx;
+        .horizontal(#FFFFFF, #BAA1FF);
+        border-radius: 16rpx;
+        padding: 3rpx;
+
+        .progress{
+          .horizontal(#FFC634, #FF4200);
+          width: 100%;
+          height: 100%;
+          border-radius: 12rpx;
+          .transition(all 2s ease);
+        }
+      }
+    }
+  }
+  .counting-money-wrap {
+    width: 574rpx;
+    height: 994rpx;
+    position: absolute;
+    left: 50%;
+    bottom: 0rpx;
+    margin-left: -287rpx;
+
+    .touch-content {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      @opacity: .8;
+      .child-money-item() {
+        z-index: 20;
+        transform: translateY(-1800rpx) scale(.5, .5);
+        opacity: @opacity;
+      }
+      .child-opacity-item() {
+        transition: none;
+        transform: translateY(0);
+        opacity: .8;
+      }
+      &.child-0{
+        .money-item.money-item-0 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-0{
+        .money-item.money-item-0 {
+          .child-opacity-item()
+        }
+      }
+      &.child-1{
+        .money-item.money-item-1 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-1{
+        .money-item.money-item-1 {
+          .child-opacity-item()
+        }
+      }
+      &.child-2{
+        .money-item.money-item-2 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-2{
+        .money-item.money-item-2 {
+          .child-opacity-item()
+        }
+      }
+      &.child-3{
+        .money-item.money-item-3 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-3{
+        .money-item.money-item-3 {
+          .child-opacity-item()
+        }
+      }
+      &.child-4{
+        .money-item.money-item-4 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-4{
+        .money-item.money-item-4 {
+          .child-opacity-item()
+        }
+      }
+      &.child-5{
+        .money-item.money-item-5 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-5{
+        .money-item.money-item-5 {
+          .child-opacity-item()
+        }
+      }
+      &.child-6{
+        .money-item.money-item-6 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-6{
+        .money-item.money-item-6 {
+          .child-opacity-item()
+        }
+      }
+      &.child-7{
+        .money-item.money-item-7 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-7, {
+        .money-item.money-item-7 {
+          .child-opacity-item()
+        }
+      }
+      &.child-8{
+        .money-item.money-item-8 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-8{
+        .money-item.money-item-8 {
+          .child-opacity-item()
+        }
+      }
+      &.child-9{
+        .money-item.money-item-0 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-0{
+        .money-item.money-item-0 {
+          .child-opacity-item()
+        }
+      }
+      &.child-10{
+        .money-item.money-item-10 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-10{
+        .money-item.money-item-10 {
+          .child-opacity-item()
+        }
+      }
+      &.child-11{
+        .money-item.money-item-11 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-11{
+        .money-item.money-item-11 {
+          .child-opacity-item()
+        }
+      }
+      &.child-12{
+        .money-item.money-item-12 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-12{
+        .money-item.money-item-12 {
+          .child-opacity-item()
+        }
+      }
+      &.child-13{
+        .money-item.money-item-13 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-13{
+        .money-item.money-item-13 {
+          .child-opacity-item()
+        }
+      }
+      &.child-14{
+        .money-item.money-item-14 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-14{
+        .money-item.money-item-14 {
+          .child-opacity-item()
+        }
+      }
+      &.child-15{
+        .money-item.money-item-15 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-15{
+        .money-item.money-item-15 {
+          .child-opacity-item()
+        }
+      }
+      &.child-16{
+        .money-item.money-item-16 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-16{
+        .money-item.money-item-16 {
+          .child-opacity-item()
+        }
+      }
+      &.child-17{
+        .money-item.money-item-17 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-17{
+        .money-item.money-item-17 {
+          .child-opacity-item()
+        }
+      }
+      &.child-18{
+        .money-item.money-item-18 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-18{
+        .money-item.money-item-18 {
+          .child-opacity-item()
+        }
+      }
+      &.child-19{
+        .money-item.money-item-19 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-19{
+        .money-item.money-item-19 {
+          .child-opacity-item()
+        }
+      }
+      &.child-20{
+        .money-item.money-item-20 {
+          .child-money-item();
+        }
+      }
+      &.child-opacity-20{
+        .money-item.money-item-20 {
+          .child-opacity-item()
+        }
+      }
+      &::before{
+        display: inline-block;
+        content: '';
+        width: 100%;
+        height: 446rpx;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 10;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/money-bg-1.png') 0 0 no-repeat;
+        background-size: 100%;
+      }
+      .money-item {
+        width: 494rpx;
+        height: 901rpx;
+        left: 50%;
+        top: 195rpx;
+        margin-left: -247rpx;
+        position: absolute;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/money.png') 0 0 no-repeat;
+        background-size: 100% 100%;
+        z-index: 11;
+        // .box-shadow(0 0 20px rgba(124,124,124,0.1));
+        .scale-all();
+        .opacity(1);
+        transform: translateY(0);
+        .transition(all .8s ease);
+
+        &.item-0{
+          top: 180rpx;
+          // transform: translateY(-100rpx);
+        }
+        &.item-1{
+          .box-shadow(0 0 20px rgba(124,124,124, 1));
+        }
+
+        &.current{
+          z-index: 20;
+        }
+
+        &.transition{
+          // .transition(all .8s ease);
+          transition: all .8s ease;
+          z-index: 20;
+        }
+
+        &.active {
+          transform: translateY(-1800rpx) scale(.5, .5);
+          opacity: .5;
+          // .opacity(.5);
+        }
+      }
+      &::after{
+        display: inline-block;
+        content: '';
+        width: 584rpx;
+        height: 318rpx;
+        position: absolute;
+        left: -7rpx;
+        bottom: 0;
+        z-index: 50;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/money-bg-2.png') 0 0 no-repeat;
+        background-size: 100%;
+      }
+
+      .touch-tip{
+        width: 90%;
+        height: auto;
+        position: absolute;
+        z-index: 60;
+        bottom: 60rpx;
+        left: 50%;
+        margin-left: -45%;
+        text-align: center;
+        color: #FFEEAA;
+        font-size: 30rpx;
+
+        .tip-text-title{
+          display: inline-block;
+          width: 100%;
+          font-weight: bold;
+          margin-bottom: 20rpx;
+          .text-shadow(3rpx 3rpx 3rpx rgba(0, 0, 0, .8));
+        }
+        .tip-text-remark{
+          .text-shadow(3rpx 3rpx 3rpx rgba(0, 0, 0, .4));
+        }
+      }
+    }
+  }
+  .game-over{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -100;
+    &.show{
+      z-index: 100;
+      .game-over-mask{
+        background: rgba(0, 0, 0, 0.4);
+      }
+      .game-over-tip{
+        .scale-all();
+        .opacity(1);
+      }
+    }
+    .game-over-mask{
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0);
+      .transition(all .5s ease);
+    }
+    .game-over-tip {
+      width: 697rpx;
+      height: 667rpx;
+      position: absolute;
+      background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/game-over.png?v1') 0 0 no-repeat;
+      background-size: 100% 100%;
+      z-index: 100;
+      top: 50%;
+      left: 50%;
+      margin-top: -452rpx;
+      margin-left: -373rpx;
+      .transition(all .5s ease);
+      .opacity(0.2);
+      .scale-all(0.2);
+
+      .over-tip-text{
+        position: absolute;
+        font-size: 36rpx;
+        color: #FFF;
+        text-align: center;
+        left: 20rpx;
+        width: 100%;
+        top: 400rpx;
+      }
+      .over-tip-value{
+        position: absolute;
+        font-size: 56rpx;
+        color: #FFE345;
+        text-align: center;
+        left: 20rpx;
+        width: 100%;
+        top: 480rpx;
+      }
+      .count-down{
+        display: inline-block;
+        width: 96rpx;
+        height: 96rpx;
+        background: #EC3D3E;
+        border: 2rpx solid #FFE244;
+        line-height: 96rpx;
+        text-align: center;
+        position: absolute;
+        bottom: -50rpx;
+        left: 50%;
+        margin-left: -30rpx;
+        font-size: 44rpx;
+        color: #FFE244;
+        .border-radius(50%);
+      }
+    }
+  }
+  .gold-1{
+    width: 82rpx;
+    height: 72rpx;
+    background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/gold-1.png') 0 0 no-repeat;
+    background-size: 100%;
+    position: absolute;
+    right: -41rpx;
+    bottom: 84rpx;
+    z-index: 500;
+  }
+  .gold-2{
+    width: 136rpx;
+    height: 61rpx;
+    background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/gold-2.png') 0 0 no-repeat;
+    background-size: 100%;
+    position: absolute;
+    left: -90rpx;
+    bottom: 0rpx;
+    z-index: 500;
+  }
+  .gold-3{
+    width: 54rpx;
+    height: 48rpx;
+    background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/gold-3.png') 0 0 no-repeat;
+    background-size: 100%;
+    position: absolute;
+    left: 20rpx;
+    bottom: 582rpx;
+  }
+  .gold-4{
+    width: 16rpx;
+    height: 40rpx;
+    background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/gold-4.png') 0 0 no-repeat;
+    background-size: 100%;
+    position: absolute;
+    right: 0rpx;
+    bottom: 672rpx;
+  }
+  .gold-5{
+    width: 28rpx;
+    height: 100rpx;
+    background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/gold-5.png') 0 0 no-repeat;
+    background-size: 100%;
+    position: absolute;
+    right: 0rpx;
+    bottom: 20rpx;
+  }
+  
+  // 倒计时动画
+  .animation-bong(@name: fn-animation){
+    @keyframes @name {
+      0% {
+        .scale-all(.2);
+        .opacity(0);
+      }
+      30% {
+        .scale-all(1.5);
+        .opacity(1);
+      }
+      100% {
+        .scale-all(1.5);
+        .opacity(1);
+      }
+    }
+  }
+  .bong{
+    width: 192rpx;
+    height: 163rpx;
+    background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/bong.png') 0 0 no-repeat;
+    background-size: 100%;
+    position: absolute;
+    top: 160rpx;
+    left: 50%;
+    margin-left: -96rpx;
+    line-height: 163rpx;
+    text-align: center;
+    color: #FF4401;
+    font-size: 30rpx;
+    .scale-all(.2);
+    .opacity(0);
+    z-index: 1000;
+    
+    @bong-time: 1.5s;
+    @animation-bong: animation-bong;
+    .animation-bong(@animation-bong);
+    //动画样式设置
+    .animation-class-bong() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-bong);
+      //设置动画时间(1秒)
+      .animation-duration(@bong-time);
+      //动画延时播放
+      .animation-delay(0s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(1);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+
+    &.bong-start{
+      .animation-class-bong();
+    }
+  }
+  // 移动动画
+  .animation-move(@name: fn-animation, @y: 0rpx){
+    @keyframes @name {
+      from {
+        transform: translateY(0rpx);
+      }
+      to {
+        transform: translateY(@y);
+      }
+    }
+  }
+  // 倒计时动画
+  .animation-clock(@name: fn-animation){
+    @keyframes @name {
+      0% {
+        .scale-all(.2);
+        .opacity(0);
+      }
+      40% {
+        .scale-all(1.2);
+        .opacity(1);
+      }
+      60% {
+        .scale-all(1.2);
+        .opacity(1);
+      }
+      100% {
+        .scale-all(.2);
+        .opacity(0);
+      }
+    }
+  }
+  .guide{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .6);
+    z-index: 1000;
+
+    .count-down-clock{
+      position: absolute;
+      width: 250rpx;
+      height: 250rpx;
+      background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/count-down-clock.png') 0 0 no-repeat;
+      background-size: 100%;
+      left: 50%;
+      margin-left: -125rpx;
+      top: 58rpx;
+      font-family: 'subfont';
+      text-align: center;
+      line-height: 250rpx;
+      font-size: 100rpx;
+      .sub-font{
+        display: inline-block;
+        color: #FFD254;
+        background-image:-webkit-linear-gradient(left,#FFD254,#FF392F);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+      }
+      
+      @clock-time: 1s;
+      @animation-clock: animation-clock;
+      .animation-clock(@animation-clock);
+      //动画样式设置
+      .animation-class-clock() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-clock);
+        //设置动画时间(1秒)
+        .animation-duration(@clock-time);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(ease-out);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(infinite);
+        // 	规定是否应该轮流反向播放动画
+        .animation-direction(normal);
+      }
+
+      .clock-start{
+        .animation-class-clock();
+      }
+    }
+
+    .guide-money{
+      width: 494rpx;
+      height: 604rpx;
+      background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/money-analog.png') 0 0 no-repeat;
+      background-size: 100%;
+      position: absolute;
+      left: 50%;
+      bottom: 240rpx;
+      margin-left: -244rpx;
+    }
+    .guide-arrow{
+      display: inline-block;
+      width: 40rpx;
+      height: 44rpx;
+      background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/arrow-analog.png') 0 0 no-repeat;
+      background-size: 100%;
+      position: absolute;
+      left: 50%;
+      margin-left: -20rpx;
+      bottom: 100rpx;
+
+      @arrow-time: .6s;
+      @animation-arrow: animation-arrow;
+      .animation-move(@animation-arrow, -50rpx);
+      //动画样式设置
+      .animation-class-arrow() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-arrow);
+        //设置动画时间(1秒)
+        .animation-duration(@arrow-time);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(ease-out);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(infinite);
+        // 规定是否应该轮流反向播放动画
+        .animation-direction(normal);
+      }
+
+      &.arrow-move-start{
+        .animation-class-arrow();
+      }
+    }
+    .guide-text{
+      display: block;
+      text-align: center;
+      position: absolute;
+      left: 0;
+      bottom: 64rpx;
+      width: 100%;
+      font-size: 30rpx;
+      color: #FFEEAA;
+    }
+    
+    .guide-hand{
+      width: 266rpx;
+      height: 256rpx;
+      position: absolute;
+      bottom: 142rpx;
+      left: 50%;
+      margin-left: -10rpx;
+      background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/hand.png') 0 0 no-repeat;
+      background-size: 100%;
+      z-index: 10;
+
+      @hand-time: 1s;
+      @animation-hand: animation-hand;
+      .animation-move(@animation-hand, -380rpx);
+      //动画样式设置
+      .animation-class-hand() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-hand);
+        //设置动画时间(1秒)
+        .animation-duration(@hand-time);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(ease-out);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(infinite);
+        // 	规定是否应该轮流反向播放动画
+        .animation-direction(normal);
+      }
+
+      &.hand-move-start{
+        .animation-class-hand();
+      }
+    }
+    .guide-instructions-line{
+      font-size: 0;
+      width: 4rpx;
+      height: 380rpx;
+      border-left: 4rpx dashed #FFF; 
+      position: absolute;
+      left: 50%;
+      margin-left: -2rpx;
+      top: 100rpx;
+    }
+    
+    /**
+    * 信号波动画(关键帧)
+    * @name 动画名称
+    * @remark 无
+    */
+    .animation-frame-signal(@name: fn-animation) {
+      @keyframes @name {
+        from {
+          .scale-all(1);
+          .opacity(1);
+        }
+        to {
+          .scale-all(5);
+          .opacity(0);
+        }
+      }
+    }
+    @signal-time: 3s;
+    @animation-signal1: animation-signal1;
+    .animation-frame-signal(@animation-signal1);
+    //动画样式设置
+    .animation-class-signal1() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-signal1);
+      //设置动画时间(1秒)
+      .animation-duration(@signal-time);
+      //动画延时播放
+      .animation-delay(0s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+    @animation-signal2: animation-signal2;
+    .animation-frame-signal(@animation-signal2);
+    //动画样式设置
+    .animation-class-signal2() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-signal2);
+      //设置动画时间(1秒)
+      .animation-duration(@signal-time);
+      //动画延时播放
+      .animation-delay(1s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+    @animation-signal3: animation-signal3;
+    .animation-frame-signal(@animation-signal3);
+    //动画样式设置
+    .animation-class-signal3() {
+      //通过动画名称将动画添加到样式中
+      .animation-name(@animation-signal3);
+      //设置动画时间(1秒)
+      .animation-duration(@signal-time);
+      //动画延时播放
+      .animation-delay(2s);
+      //设置动画速度曲线(直线匀速)
+      .animation-timing-function(ease-out);
+      //动画的播放次数(重复播放)
+      .animation-iteration-count(infinite);
+      // 	规定是否应该轮流反向播放动画
+      .animation-direction(normal);
+    }
+    .guide-instructions-point{
+      width: 44rpx;
+      height: 44rpx;
+      background: #F38B8B;
+      border: 2rpx solid #FFF;
+      border-radius: 50%;
+      position: absolute;
+      top: 435rpx;
+      left: 50%;
+      margin-left: -24rpx;
+      .energy-wave {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        .energy-wave-item {
+          position: absolute;
+          top: -2rpx;
+          left: -2rpx;
+          width: 100%;
+          height: 100%;
+          .border-radius(50%);
+          border: .5rpx solid #FFF;
+        }
+        &.energy-wave-start {
+          .energy-wave-one {
+            .animation-class-signal1();
+            z-index: 1;
+          }
+          .energy-wave-two {
+            .animation-class-signal2();
+            z-index: 2;
+          }
+          .energy-wave-three {
+            .animation-class-signal3();
+            z-index: 3;
+          }
+        }
+      }
+    }
+  }
+
+  .money-falling{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+
+    .animation-falling-1(@name: fn-animation){
+      @keyframes @name {
+        from {
+          transform: translate(300rpx, 0) rotate(0deg);
+          .opacity(1);
+        }
+        to {
+          transform: translate(-500rpx, 500rpx) rotate(180deg);
+          .opacity(.5);
+        }
+      }
+    }
+    .money-falling-item{
+      display: inline-block;
+      position: absolute;
+
+      @falling-1-time: .8s;
+      @animation-falling-1: animation-falling-1;
+      .animation-falling-1(@animation-falling-1);
+      //动画样式设置
+      .animation-class-falling-1() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-falling-1);
+        //设置动画时间(1秒)
+        .animation-duration(@falling-1-time);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(ease-out);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(1);
+        // 	规定是否应该轮流反向播放动画
+        .animation-direction(normal);
+      }
+      &.falling-start-1{
+        width: 199rpx;
+        height: 114rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/flutter1.png') 0 0 no-repeat;
+        background-size: 100%;
+        top: -114rpx;
+        left: 300rpx;
+        .animation-class-falling-1();
+      }
+
+      .animation-falling-2(@name: fn-animation){
+        @keyframes @name {
+          from {
+            transform: translate(0rpx, 0) rotate(0deg);
+            .opacity(1);
+          }
+          to {
+            transform: translate(500rpx, 1000rpx) rotate(-200deg);
+            .opacity(.5);
+          }
+        }
+      }
+      @falling-2-time: 2s;
+      @animation-falling-2: animation-falling-2;
+      .animation-falling-2(@animation-falling-2);
+      //动画样式设置
+      .animation-class-falling-2() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-falling-2);
+        //设置动画时间(1秒)
+        .animation-duration(@falling-2-time);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(ease-out);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(1);
+        // 	规定是否应该轮流反向播放动画
+        .animation-direction(normal);
+      }
+      &.falling-start-2{
+        width: 154rpx;
+        height: 110rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/flutter2.png') 0 0 no-repeat;
+        background-size: 100%;
+        top: -110rpx;
+        left: 50%;
+        .animation-class-falling-2();
+      }
+
+      .animation-falling-3(@name: fn-animation){
+        @keyframes @name {
+          0% {
+            transform: translate(-300rpx, 0) rotate(0deg);
+            .opacity(1);
+          }
+          100% {
+            transform: translate(-600rpx, 1000rpx) rotate(-180deg);
+            .opacity(.8);
+          }
+        }
+      }
+      @falling-3-time: 3s;
+      @animation-falling-3: animation-falling-3;
+      .animation-falling-3(@animation-falling-3);
+      //动画样式设置
+      .animation-class-falling-3() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-falling-3);
+        //设置动画时间(1秒)
+        .animation-duration(@falling-3-time);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(ease-out);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(1);
+        // 	规定是否应该轮流反向播放动画
+        .animation-direction(normal);
+      }
+      &.falling-start-3{
+        width: 154rpx;
+        height: 111rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/flutter3.png') 0 0 no-repeat;
+        background-size: 100%;
+        top: -111rpx;
+        left: 50%;
+        .animation-class-falling-3();
+      }
+
+      .animation-falling-4(@name: fn-animation){
+        @keyframes @name {
+          0% {
+            transform: translate(300rpx, 0) rotateZ(0deg);
+            .opacity(1);
+          }
+          100% {
+            transform: translate(-500rpx, 700rpx) rotateZ(-180deg);
+            .opacity(.2);
+          }
+        }
+      }
+      @falling-4-time: 1s;
+      @animation-falling-4: animation-falling-4;
+      .animation-falling-4(@animation-falling-4);
+      //动画样式设置
+      .animation-class-falling-4() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-falling-4);
+        //设置动画时间(1秒)
+        .animation-duration(@falling-4-time);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(ease-out);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(1);
+        // 	规定是否应该轮流反向播放动画
+        .animation-direction(normal);
+      }
+      &.falling-start-4{
+        width: 192rpx;
+        height: 190rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/flutter4.png') 0 0 no-repeat;
+        background-size: 100%;
+        top: -190rpx;
+        left: 50%;
+        .animation-class-falling-4();
+      }
+
+      .animation-falling-5(@name: fn-animation){
+        @keyframes @name {
+          0% {
+            transform: translate(-200rpx, 0) rotateY(0deg);
+            .opacity(1);
+          }
+          100% {
+            transform: translate(0rpx, 800rpx) rotateY(-360deg);
+            .opacity(.2);
+          }
+        }
+      }
+      @falling-5-time: 1.5s;
+      @animation-falling-5: animation-falling-5;
+      .animation-falling-5(@animation-falling-5);
+      //动画样式设置
+      .animation-class-falling-5() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-falling-5);
+        //设置动画时间(1秒)
+        .animation-duration(@falling-5-time);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(ease-out);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(1);
+        // 	规定是否应该轮流反向播放动画
+        .animation-direction(normal);
+      }
+      &.falling-start-5{
+        width: 188rpx;
+        height: 86rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/flutter5.png') 0 0 no-repeat;
+        background-size: 100%;
+        top: -188rpx;
+        left: 50%;
+        .animation-class-falling-5();
+      }
+      
+
+      .animation-falling-6(@name: fn-animation){
+        @keyframes @name {
+          0% {
+            transform: translate(200rpx, 0) rotateX(0deg);
+            .opacity(1);
+          }
+          100% {
+            transform: translate(0rpx, 800rpx) rotateX(-720deg);
+            .opacity(.8);
+          }
+        }
+      }
+
+      @falling-6-time: 1.2s;
+      @animation-falling-6: animation-falling-6;
+      .animation-falling-6(@animation-falling-6);
+      //动画样式设置
+      .animation-class-falling-6() {
+        //通过动画名称将动画添加到样式中
+        .animation-name(@animation-falling-6);
+        //设置动画时间(1秒)
+        .animation-duration(@falling-6-time);
+        //动画延时播放
+        .animation-delay(0s);
+        //设置动画速度曲线(直线匀速)
+        .animation-timing-function(ease-out);
+        //动画的播放次数(重复播放)
+        .animation-iteration-count(1);
+        // 	规定是否应该轮流反向播放动画
+        .animation-direction(normal);
+      }
+      &.falling-start-6{
+        width: 192rpx;
+        height: 190rpx;
+        background: url('@{resourcePath}MarketActivityShake/assets/countingMoney/flutter6.png') 0 0 no-repeat;
+        background-size: 100%;
+        top: -190rpx;
+        left: 50%;
+        .animation-class-falling-6();
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-counting-money">
+    <i class="gold-3"></i>
+    <i class="gold-4"></i>
+    <i class="gold-5"></i>
+    <view class="money-falling">
+      <repeat for="{{moneyFallingList}}" key="index" item="item">
+        <i class="{{ 'money-falling-item ' + (item.animation) }}"></i>
+      </repeat>
+    </view>
+    <view class="{{ 'bong' + bongStart}}">{{bongMoney}}</view>
+    <view class="counting-money-head">
+      <view class="game-time">
+        <text class="time-clock">{{gameTime}}</text>
+        <view class="time-progress">
+          <view class="progress" style="width: {{(gameTime / timer) * 100}}%;"></view>
+        </view>
+      </view>
+      <view class="money-count">
+        <text class="my-counting-money">{{moneyNumber * currency}}</text>
+      </view>
+    </view>
+    <view class="counting-money-wrap">
+      <!-- <touch-component v-on:slideUp="slideUpFn" v-on:touchStart="touchStartFn" v-on:touchMove="touchMoveFn" moveDirection="up"> -->
+      <view bindtouchstart="touchStartFn" bindtouchmove="touchMoveFn" bindtouchend="slideUpFn" style="position: relative;width: 100%;height: 100%;">
+        <view slot="touch-content" class="touch-content {{touchItem}}">
+          <view class="money-item item-0"></view>
+          <view class="money-item item-1"></view>
+          <repeat for="{{moneyGroup}}" key="index" item="item">
+            <!-- <view class="{{'money-item ' + item.class}}" wx:if="{{item.disabled !== true}}">{{index}}</view> -->
+            <view class="{{'money-item money-item-' + index}}"></view>
+          </repeat>
+          <view class="touch-tip">
+            <text class="tip-text-title">手指滑动越快</text>
+            <text class="tip-text-remark">数钞票数量越多</text>
+          </view>
+          <i class="gold-1"></i>
+          <i class="gold-2"></i>
+        </view>
+      </view>
+      <!-- </touch-component> -->
+    </view>
+    <view class="{{ 'game-over' + (!slideStatus ? ' show' : '')}}">
+      <view class="game-over-mask"></view>
+      <view class="game-over-tip">
+        <view class="over-tip-text">我的成绩</view>
+        <view class="over-tip-value">{{moneyNumber * currency}}</view>
+        <text class="count-down">{{countDownTimer}}</text>
+      </view>
+    </view>
+    <view class="guide" wx:if="{{guideTimer > 0}}">
+      <view class="count-down-clock"><text class="{{ 'sub-font ' + (guideStart ? 'clock-start' : '')}}">{{guideTimer}}</text></view>
+      <view class="guide-money">
+        <view class="guide-instructions-line"></view>
+        <view class="guide-instructions-point">
+          <!-- 能量波 -->
+          <view class="energy-wave {{ guideStart ? 'energy-wave-start' : '' }}">
+            <view class="energy-wave-item energy-wave-one"></view>
+            <view class="energy-wave-item energy-wave-two"></view>
+            <view class="energy-wave-item energy-wave-three"></view>
+          </view>
+        </view>
+      </view>
+      <view class="guide-hand {{ guideStart ? 'hand-move-start' : '' }}"></view>
+      <i class="guide-arrow {{ guideStart ? 'arrow-move-start' : '' }}"></i>
+      <text class="guide-text">保存体力，等待开始</text>
+    </view>
+  </view>
+</template>
+
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { PATCH, Tips } from '@/utils'
+import { RESOURCE_PATCH, STATUS } from '@/configs'
+import { CountingMoneyService } from '../../services'
+import TouchComponent from '@/components/touch-component/index'
+
+export default class CountingMoneyPages extends wepy.page {
+  config = {
+    navigationBarTitleText: '',
+    disableScroll: true
+  }
+
+  components = {
+    'touch-component': TouchComponent
+  }
+
+  data = {
+    // 滑动是否可用
+    slideStatus: true,
+    // 启动money飘落
+    moneyFallingStatus: false,
+    // 飘落动画项
+    moneyFallingList: [
+      {id: 0, animation: ''},
+      {id: 1, animation: ''},
+      {id: 2, animation: ''}
+      // {id: 3, animation: ''},
+      // {id: 4, animation: ''},
+      // {id: 5, animation: ''}
+    ],
+    // 用于随机去设置动画名称
+    moneyFallingAnimation: [
+      {key: 1, animation: 'falling-start-1', timer: 0.8},
+      {key: 2, animation: 'falling-start-2', timer: 2},
+      {key: 3, animation: 'falling-start-3', timer: 3},
+      {key: 4, animation: 'falling-start-4', timer: 1},
+      {key: 5, animation: 'falling-start-5', timer: 1.5},
+      {key: 6, animation: 'falling-start-6', timer: 1.2}
+    ],
+    isShowFalling: true,
+    // 游戏时间(单位：秒)
+    timer: 0,
+    gameTime: 0,
+    // 游戏结束后的倒计时时间（秒）
+    countDownTimer: 2,
+    // 引导时间
+    guideTimer: 5,
+    // 引导倒计时动画开始
+    guideStart: false,
+    // 可滑动元素的集合
+    moneyGroup: {
+      // 数据key: { id: '数据ID', class: '动画class' }
+      // 0: { id: 0, class: '' },
+    },
+    // 所有可滑动钱的张数
+    moneyAll: 0,
+    // 当前可滑动钱剩余张数
+    currentMoney: 0,
+    // 多少张
+    moneyNumber: 0,
+    // 货币单数
+    currency: 100,
+    // 显示爆炸效果数(每滑动20张显示一次)
+    bongNumber: 20,
+    bongStart: '',
+    bongMoney: 0,
+    // 当前groupItem的dataset
+    currentDataSet: null,
+    // 钱动画
+    moneyAnimation: null,
+    // 活动ID
+    activityId: '',
+    // 活动游戏ID
+    activityGameId: '',
+    // 酒店ID
+    hotelId: '',
+    // 用户编号
+    userNo: '',
+    touchItem: '',
+    // 音频对象集合
+    innerAudioContextGroups: {},
+    // start
+    startData: {},
+    // move
+    moveData: {}
+  }
+
+  methods = {
+    /**
+     * 触摸开始
+     */
+    touchStartFn(e) {
+      let changedTouches = e.changedTouches
+      this.startData = changedTouches[0] || {}
+    },
+    /**
+     * 触摸移动
+     */
+    // touchMoveFn(e, star, move, distance) {
+    touchMoveFn(e) {
+      let changedTouches = e.changedTouches
+      let changedTouche = changedTouches[0] || {}
+      this.moveData = changedTouche
+    },
+    /**
+     * 向上滑动
+     */
+    slideUpFn(e) {
+      let startClientY = this.startData.clientY
+      let moveClientY = this.moveData.clientY
+      let yDistance = startClientY - moveClientY
+      this.startData = {}
+      this.moveData = {}
+      if (yDistance > 50) {
+        let touches = e.touches
+        if (this.slideStatus && touches.length === 0) {
+          // 设置当前滑动元素动画
+          this.moneyNumber += 1
+          // 递减当前数钱数
+          this.currentMoney--
+          let currentGroupItem = this.moneyGroup[this.currentMoney]
+          if (this.currentMoney < 0) {
+            this.currentMoney = this.moneyAll
+            this.$apply()
+            currentGroupItem = this.moneyGroup[this.currentMoney]
+          }
+          if (currentGroupItem) {
+            let that = this
+            that.touchItem += ' child-' + that.currentMoney
+            // 滑动音效
+            if (that.isShowFalling) {
+              that.createAudioContext(this.currentMoney)
+            }
+            // 每滑动 bongNumber 张显示bong动画
+            if (that.moneyNumber && that.moneyNumber % that.bongNumber === 0) {
+              that.bongStart = ' bong-start'
+              that.bongMoney = that.moneyNumber * that.currency
+              setTimeout(() => {
+                that.bongStart = ''
+                that.$apply()
+              }, 1500)
+            }
+            // 启动money飘落动画
+            if (!that.moneyFallingStatus) {
+              that.moneyFallingStatus = true
+              setTimeout(() => {
+                that.moneyFalling()
+              }, 500)
+            }
+            // 清除完成动画动的元素
+            ;((idx, that) => {
+              setTimeout(() => {
+                // 清除动画class
+                that.touchItem = that.touchItem.replace(' child-' + idx, ' child-opacity-' + idx)
+                that.$apply()
+                setTimeout(() => {
+                  that.touchItem = that.touchItem.replace(' child-opacity-' + idx, '')
+                  that.$apply()
+                }, 800)
+              }, 800)
+            })(that.currentMoney, that)
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * 创建滑动音效
+   */
+  createAudioContext(currentMoney) {
+    let innerAudioContextGroups = this.innerAudioContextGroups
+    let innerAudioContext = innerAudioContextGroups[currentMoney]
+    if (innerAudioContext) {
+      innerAudioContext.play()
+    } else {
+      let innerAudioContext = wx.createInnerAudioContext()
+      this.innerAudioContextGroups[currentMoney] = innerAudioContext
+      this.$apply()
+      // 是否自动开始播放，默认为 false
+      innerAudioContext.autoplay = true
+      // 是否循环播放，默认为 false
+      innerAudioContext.loop = false
+      // ios在静音状态下能够正常播放音效
+      wx.setInnerAudioOption({
+        // 是否遵循系统静音开关，默认为 true。当此参数为 false 时，即使用户打开了静音开关，也能继续发出声音。
+        obeyMuteSwitch: false
+      })
+      // 音频资源的地址
+      innerAudioContext.src = RESOURCE_PATCH + 'assets/audio/count-money.mp3'
+    }
+  }
+
+  /**
+   * 钱飘落启动, 随机
+   */
+  moneyFalling() {
+    // 飘落动画项
+    let moneyFallingList = this.moneyFallingList
+    // 用于随机去设置动画名称
+    let moneyFallingAnimation = this.moneyFallingAnimation
+    let animationLen = moneyFallingAnimation.length
+
+    let that = this
+    let eachFn = (listItem, animationItem) => {
+      if (that.slideStatus) {
+        let thisListItem = that.moneyFallingList[listItem.id]
+        thisListItem.animation = animationItem.animation
+        that.$apply()
+        setTimeout(() => {
+          let resNumber = Math.floor(Math.random() * animationLen)
+          eachFn(thisListItem, moneyFallingAnimation[resNumber])
+        }, animationItem.timer * 1000)
+      }
+    }
+
+    for (let i = 0, len = moneyFallingList.length; i < len; i++) {
+      eachFn(moneyFallingList[i], moneyFallingAnimation[i])
+    }
+  }
+
+  /**
+   * 游戏结束
+   */
+  gameOver() {
+    // 数据提交
+    this.gameCountNumSubmitResult()
+  }
+
+  /**
+   * 计数游戏提交结果
+   */
+  gameCountNumSubmitResult() {
+    let userNo = this.userNo
+    let activityGameId = this.activityGameId
+
+    if (userNo && activityGameId) {
+      CountingMoneyService.gameCountNumSubmitResult({
+        data: {
+          activityGameId,
+          userNo,
+          num: this.moneyNumber
+        }
+      }).then(res => {
+        // 游戏结束后倒计时
+        this.gameOverCountDown()
+      }).catch(err => {
+        Tips.error(err)
+        let that = this
+        setTimeout(() => {
+          that.toActivityTransfer()
+        }, 1500)
+      })
+    }
+  }
+
+  /**
+   * 去活动暖场页
+   */
+  toActivityTransfer() {
+    wx.reLaunch({
+      url: '../activity-transfer?activityId=' + this.activityId + '&hotelId=' + this.hotelId
+    })
+  }
+
+  /**
+   * 游戏结束后倒计时
+   */
+  gameOverCountDown() {
+    let that = this
+    setTimeout(() => {
+      that.countDownTimer--
+      that.$apply()
+      if (that.countDownTimer <= 0) {
+        wx.reLaunch({url: 'ranking-list?activityId=' + this.activityId + '&activityGameId=' + this.activityGameId})
+      } else {
+        this.gameOverCountDown()
+      }
+    }, 1000)
+  }
+
+  /**
+   * 游戏倒计时
+   */
+  gameCountDown() {
+    let that = this
+    setTimeout(() => {
+      that.gameTime--
+      that.$apply()
+
+      if (that.gameTime > 0) {
+        that.gameCountDown()
+      } else {
+        that.slideStatus = false
+        that.$apply()
+        that.gameOver()
+      }
+    }, 1000)
+  }
+
+  /**
+   * 生成money元素
+   */
+  renderMoney(money) {
+    for (let i = this.currentMoney, len = this.currentMoney + money + 1; i < len; i++) {
+      this.moneyGroup[i] = {id: i}
+    }
+    this.currentMoney += money
+    this.moneyAll = this.currentMoney
+    this.$apply()
+  }
+
+  /**
+   * 引导倒计时
+   */
+  guideCountDown() {
+    let that = this
+    setTimeout(() => {
+      that.guideTimer--
+      that.$apply()
+
+      if (that.guideTimer > 0) {
+        that.guideCountDown()
+      } else {
+        // 游戏倒计时
+        this.gameCountDown()
+      }
+    }, 1000)
+  }
+
+  /**
+   * 获取游戏配置
+   */
+  gameCountNumConfig() {
+    CountingMoneyService.gameCountNumConfig({data: {}}).then(res => {
+      let gameTime = res.gameTime || 0
+      if (gameTime && gameTime >= 5) {
+        this.resetConfig(gameTime)
+      }
+    }).catch(err => {
+      Tips.error(err)
+    })
+  }
+
+  /**
+   * 根据配置重置参数
+   */
+  resetConfig(gameTime) {
+    // 游戏倒计时
+    // this.timer = gameTime - this.guideTimer
+    this.timer = gameTime
+    this.gameTime = this.timer
+    // 引导动画开始
+    this.guideStart = true
+    this.$apply()
+    // 引导倒计时开始
+    this.guideCountDown()
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    options = options || {}
+    this.activityId = options.activityId
+    this.activityGameId = options.activityGameId
+    this.hotelId = options.hotelId
+    this.userNo = wx.getStorageSync(STATUS.USER_NO)
+    // 活动页设置屏幕长亮
+    wx.setKeepScreenOn({
+      keepScreenOn: true,
+      complete: () => {}
+    })
+    let that = this
+    wx.getSystemInfo({
+      success: function(res) {
+        var model = res.model
+        if (model.search('iPhone 6') !== -1 || model.search('iPhone 6s') !== -1) {
+          that.isShowFalling = false
+        }
+      }
+    })
+    // 获取游戏配置
+    this.gameCountNumConfig()
+    // this.resetConfig(250)
+    // 生成money元素
+    this.renderMoney(8)
+  }
+}
+</script>

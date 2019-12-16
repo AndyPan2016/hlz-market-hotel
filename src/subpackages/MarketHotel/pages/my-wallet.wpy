@@ -1,0 +1,225 @@
+<!--
+  我的钱包页
+  @Author: AndyPan
+  @CreateDate: 2019年4月28日14:35:19
+  @LastUpdateDate: 2019年4月28日14:35:22
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+
+.page-my-wallet-main {
+}
+
+.my-wallet-list {
+  padding: 20rpx 26rpx;
+  padding-bottom: 174rpx;
+
+  // &.page-main-cont{
+  //   margin: 20rpx 26rpx;
+  //   background: transparent;
+  // }
+
+  .wallet-list-item {
+    height: 132rpx;
+    background: @color-ffffff;
+    margin-bottom: 20rpx;
+    position: relative;
+    color: @color-333333;
+
+    .item-left {
+      position: absolute;
+      top: 30rpx;
+      left: 30rpx;
+      right: 280rpx;
+      .clearfix();
+
+      .item-text-type {
+        display: inline-block;
+        width: 100%;
+        font-size: 30rpx;
+        line-height: 30rpx;
+        text-align: left;
+        float: left;
+      }
+      .item-text-date {
+        display: inline-block;
+        width: 100%;
+        font-size: 24rpx;
+        line-height: 24rpx;
+        text-align: left;
+        color: @color-999999;
+        float: left;
+        margin-top: 16rpx;
+      }
+    }
+    .item-right {
+      display: inline-block;
+      height: 36rpx;
+      line-height: 36rpx;
+      font-size: 36rpx;
+      position: absolute;
+      top: 50%;
+      right: 30rpx;
+      margin-top: -18rpx;
+
+      &.red,
+      &.in {
+        color: @brand-primary;
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <scroll-view class="page-my-wallet-main page-main-wrap" scroll-y bindscrolltolower="lower" bindscrolltoupper="upper">
+    <view class="my-wallet-list">
+      <view class="list-null" wx:if="{{ !billRecords || !billRecords.length }}">钱包空空~</view>
+      <repeat for="{{billRecords}}" key="index" index="index" item="item">
+        <view class="wallet-list-item">
+          <view class="item-left">
+            <text class="item-text-type">{{item.memo || '活动抽奖'}}</text>
+            <text class="item-text-date">{{item.finishTime}}</text>
+          </view>
+          <view class="{{ 'item-right ' + (item.direction) }}">{{item.directionText + item.amount}}元</view>
+        </view>
+      </repeat>
+    </view>
+    <!-- 底部Footer -->
+    <footer :dataset.sync="footerDataSet" :onFooterItemTap="onFooterItemTapFn" />
+  </scroll-view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import FooterComponent from '@/components/footer-component/index'
+import { Utils, Tips, PATCH } from '@/utils'
+import { STATUS } from '@/configs'
+import { WalletService } from '../services'
+
+export default class MyWalletPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '钱包'
+  }
+
+  // 组件
+  components = {
+    // 底部
+    footer: FooterComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    userNo: null,
+    // 底部导航数据
+    footerDataSet: [],
+    // 页码
+    pageNo: 1,
+    // 进出账记录
+    billRecords: null
+  }
+
+  onFooterItemTapFn(dataset, e) {
+    let key = dataset.key
+    if (key === 'extract') {
+      wepy.navigateTo({ url: 'cash-withdrawal' })
+    }
+    return false
+  }
+
+  /**
+   * 滚动到底部
+   */
+  lower(e) {
+    this.pageNo++
+    this.customerAccountDetail()
+  }
+
+  /**
+   * 滚动到顶部
+   */
+  upper(e) {
+    this.pageNo = 1
+    this.customerAccountDetail()
+  }
+
+  /**
+   * 获取用户信息
+   */
+  memberInfo() {
+    WalletService.memberInfo({
+      data: { userNo: this.userNo }
+    })
+      .then(res => {
+        let memberInfo = res.data.memberInfo
+        this.footerDataSet = [
+          {
+            key: 'balance',
+            type: 'text',
+            theme: 'default',
+            text: '￥' + memberInfo.balance,
+            labelText: '余额'
+          },
+          {
+            key: 'extract',
+            type: 'text',
+            theme: 'primary',
+            text: '提现',
+            boxFlex: 2
+          }
+        ]
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 用户进出帐
+   */
+  customerAccountDetail() {
+    wx.showNavigationBarLoading()
+    WalletService.customerAccountDetail({
+      data: { userNo: this.userNo, start: this.pageNo }
+    })
+      .then(res => {
+        wx.hideNavigationBarLoading()
+        wx.stopPullDownRefresh()
+        let dataRows = res.data.rows
+        if (dataRows) {
+          if (this.pageNo === 1) {
+            this.billRecords = dataRows
+          } else {
+            Utils.forEach(dataRows, dataItem => {
+              this.billRecords.push(dataItem)
+            })
+          }
+          this.$apply()
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  methods = {}
+
+  onLoad() {
+    PATCH.createPatch.call(this)
+  }
+
+  onShow() {
+    this.userNo = wepy.getStorageSync(STATUS.USER_NO)
+    this.memberInfo()
+    this.customerAccountDetail()
+  }
+}
+</script>  

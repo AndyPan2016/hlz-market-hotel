@@ -1,0 +1,183 @@
+<!--
+  商品详情
+  @Author: AndyPan
+  @CreateDate: 2019年10月25日10:04:43
+  @LastUpdateDate: 2019年10月25日10:04:46
+  @Remarks:
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+@import '../../../assets/less/_variables.less';
+
+.page-detail-main{
+  padding-bottom: 100rpx;
+  position: relative;
+
+  .product-price{
+    font-size: 40rpx;
+    color: #FF4C2F;
+    height: 52rpx;
+    line-height: 52rpx;
+    text-align: left;
+    margin: 0 30rpx;
+    margin-top: 60rpx;
+    margin-bottom: 30rpx;
+  }
+  .product-name{
+    margin: 0 30rpx;
+    margin-bottom: 30rpx;
+    font-size: 30rpx;
+    line-height: 40rpx;
+    color: #222;
+    text-align: left;
+    .source {
+      display: inline-block;
+      margin-right: 20rpx;
+      background: #FF4C2F;
+      border-radius: 12rpx;
+      color: #FFF;
+      font-size: 22rpx;
+      padding: 2rpx 12rpx;
+    }
+  }
+  
+  .detail-bottom-btn{
+    height: 100rpx;
+    background: #FF4C2F;
+    font-size: 30rpx;
+    line-height: 100rpx;
+    text-align: center;
+    color: #FFF;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-detail-main">
+    <swiper-banner :dataset.sync="swiperDataSet" width="100%" height="702rpx"></swiper-banner>
+    <view class="product-price">￥{{productIntro.price}}</view>
+    <view class="product-name">
+      <text class="source" wx:if="{{productIntro.sourceText}}">{{productIntro.sourceText}}</text>{{productIntro.productName}}
+    </view>
+    <view class="detail-bottom-btn" @tap="toBuy">去{{productIntro.sourceText}}购买</view>
+    <view wx:if="{{webView}}">
+      <web-view src="{{productIntro.shortUrl}}" />
+    </view>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+// import { Utils } from '@/utils'
+import { Tips, Utils } from '@/utils'
+import { VideoService } from '../services'
+import { STATUS } from '@/configs'
+import SwiperComponent from '@/components/swiper-component/index'
+
+export default class ProductDetailPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '商品简介'
+  }
+
+  // data
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    userNo: null,
+    skuId: null,
+    source: null,
+    swiperDataSet: null,
+    productIntro: null,
+    sourceMap: {
+      'JD': { key: 'JD', text: '京东', path: 'pages/proxy/union/union?spreadUrl=' }
+    },
+    webView: null
+  }
+
+  // 组件
+  components = {
+    // 图片切换组件
+    'swiper-banner': SwiperComponent
+  }
+
+  // 方法
+  methods = {
+    toBuy() {
+      let shortUrl = this.productIntro.shortUrl
+      if (shortUrl) {
+        // wx.navigateTo({
+        //   url: 'web-view?shortUrl=' + shortUrl
+        // })
+        wx.navigateToMiniProgram({
+          appId: 'wx1edf489cb248852c',
+          path: (this.sourceMap[this.source] || {}).path + shortUrl,
+          extraData: {spreadUrl: shortUrl},
+          // develop.开发版 trial.体验版 release.正式版
+          envVersion: 'release',
+          success(res) {
+            // console.info('navigateToMiniProgram success')
+          },
+          fail(res) {
+            // console.info('navigateToMiniProgram error' + JSON.stringify(res))
+          },
+          complete(res) {
+            // console.info('navigateToMiniProgram complete')
+          }
+        })
+      }
+    }
+  }
+
+  videoCommerceProductInfo () {
+    VideoService.videoCommerceProductInfo({
+      data: {
+        userNo: this.userNo,
+        skuId: this.skuId
+      }
+    }).then(res => {
+      let data = res.data
+      data.source = !this.source || this.source === 'null' ? 'JD' : this.source
+      data.sourceText = (this.sourceMap[data.source] || {}).text || ''
+      this.productIntro = data
+      let swiperDataSet = (data.imgs || '').split(',')
+      this.swiperDataSet = []
+      Utils.forEach(swiperDataSet, item => {
+        this.swiperDataSet.push({picture: item})
+      })
+      this.$apply()
+    }).catch(err => {
+      Tips.error(err.message)
+    })
+  }
+
+  videoBrowseLogAdd() {
+    VideoService.videoBrowseLogAdd({
+      data: {
+        userNo: this.userNo,
+        skuId: this.skuId
+      }
+    })
+  }
+
+  // 加载完成
+  onLoad(options) {
+    this.userNo = wx.getStorageSync(STATUS.USER_NO)
+    this.skuId = options.skuId
+    this.source = !options.source || options.source === 'null' ? 'JD' : options.source
+    this.videoCommerceProductInfo()
+    this.videoBrowseLogAdd()
+  }
+
+  onShow() {}
+}
+</script>

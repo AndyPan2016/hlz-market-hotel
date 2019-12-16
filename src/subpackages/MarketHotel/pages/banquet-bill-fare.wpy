@@ -1,0 +1,276 @@
+<!--
+  宴会菜单列表页
+  @Author: AndyPan
+  @CreateDate: 2019年4月26日14:41:47
+  @LastUpdateDate: 2019年4月26日14:41:50
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+
+.page-banquet-bill-fare-main {
+  .bill-fare-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 100rpx;
+
+    .bill-fare-form {
+      .rows-item-price {
+        margin: 30rpx auto;
+      }
+      .form-column-item {
+        font-size: 28rpx;
+        width: 400rpx;
+        .text-overflow();
+        min-height: 30rpx;
+        line-height: 30rpx;
+
+        .original-price {
+          padding: 2rpx;
+          font-size: 30rpx;
+          color: @color-999999;
+        }
+        &.ta-right {
+          float: right;
+          width: auto;
+        }
+      }
+      .rows-item-original-price {
+        margin: 30rpx auto;
+        .form-column-item {
+          font-size: 32rpx;
+          overflow: initial;
+          .setmeal-price {
+            // font-family: 'Bahnschrift';
+            font-size: 30rpx;
+            color: @color-bbbbbb;
+            height: 30rpx;
+            line-height: 30rpx;
+            position: relative;
+            display: inline-block;
+
+            .line {
+              display: inline-block;
+              width: 100%;
+              height: 0.5rpx;
+              border-top: 0.5rpx solid @color-FF2E28;
+              position: absolute;
+              left: 0;
+              top: 50%;
+            }
+          }
+        }
+      }
+      .rows-item-setmeal-price {
+        margin: 30rpx auto;
+        .form-column-item {
+          font-size: 32rpx;
+          overflow: initial;
+          .setmeal-price {
+            font-family: 'Bahnschrift';
+            font-size: 48rpx;
+            color: @color-FF2E28;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-banquet-bill-fare-main page-main-wrap">
+    <view class="bill-fare-wrap">
+      <tab :isFull="boolTrue" models="min" :items.sync="billFareList" :onSwitch="tabSwitchFn" :switchIndex.sync="switchIndex">
+        <view slot="tab-content-slot">
+          <view class="bill-fare-panel">
+            <text class="panel-top-line"></text>
+            <view class="bill-fare-cont-wrap" wx:if="{{ setMealDishesList && setMealDishesList.length }}">
+              <view class="block-cont-title">套餐详情</view>
+              <view class="ui-form bill-fare-form">
+                <repeat for="{{setMealDishesList}}" key="index" index="index" item="item">
+                  <view class="form-rows-item">
+                    <view class="form-column-item left">{{item.setMealDishesName}}</view>
+                    <view class="form-column-item right ta-right" wx:if="{{item.setMealDishesPrice && item.setMealDishesPrice !== '0' && item.setMealDishesPrice !== 0}}">￥{{item.setMealDishesPrice}}</view>
+                  </view>
+                </repeat>
+                <view class="form-rows-item" wx:if="{{tableFee && tableFee !== '0' && tableFee !== 0 && tableFee !== '0.00'}}">
+                  <view class="form-column-item left">餐位费</view>
+                  <view class="form-column-item right ta-right">￥{{tableFee}}/人</view>
+                </view>
+                <view class="form-rows-item rows-item-original-price">
+                  <view class="form-column-item left">原价</view>
+                  <view class="form-column-item right ta-right" wx:if="{{currentBillFare.originalPrice && currentBillFare.originalPrice !== '0' && currentBillFare.originalPrice !== 0}}">
+                    <view class="setmeal-price">￥{{currentBillFare.originalPrice}}
+                      <i class="line"></i>
+                    </view>
+                  </view>
+                </view>
+                <view class="form-rows-item rows-item-setmeal-price">
+                  <view class="form-column-item left">套餐价</view>
+                  <view class="form-column-item right ta-right" wx:if="{{currentBillFare.setMealPrice && currentBillFare.setMealPrice !== '0' && currentBillFare.setMealPrice !== 0}}">
+                    <text class="setmeal-price">￥{{currentBillFare.setMealPrice}}</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view class="bill-fare-cont-null" wx:else>{{isShowPageCont ? '套餐详情请咨询酒店' : '加载中...'}}</view>
+          </view>
+        </view>
+      </tab>
+    </view>
+    <!-- 底部Footer -->
+    <footer />
+    <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" />
+  </view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import FooterComponent from '@/components/footer-component/index'
+import TabComponent from '@/components/tab-component/index'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import { Utils, Tips, PATCH } from '@/utils'
+import { IndexService } from '../services'
+import { STATUS } from '@/configs'
+
+export default class BanquetBillFarePages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '宴会菜单'
+  }
+
+  // 组件
+  components = {
+    // 底部
+    footer: FooterComponent,
+    // 菜单价格选项卡
+    tab: TabComponent,
+    'user-authorize': UserAuthorizeComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    hotelId: null,
+    currentBillFare: null,
+    setMealDishesList: null,
+    // 宴会菜单价格列表
+    billFareList: null,
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    tableFee: '',
+    isShowPageCont: false,
+    // 指定选项卡切换索引
+    switchIndex: 0,
+    // 是否为分享链接
+    isShare: null
+  }
+
+  onAuthorizeAllFn(data) {
+    this.hotelSetMealList()
+  }
+
+  /**
+   * 酒店套餐列表
+   */
+  hotelSetMealList() {
+    IndexService.hotelSetMealList({ data: { hotelId: this.hotelId } })
+      .then(res => {
+        let setMealInfoList = res.data.setMealInfoList
+        Utils.forEach(setMealInfoList, (item, key) => {
+          item.key = item.setMealId
+          item.title = '￥' + item.setMealPrice + '/桌'
+        })
+        // let temp = []
+        // for (let i = 0; i < 7; i++) {
+        //   temp.push(setMealInfoList[1])
+        // }
+        // this.billFareList = temp
+        this.billFareList = setMealInfoList
+        this.$apply()
+        this.$invoke('tab', 'renderView')
+        this.hotelTrackAdd()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 增加酒店足迹
+   */
+  hotelTrackAdd() {
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (this.hotelId && this.isShare) {
+      IndexService.hotelTrackAdd({
+        data: { hotelId: this.hotelId, userNo }
+      }).then(res => {})
+    }
+  }
+
+  /**
+   * 酒店套餐菜品列表
+   */
+  hotelSetMealDishesList(id) {
+    IndexService.hotelSetMealDishesList({
+      data: {
+        hotelId: this.hotelId,
+        setMealId: id
+      }
+    })
+      .then(res => {
+        this.tableFee = res.data.tableFee
+        this.setMealDishesList = res.data.setMealInfoList
+        this.isShowPageCont = true
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 选项卡切换
+   */
+  tabSwitchFn(item, idx, e) {
+    this.currentBillFare = item
+    this.$apply()
+    this.hotelSetMealDishesList(item.key)
+  }
+
+  /**
+   * 分享转发
+   */
+  onShareAppMessage(res) {
+    return {
+      path:
+        '/subpackages/MarketHotel/pages/banquet-bill-fare?hotelId=' +
+        this.hotelId +
+        '&isShare=true'
+    }
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    wx.showShareMenu({ withShareTicket: true })
+    options = options || {}
+    this.hotelId = options.hotelId || wepy.getStorageSync(STATUS.HOTEL_ID)
+    this.switchIndex = options.switchIndex
+    this.isShare = options.isShare
+
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (userNo) {
+      this.hotelSetMealList()
+    } else {
+      this.$invoke('user-authorize', 'authorizeActivation')
+    }
+  }
+}
+</script>  

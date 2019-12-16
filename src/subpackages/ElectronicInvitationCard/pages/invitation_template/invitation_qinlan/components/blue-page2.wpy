@@ -1,0 +1,108 @@
+<style lang="less">
+page {
+  width: 100%;
+  height: 100%;
+}
+</style>
+<template>
+    <view class="page-blue">
+        <!-- page2 -->
+        <view class="frame">
+            <blue-layout flower="flower02">
+                <view slot="panel" class="panel2">
+                    <view class="panel-top">
+                        <image mode="aspectFill" class="panel-photo panel-photo-top" src="{{ p2.contentInfos[0].fieldContent }}" @load="imageLoad" />
+                        <temp-image-uploader :rate.sync="src1Rate" :mySrc.sync="src1" :myShown.sync="editMode" @onImageUploaded.user="onImageUploaded" />
+                    </view>
+                    <view class="panel-middle">
+                        <view class="icon-my-sweetest-love"></view>
+                    </view>
+                    <view class="panel-bottom">
+                        <image mode="aspectFill" class="panel-photo panel-photo-bottom" src="{{ p2.contentInfos[1].fieldContent }}" @load="imageLoad" />
+                        <temp-image-uploader2 :rate.sync="src2Rate" :mySrc.sync="src2" :myShown.sync="editMode" @onImageUploaded.user="onImageUploaded" />
+                    </view>
+                </view>
+            </blue-layout>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from 'wepy'
+import BlueLayout from './blue-layout'
+import TempImageUploader from './temp-image-uploader'
+const pageNo = 2 // 当前页码
+export default class BluePage2 extends wepy.component {
+  components = {
+    'blue-layout': BlueLayout,
+    'temp-image-uploader': TempImageUploader,
+    'temp-image-uploader2': TempImageUploader
+  }
+  props = {
+    editMode: { // 是否处于编辑模式
+      type: Boolean,
+      default: false
+    },
+    basicInfo: { // 请柬基本信息
+      type: Object,
+      default: {}
+    },
+    p2: { // 当前页信息
+      type: Object,
+      default: {
+        contentInfos: []
+      }
+    },
+    a2: {
+      type: Object,
+      default: { shown: false, hide: false }
+    }
+  }
+  watch = {
+    src1(n, o) {
+      this.p2.contentInfos[0] = {
+        fieldName: 1,
+        contentType: 'PICTURE',
+        fieldContent: n
+      }
+      this.$apply()
+    },
+    src2(n, o) {
+      this.p2.contentInfos[1] = {
+        fieldName: 2,
+        contentType: 'PICTURE',
+        fieldContent: n
+      }
+      this.$apply()
+    }
+  }
+  data = {
+    src1: '',
+    src1Rate: '0.78',
+    src2: '',
+    src2Rate: '0.78',
+    changedList: [],
+    imageCount: 2, // 图片总数
+    imageLoadedCount: 0 // 已加载图片数量
+  }
+  methods = {
+    onImageUploaded(e) {
+      this.prepareChangedList()
+      this.$emit('onPageDataChanged', pageNo, { contentInfos: this.changedList })
+    },
+    imageLoad() {
+      this.imageLoadedCount++
+      this.$emit('onImageLoadedCountChanged', { pageNo, count: this.imageLoadedCount, total: this.imageCount }) // 加载进度改变
+    }
+  }
+  prepareChangedList() {
+    this.changedList = []
+    if (this.src1) {
+      this.changedList.push({ fieldName: 1, contentType: 'PICTURE', fieldContent: this.src1 })
+    }
+    if (this.src2) {
+      this.changedList.push({ fieldName: 2, contentType: 'PICTURE', fieldContent: this.src2 })
+    }
+    this.$apply()
+  }
+}
+</script>

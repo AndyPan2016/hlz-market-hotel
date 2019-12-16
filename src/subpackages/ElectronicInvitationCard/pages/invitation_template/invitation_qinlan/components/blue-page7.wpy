@@ -1,0 +1,145 @@
+<style lang="less">
+page {
+  width: 100%;
+  height: 100%;
+}
+.call-me {
+  width: 300rpx;
+  height: 70rpx;
+  border-radius: 4rpx;
+  background: #ff4c2f;
+  text-align: center;
+  line-height: 70rpx;
+  color: #ffffff;
+  font-size: 32rpx;
+  position: absolute;
+  bottom: 80rpx;
+  left: 50%;
+  margin-left: -150rpx;
+  z-index: 801;
+}
+</style>
+<template>
+    <view class="page-blue">
+        <!-- page7 -->
+        <view class="frame">
+            <blue-layout flower="flower04">
+                <view slot="panel" class="panel7">
+                    <view class="panel-top">
+                        <image class="panel-top-photo" mode="aspectFill" src="{{ p7.contentInfos[0].fieldContent }}" @load="imageLoad" />
+                        <temp-image-uploader :rate.sync="src11Rate" :mySrc.sync="src11" :myShown.sync="editMode" @onImageUploaded.user="onImageUploaded" />
+                    </view>
+                    <view class="panel-bottom">
+                    </view>
+                    <view class="panel-location-wrapper">
+                        <view class="panel-location">
+                            <map class="panel-location-map" wx:if="{{showMap}}" longitude="{{basicInfo.longitude}}" latitude="{{basicInfo.latitude}}" markers="{{basicInfo.marker}}" show-location @tap="toMap"></map>
+                            <view class="panel-location-nav">导航</view>
+                            <view class="panel-location-text">
+                                <text class="panel-location-text-time">{{basicInfo.weddingTime}}</text>
+                                <text class="panel-location-text-address">{{basicInfo.hotelAddressName}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </blue-layout>
+            <!-- <view class="call-me" wx:if="{{bottomType==='msg' && showMap}}" @tap.stop="goHotel">{{hotelType === 'HOTEL' ? '参观酒店' : '参观商家'}}</view> -->
+            <view class="call-me" wx:if="{{bottomType==='msg' && showMap}}" @tap.stop="goHotel">参观商家</view>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from 'wepy'
+import BlueLayout from './blue-layout'
+import TempImageUploader from './temp-image-uploader'
+const pageNo = 7 // 当前页码
+export default class BluePage7 extends wepy.component {
+  components = {
+    'blue-layout': BlueLayout,
+    'temp-image-uploader': TempImageUploader
+  }
+  props = {
+    editMode: { // 是否处于编辑模式
+      type: Boolean,
+      default: false
+    },
+    basicInfo: { // 请柬基本信息
+      type: Object,
+      default: {}
+    },
+    p7: { // 当前页信息
+      type: Object,
+      default: {
+        contentInfos: []
+      }
+    },
+    a7: {
+      type: Object,
+      default: { shown: false, hide: false }
+    },
+    hotelType: {
+      type: String,
+      default: ''
+    },
+    bottomType: {
+      type: String,
+      default: ''
+    }
+  }
+  watch = {
+    src11(n, o) {
+      this.p7.contentInfos[0] = {
+        fieldName: 11,
+        contentType: 'PICTURE',
+        fieldContent: n
+      }
+      this.$apply()
+    }
+  }
+  data = {
+    showMap: true,
+    src11: '',
+    src11Rate: '1.39',
+    changedList: [],
+    imageCount: 1, // 图片总数
+    imageLoadedCount: 0 // 已加载图片数量
+  }
+  events = {
+    'onPageCardHide': (p, $event) => {
+      if (p.pageNo === 6) {
+        this.showMap = false
+        this.$apply()
+      }
+    },
+    'onPageCardShow': (p, $event) => {
+      if (p.pageNo === 6) {
+        this.showMap = true
+        this.$apply()
+      }
+    }
+  }
+  methods = {
+    onImageUploaded(e) {
+      this.prepareChangedList()
+      this.$emit('onPageDataChanged', pageNo, { contentInfos: this.changedList })
+    },
+    imageLoad() {
+      this.imageLoadedCount++
+      this.$emit('onImageLoadedCountChanged', { pageNo, count: this.imageLoadedCount, total: this.imageCount }) // 加载进度改变
+    },
+    toMap() {
+      this.$emit('toMap')
+    },
+    goHotel() {
+      this.$emit('goHotel')
+    }
+  }
+  prepareChangedList() {
+    this.changedList = []
+    if (this.src11) {
+      this.changedList.push({ fieldName: 11, contentType: 'PICTURE', fieldContent: this.src11 })
+    }
+    this.$apply()
+  }
+}
+</script>

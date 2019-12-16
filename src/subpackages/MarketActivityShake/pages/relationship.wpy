@@ -1,0 +1,332 @@
+<!--
+  关系-第二版
+  @Author: AndyPan
+  @CreateDate: 2019年5月15日11:44:20
+  @LastUpdateDate: 2019年5月15日11:44:23
+  @Remarks: 关系页面
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../assets/less/mixin.less';
+
+.page-index-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  background: #fff;
+
+  .page-index-banner {
+    width: 100%;
+    position: relative;
+
+    .index-banner-thumb {
+      width: 100%;
+    }
+  }
+  .index-banner-thumb {
+    width: 100%;
+    height: auto;
+    display: initial;
+  }
+  .page-index-main {
+    background: #fff;
+    .border-radius(10rpx);
+    position: absolute;
+    top: 200rpx;
+    left: 26rpx;
+    right: 26rpx;
+
+    .index-main-title {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      margin: 60rpx auto;
+      color: #333333;
+      font-size: 36rpx;
+      font-weight: bold;
+    }
+    .relationship-item {
+      margin: 0 38rpx;
+      margin-bottom: 20rpx;
+      background: #fff;
+      box-shadow: 0px 0px 10px #ccc;
+      height: 160rpx;
+      border-radius: 4rpx;
+      position: relative;
+
+      .item-icon {
+        width: 94rpx;
+        height: 100%;
+        margin-left: 30rpx;
+        position: relative;
+        // line-height: 160rpx;
+
+        .icon-thumb {
+          display: inline-block;
+          width: 100%;
+          height: 96rpx;
+          position: absolute;
+          // left: 0;
+          top: 50%;
+          margin-top: -38rpx;
+        }
+      }
+      .item-text {
+        position: absolute;
+        top: 0rpx;
+        right: 0rpx;
+        bottom: 0rpx;
+        left: 168rpx;
+
+        .text-wrap {
+          position: relative;
+          z-index: 10;
+          height: 100%;
+          width: 100%;
+        }
+
+        .text-title {
+          display: inline-block;
+          width: 100%;
+          margin-top: 46rpx;
+          font-size: 36rpx;
+          color: #333;
+          font-weight: bold;
+          float: left;
+          .text-overflow();
+        }
+        .text-remark {
+          display: inline-block;
+          width: 100%;
+          margin-top: 0rpx;
+          color: #999;
+          font-size: 22rpx;
+          float: left;
+          .text-overflow();
+        }
+
+        .bg-thumb {
+          position: absolute;
+          bottom: 0;
+          &.bg-family {
+            top: 20rpx;
+            right: 30rpx;
+            width: 144rpx;
+            height: 140rpx;
+          }
+          &.bg-friends {
+            top: 16rpx;
+            right: 42rpx;
+            width: 120rpx;
+            height: 142rpx;
+          }
+          &.bg-colleagues {
+            top: 50rpx;
+            right: 0rpx;
+            width: 204rpx;
+            height: 110rpx;
+          }
+          &.bg-classmates {
+            top: 42rpx;
+            right: 6rpx;
+            width: 190rpx;
+            height: 120rpx;
+          }
+          &.bg-other {
+            top: 40rpx;
+            right: 6rpx;
+            width: 190rpx;
+            height: 94rpx;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-index-wrap">
+    <image class="index-banner-thumb" src="{{resourcePath ? resourcePath + 'MarketActivityShake/assets/images/background/bg-relationship.png' : ''}}" lazy-load="true" />
+    <!-- <view class="page-index-banner">
+      <image class="index-banner-thumb" src="../assets/images/bg/bg-relationship.png" lazy-load="true" />
+    </view> -->
+    <view class="page-index-main">
+      <text class="index-main-title">我和{{sponsor}}的关系是？</text>
+      <repeat for="{{relationship}}" key="index" index="index" item="item">
+        <view class="relationship-item" @tap="relationshipClick" data-item="{{item}}">
+          <view class="item-icon">
+            <image class="icon-thumb" src="{{item.icon}}" />
+          </view>
+          <view class="item-text">
+            <view class="text-wrap">
+              <text class="text-title">{{item.text}}</text>
+              <text class="text-remark">{{item.ch}}</text>
+            </view>
+            <image class="{{ 'bg-thumb ' + (item.bgClass || '') }}" src="{{item.bg}}" />
+          </view>
+        </view>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { STATUS, RESOURCE_PATCH } from '../configs'
+import { Utils, Tips, PATCH } from '@/utils'
+import { RelationshipService } from '../services'
+
+export default class IndexPages extends wepy.page {
+  config = {
+    navigationBarTitleText: '喜事宝',
+    navigationStyle: 'custom'
+  }
+  components = {}
+
+  data = {
+    resourcePath: RESOURCE_PATCH,
+    // 关系列表
+    relationship: [
+      {
+        id: 1,
+        relation: '家人',
+        text: '我们是家人',
+        ch: 'We are family members.',
+        icon:
+          RESOURCE_PATCH +
+          'MarketActivityShake/assets/images/icon/icon-family.png',
+        bg:
+          RESOURCE_PATCH +
+          'MarketActivityShake/assets/images/background/bg-family.png',
+        bgClass: 'bg-family'
+      },
+      {
+        id: 2,
+        relation: '朋友',
+        text: '我们是朋友',
+        ch: 'We are friends.',
+        icon:
+          RESOURCE_PATCH +
+          'MarketActivityShake/assets/images/icon/icon-friends.png',
+        bg:
+          RESOURCE_PATCH +
+          'MarketActivityShake/assets/images/background/bg-friends.png',
+        bgClass: 'bg-friends'
+      },
+      {
+        id: 3,
+        relation: '同事',
+        text: '我们是同事',
+        ch: 'We are colleagues.',
+        icon:
+          RESOURCE_PATCH +
+          'MarketActivityShake/assets/images/icon/icon-colleagues.png',
+        bg:
+          RESOURCE_PATCH +
+          'MarketActivityShake/assets/images/background/bg-colleagues.png',
+        bgClass: 'bg-colleagues'
+      },
+      {
+        id: 4,
+        relation: '同学',
+        text: '我们是同学',
+        ch: 'We are classmates.',
+        icon:
+          RESOURCE_PATCH +
+          'MarketActivityShake/assets/images/icon/icon-classmates.png',
+        bg:
+          RESOURCE_PATCH +
+          'MarketActivityShake/assets/images/background/bg-classmates.png',
+        bgClass: 'bg-classmates'
+      },
+      {
+        id: 5,
+        relation: '其他',
+        text: '其他',
+        ch: 'Other',
+        icon:
+          RESOURCE_PATCH +
+          'MarketActivityShake/assets/images/icon/icon-other.png',
+        bg:
+          RESOURCE_PATCH +
+          'MarketActivityShake/assets/images/background/bg-other.png',
+        bgClass: 'bg-other'
+      }
+    ],
+    // 主办方
+    sponsor: '主办方',
+    // 活动场景，根据不同场景进入不同皮肤的活动页
+    sceneType: null,
+    activityId: '',
+    isShipClick: false,
+    isResultSelf: ''
+  }
+
+  computed = {}
+
+  methods = {
+    async relationshipClick(e) {
+      if (!this.isShipClick) {
+        this.isShipClick = true
+        let relationshipItem = e.currentTarget.dataset.item
+        let userSpecialInfo = wepy.getStorageSync(STATUS.USER_SPECIAL_INFO)
+        // let activityId = wepy.getStorageSync(STATUS.ACTIVITY_ID)
+        let activityId = wepy.getStorageSync(
+          STATUS.ACTIVITY_ID + 'Relationship'
+        )
+        // 绑定参与用户关系
+        let [rlterr] = await Utils.promiseTo(
+          RelationshipService.activityMember({
+            data: {
+              activityId: activityId,
+              // 会员编码
+              userNo:
+                userSpecialInfo.userNo || wepy.getStorageSync(STATUS.USER_NO),
+              // 关系
+              relation: relationshipItem.relation
+            }
+          })
+        )
+        if (rlterr) {
+          Tips.error(rlterr.message)
+        } else {
+          // 保存关系
+          wepy.setStorageSync(STATUS.RELATION_SHIP, relationshipItem)
+          wepy.setStorageSync(STATUS.IS_BIND_RELATION, false)
+          // 如果是婚宴场景，跳转至'shake-wedding'，否则跳转公共皮肤场景'shake-purpose'
+          wepy.redirectTo({
+            url:
+              (this.sceneType === 'marry' ? 'shake-wedding' : 'shake-purpose') +
+              '?id=' +
+              this.activityId +
+              '&isResultSelf=' +
+              this.isResultSelf
+          })
+        }
+      }
+    }
+  }
+
+  events = {}
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    options = options || {}
+    let params = options.sceneType.split('-_-')
+    this.sceneType = params[0]
+    this.activityId = params[1]
+    this.isResultSelf = options.isResultSelf || ''
+    if (this.sceneType === 'marry') {
+      this.sponsor = '新人'
+    }
+    this.$apply()
+  }
+}
+</script>

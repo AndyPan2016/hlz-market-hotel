@@ -1,0 +1,726 @@
+<!--
+  电子请柬-请帖信息
+  @Author: zongxunjiang
+  @CreateDate: 2019年6月10日13:55:25
+  @LastUpdateDate: 2019年6月10日13:55:29
+  @Remarks: 请帖信息
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+@base64-close: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAZCAYAAAArK+5dAAABiUlEQVRIS7WWsUrDUBSG/wNNELnY+gg+hYtTqRQRdbFLpy65Qx8oQ6fuWUpBpCiZXARXd9/AW7CiSeHIkaakt22SpmnGEL4v57/n5IQ8z3sD8Os4Ttv3/S9UfJHneSMiugPwWqvVWlVI+v2+iuN4AqBOnU7HbTQaYyJqiwRAczAYfJctRODz+fwZwDmAEQnIkrwAaJeRpOHMPDHG3P4LqpBorY8BhPLmCTwIgmgpSEkeiagJoHAlC7hkfpGGC3NFIDd6vd6R4zgPRSVZ8I2CXSR58K2CIhILHhpjriRzu/vWIko/YMcVRdHlcDj8seFxHF/L/U2tnSmwK2HmcDab3SulxosDDbPgmRFtq4SZpzKh0pJ58MICebDb7Z4qpT4AnDDzpzHmLAgCkWVeuRElMbmu+7SIZUpEdYmrkgrSB135GRy0i/Imeq85yIMnp1pqkovCi0pWumhXuCVZ+1SvzEFZeCLZtGyW+2BfeJYk2cnJkql+J2ut5cN1c4i/CiJySWv9zszmUP9Ff//dkvXwtj9WAAAAAElFTkSuQmCC';
+
+.page-info {
+  background: #f2f2f2;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 28rpx;
+  .sp {
+    padding: 0 30rpx;
+    background: #fff;
+    .in {
+      padding: 30rpx 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .text {
+        &.show {
+          color: #888;
+        }
+      }
+    }
+    text {
+      color: #222;
+      width: 172rpx;
+      flex: 0 0 auto;
+    }
+    input {
+      display: flex;
+      flex: 0 0 auto;
+      font-size: 28rpx;
+      width: 460rpx;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .picker {
+      display: flex;
+      flex: 1;
+      font-size: 28rpx;
+      .text {
+        color: #888;
+      }
+    }
+  }
+  .groom {
+    margin-top: 20rpx;
+    position: relative;
+    .in {
+      border-bottom: 2rpx solid #f2f2f2;
+    }
+  }
+  .nomargin {
+    margin-top: 0;
+  }
+  .bride {
+    margin-bottom: 20rpx;
+  }
+  .wedding-time {
+    margin-bottom: 20rpx;
+  }
+  .gift {
+    margin-bottom: 20rpx;
+    .in {
+      align-items: flex-start;
+    }
+    .v1 {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      .lt {
+        .ready {
+          color: #888;
+        }
+        .check {
+          color: #ff4c2f;
+          border-bottom: 2rpx solid #ff4c2f;
+          display: inline-block;
+          padding-top: 10rpx;
+        }
+      }
+    }
+  }
+  .hotel {
+    .in {
+      border-bottom: 2rpx solid #f2f2f2;
+      input {
+        display: block;
+      }
+    }
+    position: relative;
+  }
+  .address {
+    .in {
+      border-bottom: 2rpx solid #f2f2f2;
+      input {
+        display: block;
+      }
+    }
+    position: relative;
+    &:before {
+      content: '';
+      width: 22rpx;
+      height: 32rpx;
+      background: url('@{base64-icon-position}') 0 0 no-repeat;
+      background-size: 100% 100%;
+      right: 60rpx;
+      top: 40rpx;
+      position: absolute;
+    }
+  }
+  .banquet-type {
+    margin-bottom: 20rpx;
+    .radio-group {
+      display: flex;
+      .radio {
+        margin-right: 45rpx;
+        display: flex;
+        align-items: center;
+        font-size: 26rpx;
+        color: #222222;
+        .type-radio {
+          flex: 0 0 auto;
+          margin-right: 10rpx;
+          .wx-radio-input {
+            height: 24rpx;
+            width: 24rpx;
+          }
+        }
+        .infos {
+          flex: 1 0 auto;
+          width: 50%;
+          line-height: 40rpx;
+          margin-right: 40rpx;
+          .info {
+            .name,
+            .phone {
+              font-size: 28rpx;
+              color: @color-222222;
+              font-weight: bold;
+              margin-right: 60rpx;
+            }
+            .phone {
+              margin-right: 30rpx;
+            }
+            .defaule-address {
+              display: inline-block;
+              padding: 0rpx 10rpx;
+              height: 36rpx;
+              line-height: 36rpx;
+              background: @brand-primary;
+              .border-radius(4rpx);
+              font-size: 24rpx;
+              color: @color-ffffff;
+            }
+          }
+          .address {
+            font-size: 24rpx;
+            color: @color-888888;
+          }
+        }
+      }
+    }
+  }
+  .placeholderstyle {
+    color: #888;
+  }
+  .ui-btn {
+    width: 600rpx;
+    height: 96rpx;
+    .border-radius(96rpx);
+    background: @brand-primary;
+    font-size: 30rpx;
+    color: @color-ffffff;
+    text-align: center;
+    line-height: 96rpx;
+    margin: 100rpx auto 0 auto;
+  }
+  .popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: none;
+    .box {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 520rpx;
+      height: 458rpx;
+      margin-top: -229rpx;
+      margin-left: -260rpx;
+      background: #fff;
+      border-radius: 8rpx;
+      overflow: hidden;
+      .msg {
+        color: #222;
+        font-size: 36rpx;
+        text-align: center;
+        padding-top: 30rpx;
+        width: 100%;
+      }
+      .close-btn {
+        height: 24rpx;
+        width: 24rpx;
+        position: absolute;
+        top: 36rpx;
+        right: 26rpx;
+        background: url('@{base64-close}') 0 0 no-repeat;
+        background-size: cover;
+      }
+      .content {
+        padding: 30rpx 26rpx 0 26rpx;
+        .v1 {
+          font-size: 28rpx;
+          color: #222;
+        }
+        .v2 {
+          font-size: 24rpx;
+          color: #555;
+          margin-top: 26rpx;
+        }
+      }
+      .btn {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100rpx;
+        line-height: 100rpx;
+        text-align: center;
+        color: #fff;
+        font-size: 30rpx;
+        background: #ff4c2f;
+      }
+    }
+  }
+  .showPopup {
+    display: block;
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-info">
+    <navigationBar :title="title"></navigationBar>
+    <block wx:if="{{themetype==='baobao'}}">
+      <view class="groom sp">
+        <view class="in">
+          <text>宝宝姓名</text>
+          <input class="weui-input" placeholder-class="placeholderstyle" auto-focus placeholder="请输入宝宝的真实姓名" data-name="babyName" value="{{fromData.babyName}}" bindinput="valueChange" />
+        </view>
+      </view>
+      <view class="groom sp nomargin">
+        <view class="in">
+          <text>宝爸姓名</text>
+          <input class="weui-input" placeholder-class="placeholderstyle" placeholder="请输入宝爸姓名" data-name="babyDadName" value="{{fromData.babyDadName}}" bindinput="valueChange" />
+        </view>
+      </view>
+      <view class="bride sp">
+        <view class="in">
+          <text>宝妈姓名</text>
+          <input class="weui-input" placeholder-class="placeholderstyle" placeholder="请输入宝妈姓名" data-name="babyMomName" value="{{fromData.babyMomName}}" bindinput="valueChange" />
+        </view>
+      </view>
+      <view class="banquet-type sp">
+        <view class="in">
+          <text>宴会类型</text>
+          <radio-group class="radio-group" bindchange="banquetChange">
+            <label class="radio" wx:for="{{banquetType}}">
+              <radio value="{{item.value}}" checked="{{item.checked}}" class="type-radio" color="#FF4C2F" />{{item.name}}
+            </label>
+          </radio-group>
+        </view>
+      </view>
+    </block>
+    <block wx:elif="{{themetype==='birthday'}}">
+      <view class="groom sp">
+        <view class="in">
+          <text>寿星姓名</text>
+          <input class="weui-input" placeholder-class="placeholderstyle" auto-focus placeholder="请输入寿星真实姓名" data-name="birthdayStar" value="{{fromData.birthdayStar}}" bindinput="valueChange" />
+        </view>
+      </view>
+      <view class="bride sp">
+        <view class="in">
+          <text>寿星年龄</text>
+          <input class="weui-input" placeholder-class="placeholderstyle" placeholder="请输入寿星年龄" data-name="birthdayAge" value="{{fromData.birthdayAge}}" bindinput="valueChange" />
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="groom sp">
+        <view class="in">
+          <text>新郎姓名</text>
+          <input class="weui-input" placeholder-class="placeholderstyle" auto-focus placeholder="请输入新郎的真实姓名" data-name="bridegroomName" value="{{fromData.bridegroomName}}" bindinput="valueChange" />
+        </view>
+      </view>
+      <view class="bride sp">
+        <view class="in">
+          <text>新娘姓名</text>
+          <input class="weui-input" placeholder-class="placeholderstyle" placeholder="请输入新娘的真实姓名" data-name="brideName" value="{{fromData.brideName}}" bindinput="valueChange" />
+        </view>
+      </view>
+    </block>
+    <view class="wedding-time sp" @tap="datePicker">
+      <view class="in">
+        <text>宴会时间</text>
+        <view class="text" :class="{show:!fromData.weddingTime}">{{fromData.weddingTime || '请设置时间'}}</view>
+      </view>
+    </view>
+    <view class="gift sp" wx:if="{{privilege}}">
+      <view class="in">
+        <text>伴手礼</text>
+        <view class="v1">
+          <view class="lt">
+            <view class="ready">为宾客准备一份礼物</view>
+            <view class="check" @tap="checkGift">查看伴手礼</view>
+          </view>
+          <view class="rt">
+            <switch color="#FF4C2F" checked="{{fromData.supportGift === 'yes' ? true : false}}" data-name="supportGift" bindchange="valueChange" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="hotel sp">
+      <view class="in">
+        <text>酒店</text>
+        <input class="weui-input" placeholder-class="placeholderstyle" placeholder="请输入酒店" value="{{fromData.hotelName}}" data-name="hotelName" bindinput="valueChange" />
+      </view>
+    </view>
+    <view class="address sp">
+      <view class="in" @tap="tomap">
+        <text>地址</text>
+        <input placeholder-class="placeholderstyle" placeholder="请输入婚礼地址" value="{{fromData.hotelAddress}}" data-name="hotelAddress" bindinput="valueChange" disabled />
+      </view>
+    </view>
+
+    <view class="room sp">
+      <view class="in">
+        <text>宴会厅</text>
+        <input class="weui-input" placeholder-class="placeholderstyle" placeholder="请输入具体的宴会厅" value="{{fromData.hallAddress}}" data-name="hallAddress" bindinput="valueChange" />
+      </view>
+    </view>
+
+    <view class="ui-btn" @tap="saveData">提交</view>
+
+    <view class="popup" :class="{showPopup: popupDisplay }">
+      <view class="box">
+        <view class="close-btn" @tap="closeDialog"></view>
+        <view class="msg">提示</view>
+        <view class="content">
+          <view class="v1">1、开启伴手礼后，宾客可通过电子请柬回复接收伴手礼的地址； </view>
+          <view class="v1">2、可以在线挑选伴手礼及在线邮寄礼物给宾客。</view>
+          <view class="v2">*邮寄伴手礼不收取运费哦~</view>
+        </view>
+        <view class="btn" @tap="chooseGift">挑选伴手礼</view>
+      </view>
+    </view>
+    <timePicker :timevalue.sync="times" :showTimesPicker.sync="showTimesPicker" :onSubmit="onSubmitPicker" :onCancel="onCancelPicker" />
+    
+    <user-authorize :onAuthorizeAll="onAuthorizeAllFn"
+        :authorizeType.sync="authorizeType"
+        :onCloseAuthorize="onCloseAuthorizeFn" />
+  </view>
+</template>
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import navigationBar from '../components/navigation-bar/index'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import timePicker from '@/components/time-picker/index'
+import { STATUS } from '@/configs'
+import { IndexService, InvitationService } from '../services'
+import { Tips, PATCH, Utils } from '@/utils'
+export default class InfoPages extends wepy.page {
+  // 配置
+  config = {
+    navigationStyle: 'custom',
+    backgroundTextStyle: 'light',
+    navigationBarTextStyle: 'white'
+  }
+  components = {
+    navigationBar: navigationBar,
+    timePicker,
+    'user-authorize': UserAuthorizeComponent
+  }
+  // data
+  data = {
+    // 授权类型
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    title: '请帖信息',
+    popupDisplay: false,
+    userNo: '',
+    // 请柬ID
+    invitationid: '',
+    // 婚礼时间
+    times: '',
+    // 是否显示时间控件
+    showTimesPicker: false,
+    banquetType: [
+      {
+        name: '满月',
+        value: 'manyue',
+        checked: 'true'
+      },
+      {
+        name: '百日',
+        value: 'bairi'
+      },
+      {
+        name: '周岁',
+        value: 'zhousui'
+      }
+    ],
+    // 表单数据
+    fromData: {
+      weddingTime: '',
+      hotelId: '',
+      hotelAddress: '',
+      hallAddress: '',
+      supportGift: 'no',
+      templateId: ''
+    },
+    templateType: '',
+    // 时间数组
+    dateTimeArray: [],
+    privilege: false,
+    themetype: '',
+    hotalType: ''
+  }
+
+  onAuthorizeAllFn(data) {
+    if (data.userNo) {
+      this.userNo = data.userNo
+      if (!this.invitationid) {
+        this.getHotelInfo()
+      }
+      this.checkPrivilege({
+        hotelId: this.hotelId,
+        moduleTypeEnum: 'INVITATION_GIFT'
+      })
+      this.getBaseInfo()
+    }
+  }
+
+  /**
+   * 授权被用户关闭
+   */
+  onCloseAuthorizeFn() {
+    wx.navigateBack({ delta: 1 })
+  }
+
+  methods = {
+    weddingTimeChange(e) {
+      this.weddingTime = e.detail.value
+    },
+
+    checkGift() {
+      this.popupDisplay = true
+      this.$apply()
+    },
+    /**
+     * 打开时间控件
+     */
+    datePicker() {
+      this.showTimesPicker = true
+      this.$apply()
+    }
+  }
+  /**
+   * 时间控件提交数据
+   */
+  onSubmitPicker(e) {
+    this.times = e
+    this.fromData.weddingTime = this.times
+    this.showTimesPicker = false
+    this.$apply()
+  }
+  /**
+   * 关闭时间控件
+   */
+  onCancelPicker(e) {
+    this.showTimesPicker = false
+    this.$apply()
+  }
+  /**
+   * 关闭弹窗
+   */
+  closeDialog() {
+    this.popupDisplay = false
+  }
+
+  /**
+   * 挑选伴手礼
+   */
+  chooseGift() {
+    this.popupDisplay = false
+    // 提交成功后跳转
+    // wx.navigateTo({
+    //   url: '/subpackages/OnlineRetailers/pages/index'
+    // })
+    let hotelAdminNo = wx.getStorageSync(STATUS.HOTEL_ADMIN_NO)
+    Utils.openNewProcedures('pages/index?hotelAdminNo=' + hotelAdminNo)
+  }
+  tomap() {
+    const _self = this
+    // if (!_self.hotalType || _self.hotalType === 'HOTEL') {
+    //   return false
+    // }
+    wx.chooseLocation({
+      success(res) {
+        _self.fromData.hotelAddress = res.address
+        _self.fromData.coordinate = res.longitude + ',' + res.latitude
+        _self.$apply()
+      }
+    })
+  }
+  /**
+   * 获取输入框里面的值
+   */
+  valueChange(e) {
+    let targetName = e.currentTarget.dataset.name || ''
+    let inputVal = e.detail.value || ''
+    if (targetName === 'supportGift') {
+      this.fromData[targetName] = inputVal ? 'yes' : 'no'
+    } else {
+      this.fromData[targetName] = inputVal
+    }
+    this.$apply()
+  }
+  banquetChange(e) {
+    this.fromData['babyBanquetType'] = e.detail.value
+    // console.log(e)
+  }
+  /**
+   * 保存请柬基本信息
+   */
+  saveData() {
+    for (let item in this.fromData) {
+      if (!this.fromData[item]) {
+        console.info(item)
+        Tips.error('信息不完整')
+        return false
+      }
+    }
+    let parmes = Object.assign(
+      {
+        userNo: this.userNo,
+        invitationId: this.invitationid,
+        hotelId: this.hotelId,
+        themetype: this.themetype
+      },
+      this.fromData
+    )
+
+    return IndexService.invitationBasicInfoSave({ data: parmes })
+      .then(res => {
+        if (res.data.success) {
+          if (this.templateType && this.templateType !== 'undefined') {
+            wx.redirectTo({
+              url:
+                'invitation_template/invitation_' +
+                this.templateType.toLowerCase() +
+                '/index?bottomType=setting&invitationid=' +
+                res.data.invitationId +
+                '&hotelId=' +
+                this.hotelId +
+                '&tpl_id=' +
+                this.fromData.templateId +
+                '&templateType=' +
+                this.templateType.toLowerCase() +
+                '&themetype=' +
+                this.themetype +
+                '&tpmdata=' +
+                JSON.stringify({
+                  templateType: this.templateType
+                })
+            })
+          }
+        } else {
+          Tips.error(res.message)
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  // 查询电子请柬基本信息
+  getBaseInfo() {
+    let parmes = {}
+    let validate = [] // 根据请柬类型保留需要的字段
+    switch (this.themetype) {
+      case 'baobao':
+        validate = ['babyBanquetType', 'babyDadName', 'babyMomName', 'babyName']
+        break
+      case 'birthday':
+        validate = ['birthdayAge', 'birthdayStar']
+        break
+      default:
+        validate = ['brideName', 'bridegroomName']
+        break
+    }
+    // console.log(validate)
+    if (this.invitationid && this.invitationid !== 'undefined') {
+      parmes['invitationId'] = this.invitationid
+      IndexService.invitationBasicInfoQuery({ data: parmes })
+        .then(res => {
+          let data = res.data
+          if (data.success) {
+            for (let item of validate) {
+              this.fromData[item] = data[item] || ''
+            }
+            this.fromData.weddingTime = data.weddingTime
+            this.fromData.hallAddress = data.hallAddress
+            this.fromData.hotelAddress = data.hotelAddress
+            this.fromData.supportGift = data.supportGift
+            this.fromData.coordinate = data.coordinate
+            this.fromData.hotelName = data.hotelName
+            if (this.themetype === 'baobao') {
+              Utils.forEach(this.banquetType, typeItem => {
+                typeItem.checked = undefined
+                if (typeItem.value === data.babyBanquetType) {
+                  typeItem.checked = 'true'
+                  return 'break'
+                }
+              })
+            }
+            this.$apply()
+          } else {
+            Tips.error(res.message)
+          }
+        })
+        .catch(err => {
+          Tips.error(err.message)
+        })
+    } else {
+      this.fromData['hallAddress'] = ''
+      this.fromData['supportGift'] = 'no'
+    }
+  }
+  getHotelInfo() {
+    IndexService.hotelInfo({
+      data: {
+        hotelId: this.hotelId,
+        userNo: this.userNo
+      }
+    }).then(res => {
+      let hotelInfo = res.data.apiHotelInfo
+      this.fromData.hotelAddress = hotelInfo.address
+      this.fromData.coordinate = hotelInfo.coordinate
+      if (hotelInfo.type === 'HOTEL') {
+        this.fromData.hotelName = hotelInfo.name
+      }
+      this.$apply()
+    })
+  }
+  /**
+   * 权限判断
+   */
+  checkPrivilege(parme) {
+    let parmes = Object.assign({}, parme)
+    InvitationService.modulePrivilegeCheck({ data: parmes })
+      .then(res => {
+        let result = res.data
+        if (result.success) {
+          this.privilege = true
+        } else {
+          this.privilege = false
+        }
+        this.$apply()
+      })
+      .catch(() => {
+        this.privilege = false
+        this.$apply()
+      })
+  }
+  // 加载完成
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    this.userNo = wepy.getStorageSync(STATUS.USER_NO) || ''
+    this.hotelId = wx.getStorageSync('Invitation' + STATUS.HOTEL_ID)
+    this.fromData.templateId = options.templateid || options.invitationid
+    this.fromData.hotelId = this.hotelId
+    this.invitationid = options.invitationid
+    this.templateType = options.templateType || ''
+    this.hotalType = wx.getStorageSync('Invitation' + STATUS.HOTEL_TYPE)
+    this.themetype = options.themetype
+    if (this.themetype === 'baobao') {
+      this.fromData['babyBanquetType'] = 'manyue'
+    }
+    if (this.userNo) {
+      if (!this.invitationid) {
+        this.getHotelInfo()
+      }
+      this.checkPrivilege({
+        hotelId: this.hotelId,
+        moduleTypeEnum: 'INVITATION_GIFT'
+      })
+      this.getBaseInfo()
+    } else {
+      this.$invoke('user-authorize', 'authorizeActivation')
+    }
+  }
+  onShow() {}
+}
+</script>

@@ -1,0 +1,321 @@
+<!--
+  答题游戏排行榜页面
+  @Author: AndyPan
+  @CreateDate: 2019年11月1日14:49:25
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../../assets/less/mixin.less';
+
+.page-answer-ranking{
+  background: #E03C18;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-weight: bold;
+  .answer-ranking-main{
+    position: absolute;
+    top: 126rpx;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0e4b68;
+    border-top: 2rpx solid #333;
+    .ranking-head {
+      width: 690rpx;
+      height: 190rpx;
+      background: url('@{resourcePath}MarketActivityShake/assets/answer/images/ranking-list-head.png') 0 0 no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto;
+      margin-top: 46rpx;
+      .my-rank{
+        width: 124rpx;
+        text-align: center;
+        color: #FFF;
+        margin-top: 26rpx;
+        margin-left: 44rpx;
+        float: left;
+        .rank-num{
+          height: 50rpx;
+          font-size: 50rpx;
+          font-weight: bold;
+          margin-top: 12rpx;
+          margin-bottom: 20rpx;
+        }
+        .rank-label{
+          font-size: 24rpx;
+          margin-top: 6rpx;
+        }
+      }
+      .my-photo{
+        float: left;
+        margin-top: 26rpx;
+        margin-left: 10rpx;
+        width: 120rpx;
+        height: 120rpx;
+        border: 4rpx solid #FFF;
+        overflow: hidden;
+        border-radius: 100%;
+      }
+      .rank-info{
+        float: right;
+        margin-right: 44rpx;
+        margin-top: 30rpx;
+        .my-result{
+          font-size: 28rpx;
+          color: #FFF;
+          text-align: center;
+        }
+        .my-beat{
+          width: 310rpx;
+          height: 60rpx;
+          line-height: 60rpx;
+          border: 2rpx solid #333;
+          background: #e97d2a;
+          border-radius: 60rpx;
+          text-align: center;
+          font-size: 26rpx;
+          color: #FFF;
+          margin-top: 20rpx;
+        }
+      }
+    }
+    .ranking-list-wrap{
+      width: 630rpx;
+      overflow: hidden;
+      overflow-y: auto;
+      position: absolute;
+      top: 226rpx;
+      left: 50%;
+      margin-left: -315rpx;
+      background: #ece4c8;
+      bottom: 150rpx;
+      // bottom: calc(150rpx + constant(safe-area-inset-bottom));
+      // bottom: calc(150rpx + env(safe-area-inset-bottom));
+      .page-ranking-list{
+        .ranking-list-component{
+          // float: left;
+          margin-right: 40rpx;
+          .ranking-list-item{
+            float: left;
+            width: 100%;
+            margin-bottom: 20rpx;
+            &::after {
+              content: '';
+              width: 100%;
+              height: 2rpx;
+              border-bottom: 2rpx solid #C1AF71;
+              float: left;
+              margin-top: 16rpx;
+            }
+          }
+        }
+      }
+    }
+    .ranking-button{
+      position: absolute;
+      padding: 0 20rpx;
+      height: 150rpx;
+      // height: calc(150rpx + constant(safe-area-inset-height));
+      // height: calc(150rpx + env(safe-area-inset-height));
+      background: #E03C18;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      .ranking-btn {
+        width: 50%;
+        height: 110rpx;
+        float: left;
+        margin-top: 20rpx;
+        .btn{
+          height: 110rpx;
+          border: 2rpx solid #333;
+          background: #E03C18;
+          border-radius: 55rpx;
+          box-shadow: 0 10rpx 5rpx rgba(0, 0, 0, 0.1);
+          margin: 0 10rpx;
+          .btn-text {
+            height: 100rpx;
+            line-height: 100rpx;
+            background: #FFF;
+            border-radius: 55rpx;
+            color: #E03C18;
+            font-weight: bold;
+            text-align: center;
+            font-size: 36rpx;
+          }
+          &.gift {
+            .btn-text {
+              background: #e97d2a;
+              color: #FFF;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-answer-ranking">
+    <navigation-bar :title.sync="title" :isShowBack="isShowBack"/>
+    <view class="answer-ranking-main" style="{{navBarHeight ? ('top:' + navBarHeight + 'rpx;') : ''}}">
+      <view class="ranking-head">
+        <view class="my-rank">
+          <view class="rank-num">{{userInfo.rank || '0'}}</view>
+          <view class="rank-label">我的排名</view>
+        </view>
+        <image class="my-photo" src="{{userInfo.headImg}}" />
+        <view class="rank-info">
+          <view class="my-result">我的成绩：{{userInfo.num || 0}}题/ {{userInfo.usedTime || 0}}秒</view>
+          <view class="my-beat">打败了{{userInfo.overstepRate}}％的对手</view>
+        </view>
+      </view>
+      <view class="ranking-list-wrap">
+        <pull-down :onPullDownRefresh="refreshRank">
+          <view slot="pull-down-content" class="page-ranking-list" id="j-pull-down-scroller">
+            <answer-ranking-list :dataset.sync="rankingList" />
+          </view>
+        </pull-down>
+      </view>
+      <view class="ranking-button">
+        <view class="ranking-btn">
+          <view class="btn moregame" @tap="moreGame">
+            <view class="btn-text">更多游戏</view>
+          </view>
+        </view>
+        <view class="ranking-btn">
+          <view class="btn gift" @tap="goToCoupon">
+            <view class="btn-text">商户礼包</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <video-guide :activityId.sync="activityId" />
+  </view>
+</template>
+
+
+<!-- 页面交互 -->
+<script>
+import wepy from 'wepy'
+import { STATUS } from '@/configs'
+import { Utils, Tips } from '@/utils'
+import { AnswerService } from '../../services'
+import VideoGuideComponent from '@/components/video-guide/index'
+import NavigationBarComponent from '@/components/navigation-bar/index'
+import PullDownComponent from '@/components/pull-down-component/index'
+import AnswerRankingListComponent from '../../components/answer-ranking-list'
+
+export default class AnswerRankingPages extends wepy.page {
+  config = {
+    navigationStyle: 'custom',
+    navigationBarTextStyle: 'white',
+    disableScroll: true
+  }
+
+  components = {
+    // 下拉刷新
+    'pull-down': PullDownComponent,
+    'video-guide': VideoGuideComponent,
+    'navigation-bar': NavigationBarComponent,
+    'answer-ranking-list': AnswerRankingListComponent
+  }
+
+  data = {
+    isShowBack: false,
+    // 导航高度
+    navBarHeight: null,
+    // 标题
+    title: '排行榜',
+    // 用户编号
+    userNo: null,
+    // 活动ID
+    activityId: null,
+    // 活动游戏ID
+    activityGameId: null,
+    userInfo: {},
+    rankingList: []
+  }
+
+  methods = {
+    /**
+     * 更多游戏
+     */
+    moreGame() {
+      // 更多游戏
+      wx.reLaunch({
+        url: '../activity-transfer?activityId=' + this.activityId
+      })
+    },
+    /**
+     * 商户礼包
+     */
+    goToCoupon() {
+      wx.navigateTo({
+        url:
+          '../coupon-center?activityGameId=' + this.activityGameId + '_' + this.activityId + '&isAddUnion=true'
+      })
+    }
+  }
+
+  /**
+   * 下拉刷新排名
+   */
+  refreshRank() {
+    // 游戏进行中，刷新排名数据
+    this.gameCountNumRanking()
+  }
+
+  /**
+   * 计数游戏排行榜
+   */
+  gameCountNumRanking() {
+    let userNo = this.userNo
+    let activityGameId = this.activityGameId
+    if (userNo && activityGameId) {
+      AnswerService.gameCountNumRanking({
+        data: {
+          userNo,
+          activityGameId
+        }
+      }).then(res => {
+        this.userInfo = res
+        this.rankingList = res.rankingInfos
+        // if (this.userInfo.finalResults === 'yes') {
+        //   // Tips.msg('当前排名已是最终排名')
+        //   this.theButtonText = '更多游戏'
+        // }
+        this.$apply()
+        // 如果不是最终结果，继续请求刷新数据
+        // if (res.finalResults === 'no') {
+        //   setTimeout(() => {
+        //     this.gameCountNumRanking()
+        //   }, 5000)
+        // }
+      }).catch(err => {
+        Tips.error(err)
+      })
+    }
+  }
+
+  onLoad(options) {
+    options = options || {}
+    this.activityId = options.activityId
+    //  || 873
+    this.activityGameId = options.activityGameId
+    this.userNo = wx.getStorageSync(STATUS.USER_NO)
+    // navBar高度
+    this.navBarHeight = Utils.getNavBarHeight()
+    this.$apply()
+    // 排名
+    this.gameCountNumRanking()
+  }
+}
+</script>

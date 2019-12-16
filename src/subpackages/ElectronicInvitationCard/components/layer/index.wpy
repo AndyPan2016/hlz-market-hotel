@@ -1,0 +1,280 @@
+<template>
+  <view class="layer" wx:if="{{showLayer}}">
+    <view class="layer-mask" style="{{'background:'+'rgba(0,0,0,'+maskOption*0.1+')'}}" @tap="closeLayer">layer</view>
+    <view class="content" :class="{radio:borderRadio,animate:showLayer}">
+      <view class="{{theme[layerTheme]}}">
+        <view class="__hd">
+          <text class="title">{{layerTitle}}</text>
+        </view>
+        <view class="__bd">
+          <text class="tips" wx:if="{{giftDatas.bridegroomName && giftDatas.brideName}}">{{giftDatas.bridegroomName}}&{{giftDatas.brideName}}为您精心准备了一份礼物，请注意查收！</text>
+          <text class="tips" wx:if="{{giftDatas.babyName}}">{{giftDatas.babyName}}为您精心准备了一份礼物，请注意查收！</text>
+          <text class="tips" wx:if="{{giftDatas.birthdayStar}}">{{giftDatas.birthdayStar}}为您精心准备了一份礼物，请注意查收！</text>
+          <view class="from">
+            <view class="c-row">
+              <view class="text">接受姓名：</view>
+              <view class="input"><input placeholder="请输入您的姓名" bindinput="valueChange" data-name="realName" value="{{fromData.realName}}" /></view>
+            </view>
+            <view class="c-row">
+              <view class="text">手机号：</view>
+              <view class="input"><input type="number" placeholder="请输入您的手机号码" bindinput="valueChange" data-name="mobileNo" value="{{fromData.mobileNo}}" /></view>
+            </view>
+            <view class="c-row">
+              <view class="text">所在地区：</view>
+              <view class="input" :class="{novalue:!giftDatas.province}" @tap="goCity"><text>{{(giftDatas.province)+(giftDatas.city)+(giftDatas.district) || '省份、城市、区县'}}</text></view>
+            </view>
+            <view class="c-row">
+              <view class="text">详细地址：</view>
+              <view class="input"><textarea class="textarea" maxlength="64" bindinput="valueChange" data-name="address" placeholder="如街道、楼牌号等" value="{{fromData.address}}" /></view>
+            </view>
+          </view>
+        </view>
+        <view class="__ft">
+          <view class="btn" @tap="submitLayer">确定</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class LayerComponent extends wepy.component {
+  props = {
+    giftDatas: {
+      type: Object,
+      default: {}
+    },
+    // 是否显示弹窗
+    showLayer: {
+      type: Boolean,
+      default: false
+    },
+    // 蒙层透明度
+    maskOption: {
+      type: Number,
+      default: 3
+    },
+    // 弹层圆角
+    borderRadio: {
+      type: Boolean,
+      default: false
+    },
+    // title
+    layerTitle: {
+      type: String,
+      default: '领礼物'
+    },
+    // layer主题
+    layerTheme: {
+      type: String,
+      default: 'ORANGE'
+    },
+    // 弹层关闭
+    onCloseLayer: {
+      type: Function
+    },
+    // 提交数据
+    onSubmitLayer: {
+      type: Function
+    }
+  }
+  data = {
+    theme: {
+      DEFAULT: 'default',
+      ORANGE: 'orange'
+    },
+    fromData: {
+      realName: '',
+      mobileNo: '',
+      province: '',
+      city: '',
+      district: '',
+      address: ''
+    }
+  }
+
+  watch = {
+    giftDatas(v1) {
+      for (let key in v1) {
+        if (key !== 'companyName' && key !== 'companyOrderNo') {
+          this.fromData[key] = v1[key]
+        }
+      }
+      this.$apply()
+    }
+  }
+
+  methods = {
+    closeLayer(e) {
+      if (this.onCloseLayer) {
+        this.onCloseLayer.call(this.$parent, this.showLayer, e)
+      }
+      this.$emit('onCloseLayer', this.showLayer)
+    },
+    submitLayer(e) {
+      let data = Object.assign({}, this.giftDatas, this.fromData)
+      if (this.onSubmitLayer) {
+        this.onSubmitLayer.call(this.$parent, data, e)
+      }
+      this.$emit('onSubmitLayer', data)
+    },
+    /**
+     * 选择地址
+     */
+    goCity() {
+      let address = []
+      address[0] = this.giftDatas['province']
+      address[1] = this.giftDatas['city']
+      address[2] = this.giftDatas['district']
+      wepy.navigateTo({
+        url:
+          '/subpackages/ElectronicInvitationCard/pages/address-city?address=' +
+          address
+      })
+    },
+    valueChange(e) {
+      let _self = this
+      let dataset = e.currentTarget.dataset
+      let value = e.detail.value
+      let name = dataset.name
+      _self.fromData[name] = value
+      _self.$apply()
+    }
+  }
+  onLoad() {
+    // console.info(this.giftDatas)
+  }
+}
+</script>
+<style lang="less" scoped>
+@import '../../../../assets/less/mixin.less';
+@keyframes up {
+  0% {
+    bottom: -800rpx;
+  }
+  100% {
+    bottom: 0rpx;
+  }
+}
+.layer {
+  .layer-mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0);
+  }
+  .content {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    background: @color-ffffff;
+    z-index: 1001;
+    box-sizing: border-box;
+    animation: up 0.2s ease-in-out;
+    bottom: 0rpx;
+    &.radio {
+      border-top-left-radius: 10rpx;
+      border-top-right-radius: 10rpx;
+    }
+    .__hd {
+      text-align: center;
+      .title {
+        font-size: 36rpx;
+        color: @color-222222;
+      }
+    }
+    .orange {
+      padding: 30rpx;
+      .__hd {
+        .title {
+          color: @brand-primary;
+          position: relative;
+          padding: 0 20rpx;
+          text-align: left;
+          &::before {
+            content: '';
+            display: block;
+            width: 40rpx;
+            height: 2rpx;
+            background: @brand-primary;
+            position: absolute;
+            left: -40rpx;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+          &::after {
+            content: '';
+            display: block;
+            width: 40rpx;
+            height: 2rpx;
+            background: @brand-primary;
+            position: absolute;
+            right: -40rpx;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
+      }
+      .__bd {
+        text-align: center;
+        .tips {
+          font-size: 24rpx;
+          color: @color-555555;
+        }
+        .from {
+          margin-top: 20rpx;
+          .c-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30rpx;
+            &:last-child {
+              align-items: stretch;
+            }
+            .text {
+              width: 140rpx;
+              flex: 0 0 auto;
+              font-size: 26rpx;
+              color: @color-222222;
+              text-align: left;
+            }
+            .input {
+              width: 50%;
+              flex: 1 0 auto;
+              text-align: left;
+              font-size: 26rpx;
+              color: @color-222222;
+              border: 2rpx solid @color-eeeeee;
+              box-sizing: border-box;
+              .border-radius(8rpx);
+              padding: 20rpx;
+              &.novalue {
+                color: @color-888888;
+              }
+              .textarea {
+                max-height: 140rpx;
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+      .__ft {
+        .btn {
+          width: 200rpx;
+          height: 80rpx;
+          .border-radius(8rpx);
+          background: @brand-primary;
+          color: @color-ffffff;
+          font-size: 30rpx;
+          line-height: 80rpx;
+          margin: 0 auto;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+</style>

@@ -1,0 +1,320 @@
+<template>
+  <view class="page-one" :class="{animation:current==5}">
+    <view class="img page1-t-r top"></view>
+    <text class="text ui-text">幸福满满悄悄滋长\n只想继续牵手\n微笑浪漫</text>
+    <view class="img page1-b-1 bottom"></view>
+    <view class="img page1-b-2 bottom"></view>
+    <view class="img page1-b-3 bottom"></view>
+    <view class="img page1-b-4 bottom"></view>
+    <view class="img page1-b-5 bottom"></view>
+    <block wx:if="{{pageImgData['page'+current]}}">
+      <view class="page5-user-img1">
+        <image class="ui-img" mode="aspectFill" src="{{pageImgData['page'+current]['img'+1] || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_2/page5.png'}}"></image>
+      </view>
+      <view class="page5-user-img2">
+        <image class="ui-img" mode="aspectFill" src="{{pageImgData['page'+current]['img'+2] || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_2/page6.png'}}"></image>
+      </view>
+      <view class="page5-user-img3">
+        <image class="ui-img" mode="aspectFill" src="{{pageImgData['page'+current]['img'+3] || 'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_2/page7.png'}}"></image>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="page5-user-img1">
+        <image class="ui-img" mode="aspectFill" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_2/page5.png"></image>
+      </view>
+      <view class="page5-user-img2">
+        <image class="ui-img" mode="aspectFill" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_2/page6.png"></image>
+      </view>
+      <view class="page5-user-img3">
+        <image class="ui-img" mode="aspectFill" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_2/page7.png"></image>
+      </view>
+    </block>
+    <view class="upload_img load1" @tap="uploadImg" data-index="1" wx:if="{{bottomType === 'setting'}}">
+      <view class="ui-img"></view>
+    </view>
+    <view class="upload_img load2" @tap="uploadImg" data-index="2" wx:if="{{bottomType === 'setting'}}">
+      <view class="ui-img"></view>
+    </view>
+    <view class="upload_img load3" @tap="uploadImg" data-index="3" wx:if="{{bottomType === 'setting'}}">
+      <view class="ui-img"></view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class FivePagesComponent extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    current: {
+      type: Number,
+      default: 0
+    },
+    domain: {
+      type: String,
+      default:
+        'https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/'
+    },
+    onUploadImg: {
+      type: Function
+    },
+    pageImgData: {
+      type: Object
+    },
+    bottomType: {
+      type: Object,
+      default: 'create'
+    }
+  }
+  methods = {
+    uploadImg(e) {
+      let index = e.currentTarget.dataset.index || ''
+      let rang = e.currentTarget.dataset.rang || 0
+      if (this.onUploadImg) {
+        this.onUploadImg.call(
+          this.$parent,
+          {
+            img_index: this.current + ',' + index + ',' + rang
+          },
+          e
+        )
+      }
+      this.$emit('onUploadImg', e)
+    }
+  }
+  watch = {
+    current(newValue, oldValue) {}
+  }
+}
+</script>
+<style lang="less" scoped>
+/**
+ * @description: 关键帧动画
+ * @param {@name,@content} 
+ * @return: 
+ */
+.keyframes (@name,@content) {
+  @-webkit-keyframes @name {
+    @content();
+  }
+  @keyframes @name {
+    @content();
+  }
+}
+
+/******设置动画效果********/
+.keyframes(
+  page5_t_r,
+  {from {right: -140rpx;opacity: 0} to {right: -50rpx;opacity: 1}}
+);
+
+.keyframes(
+  page5_user_img1,
+  {from {transform: translateX(40rpx) ;opacity: 0} to {transform:
+    translateX(0rpx) ;opacity: 1}}
+);
+.keyframes(
+  page5_user_img2,
+  {from {transform: translateX(-40rpx) ;opacity: 0} to {transform:
+    translateX(0rpx) ;opacity: 1}}
+);
+
+/***文字***/
+.keyframes(
+  page5_text,
+  {from {transform: translateX(-20rpx) ;opacity: 0} to {transform:
+    translateX(0rpx) ;opacity: 1}}
+);
+
+/****执行动画*******/
+.animation {
+  .page1-t-r {
+    animation: page5_t_r 3s forwards;
+  }
+  .page1-b-1 {
+    animation: b_l_r_img 3s 2s forwards;
+  }
+  .page1-b-2 {
+    animation: b_l1_r_img 3s 1s forwards;
+  }
+  .page1-b-3 {
+    animation: b_r_r_img 3s 1s forwards;
+  }
+  .page1-b-4 {
+    animation: b_r1_r_img 3s 1s forwards;
+  }
+  .page1-b-5 {
+    animation: b_r2_r_img 3s 2s forwards;
+  }
+  .ui-text {
+    animation: page5_text 3s forwards;
+  }
+  .page5-user-img1 {
+    animation: page5_user_img1 3s forwards;
+  }
+  .page5-user-img2 {
+    animation: page5_user_img1 3s 1s forwards;
+  }
+  .page5-user-img3 {
+    animation: page5_user_img2 3s forwards;
+  }
+}
+
+/*****基本布局*************/
+.page-one {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .img {
+    position: absolute;
+    z-index: 10;
+  }
+  .ui-img {
+    width: 100%;
+    height: 100%;
+  }
+  .text {
+    position: absolute;
+    font-family: 'hy';
+  }
+  .bottom {
+    bottom: 0;
+  }
+  .page1-t-r {
+    width: 270rpx;
+    height: 365rpx;
+    display: block;
+    top: 290rpx;
+    right: -80rpx;
+    opacity: 0;
+    transform: scale(0.7);
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page1_6.png')
+      no-repeat;
+    background-size: 270rpx 365rpx;
+  }
+  .page1-b-1 {
+    width: 362rpx;
+    height: 399rpx;
+    display: block;
+    left: -70rpx;
+    bottom: 106rpx;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page1_1.png')
+      no-repeat;
+    background-size: 362rpx 399rpx;
+  }
+  .page1-b-2 {
+    width: 153rpx;
+    height: 445rpx;
+    display: block;
+    left: 224rpx;
+    bottom: -160rpx;
+    z-index: 10;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page5_1.png')
+      no-repeat;
+    background-size: 153rpx 445rpx;
+  }
+  .page1-b-3 {
+    width: 112rpx;
+    height: 292rpx;
+    display: block;
+    right: 338rpx;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page3_3.png')
+      no-repeat;
+    background-size: 112rpx 292rpx;
+  }
+  .page1-b-4 {
+    width: 109rpx;
+    height: 334rpx;
+    display: block;
+    right: 278rpx;
+    bottom: -80rpx;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page5_2.png')
+      no-repeat;
+    background-size: 109rpx 334rpx;
+  }
+  .page1-b-5 {
+    width: 219rpx;
+    height: 179rpx;
+    display: block;
+    right: 0;
+    bottom: 156rpx;
+    opacity: 0;
+    background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/invitation_template/invitation_1/page1_5.png')
+      no-repeat;
+    background-size: 219rpx 179rpx;
+  }
+  .ui-text {
+    font-family: 'hy';
+    font-size: 20rpx;
+    color: #333;
+    position: absolute;
+    left: 36rpx;
+    top: 45vh;
+    line-height: 30rpx;
+    opacity: 0;
+  }
+  .page5-user-img1 {
+    width: 360rpx;
+    height: 38vh;
+    border: 10rpx solid #f2d3c3;
+    background: #fff;
+    position: absolute;
+    top: 2vh;
+    left: 36rpx;
+    box-sizing: border-box;
+    opacity: 0;
+  }
+  .page5-user-img2 {
+    width: 300rpx;
+    height: 36vh;
+    border: 10rpx solid #f2d3c3;
+    background: #fff;
+    position: absolute;
+    top: 4vh;
+    right: 36rpx;
+    box-sizing: border-box;
+    opacity: 0;
+  }
+  .page5-user-img3 {
+    width: 490rpx;
+    height: 506rpx;
+    border: 10rpx solid #f2d3c3;
+    background: #fff;
+    position: absolute;
+    top: 42vh;
+    right: 36rpx;
+    box-sizing: border-box;
+    opacity: 0;
+  }
+  .upload_img {
+    position: absolute;
+    width: 100rpx;
+    height: 100rpx;
+    z-index: 100;
+    .ui-img {
+      width: 100rpx;
+      height: 100rpx;
+      background: url('https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png')
+        no-repeat;
+      background-size: 100rpx 100rpx;
+    }
+    &.load1 {
+      left: 180rpx;
+      top: 16vh;
+    }
+    &.load2 {
+      right: 150rpx;
+      top: 18vh;
+    }
+    &.load3 {
+      right: 220rpx;
+      top: 56vh;
+    }
+  }
+}
+</style>

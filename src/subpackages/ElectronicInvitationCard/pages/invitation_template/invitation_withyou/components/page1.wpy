@@ -1,0 +1,465 @@
+<!--
+  请柬第1屏
+  @Author: AndyPan
+  @CreateDate: 2019年7月25日14:47:58
+  @LastUpdateDate: 2019年7月25日14:48:01
+  @Remarks: 
+-->
+<style lang="less">
+// @import '../../../../../../assets/less/mixin.less';
+.keyframes (@name,@content) {
+  @-webkit-keyframes @name {
+    @content();
+  }
+  @keyframes @name {
+    @content();
+  }
+}
+.page-screen{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .upload-img, .edit-img{
+    position: absolute;
+    width: 100rpx;
+    height: 100rpx;
+    z-index: 100;
+    .ui-img{
+      width: 100rpx;
+      height:100rpx;
+    }
+  }
+  .circle{
+    border-radius: 50%;
+    border: 2rpx solid #BFBFBF;
+    position: absolute;
+    opacity: 0;
+  }
+  .photos{
+    position: absolute;
+    overflow: hidden;
+    opacity: 0;
+    .photo-thumb-wrap{
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .photo-thumb{
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+.page-screen.page-one{
+  &.animation{
+    .bride-groom-photo{
+      @keyframeName: photo;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            transform: rotate(50deg);
+            opacity: 0;
+            right: -304rpx;
+          } 
+          to {
+            transform: rotate(0deg);
+            opacity: 1;
+            right: 0rpx;
+          }
+        }
+      );
+      animation: @keyframeName 3s forwards;
+    }
+    .bride-groom-circle-one{
+      @keyframeName: circle-one;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            top: -560rpx;
+          } 
+          to {
+            opacity: 1;
+            top: -128rpx;
+          }
+        }
+      );
+      animation: @keyframeName 3s ease 1s forwards;
+    }
+    .bride-groom-circle-two{
+      @keyframeName: circle-two;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            bottom: -488rpx;
+          } 
+          to {
+            opacity: 1;
+            bottom: -190rpx;
+          }
+        }
+      );
+      animation: @keyframeName 3s ease 1s forwards;
+    }
+    .wedding-people{
+      @keyframeName: people;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            top: 16rpx;
+          } 
+          to {
+            opacity: 1;
+            top: 46rpx;
+          }
+        }
+      );
+      animation: @keyframeName 1s ease 1.5s forwards;
+    }
+    .wedding-en{
+      @keyframeName: wedding-en;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            top: 66rpx;
+          } 
+          to {
+            opacity: 1;
+            top: 126rpx;
+          }
+        }
+      );
+      animation: @keyframeName 1s ease 2s forwards;
+    }
+    .merry-me, .yes-i-do{
+      @keyframeName: yes-do;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+            transform: scale(.2, .2) rotate(90deg);
+          } 
+          to {
+            opacity: 1;
+            transform: scale(1, 1) rotate(90deg);
+          }
+        }
+      );
+      animation: @keyframeName 2s ease 2.5s forwards;
+    }
+    .wedding-date, .wedding-address, .my-destiny{
+      @keyframeName: address;
+      .keyframes(
+        @keyframeName,
+        {
+          from {
+            opacity: 0;
+          } 
+          to {
+            opacity: 1;
+          }
+        }
+      );
+      animation: @keyframeName 2s ease 3s forwards;
+    }
+  }
+  
+  &.scale, &.cover {
+    transform: scale(0.7, 0.7);
+    box-shadow: 0 0 40px rgba(124,124,124,.2);
+    margin-top: -180rpx;
+    height: 1400rpx;
+    border-radius: 20rpx;
+    overflow: hidden;
+    .bride-groom-photo{
+      transform: rotate(0deg);
+      opacity: 1;
+      right: 0rpx;
+    }
+    .bride-groom-circle-one{
+      opacity: 1;
+      top: -128rpx;
+    }
+    .bride-groom-circle-two{
+      opacity: 1;
+      bottom: -190rpx;
+    }
+    .wedding-people{
+      opacity: 1;
+      top: 46rpx;
+    }
+    .wedding-en{
+      opacity: 1;
+      top: 126rpx;
+    }
+    .merry-me, .yes-i-do{
+      opacity: 1;
+      transform: scale(1, 1) rotate(90deg);
+    }
+    .wedding-date, .wedding-address, .my-destiny{
+      opacity: 1;
+    }
+  }
+  &.cover{
+    transform: scale(0.45, 0.45);
+    margin-top: -180rpx;
+    height: 100%;
+    border-radius: 20rpx;
+    overflow: hidden;
+    .bride-groom-photo{
+      .photo-thumb-wrap{
+        .photo-thumb.thumb-custom{
+          right: 0rpx;
+        }
+      }
+    }
+    .yes-i-do{
+      bottom: initial;
+      top: 950rpx;
+    }
+    .wedding-date{
+      bottom: initial;
+      top: 900rpx;
+    }
+    .wedding-address{
+      bottom: initial;
+      top: 950rpx;
+      text-align: left;
+    }
+    .my-destiny{
+      bottom: initial;
+      top: 1050rpx;
+    }
+    .bride-groom-circle-two{
+      bottom: initial;
+      top: 920rpx;
+    }
+  }
+  .bride-groom-circle-one{
+    width: 560rpx;
+    height: 560rpx;
+    top: -128rpx;
+    left: 88rpx;
+  }
+  .bride-groom-circle-two{
+    width: 488rpx;
+    height: 488rpx;
+    bottom: -190rpx;
+    left: 144rpx;
+  }
+  
+  .bride-groom-photo{
+    width: 608rpx;
+    height: 712rpx;
+    top: 164rpx;
+    right: -304rpx;
+    transform: rotate(50deg);
+
+    .photo-thumb-wrap{
+      width: 712rpx;
+      height: 712rpx;
+      margin-left: -50rpx;
+      
+      .photo-thumb.thumb-custom{
+        width: 608rpx;
+        height: 712rpx;
+        position: relative;
+        top: 0;
+        right: -50rpx;
+      }
+    }
+  }
+  .wedding-people{
+    position: absolute;
+    top: 46rpx;
+    left: 58rpx;
+    color: #333333;
+    font-size: 46rpx;
+    opacity: 0;
+    font-family: 'hy';
+  }
+  .wedding-en{
+    position: absolute;
+    top: 126rpx;
+    left: 52rpx;
+    color: #333333;
+    font-size: 120rpx;
+    opacity: 0
+  }
+  .merry-me{
+    position: absolute;
+    top: 420rpx;
+    left: -20rpx;
+    color: #333333;
+    font-size: 30rpx;
+    display: inline-block;
+    border-left: 2rpx solid #333333;
+    height: 30rpx;
+    line-height: 30rpx;
+    padding-left: 20rpx;
+    transform: rotate(90deg);
+    opacity: 0
+  }
+  .yes-i-do{
+    position: absolute;
+    bottom: 260rpx;
+    right: 30rpx;
+    color: #333333;
+    font-size: 30rpx;
+    display: inline-block;
+    height: 30rpx;
+    line-height: 30rpx;
+    transform: rotate(90deg);
+    opacity: 0
+  }
+  .wedding-date{
+    position: absolute;
+    left: 38rpx;
+    bottom: 240rpx;
+    color: #333333;
+    font-size: 24rpx;
+    opacity: 0;
+  }
+  .wedding-address{
+    position: absolute;
+    display: inline-block;
+    left: 38rpx;
+    right: 120rpx;
+    bottom: 200rpx;
+    color: #333333;
+    font-size: 24rpx;
+    opacity: 0;
+    // .text-overflow();
+  }
+  .my-destiny{
+    display: inline-block;
+    height: 18rpx;
+    font-size: 18rpx;
+    line-height: 18rpx;
+    color: #333333;
+    position: absolute;
+    bottom: 160rpx;
+    left: 98rpx;
+    right: 206rpx;
+    opacity: 0;
+    text-transform:Uppercase;
+
+    &::before{
+      content: '';
+      display: inline-block;
+      width: 34rpx;
+      height: 2rpx;
+      border-top: 2rpx solid #333333;
+      position: absolute;
+      left: -60rpx;
+      top: 10rpx;
+    }
+    &::after{
+      content: '';
+      display: inline-block;
+      width: 104rpx;
+      height: 2rpx;
+      border-top: 2rpx solid #333333;
+      position: absolute;
+      right: -124rpx;
+      top: 10rpx;
+    }
+  }
+
+  .upload-img{
+    right: 230rpx;
+    top: 460rpx;
+  }
+  .edit-img{
+    left: 150rpx;
+    bottom: 160rpx;
+  }
+}
+</style>
+
+<template>
+  <view class="page-screen page-one {{scale || (current === 0 ? 'animation' : '')}}">
+    <view class="circle bride-groom-circle-one"></view>
+    <view class="photos bride-groom-photo">
+      <view class="photo-thumb-wrap">
+        <slot name="photo-thumb" wx:if="{{showSlot}}"></slot>
+        <image class="photo-thumb thumb-custom" wx:if="{{!showSlot && domain && photoThumb}}"
+          src="{{pageData.imageInfo[current][0] ? pageData.imageInfo[current][0]['imagePath'] : ((domain || RESOURCE_PATCH + 'ElectronicInvitationCard/invitation_template/invitation_concise/') + 'photo-thumb-default-2/12.png')}}"
+          @load="imageLoad" />
+        <image class="photo-thumb" @load="imageLoad" wx:elif="{{!showSlot && domain}}" />
+      </view>
+    </view>
+    <view class="upload-img" @tap="uploadImg" data-index="1" data-rate="1.17" wx:if="{{bottomType === 'setting'}}">
+      <image class="ui-img" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_img_upload.png" />
+    </view>
+    <view class="edit-img" @tap="toEditInfo" wx:if="{{bottomType === 'setting'}}">
+      <image class="ui-img" src="https://media.ihunlizhe.com/market/ElectronicInvitationCard/assets/images/flower/flower_text_edit.png" />
+    </view>
+    <view class="circle bride-groom-circle-two"></view>
+    <slot name="wedding-people" wx:if="{{showSlot}}"></slot>
+    <text class="wedding-people" wx:if="{{!showSlot}}">{{pageData.baseInfo.bridegroomName || '新郎'}} & {{pageData.baseInfo.brideName || '新娘'}}</text>
+    <text class="wedding-en">WEDDING.</text>
+    <text class="merry-me">MARRY ME</text>
+    <text class="yes-i-do">YES I DO</text>
+    <slot name="wedding-date" wx:if="{{showSlot}}"></slot>
+    <text class="wedding-date" wx:if="{{!showSlot}}">{{pageData.baseInfo.weddingTime || '2019年12月12日 12时08分'}}</text>
+    <slot name="wedding-address" wx:if="{{showSlot}}"></slot>
+    <text class="wedding-address" wx:if="{{!showSlot}}">{{pageData.baseInfo.hotelName || '昏礼者礼典酒店'}}</text>
+    <text class="my-destiny">you are my destiny</text>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import { RESOURCE_PATCH } from '@/configs'
+
+export default class OnePagesComponent extends wepy.component {
+  config = {
+    disableScroll: true
+  }
+  props = {
+    photoThumb: Boolean,
+    scale: String,
+    current: { type: Number, default: 0 },
+    domain: { type: String, default: RESOURCE_PATCH + 'ElectronicInvitationCard/invitation_template/invitation_concise/' },
+    pageData: { type: Object, default: {} },
+    bottomType: String,
+    onUploadImg: Function,
+    onImageLoad: Function,
+    themeType: String,
+    showSlot: Boolean | String
+  }
+  data = {
+    RESOURCE_PATCH: RESOURCE_PATCH
+  }
+  methods = {
+    uploadImg(e) {
+      if (this.onUploadImg) {
+        this.onUploadImg.call(this.$parent, e)
+      }
+      this.$emit('onUploadImg', e)
+    },
+    toEditInfo() {
+      let baseInfo = this.pageData.baseInfo
+      wx.navigateTo({
+        url: '/subpackages/ElectronicInvitationCard/pages/info?templateid=' +
+          baseInfo.templateId + '&invitationid=' + baseInfo.invitationId + '&templateType=' + baseInfo.templateType + '&themetype=' + this.themetype
+      })
+    },
+    imageLoad(e) {
+      let onImageLoad = this.onImageLoad
+      if (onImageLoad) {
+        onImageLoad.call(this.$parent, e)
+      }
+      this.$emit('onImageLoad', e)
+    }
+  }
+}
+</script>

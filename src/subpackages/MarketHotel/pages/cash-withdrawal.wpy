@@ -1,0 +1,237 @@
+<!--
+  提现页
+  @Author: AndyPan
+  @CreateDate: 2019年4月28日15:18:43
+  @LastUpdateDate: 2019年4月26日15:11:53
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+@import '../../../assets/less/mixin.less';
+
+.page-cash-withdrawal-main {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  .bill-fare-panel {
+    margin-top: 60rpx;
+  }
+
+  .withdrawal-inp-wrap {
+    height: 128rpx;
+    position: relative;
+    font-size: 64rpx;
+    font-weight: bold;
+    color: @color-333333;
+    text-align: left;
+    border-bottom: 1px solid @color-e3e3e3;
+
+    .withdrawal-unit {
+      display: inline-block;
+      height: 68rpx;
+      line-height: 68rpx;
+      margin-top: 30rpx;
+    }
+    .withdraw-input {
+      position: absolute;
+      left: 80rpx;
+      right: 0rpx;
+      top: 30rpx;
+      height: 68rpx;
+      line-height: 68rpx;
+    }
+    .placeholder-class {
+      font-size: 28rpx;
+      font-weight: normal;
+      color: @color-bbbbbb;
+    }
+  }
+  .balance-wrap {
+    color: #828180;
+    font-size: 24rpx;
+    text-align: left;
+    margin-top: 20rpx;
+    .withdraw-all {
+      color: @brand-primary;
+      display: inline-block;
+      margin-left: 20rpx;
+    }
+  }
+  .withdraw-btn {
+    margin: 24rpx;
+    height: 96rpx;
+    line-height: 96rpx;
+    text-align: center;
+    font-size: 30rpx;
+    color: @color-ffffff;
+    background: @brand-primary;
+    margin-top: 68rpx;
+    .border-radius(0);
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <view class="page-cash-withdrawal-main">
+    <view class="bill-fare-panel">
+      <text class="panel-top-line"></text>
+      <view class="bill-fare-cont-wrap">
+        <content-block class="content-block" title="提现金额">
+          <view slot="content-main-slot" class="content-main-slot">
+            <view class="withdrawal-inp-wrap">
+              <text class="withdrawal-unit">￥</text>
+              <input bindinput="onMoneyInput" value="{{money}}" type="digit" auto-focus class="withdraw-input" placeholder-class="placeholder-class" placeholder="请输入需要提现的金额" />
+            </view>
+            <view class="balance-wrap">余额￥{{balance}}<text class="withdraw-all" @tap="onAllClick">全部提现</text></view>
+            <button class="withdraw-btn" @tap="onWithdrawTap">提现到微信零钱</button>
+          </view>
+        </content-block>
+      </view>
+    </view>
+      <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" :onCloseAuthorize="onCloseAuthorizeFn" />
+  </view>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import ContentBlockComponent from '../components/content-block-component/index'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import { Utils, Tips, PATCH } from '@/utils'
+import { STATUS } from '@/configs'
+import { WalletService } from '../services'
+
+export default class CashWithdrawalPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '我的钱包-提现'
+  }
+
+  // 组件
+  components = {
+    'content-block': ContentBlockComponent,
+    // 用户认证授权组件
+    'user-authorize': UserAuthorizeComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    userNo: null,
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo', 'PhoneNumber'],
+    // 提现金额
+    money: '',
+    // 余额
+    balance: '0.00'
+  }
+
+  /**
+   * 所有授权操作完成
+   */
+  onAuthorizeAllFn(data) {
+    // 提现处理
+    this.withdrawal()
+  }
+
+  /**
+   * 用户关闭授权框
+   */
+  onCloseAuthorizeFn() {}
+
+  /**
+   * 获取用户信息
+   */
+  memberInfo() {
+    WalletService.memberInfo({
+      data: { userNo: this.userNo }
+    })
+      .then(res => {
+        let memberInfo = res.data.memberInfo
+        this.balance = memberInfo.availableAmount
+        this.$apply()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 提现
+   */
+  withdrawal() {
+    WalletService.withdraw({
+      data: { amount: this.money, userNo: this.userNo }
+    })
+      .then(res => {
+        if (res.data.success) {
+          wx.navigateTo({ url: 'withdraw-result' })
+          // Tips.success('操作成功')
+          // this.money = ''
+          // this.$apply()
+          // this.memberInfo()
+        } else {
+          Tips.error((res.data || {}).message || '操作失败')
+        }
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 是否已经缓存过手机号
+   */
+  authorizePhoneNumber() {
+    let phoneNumber = wx.getStorageSync(STATUS.PHONE_NUMBER)
+    if (!phoneNumber) {
+      this.$invoke('user-authorize', 'authorizeActivation')
+    } else {
+      // 提现处理
+      this.withdrawal()
+    }
+  }
+
+  methods = {
+    onMoneyInput(e) {
+      let money = Utils.toFixed(e.detail.value)
+      this.money = money
+      this.$apply()
+      return money
+    },
+    onAllClick(e) {
+      let that = this
+      setTimeout(() => {
+        that.money = this.balance || '0'
+        that.$apply()
+      }, 500)
+    },
+    onWithdrawTap(e) {
+      let money = this.money
+      let balance = parseFloat(this.balance || 0)
+      if (!money) {
+        Tips.error('请输入提现金额')
+        return false
+      } else if (money > balance) {
+        Tips.error('余额不足')
+        return false
+      }
+      // 是否已经缓存过手机号
+      this.authorizePhoneNumber()
+    }
+  }
+
+  onLoad() {
+    PATCH.createPatch.call(this)
+  }
+
+  onShow() {
+    this.userNo = wepy.getStorageSync(STATUS.USER_NO)
+    this.memberInfo()
+  }
+}
+</script>  

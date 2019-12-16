@@ -1,0 +1,184 @@
+<!--
+  宴会厅列表页
+  @Author: AndyPan
+  @CreateDate: 2019年4月26日14:41:47
+  @LastUpdateDate: 2019年4月26日14:41:50
+  @Remarks: 
+-->
+
+<!-- 页面样式 -->
+<style lang="less">
+.page-banquet-hall-main {
+  .page-main-cont {
+    position: relative;
+    z-index: 9;
+    &.additional-class {
+      margin-bottom: 100rpx;
+      padding-bottom: 100rpx;
+    }
+  }
+}
+</style>
+
+<!-- 页面模板 -->
+<template>
+  <pull-down :onPullDownRefresh="refreshPage">
+    <view slot="pull-down-content">
+      <scroll-view class="page-banquet-hall-main page-main-wrap" scroll-y bindscrolltolower="lower">
+        <view class="{{ 'banquet-hall-main-cont page-main-cont' + (' ' + additional)}}">
+          <image-text-banquet-hall :dataset.sync="banquetHallDataSet">
+          </image-text-banquet-hall>
+        </view>
+        <!-- 底部Footer -->
+        <footer />
+      </scroll-view>
+      <user-authorize :onAuthorizeAll="onAuthorizeAllFn" :authorizeType="authorizeType" />
+    </view>
+  </pull-down>
+</template>
+  
+<script>
+import wepy from 'wepy'
+import FooterComponent from '@/components/footer-component/index'
+import ImageTextComponent from '../components/image-text-component/index'
+import UserAuthorizeComponent from '@/components/user-authorize-component/index'
+import PullDownComponent from '@/components/pull-down-component/index'
+import { IndexService } from '../services'
+import { Tips, DataPipe, PATCH } from '@/utils'
+import { STATUS } from '@/configs'
+
+export default class BanquetHallListPages extends wepy.page {
+  // 配置
+  config = {
+    navigationBarTitleText: '宴会厅'
+  }
+
+  // 组件
+  components = {
+    // 下拉刷新
+    'pull-down': PullDownComponent,
+    // 底部
+    footer: FooterComponent,
+    // 宴会厅图文介绍
+    'image-text-banquet-hall': ImageTextComponent,
+    // 用户认证授权组件
+    'user-authorize': UserAuthorizeComponent
+  }
+
+  data = {
+    // true/false变量
+    boolTrue: true,
+    boolFalse: false,
+    // 宴会厅数据
+    banquetHallDataSet: null,
+    hotelId: null,
+    authorizeType: ['WXLogin', 'AccountInfo', 'UserInfo'],
+    additional: '',
+    // 是否为分享链接
+    isShare: null
+  }
+
+  onAuthorizeAllFn(data) {
+    this.hotelBanquetHallListInfo()
+  }
+
+  /**
+   * 获取酒店宴会厅列表
+   */
+  hotelBanquetHallListInfo() {
+    IndexService.hotelBanquetHallListInfo({ data: { hotelId: this.hotelId } })
+      .then(res => {
+        if (res && res.data) {
+          let hotelBanquetHallListInfos =
+            res.data.hotelBanquetHallListInfos || []
+          let keyAssemble = {
+            tables: '桌数',
+            area: '面积',
+            storey: '楼层'
+          }
+          DataPipe.basePipe(
+            hotelBanquetHallListInfos,
+            (item, key, dataItem) => {
+              if (keyAssemble[key] && item) {
+                dataItem['label'] = dataItem['label'] || []
+                dataItem['label'].push(item)
+              }
+              dataItem.key = dataItem.code
+              dataItem.title = dataItem.hallName
+              dataItem.thumb = dataItem.coverPicture
+              dataItem.video = ((dataItem.videoLists || [])[0] || {}).picture
+            }
+          )
+          this.banquetHallDataSet = hotelBanquetHallListInfos
+          this.$apply()
+        }
+        this.hotelTrackAdd()
+      })
+      .catch(err => {
+        Tips.error(err.message)
+      })
+  }
+
+  /**
+   * 增加酒店足迹
+   */
+  hotelTrackAdd() {
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (this.hotelId && this.isShare) {
+      IndexService.hotelTrackAdd({
+        data: { hotelId: this.hotelId, userNo }
+      }).then(res => {})
+    }
+  }
+
+  /**
+   * 滚动到底部
+   */
+  lower(e) {
+    this.hotelBanquetHallListInfo()
+  }
+
+  /**
+   * 分享转发
+   */
+  onShareAppMessage(res) {
+    return {
+      title: this.hallName,
+      path:
+        '/subpackages/MarketHotel/pages/banquet-hall-list?hotelId=' +
+        this.hotelId +
+        '&isShare=true'
+    }
+  }
+
+  onLoad(options) {
+    PATCH.createPatch.call(this)
+    wx.showShareMenu({ withShareTicket: true })
+    options = options || {}
+    this.hotelId = options.hotelId || wepy.getStorageSync(STATUS.HOTEL_ID)
+    this.isShare = options.isShare
+    this.refreshPage()
+  }
+
+  onShow() {
+    this.$invoke('image-text-banquet-hall', 'stopVideo')
+  }
+
+  /**
+   * 下拉刷新
+   */
+  refreshPage() {
+    let userNo = wepy.getStorageSync(STATUS.USER_NO)
+    if (userNo) {
+      this.hotelBanquetHallListInfo()
+    } else {
+      this.$invoke('user-authorize', 'authorizeActivation')
+    }
+    const res = wx.getSystemInfoSync()
+    if (res.model.indexOf('iPhone') > -1) {
+      this.additional = 'additional-class'
+      this.$apply()
+    }
+  }
+}
+</script>  
